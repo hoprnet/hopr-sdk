@@ -51,3 +51,11 @@ export const GetChannelsResponse = z.object({
 });
 
 export type GetChannelsResponseType = ZodToType<typeof GetChannelsResponse>;
+
+/** Redeem tickets */
+
+export const RedeemTicketsPayload = z.object({
+  peerId: z.string()
+});
+
+export type RedeemTicketsPayloadType = ZodToType<typeof RedeemTicketsPayload>;
