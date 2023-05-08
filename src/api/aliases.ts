@@ -13,7 +13,6 @@ if (!APIKEY) {
 const getAliases = async (): Promise<{
   [key: string]: string | { status: string; error: string };
 }> => {
-  // Fetch and check error responses
   const res = await fetch(`${BASEURL}aliases/`, {
     method: 'GET',
     headers: getHeaders(APIKEY)
@@ -51,7 +50,6 @@ const setAlias = async (
 const getAlias = async (
   alias: string
 ): Promise<string | { status: string; error?: string }> => {
-  // Fetch and check error responses
   const res = await fetch(`${BASEURL}aliases/${alias}`, {
     method: 'GET',
     headers: getHeaders(APIKEY)
@@ -70,7 +68,6 @@ const getAlias = async (
 };
 
 const removeAlias = async (alias: string) => {
-  // Fetch and check error responses
   const res = await fetch(`${BASEURL}aliases/${alias}`, {
     method: 'DELETE',
     headers: getHeaders(APIKEY)
