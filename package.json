@@ -1,6 +1,7 @@
 {
   "name": "hopr-sdk",
   "version": "0.0.1",
+  "license": "GPLv3",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -12,6 +13,7 @@
     "test": "jest --passWithNoTests"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.26.1",
     "@types/jest": "^29.5.1",
     "jest": "^29.5.0",
     "prettier": "^2.8.8",

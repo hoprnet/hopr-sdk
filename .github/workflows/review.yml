@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  review-source-code:
+  review:
     name: Review source code
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -43,3 +43,16 @@ jobs:
 
       - name: Run tests and coverage
         run: yarn test --ci
+
+  # Run publish if pr title includes [RELEASE]
+  publish:
+    needs: review
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.title, '[RELEASE]')
+    name: Publish package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Publish package
+        uses: ../actions/publish.yml
