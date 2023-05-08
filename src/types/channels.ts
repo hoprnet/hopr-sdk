@@ -2,6 +2,16 @@ import { z } from 'zod';
 import { ZodToType } from './general';
 
 /**
+ * General types
+ */
+
+export const PeerIdPayload = z.object({
+  peerId: z.string()
+});
+
+export type PeerIdPayloadType = ZodToType<typeof PeerIdPayload>;
+
+/**
  * Fund channel
  */
 
@@ -52,10 +62,19 @@ export const GetChannelsResponse = z.object({
 
 export type GetChannelsResponseType = ZodToType<typeof GetChannelsResponse>;
 
-/** Redeem tickets */
+/** Get tickets */
 
-export const RedeemTicketsPayload = z.object({
-  peerId: z.string()
+export const Ticket = z.object({
+  counterparty: z.string(),
+  challenge: z.string(),
+  epoch: z.string(),
+  index: z.string(),
+  amount: z.string(),
+  winProb: z.string(),
+  channelEpoch: z.string(),
+  signature: z.string()
 });
 
-export type RedeemTicketsPayloadType = ZodToType<typeof RedeemTicketsPayload>;
+export const GetTicketsResponse = z.array(Ticket);
+
+export type GetTicketsResponseType = ZodToType<typeof GetTicketsResponse>;

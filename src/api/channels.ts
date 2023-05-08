@@ -6,7 +6,8 @@ import {
   OpenChannelsPayloadType,
   OpenChannelsResponse,
   GetChannelsResponse,
-  RedeemTicketsPayloadType
+  PeerIdPayloadType,
+  GetTicketsResponse
 } from '../types';
 import { APIError, getHeaders } from '../utils';
 
@@ -74,10 +75,10 @@ export const getChannels = async (url: string, apiKey: string) => {
 export const redeemTickets = async (
   url: string,
   apiKey: string,
-  path: RedeemTicketsPayloadType
+  body: PeerIdPayloadType
 ) => {
   const rawResponse = await fetch(
-    `${url}/api/v2/channels/${path.peerId}/tickets/redeem`,
+    `${url}/api/v2/channels/${body.peerId}/tickets/redeem`,
     {
       method: 'POST',
       headers: getHeaders(apiKey)
@@ -88,6 +89,30 @@ export const redeemTickets = async (
     return true;
   } else {
     const jsonResponse = await rawResponse.json();
+    throw new APIError(Error.parse(jsonResponse));
+  }
+};
+
+export const getTickets = async (
+  url: string,
+  apiKey: string,
+  body: PeerIdPayloadType
+) => {
+  const rawResponse = await fetch(
+    `${url}/api/v2/channels/${body.peerId}/tickets`,
+    {
+      method: 'GET',
+      headers: getHeaders(apiKey)
+    }
+  );
+
+  const jsonResponse = await rawResponse.json();
+
+  const parsedRes = GetTicketsResponse.safeParse(jsonResponse);
+
+  if (parsedRes.success) {
+    return parsedRes.data;
+  } else {
     throw new APIError(Error.parse(jsonResponse));
   }
 };
