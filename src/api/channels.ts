@@ -4,7 +4,8 @@ import {
   FundChannelsResponse,
   Error,
   OpenChannelsPayloadType,
-  OpenChannelsResponse
+  OpenChannelsResponse,
+  GetChannelsResponse
 } from '../types';
 import { APIError, getHeaders } from '../utils';
 
@@ -30,7 +31,7 @@ export const fundChannels = async (
   }
 };
 
-export const OpenChannels = async (
+export const openChannels = async (
   url: string,
   apiKey: string,
   body: OpenChannelsPayloadType
@@ -44,6 +45,23 @@ export const OpenChannels = async (
   const jsonResponse = await rawResponse.json();
 
   const parsedRes = OpenChannelsResponse.safeParse(jsonResponse);
+
+  if (parsedRes.success) {
+    return parsedRes.data;
+  } else {
+    throw new APIError(Error.parse(jsonResponse));
+  }
+};
+
+export const getChannels = async (url: string, apiKey: string) => {
+  const rawResponse = await fetch(`${url}/channels`, {
+    method: 'GET',
+    headers: getHeaders(apiKey)
+  });
+
+  const jsonResponse = await rawResponse.json();
+
+  const parsedRes = GetChannelsResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;

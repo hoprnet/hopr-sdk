@@ -34,3 +34,20 @@ export const OpenChannelsResponse = z.object({
 });
 
 export type OpenChannelsResponseType = ZodToType<typeof OpenChannelsResponse>;
+
+/** Get channels */
+
+export const Channel = z.object({
+  type: z.enum(['incoming', 'outgoing']),
+  channelId: z.string(),
+  peerId: z.string(),
+  status: z.enum(['WaitingForCommitment', 'Open', 'PendingToClose', 'Closed']),
+  balance: z.string()
+});
+
+export const GetChannelsResponse = z.object({
+  incoming: z.array(Channel),
+  outgoing: z.array(Channel)
+});
+
+export type GetChannelsResponseType = ZodToType<typeof GetChannelsResponse>;
