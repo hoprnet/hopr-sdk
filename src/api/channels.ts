@@ -1,13 +1,15 @@
 import {
-  FundChannelsResponseType,
-  type FundChannelsPayloadType,
-  FundChannelsResponse,
+  CloseChannelResponse,
   Error,
-  OpenChannelsPayloadType,
-  OpenChannelsResponse,
+  FundChannelsResponse,
   GetChannelsResponse,
-  PeerIdPayloadType,
-  GetTicketsResponse
+  GetTicketsResponse,
+  OpenChannelsResponse,
+  type CloseChannelPayloadType,
+  type FundChannelsPayloadType,
+  type FundChannelsResponseType,
+  type OpenChannelsPayloadType,
+  type PeerIdPayloadType
 } from '../types';
 import { APIError, getHeaders } from '../utils';
 
@@ -109,6 +111,30 @@ export const getTickets = async (
   const jsonResponse = await rawResponse.json();
 
   const parsedRes = GetTicketsResponse.safeParse(jsonResponse);
+
+  if (parsedRes.success) {
+    return parsedRes.data;
+  } else {
+    throw new APIError(Error.parse(jsonResponse));
+  }
+};
+
+export const closeChannel = async (
+  url: string,
+  apiKey: string,
+  body: CloseChannelPayloadType
+) => {
+  const rawResponse = await fetch(
+    `${url}/api/v2/channels/${body.peerId}/${body.direction}`,
+    {
+      method: 'DELETE',
+      headers: getHeaders(apiKey)
+    }
+  );
+
+  const jsonResponse = await rawResponse.json();
+
+  const parsedRes = CloseChannelResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;

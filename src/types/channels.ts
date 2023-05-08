@@ -78,3 +78,19 @@ export const Ticket = z.object({
 export const GetTicketsResponse = z.array(Ticket);
 
 export type GetTicketsResponseType = ZodToType<typeof GetTicketsResponse>;
+
+/** Close channel */
+
+export const CloseChannelPayload = z.object({
+  peerId: z.string(),
+  direction: z.enum(['incoming', 'outgoing'])
+});
+
+export type CloseChannelPayloadType = ZodToType<typeof CloseChannelPayload>;
+
+export const CloseChannelResponse = z.object({
+  receipt: z.string(),
+  channelStatus: z.string()
+});
+
+export type CloseChannelResponseType = ZodToType<typeof CloseChannelResponse>;
