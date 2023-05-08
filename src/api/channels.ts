@@ -9,7 +9,14 @@ import {
   type FundChannelsPayloadType,
   type FundChannelsResponseType,
   type OpenChannelsPayloadType,
-  type PeerIdPayloadType
+  type PeerIdPayloadType,
+  GetChannelPayloadType,
+  GetChannelResponse,
+  OpenChannelsResponseType,
+  GetChannelsResponseType,
+  GetTicketsResponseType,
+  CloseChannelResponseType,
+  GetChannelResponseType
 } from '../types';
 import { APIError, getHeaders } from '../utils';
 
@@ -39,7 +46,7 @@ export const openChannels = async (
   url: string,
   apiKey: string,
   body: OpenChannelsPayloadType
-) => {
+): Promise<OpenChannelsResponseType> => {
   const rawResponse = await fetch(`${url}/api/v2/channels`, {
     method: 'POST',
     headers: getHeaders(apiKey),
@@ -57,7 +64,10 @@ export const openChannels = async (
   }
 };
 
-export const getChannels = async (url: string, apiKey: string) => {
+export const getChannels = async (
+  url: string,
+  apiKey: string
+): Promise<GetChannelsResponseType> => {
   const rawResponse = await fetch(`${url}/api/v2/channels`, {
     method: 'GET',
     headers: getHeaders(apiKey)
@@ -78,7 +88,7 @@ export const redeemTickets = async (
   url: string,
   apiKey: string,
   body: PeerIdPayloadType
-) => {
+): Promise<boolean> => {
   const rawResponse = await fetch(
     `${url}/api/v2/channels/${body.peerId}/tickets/redeem`,
     {
@@ -99,7 +109,7 @@ export const getTickets = async (
   url: string,
   apiKey: string,
   body: PeerIdPayloadType
-) => {
+): Promise<GetTicketsResponseType> => {
   const rawResponse = await fetch(
     `${url}/api/v2/channels/${body.peerId}/tickets`,
     {
@@ -123,7 +133,7 @@ export const closeChannel = async (
   url: string,
   apiKey: string,
   body: CloseChannelPayloadType
-) => {
+): Promise<CloseChannelResponseType> => {
   const rawResponse = await fetch(
     `${url}/api/v2/channels/${body.peerId}/${body.direction}`,
     {
@@ -135,6 +145,30 @@ export const closeChannel = async (
   const jsonResponse = await rawResponse.json();
 
   const parsedRes = CloseChannelResponse.safeParse(jsonResponse);
+
+  if (parsedRes.success) {
+    return parsedRes.data;
+  } else {
+    throw new APIError(Error.parse(jsonResponse));
+  }
+};
+
+export const getChannel = async (
+  url: string,
+  apiKey: string,
+  body: GetChannelPayloadType
+): Promise<GetChannelResponseType> => {
+  const rawResponse = await fetch(
+    `${url}/api/v2/channels/${body.peerId}/${body.direction}`,
+    {
+      method: 'GET',
+      headers: getHeaders(apiKey)
+    }
+  );
+
+  const jsonResponse = await rawResponse.json();
+
+  const parsedRes = GetChannelResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;

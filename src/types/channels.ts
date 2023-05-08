@@ -94,3 +94,16 @@ export const CloseChannelResponse = z.object({
 });
 
 export type CloseChannelResponseType = ZodToType<typeof CloseChannelResponse>;
+
+/** Get channel */
+
+export const GetChannelPayload = z.object({
+  peerId: z.string(),
+  direction: z.enum(['incoming', 'outgoing'])
+});
+
+export type GetChannelPayloadType = ZodToType<typeof GetChannelPayload>;
+
+export const GetChannelResponse = z.array(Channel);
+
+export type GetChannelResponseType = ZodToType<typeof GetChannelResponse>;
