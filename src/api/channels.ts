@@ -1,22 +1,49 @@
 import {
-  ChannelsFundChannelsResponseType,
-  type ChannelsFundChannelsPayloadType,
-  ChannelsFundChannelsResponse,
-  Error
+  FundChannelsResponseType,
+  type FundChannelsPayloadType,
+  FundChannelsResponse,
+  Error,
+  OpenChannelsPayloadType,
+  OpenChannelsResponse
 } from '../types';
-import { APIError } from '../utils';
+import { APIError, getHeaders } from '../utils';
 
-export const channelsFundChannels = async (
-  body: ChannelsFundChannelsPayloadType
-): Promise<ChannelsFundChannelsResponseType> => {
-  const rawResponse = await fetch('/fundmulti', {
-    method: 'post',
+export const fundChannels = async (
+  url: string,
+  apiKey: string,
+  body: FundChannelsPayloadType
+): Promise<FundChannelsResponseType> => {
+  const rawResponse = await fetch(`${url}/fundmulti`, {
+    method: 'POST',
+    headers: getHeaders(apiKey),
     body: JSON.stringify(body)
   });
 
   const jsonResponse = await rawResponse.json();
 
-  const parsedRes = ChannelsFundChannelsResponse.safeParse(jsonResponse);
+  const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
+
+  if (parsedRes.success) {
+    return parsedRes.data;
+  } else {
+    throw new APIError(Error.parse(jsonResponse));
+  }
+};
+
+export const OpenChannels = async (
+  url: string,
+  apiKey: string,
+  body: OpenChannelsPayloadType
+) => {
+  const rawResponse = await fetch(`${url}/channels`, {
+    method: 'POST',
+    headers: getHeaders(apiKey),
+    body: JSON.stringify(body)
+  });
+
+  const jsonResponse = await rawResponse.json();
+
+  const parsedRes = OpenChannelsResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;
