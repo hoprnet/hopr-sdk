@@ -1,4 +1,5 @@
 import { Headers } from 'node-fetch';
+import { Buffer } from 'buffer';
 
 export const getHeaders = (apiKey: string): Headers => {
   const headers = new Headers();

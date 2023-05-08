@@ -4,15 +4,20 @@ import fetch from 'node-fetch';
 import { getHeaders } from './utils';
 import 'dotenv/config';
 
-const { BASEURL } = process.env;
+const { BASEURL, APIKEY } = process.env;
 
-const APIKEY = 'Lu1s-3dm4nu3l!';
+if (!BASEURL) {
+  throw new Error('No BASEURL found to make API calls');
+}
+if (!APIKEY) {
+  throw new Error('No APIKEY found to make API calls');
+}
 
-const accountWithdraw = async (
+const withdraw = async (
   currency: string,
   amount: string,
   recipient: string
-): Promise<{ receipt?: string; status?: string; error?: string }> => {
+): Promise<string | { status?: string; error?: string }> => {
   // Fetch and check error responses
   const res = await fetch(`${BASEURL}account/withdraw`, {
     method: 'POST',
@@ -20,34 +25,24 @@ const accountWithdraw = async (
     body: JSON.stringify({ currency, amount, recipient })
   });
 
-  return (await res.json()) as {
+  const response = (await res.json()) as {
     receipt?: string;
     status?: string;
     error?: string;
   };
+  if (response['receipt']) return response['receipt'];
+  return { status: response['status'], error: response['error'] };
 };
 
-const accountGetBalances = async (): Promise<{
-  native?: string;
-  hopr?: string;
-  status?: string;
-  error?: string;
-}> => {
-  // Fetch and check error responses
-  const res = await fetch(`${BASEURL}account/balances`, {
-    method: 'GET',
-    headers: getHeaders(APIKEY)
-  });
-  return (await res.json()) as {
-    native?: string;
-    hopr?: string;
-    status?: string;
-    error?: string;
-  };
-};
-
-const accountGetNativeBalance = async (): Promise<
-  string | { status: string; error: string }
+const getBalances = async (): Promise<
+  | {
+      native: string;
+      hopr: string;
+    }
+  | {
+      status: string;
+      error: string;
+    }
 > => {
   // Fetch and check error responses
   const res = await fetch(`${BASEURL}account/balances`, {
@@ -60,72 +55,66 @@ const accountGetNativeBalance = async (): Promise<
     status?: string;
     error?: string;
   };
-  if (balances['native']) return balances['native'];
-  else return { status: balances['status']!, error: balances['error']! };
+
+  if (balances.hopr && balances.native)
+    return { hopr: balances.hopr, native: balances.native };
+  return { status: balances.status!, error: balances.error! };
 };
 
-const accountGetHoprBalance = async (): Promise<
+const getNativeBalance = async (): Promise<
   string | { status: string; error: string }
 > => {
-  // Fetch and check error responses
-  const res = await fetch(`${BASEURL}account/balances`, {
-    method: 'GET',
-    headers: getHeaders(APIKEY)
-  });
-  const balances = (await res.json()) as {
-    native?: string;
-    hopr?: string;
-    status?: string;
-    error?: string;
-  };
-  if (balances['hopr']) return balances['hopr'];
-  else return { status: balances['status']!, error: balances['error']! };
+  const balances = await getBalances();
+  if ('native' in balances) return balances['native'];
+  return { status: balances['status']!, error: balances['error']! };
 };
 
-const accountGetAddresses = async (): Promise<
-  [hoprAddress: string, nativeAddress: string]
+const getHoprBalance = async (): Promise<
+  string | { status: string; error: string }
+> => {
+  const balances = await getBalances();
+  if ('hopr' in balances) return balances['hopr'];
+  return { status: balances['status']!, error: balances['error']! };
+};
+
+const getAddresses = async (): Promise<
+  | { hoprAddress: string; nativeAddress: string }
+  | { status: string; error: string }
 > => {
   const res = await fetch(`${BASEURL}account/addresses`, {
     method: 'GET',
     headers: getHeaders(APIKEY)
   });
   const addresses = (await res.json()) as {
-    nativeAddress: string;
-    native: string;
-    hoprAddress: string;
-    hopr: string;
+    nativeAddress?: string;
+    native?: string;
+    hoprAddress?: string;
+    hopr?: string;
+    status?: string;
+    error?: string;
   };
-  return [addresses['hoprAddress'], addresses['nativeAddress']];
+  if (addresses['hoprAddress'] && addresses['nativeAddress'])
+    return {
+      hoprAddress: addresses['hoprAddress'],
+      nativeAddress: addresses['nativeAddress']
+    };
+  return { status: addresses['status']!, error: addresses['error']! };
 };
 
-const accountGetHoprAddress = async (): Promise<string> => {
-  const res = await fetch(`${BASEURL}account/addresses`, {
-    method: 'GET',
-    headers: getHeaders(APIKEY)
-  });
-
-  const response = (await res.json()) as {
-    nativeAddress: string;
-    native: string;
-    hoprAddress: string;
-    hopr: string;
-  };
-
-  return response['hoprAddress'];
+const getHoprAddress = async (): Promise<
+  string | { status: string; error: string }
+> => {
+  const addresses = await getAddresses();
+  if ('hoprAddress' in addresses) return addresses['hoprAddress'];
+  return { status: addresses['status']!, error: addresses['error']! };
 };
 
-const accountGetNativeAddress = async (): Promise<string> => {
-  const res = await fetch(`${BASEURL}account/addresses`, {
-    method: 'GET',
-    headers: getHeaders(APIKEY)
-  });
-
-  const response = (await res.json()) as {
-    nativeAddress: string;
-    native: string;
-    hoprAddress: string;
-    hopr: string;
-  };
-
-  return response['nativeAddress'];
+const getNativeAddress = async (): Promise<
+  string | { status: string; error: string }
+> => {
+  const addresses = await getAddresses();
+  if ('nativeAddress' in addresses) return addresses['nativeAddress'];
+  return { status: addresses['status']!, error: addresses['error']! };
 };
+
+getHoprBalance().then((res) => console.log(res));
