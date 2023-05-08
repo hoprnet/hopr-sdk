@@ -22,5 +22,9 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.1"
+  }
 }
