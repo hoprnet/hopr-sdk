@@ -1,8 +1,10 @@
 import {
   ChannelsFundChannelsResponseType,
   type ChannelsFundChannelsPayloadType,
-  ChannelsFundChannelsResponse
+  ChannelsFundChannelsResponse,
+  Error
 } from '../types';
+import { APIError } from '../utils';
 
 export const channelsFundChannels = async (
   body: ChannelsFundChannelsPayloadType
@@ -19,7 +21,6 @@ export const channelsFundChannels = async (
   if (parsedRes.success) {
     return parsedRes.data;
   } else {
-    // throw custom error
-    throw new Error('');
+    throw new APIError(Error.parse(jsonResponse));
   }
 };
