@@ -1,0 +1,19 @@
+name: 'Publish'
+description: 'Publish hoprd sdk package'
+
+runs:
+  steps:
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+        cache-dependency-path: ./yarn.lock
+        registry-url: 'https://registry.npmjs.org/'
+
+    - name: Install dependencies
+      shell: bash
+      run: yarn
+
+    - name: Publish package
+      run: npx changeset version && npx changeset publish
