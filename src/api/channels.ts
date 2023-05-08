@@ -19,6 +19,7 @@ import {
   GetChannelResponseType
 } from '../types';
 import { APIError, getHeaders } from '../utils';
+import fetch from 'cross-fetch';
 
 export const fundChannels = async (
   url: string,
