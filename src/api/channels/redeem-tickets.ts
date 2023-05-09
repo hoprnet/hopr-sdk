@@ -2,6 +2,9 @@ import fetch from 'cross-fetch';
 import { Error, type PeerIdPayloadType } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
+/**
+ * // TODO: Takes more than 200s to execute
+ */
 export const redeemTickets = async (
   url: string,
   apiKey: string,
