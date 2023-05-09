@@ -16,7 +16,10 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(201);
 
-    const result = await setAlias(BASE_PATH, API_TOKEN, PEER_ID, ALIAS);
+    const result = await setAlias(BASE_PATH, API_TOKEN, {
+      peerId: PEER_ID,
+      alias: ALIAS
+    });
     expect(result).toBeUndefined();
   });
 
@@ -25,7 +28,10 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(400, { status: 'INVALID_PEERID' });
 
-    const result = await setAlias(BASE_PATH, API_TOKEN, PEER_ID, ALIAS);
+    const result = await setAlias(BASE_PATH, API_TOKEN, {
+      peerId: PEER_ID,
+      alias: ALIAS
+    });
     expect(result).toEqual({ status: 'INVALID_PEERID' });
   });
 
@@ -39,7 +45,10 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(401, expectedResponse);
 
-    const result = await setAlias(BASE_PATH, invalidApikey, PEER_ID, ALIAS);
+    const result = await setAlias(BASE_PATH, invalidApikey, {
+      peerId: PEER_ID,
+      alias: ALIAS
+    });
     expect(result).toEqual(expectedResponse);
   });
 
@@ -52,7 +61,10 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(403, expectedResponse);
 
-    const result = await setAlias(BASE_PATH, API_TOKEN, PEER_ID, ALIAS);
+    const result = await setAlias(BASE_PATH, API_TOKEN, {
+      peerId: PEER_ID,
+      alias: ALIAS
+    });
     expect(result).toEqual(expectedResponse);
   });
 
@@ -65,7 +77,10 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(422, expectedResponse);
 
-    const result = await setAlias(BASE_PATH, API_TOKEN, PEER_ID, ALIAS);
+    const result = await setAlias(BASE_PATH, API_TOKEN, {
+      peerId: PEER_ID,
+      alias: ALIAS
+    });
     expect(result).toEqual(expectedResponse);
   });
 });

@@ -15,13 +15,16 @@ import { getHeaders } from '../../utils';
 export const setAlias = async (
   url: string,
   apiKey: string,
-  peerId: string,
-  alias: string
+  nodeInfo: {
+    peerId: string;
+    alias: string;
+  }
 ): Promise<void | { status: string; error?: string }> => {
+  nodeInfo.alias;
   const res = await fetch(`${url}/api/v2/aliases`, {
     method: 'POST',
     headers: getHeaders(apiKey),
-    body: JSON.stringify({ peerId, alias })
+    body: JSON.stringify(nodeInfo)
   });
   try {
     const response = (await res.json()) as {
