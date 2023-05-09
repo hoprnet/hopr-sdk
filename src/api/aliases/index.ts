@@ -1,4 +1,4 @@
 export * from './getAlias';
 export * from './getAliases';
-export * from './setAliases';
+export * from './setAlias';
 export * from './removeAlias';

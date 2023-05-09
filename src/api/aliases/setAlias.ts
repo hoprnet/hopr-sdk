@@ -18,7 +18,7 @@ export const setAlias = async (
   peerId: string,
   alias: string
 ): Promise<void | { status: string; error?: string }> => {
-  const res = await fetch(`${url}aliases/`, {
+  const res = await fetch(`${url}/api/v2/aliases`, {
     method: 'POST',
     headers: getHeaders(apiKey),
     body: JSON.stringify({ peerId, alias })

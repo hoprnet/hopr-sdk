@@ -1,19 +1,14 @@
 import fetch from 'cross-fetch';
 import { getHeaders } from '../../utils';
-import 'dotenv/config';
 
-const { BASEURL, APIKEY } = process.env;
-if (!BASEURL) {
-  throw new Error('No BASEURL found to make API calls');
-}
-if (!APIKEY) {
-  throw new Error('No APIKEY found to make API calls');
-}
-
-export const removeAlias = async (alias: string) => {
-  const res = await fetch(`${BASEURL}aliases/${alias}`, {
+export const removeAlias = async (
+  url: string,
+  apiKey: string,
+  alias: string
+) => {
+  const res = await fetch(`${url}/api/v2/aliases/${alias}`, {
     method: 'DELETE',
-    headers: getHeaders(APIKEY)
+    headers: getHeaders(apiKey)
   });
   try {
     const response = (await res.json()) as {

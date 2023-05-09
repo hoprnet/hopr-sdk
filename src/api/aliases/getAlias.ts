@@ -14,7 +14,7 @@ export const getAlias = async (
   apiKey: string,
   alias: string
 ): Promise<string | { status: string; error?: string }> => {
-  const res = await fetch(`${url}aliases/${alias}`, {
+  const res = await fetch(`${url}/api/v2/aliases/${alias}`, {
     method: 'GET',
     headers: getHeaders(apiKey)
   });

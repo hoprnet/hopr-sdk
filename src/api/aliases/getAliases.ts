@@ -14,7 +14,7 @@ export const getAliases = async (
 ): Promise<{
   [key: string]: string | { status: string; error: string };
 }> => {
-  const res = await fetch(`${url}aliases/`, {
+  const res = await fetch(`${url}/api/v2/aliases`, {
     method: 'GET',
     headers: getHeaders(apiKey)
   });
