@@ -1,23 +1,23 @@
 import fetch from 'cross-fetch';
 import { getHeaders } from '../utils';
-import 'dotenv/config';
 
-const { BASEURL, APIKEY } = process.env;
-
-if (!BASEURL) {
-  throw new Error('No BASEURL found to make API calls');
-}
-if (!APIKEY) {
-  throw new Error('No APIKEY found to make API calls');
-}
-
-export const getAddresses = async (): Promise<
-  | { hoprAddress: string; nativeAddress: string }
-  | { status: string; error: string }
+/**
+ * Gets the HOPR and native addresses associated to the node.
+ *
+ * @param url - The URL of the API endpoint.
+ * @param apiKey - The API key to be used for authentication.
+ *
+ * @returns A promise that resolves with an object containing the HOPR and native addresses if successful, or an object with the keys "status" and "error" if unsuccessful.
+ */
+export const getAddresses = async (
+  url: string,
+  apiKey: string
+): Promise<
+  { hopr: string; native: string } | { status: string; error: string }
 > => {
-  const res = await fetch(`${BASEURL}account/addresses`, {
+  const res = await fetch(`${url}/api/v2/account/addresses`, {
     method: 'GET',
-    headers: getHeaders(APIKEY)
+    headers: getHeaders(apiKey)
   });
   const addresses = (await res.json()) as {
     nativeAddress?: string;
@@ -27,10 +27,10 @@ export const getAddresses = async (): Promise<
     status?: string;
     error?: string;
   };
-  if (addresses['hoprAddress'] && addresses['nativeAddress'])
+  if (addresses['hopr'] && addresses['native'])
     return {
-      hoprAddress: addresses['hoprAddress'],
-      nativeAddress: addresses['nativeAddress']
+      hopr: addresses['hopr'],
+      native: addresses['native']
     };
   return { status: addresses['status']!, error: addresses['error']! };
 };
