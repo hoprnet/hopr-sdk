@@ -89,7 +89,7 @@ export const CloseChannelPayload = z.object({
 export type CloseChannelPayloadType = ZodToType<typeof CloseChannelPayload>;
 
 export const CloseChannelResponse = z.object({
-  receipt: z.string(),
+  receipt: z.string().optional(),
   channelStatus: z.string()
 });
 
