@@ -40,3 +40,7 @@ node_modules/
 .cache
 
 dist
+
+# Mac OS specific file
+.DS_Store
+**/.DS_Store
