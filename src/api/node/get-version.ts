@@ -1,23 +1,21 @@
 import fetch from 'cross-fetch';
-import { Error, GetVersionResponse, GetVersionResponseType } from '../../types';
+import { Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 export const getVersion = async (
   url: string,
   apiKey: string
-): Promise<GetVersionResponseType> => {
+): Promise<string> => {
   const rawResponse = await fetch(`${url}/api/v2/node/version`, {
     method: 'GET',
     headers: getHeaders(apiKey)
   });
 
-  const jsonResponse = await rawResponse.json();
-
-  const parsedRes = GetVersionResponse.safeParse(jsonResponse);
-
-  if (parsedRes.success) {
-    return parsedRes.data;
+  if (rawResponse.status === 200) {
+    const textResponse = await rawResponse.text();
+    return textResponse;
   } else {
+    const jsonResponse = await rawResponse.json();
     // server error that was unexpected
     if (rawResponse.status > 499)
       throw new APIError({

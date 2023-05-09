@@ -13,10 +13,12 @@ export const getPeers = async (
   body?: GetPeersPayloadType
 ): Promise<GetPeersResponseType> => {
   const rawResponse = await fetch(
-    `${url}/api/v2/node/peers` +
-      new URLSearchParams({
-        quality: (body?.quality ?? 0).toString()
-      }),
+    body?.quality
+      ? `${url}/api/v2/node/peers?` +
+          new URLSearchParams({
+            quality: (body?.quality ?? 0).toString()
+          })
+      : `${url}/api/v2/node/peers`,
     {
       method: 'GET',
       headers: getHeaders(apiKey)

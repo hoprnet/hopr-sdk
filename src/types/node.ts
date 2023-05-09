@@ -2,14 +2,6 @@ import { z } from 'zod';
 import { ZodToType } from './general';
 
 /**
- * Get version
- */
-
-export const GetVersionResponse = z.string();
-
-export type GetVersionResponseType = ZodToType<typeof GetVersionResponse>;
-
-/**
  * Get peers
  */
 
@@ -39,14 +31,6 @@ export const GetPeersResponse = z.object({
 export type GetPeersResponseType = ZodToType<typeof GetPeersResponse>;
 
 /**
- * Get metrics
- */
-
-export const GetMetricsResponse = z.string();
-
-export type GetMetricsResponseType = ZodToType<typeof GetMetricsResponse>;
-
-/**
  * Get Info
  */
 
@@ -57,7 +41,7 @@ export const GetInfoResponse = z.object({
   network: z.string(),
   hoprToken: z.string(),
   hoprChannels: z.string(),
-  hoprNetworkRegistryAddress: z.string(),
+  hoprNetworkRegistryAddress: z.string().optional(),
   connectivityStatus: z.string(),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()

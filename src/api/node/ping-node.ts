@@ -1,9 +1,6 @@
 import fetch from 'cross-fetch';
 import {
   Error,
-  GetPeersPayloadType,
-  GetPeersResponse,
-  GetPeersResponseType,
   PingNodePayloadType,
   PingNodeResponse,
   PingNodeResponseType

@@ -1,23 +1,24 @@
 import fetch from 'cross-fetch';
-import { Error, GetMetricsResponse, GetMetricsResponseType } from '../../types';
+import { Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 export const getMetrics = async (
   url: string,
   apiKey: string
-): Promise<GetMetricsResponseType> => {
+): Promise<string> => {
+  const headersForMetrics = getHeaders(apiKey);
+  headersForMetrics.set('Accept-Content', 'text/plain');
+
   const rawResponse = await fetch(`${url}/api/v2/node/metrics`, {
     method: 'GET',
-    headers: { ...getHeaders(apiKey), 'Accept-Content': 'text/plain' }
+    headers: headersForMetrics
   });
 
-  const jsonResponse = await rawResponse.json();
-
-  const parsedRes = GetMetricsResponse.safeParse(jsonResponse);
-
-  if (parsedRes.success) {
-    return parsedRes.data;
+  if (rawResponse.status === 200) {
+    const textResponse = await rawResponse.text();
+    return textResponse;
   } else {
+    const jsonResponse = await rawResponse.json();
     // server error that was unexpected
     if (rawResponse.status > 499)
       throw new APIError({
