@@ -22,6 +22,12 @@ export const getChannels = async (
   if (parsedRes.success) {
     return parsedRes.data;
   } else {
+    // server error that was unexpected
+    if (rawResponse.status > 499)
+      throw new APIError({
+        status: rawResponse.status.toString(),
+        error: rawResponse.statusText
+      });
     throw new APIError(Error.parse(jsonResponse));
   }
 };

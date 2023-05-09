@@ -17,9 +17,13 @@ export const redeemTickets = async (
   if (rawResponse.status === 204) {
     return true;
   } else {
-    console.log({ rawResponse });
+    // server error that was unexpected
+    if (rawResponse.status > 499)
+      throw new APIError({
+        status: rawResponse.status.toString(),
+        error: rawResponse.statusText
+      });
     const jsonResponse = await rawResponse.json();
-    console.log({ jsonResponse });
     throw new APIError(Error.parse(jsonResponse));
   }
 };
