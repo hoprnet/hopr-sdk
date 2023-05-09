@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import fetch from 'cross-fetch';
 import { getHeaders } from './utils';
 import 'dotenv/config';
 
