@@ -104,6 +104,6 @@ export const GetChannelPayload = z.object({
 
 export type GetChannelPayloadType = ZodToType<typeof GetChannelPayload>;
 
-export const GetChannelResponse = z.array(Channel);
+export const GetChannelResponse = Channel;
 
 export type GetChannelResponseType = ZodToType<typeof GetChannelResponse>;
