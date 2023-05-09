@@ -1,4 +1,4 @@
-import { Headers } from 'node-fetch';
+import { Headers } from 'cross-fetch';
 import { Buffer } from 'buffer';
 
 export const getHeaders = (apiKey: string): Headers => {
