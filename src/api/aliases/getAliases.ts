@@ -1,21 +1,22 @@
 import fetch from 'cross-fetch';
-import { getHeaders } from '../utils';
-import 'dotenv/config';
+import { getHeaders } from '../../utils';
 
-const { BASEURL, APIKEY } = process.env;
-if (!BASEURL) {
-  throw new Error('No BASEURL found to make API calls');
-}
-if (!APIKEY) {
-  throw new Error('No APIKEY found to make API calls');
-}
-
-export const getAliases = async (): Promise<{
+/**
+ * Get all aliases you set previously and their corresponding peer IDs.
+ *
+ * @param url - The URL to retrieve the aliases from.
+ * @param apiKey - The API key to use for authentication.
+ * @returns An object with alias names as keys, and either the peerId associated with the alias or a status and error message object.
+ */
+export const getAliases = async (
+  url: string,
+  apiKey: string
+): Promise<{
   [key: string]: string | { status: string; error: string };
 }> => {
-  const res = await fetch(`${BASEURL}aliases/`, {
+  const res = await fetch(`${url}aliases/`, {
     method: 'GET',
-    headers: getHeaders(APIKEY)
+    headers: getHeaders(apiKey)
   });
 
   const aliases = (await res.json()) as {

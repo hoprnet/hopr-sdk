@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import { getHeaders } from '../utils';
+import { getHeaders } from '../../utils';
 import 'dotenv/config';
 
 const { BASEURL, APIKEY } = process.env;
