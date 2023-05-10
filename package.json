@@ -2,15 +2,15 @@
   "name": "hopr-sdk",
   "version": "0.0.1",
   "license": "GPLv3",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "repository": "git@github.com:hoprnet/hopr-sdk.git",
   "scripts": {
     "build": "tsup",
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
-    "test": "jest --passWithNoTests"
+    "test": "jest"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
