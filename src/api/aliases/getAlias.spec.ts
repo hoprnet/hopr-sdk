@@ -1,5 +1,6 @@
 import { getAlias } from './getAlias';
 import nock from 'nock';
+import { APIError } from '../../utils';
 
 const BASE_PATH = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -16,7 +17,7 @@ describe('getAlias', () => {
       .get(`/api/v2/aliases/${ALIAS}`)
       .reply(200, { peerId: expectedPeerId });
 
-    const result = await getAlias(BASE_PATH, API_TOKEN, ALIAS);
+    const result = await getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS });
 
     expect(result).toBe(expectedPeerId);
   });
@@ -30,9 +31,9 @@ describe('getAlias', () => {
       .get(`/api/v2/aliases/${ALIAS}`)
       .reply(401, expectedResponse);
 
-    const result = await getAlias(BASE_PATH, API_TOKEN, ALIAS);
-
-    expect(result).toEqual(expectedResponse);
+    await expect(
+      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+    ).rejects.toThrow(APIError);
   });
 
   it('should return 403 when authorization fails', async function () {
@@ -44,9 +45,9 @@ describe('getAlias', () => {
       .get(`/api/v2/aliases/${ALIAS}`)
       .reply(403, expectedResponse);
 
-    const result = await getAlias(BASE_PATH, API_TOKEN, ALIAS);
-
-    expect(result).toEqual(expectedResponse);
+    await expect(
+      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+    ).rejects.toThrow(APIError);
   });
 
   it('should return 404 when alias is not found', async function () {
@@ -55,9 +56,9 @@ describe('getAlias', () => {
       .get(`/api/v2/aliases/${ALIAS}`)
       .reply(404, { status: expectedStatus });
 
-    const result = await getAlias(BASE_PATH, API_TOKEN, ALIAS);
-
-    expect(result).toEqual({ status: expectedStatus });
+    await expect(
+      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+    ).rejects.toThrow(APIError);
   });
 
   it('should return 422 when there is an unknown failure', async function () {
@@ -69,8 +70,8 @@ describe('getAlias', () => {
       .get(`/api/v2/aliases/${ALIAS}`)
       .reply(422, expectedResponse);
 
-    const result = await getAlias(BASE_PATH, API_TOKEN, ALIAS);
-
-    expect(result).toEqual(expectedResponse);
+    await expect(
+      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+    ).rejects.toThrow(APIError);
   });
 });

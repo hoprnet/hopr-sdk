@@ -1,32 +1,37 @@
 import fetch from 'cross-fetch';
-import { getHeaders } from '../../utils';
+import { APIError, getHeaders } from '../../utils';
+import { Error, aliasPayloadType } from '../../types';
 
 /**
  * Get the PeerId (Hopr address) that have this alias assigned to it.
  *
- * @param url - The base URL of the messaging service.
+ * @param url - The base URL of the server.
  * @param apiKey - The API key to use for authentication.
- * @param alias - The alias to retrieve the peer ID for.
+ * @param body - An object containing the alias to retrieve the peer ID for.
  * @returns A promise that resolves to the peer ID associated with the alias, or an object with a status and error message if there was an error.
+ * @throws An error that occurred while processing the request.
  */
 export const getAlias = async (
   url: string,
   apiKey: string,
-  alias: string
-): Promise<string | { status: string; error?: string }> => {
-  const res = await fetch(`${url}/api/v2/aliases/${alias}`, {
+  body: aliasPayloadType
+): Promise<string> => {
+  const rawResponse = await fetch(`${url}/api/v2/aliases/${body.alias}`, {
     method: 'GET',
     headers: getHeaders(apiKey)
   });
 
-  const aliasResponse = (await res.json()) as {
-    peerId?: string;
-    status?: string;
-    error?: string;
-  };
+  const jsonResponse = await rawResponse.json();
 
-  if (aliasResponse['peerId']) return aliasResponse['peerId'];
-  else if (aliasResponse['error'])
-    return { status: aliasResponse['status']!, error: aliasResponse['error'] };
-  return { status: aliasResponse['status']! };
+  if (rawResponse.status === 200) {
+    return jsonResponse.peerId;
+  } else if (rawResponse.status > 499) {
+    throw new APIError({
+      status: rawResponse.status.toString(),
+      error: rawResponse.statusText
+    });
+  } else {
+    // response is neither successful nor unexpected
+    throw new APIError(Error.parse(jsonResponse));
+  }
 };

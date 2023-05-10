@@ -1,29 +1,37 @@
 import fetch from 'cross-fetch';
-import { getHeaders } from '../../utils';
+import { getHeaders, APIError } from '../../utils';
+import { getAliasesResponse, getAliasesResponseType, Error } from '../../types';
 
 /**
  * Get all aliases you set previously and their corresponding peer IDs.
  *
- * @param url - The URL to retrieve the aliases from.
+ * @param url - The base URL of the server.
  * @param apiKey - The API key to use for authentication.
  * @returns An object with alias names as keys, and either the peerId associated with the alias or a status and error message object.
+ * @throws An error that occurred while processing the request.
  */
 export const getAliases = async (
   url: string,
   apiKey: string
-): Promise<{
-  [key: string]: string | { status: string; error: string };
-}> => {
-  const res = await fetch(`${url}/api/v2/aliases`, {
+): Promise<getAliasesResponseType> => {
+  const rawResponse = await fetch(`${url}/api/v2/aliases`, {
     method: 'GET',
     headers: getHeaders(apiKey)
   });
 
-  const aliases = (await res.json()) as {
-    [key: string]: string | { status: string; error: string };
-  };
+  const jsonResponse = await rawResponse.json();
 
-  if ('error' in aliases && 'status' in aliases)
-    return { status: aliases['status'], error: aliases['error'] };
-  return aliases;
+  const parsedRes = getAliasesResponse.safeParse(jsonResponse);
+
+  if (parsedRes.success && rawResponse.status === 200) {
+    return parsedRes.data;
+  } else if (rawResponse.status > 499) {
+    throw new APIError({
+      status: rawResponse.status.toString(),
+      error: rawResponse.statusText
+    });
+  } else {
+    // response is neither successful nor unexpected
+    throw new APIError(Error.parse(jsonResponse));
+  }
 };

@@ -1,11 +1,12 @@
 import nock from 'nock';
 import { getAliases } from './getAliases';
+import { APIError } from '../../utils';
 
 const BASE_PATH = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 
 describe('getAliases', () => {
-  afterEach(() => {
+  beforeEach(() => {
     nock.cleanAll();
   });
 
@@ -30,8 +31,6 @@ describe('getAliases', () => {
 
     nock(BASE_PATH).get('/api/v2/aliases').reply(422, expectedResponse);
 
-    const result = await getAliases(BASE_PATH, API_TOKEN);
-
-    expect(result).toEqual(expectedResponse);
+    await expect(getAliases(BASE_PATH, API_TOKEN)).rejects.toThrow(APIError);
   });
 });

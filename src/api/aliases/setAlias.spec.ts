@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { setAlias } from './setAlias';
+import { APIError } from '../../utils';
 
 const BASE_PATH = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -20,7 +21,7 @@ describe('setAlias function', () => {
       peerId: PEER_ID,
       alias: ALIAS
     });
-    expect(result).toBeUndefined();
+    expect(result).toBe(true);
   });
 
   test('should return 400 if invalid peerId was provided', async function () {
@@ -28,11 +29,12 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(400, { status: 'INVALID_PEERID' });
 
-    const result = await setAlias(BASE_PATH, API_TOKEN, {
-      peerId: PEER_ID,
-      alias: ALIAS
-    });
-    expect(result).toEqual({ status: 'INVALID_PEERID' });
+    await expect(
+      setAlias(BASE_PATH, API_TOKEN, {
+        peerId: PEER_ID,
+        alias: ALIAS
+      })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 401 if authentication failed', async function () {
@@ -45,11 +47,12 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(401, expectedResponse);
 
-    const result = await setAlias(BASE_PATH, invalidApikey, {
-      peerId: PEER_ID,
-      alias: ALIAS
-    });
-    expect(result).toEqual(expectedResponse);
+    await expect(
+      setAlias(BASE_PATH, invalidApikey, {
+        peerId: PEER_ID,
+        alias: ALIAS
+      })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 403 if authorization failed', async function () {
@@ -61,11 +64,12 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(403, expectedResponse);
 
-    const result = await setAlias(BASE_PATH, API_TOKEN, {
-      peerId: PEER_ID,
-      alias: ALIAS
-    });
-    expect(result).toEqual(expectedResponse);
+    await expect(
+      setAlias(BASE_PATH, API_TOKEN, {
+        peerId: PEER_ID,
+        alias: ALIAS
+      })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 422 if unknown failure', async function () {
@@ -77,10 +81,11 @@ describe('setAlias function', () => {
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(422, expectedResponse);
 
-    const result = await setAlias(BASE_PATH, API_TOKEN, {
-      peerId: PEER_ID,
-      alias: ALIAS
-    });
-    expect(result).toEqual(expectedResponse);
+    await expect(
+      setAlias(BASE_PATH, API_TOKEN, {
+        peerId: PEER_ID,
+        alias: ALIAS
+      })
+    ).rejects.toThrow(APIError);
   });
 });

@@ -1,3 +1,4 @@
+import { APIError } from '../../utils';
 import { removeAlias } from './removeAlias';
 import nock from 'nock';
 
@@ -15,8 +16,8 @@ describe('removeAlias', () => {
 
     nock(BASE_PATH).delete(`/api/v2/aliases/${ALIAS}`).reply(204);
 
-    const response = await removeAlias(BASE_PATH, API_TOKEN, ALIAS);
-    expect(response).toBeUndefined();
+    const response = await removeAlias(BASE_PATH, API_TOKEN, { alias: ALIAS });
+    expect(response).toBe(true);
   });
 
   test('should return 401 if authentication failed', async function () {
@@ -30,8 +31,9 @@ describe('removeAlias', () => {
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(401, expectedResponse);
 
-    const response = await removeAlias(BASE_PATH, invalidApikey, ALIAS);
-    expect(response).toEqual(expectedResponse);
+    await expect(
+      removeAlias(BASE_PATH, invalidApikey, { alias: ALIAS })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 403 if authorization failed', async function () {
@@ -43,8 +45,9 @@ describe('removeAlias', () => {
     nock(BASE_PATH)
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(403, expectedResponse);
-    const response = await removeAlias(BASE_PATH, API_TOKEN, ALIAS);
-    expect(response).toEqual(expectedResponse);
+    await expect(
+      removeAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 422 if unknown failure occurred', async function () {
@@ -57,7 +60,8 @@ describe('removeAlias', () => {
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(422, expectedResponse);
 
-    const response = await removeAlias(BASE_PATH, API_TOKEN, ALIAS);
-    expect(response).toEqual(expectedResponse);
+    await expect(
+      removeAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+    ).rejects.toThrow(APIError);
   });
 });
