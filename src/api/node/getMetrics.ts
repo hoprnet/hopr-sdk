@@ -17,14 +17,15 @@ export const getMetrics = async (
   if (rawResponse.status === 200) {
     const textResponse = await rawResponse.text();
     return textResponse;
+  } // server error that was unexpected
+  else if (rawResponse.status > 499) {
+    throw new APIError({
+      status: rawResponse.status.toString(),
+      error: rawResponse.statusText
+    });
   } else {
+    // response is neither successful nor unexpected
     const jsonResponse = await rawResponse.json();
-    // server error that was unexpected
-    if (rawResponse.status > 499)
-      throw new APIError({
-        status: rawResponse.status.toString(),
-        error: rawResponse.statusText
-      });
     throw new APIError(Error.parse(jsonResponse));
   }
 };

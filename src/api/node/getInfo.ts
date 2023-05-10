@@ -17,13 +17,14 @@ export const getInfo = async (
 
   if (parsedRes.success) {
     return parsedRes.data;
-  } else {
+  } else if (rawResponse.status > 499) {
     // server error that was unexpected
-    if (rawResponse.status > 499)
-      throw new APIError({
-        status: rawResponse.status.toString(),
-        error: rawResponse.statusText
-      });
+    throw new APIError({
+      status: rawResponse.status.toString(),
+      error: rawResponse.statusText
+    });
+  } else {
+    // response is neither successful nor unexpected
     throw new APIError(Error.parse(jsonResponse));
   }
 };
