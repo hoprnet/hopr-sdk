@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { fundChannels } from './fund-channels';
+import { fundChannels } from './fundChannels';
 import { APIError } from '../../utils';
 
 const BASE_PATH = 'http://localhost:3001';
