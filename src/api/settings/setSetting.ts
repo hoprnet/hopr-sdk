@@ -1,19 +1,20 @@
 import fetch from 'cross-fetch';
-import { Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
+import { SetSettingPayloadType, Error } from '../../types';
 
-export const getVersion = async (
+export const setSetting = async (
   url: string,
-  apiKey: string
-): Promise<string> => {
-  const rawResponse = await fetch(`${url}/api/v2/node/version`, {
-    method: 'GET',
-    headers: getHeaders(apiKey)
+  apiKey: string,
+  body: SetSettingPayloadType
+): Promise<boolean> => {
+  const rawResponse = await fetch(`${url}/api/v2/settings/${body.setting}`, {
+    method: 'PUT',
+    headers: getHeaders(apiKey),
+    body: JSON.stringify({ settingValue: body.settingValue })
   });
 
-  if (rawResponse.status === 200) {
-    const textResponse = await rawResponse.text();
-    return textResponse;
+  if (rawResponse.status === 204) {
+    return true;
   } else if (rawResponse.status > 499) {
     // server error that was unexpected
     throw new APIError({
