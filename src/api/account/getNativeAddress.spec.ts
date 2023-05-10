@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { getNativeAddress } from './getNativeAddress';
+import { APIError } from '../../utils';
 
 const API_URL = 'http://localhost:3001';
 const API_KEY = 'S3CR3T-T0K3N';
@@ -30,8 +31,9 @@ describe('getNativeAddress', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(401, expectedResponse);
 
-    const result = await getNativeAddress(API_URL, invalidApiKey);
-    expect(result).toEqual(expectedResponse);
+    await expect(getNativeAddress(API_URL, invalidApiKey)).rejects.toThrow(
+      APIError
+    );
   });
 
   test('should return 403 if authorization fails', async function () {
@@ -42,8 +44,7 @@ describe('getNativeAddress', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(403, expectedResponse);
 
-    const result = await getNativeAddress(API_URL, API_KEY);
-    expect(result).toEqual(expectedResponse);
+    await expect(getNativeAddress(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 
   test('should return 422 if there is an unknown failure', async function () {
@@ -54,7 +55,6 @@ describe('getNativeAddress', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(422, expectedResponse);
 
-    const result = await getNativeAddress(API_URL, API_KEY);
-    expect(result).toEqual(expectedResponse);
+    await expect(getNativeAddress(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 });

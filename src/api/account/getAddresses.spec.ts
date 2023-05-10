@@ -1,3 +1,4 @@
+import { APIError } from '../../utils';
 import { getAddresses } from './getAddresses';
 import nock from 'nock';
 
@@ -30,8 +31,9 @@ describe('getAddresses', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(401, expectedResponse);
 
-    const result = await getAddresses(API_URL, invalidApiKey);
-    expect(result).toEqual(expectedResponse);
+    await expect(getAddresses(API_URL, invalidApiKey)).rejects.toThrow(
+      APIError
+    );
   });
 
   test('should return 403 if authorization fails', async function () {
@@ -42,8 +44,7 @@ describe('getAddresses', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(403, expectedResponse);
 
-    const result = await getAddresses(API_URL, API_KEY);
-    expect(result).toEqual(expectedResponse);
+    await expect(getAddresses(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 
   test('should return 422 if there is an unknown failure', async function () {
@@ -54,7 +55,6 @@ describe('getAddresses', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(422, expectedResponse);
 
-    const result = await getAddresses(API_URL, API_KEY);
-    expect(result).toEqual(expectedResponse);
+    await expect(getAddresses(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 });

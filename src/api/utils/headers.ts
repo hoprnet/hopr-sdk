@@ -5,6 +5,5 @@ export const getHeaders = (apiKey: string): Headers => {
   headers.set('Content-Type', 'application/json');
   headers.set('Accept-Content', 'application/json');
   headers.set('x-auth-token', `${apiKey}`);
-  console.log(headers);
   return headers;
 };

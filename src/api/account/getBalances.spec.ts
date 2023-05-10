@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { getBalances } from './getBalances';
+import { APIError } from '../../utils';
 
 const API_URL = 'http://localhost:3001';
 const API_KEY = 'S3CR3T-T0K3N';
@@ -29,8 +30,7 @@ describe('getBalances', () => {
 
     nock(API_URL).get('/api/v2/account/balances').reply(401, response);
 
-    const result = await getBalances(API_URL, API_KEY);
-    expect(result).toEqual(response);
+    await expect(getBalances(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 
   it('should return 403 if authorization fails', async () => {
@@ -41,8 +41,7 @@ describe('getBalances', () => {
 
     nock(API_URL).get('/api/v2/account/balances').reply(403, response);
 
-    const result = await getBalances(API_URL, API_KEY);
-    expect(result).toEqual(response);
+    await expect(getBalances(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 
   it('should return 422 if unknown failure', async () => {
@@ -53,7 +52,6 @@ describe('getBalances', () => {
 
     nock(API_URL).get('/api/v2/account/balances').reply(422, response);
 
-    const result = await getBalances(API_URL, API_KEY);
-    expect(result).toEqual(response);
+    await expect(getBalances(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 });

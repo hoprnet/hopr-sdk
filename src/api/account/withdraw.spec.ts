@@ -1,5 +1,6 @@
 import nock from 'nock';
 import { withdraw } from './withdraw';
+import { APIError } from '../../utils';
 
 const API_URL = 'http://localhost:3001';
 const API_KEY = 'S3CR3T-T0K3N';
@@ -17,13 +18,11 @@ describe('withdraw function', () => {
     const mockResponse = { receipt: expectedReceipt };
     nock(API_URL).post('/api/v2/account/withdraw').reply(200, mockResponse);
 
-    const actualResult = await withdraw(
-      API_URL,
-      API_KEY,
-      CURRENCY,
-      AMOUNT,
-      RECIPIENT
-    );
+    const actualResult = await withdraw(API_URL, API_KEY, {
+      currency: CURRENCY,
+      amount: AMOUNT,
+      recipient: RECIPIENT
+    });
 
     expect(actualResult).toEqual(expectedReceipt);
   });
@@ -33,17 +32,13 @@ describe('withdraw function', () => {
     const mockResponse = { status: expectedStatus };
     nock(API_URL).post('/api/v2/account/withdraw').reply(400, mockResponse);
 
-    const actualResult = await withdraw(
-      API_URL,
-      API_KEY,
-      CURRENCY,
-      AMOUNT,
-      RECIPIENT
-    );
-
-    expect(actualResult).toEqual({
-      status: expectedStatus
-    });
+    await expect(
+      withdraw(API_URL, API_KEY, {
+        currency: CURRENCY,
+        amount: AMOUNT,
+        recipient: RECIPIENT
+      })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 401 when authentication fails', async function () {
@@ -53,15 +48,13 @@ describe('withdraw function', () => {
     };
     nock(API_URL).post('/api/v2/account/withdraw').reply(401, mockResponse);
 
-    const actualResult = await withdraw(
-      API_URL,
-      API_KEY,
-      CURRENCY,
-      AMOUNT,
-      RECIPIENT
-    );
-
-    expect(actualResult).toEqual(mockResponse);
+    await expect(
+      withdraw(API_URL, API_KEY, {
+        currency: CURRENCY,
+        amount: AMOUNT,
+        recipient: RECIPIENT
+      })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 403 when authorization fails', async function () {
@@ -71,15 +64,13 @@ describe('withdraw function', () => {
     };
     nock(API_URL).post('/api/v2/account/withdraw').reply(403, mockResponse);
 
-    const actualResult = await withdraw(
-      API_URL,
-      API_KEY,
-      CURRENCY,
-      AMOUNT,
-      RECIPIENT
-    );
-
-    expect(actualResult).toEqual(mockResponse);
+    await expect(
+      withdraw(API_URL, API_KEY, {
+        currency: CURRENCY,
+        amount: AMOUNT,
+        recipient: RECIPIENT
+      })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 422 when withdraw amount exceeds current balance', async function () {
@@ -87,16 +78,12 @@ describe('withdraw function', () => {
     const mockResponse = { status: expectedStatus };
     nock(API_URL).post('/api/v2/account/withdraw').reply(422, mockResponse);
 
-    const actualResult = await withdraw(
-      API_URL,
-      API_KEY,
-      CURRENCY,
-      AMOUNT,
-      RECIPIENT
-    );
-
-    expect(actualResult).toEqual({
-      status: expectedStatus
-    });
+    await expect(
+      withdraw(API_URL, API_KEY, {
+        currency: CURRENCY,
+        amount: AMOUNT,
+        recipient: RECIPIENT
+      })
+    ).rejects.toThrow(APIError);
   });
 });
