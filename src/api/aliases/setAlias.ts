@@ -10,7 +10,7 @@ import { setAliasPayloadType, Error } from '../../types';
  * @param url - The base URL of the server.
  * @param apiKey - The API key to be used for authentication.
  * @param body - A object containing the peer ID and alias to link.
- * @returns A Promise that resolves with void if successful, or an object with the keys "status" and "error" if unsuccessful.
+ * @returns A Promise that resolves to true if alias succesfully linked to peerId.
  * @throws An error that occurred while processing the request.
  */
 export const setAlias = async (

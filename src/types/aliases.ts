@@ -29,3 +29,11 @@ export const setAliasPayload = z.object({
 });
 
 export type setAliasPayloadType = ZodToType<typeof setAliasPayload>;
+
+/**
+ * getAlias
+ */
+
+export const getAliasResponse = z.object({ peerId: z.string() });
+
+export type getAliasResponseType = ZodToType<typeof getAliasResponse>;

@@ -7,7 +7,7 @@ import { getAliasesResponse, getAliasesResponseType, Error } from '../../types';
  *
  * @param url - The base URL of the server.
  * @param apiKey - The API key to use for authentication.
- * @returns An object with alias names as keys, and either the peerId associated with the alias or a status and error message object.
+ * @returns An object with alias names as keys and the peerId associated with the alias.
  * @throws An error that occurred while processing the request.
  */
 export const getAliases = async (
