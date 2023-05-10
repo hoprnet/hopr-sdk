@@ -7,7 +7,7 @@ import {
 } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
-export const getTickets = async (
+export const getChannelTickets = async (
   url: string,
   apiKey: string,
   body: PeerIdPayloadType

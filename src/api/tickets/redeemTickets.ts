@@ -1,8 +1,11 @@
 import fetch from 'cross-fetch';
-import { Error, GetTicketsResponse, GetTicketsResponseType } from '../../types';
+import { Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
-export const getStatistics = async (
+/**
+ * Disclaimer: takes really long to succeed
+ */
+export const redeemTickets = async (
   url: string,
   apiKey: string
 ): Promise<boolean> => {

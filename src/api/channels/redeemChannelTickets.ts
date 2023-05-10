@@ -5,7 +5,7 @@ import { APIError, getHeaders } from '../../utils';
 /**
  * // TODO: Takes more than 200s to execute
  */
-export const redeemTickets = async (
+export const redeemChannelTickets = async (
   url: string,
   apiKey: string,
   body: PeerIdPayloadType
