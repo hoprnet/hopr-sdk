@@ -1,6 +1,5 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
-import { getTickets } from './getTickets';
 import { closeChannel } from './closeChannel';
 
 const BASE_PATH = 'http://localhost:3001';
