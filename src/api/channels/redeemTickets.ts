@@ -17,15 +17,17 @@ export const redeemTickets = async (
       headers: getHeaders(apiKey)
     }
   );
+
   if (rawResponse.status === 204) {
     return true;
-  } else {
+  } else if (rawResponse.status > 499) {
     // server error that was unexpected
-    if (rawResponse.status > 499)
-      throw new APIError({
-        status: rawResponse.status.toString(),
-        error: rawResponse.statusText
-      });
+    throw new APIError({
+      status: rawResponse.status.toString(),
+      error: rawResponse.statusText
+    });
+  } else {
+    // response is neither successful nor unexpected
     const jsonResponse = await rawResponse.json();
     throw new APIError(Error.parse(jsonResponse));
   }
