@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
-import { getInfo } from './get-info';
+import { getInfo } from './getInfo';
 
 const BASE_PATH = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
