@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import { APIError, getHeaders } from '../../utils';
-import { Error } from '../../types';
+import { Error, deletePayloadType } from '../../types';
 
 /**
  * Deletes a token. Can only be done before the lifetime expired.
@@ -13,10 +13,11 @@ import { Error } from '../../types';
  */
 export const deleteToken = async (
   url: string,
-  apiKey: string
+  apiKey: string,
+  body: deletePayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(`${url}/api/v2/tokens`, {
-    method: 'POST',
+  const rawResponse = await fetch(`${url}/api/v2/tokens/${body.id}`, {
+    method: 'DELETE',
     headers: getHeaders(apiKey)
   });
 
