@@ -1,19 +1,25 @@
 import fetch from 'cross-fetch';
-import { Error } from '../../types';
+import { Error, type PeerIdPayloadType } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
-export const getVersion = async (
+/**
+ * // TODO: Takes more than 200s to execute
+ */
+export const redeemChannelTickets = async (
   url: string,
-  apiKey: string
-): Promise<string> => {
-  const rawResponse = await fetch(`${url}/api/v2/node/version`, {
-    method: 'GET',
-    headers: getHeaders(apiKey)
-  });
+  apiKey: string,
+  body: PeerIdPayloadType
+): Promise<boolean> => {
+  const rawResponse = await fetch(
+    `${url}/api/v2/channels/${body.peerId}/tickets/redeem`,
+    {
+      method: 'POST',
+      headers: getHeaders(apiKey)
+    }
+  );
 
-  if (rawResponse.status === 200) {
-    const textResponse = await rawResponse.text();
-    return textResponse;
+  if (rawResponse.status === 204) {
+    return true;
   } else if (rawResponse.status > 499) {
     // server error that was unexpected
     throw new APIError({
