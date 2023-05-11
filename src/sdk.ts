@@ -1,4 +1,4 @@
-import { ApiWrapper } from './apiWrapper';
+import { ApiWrapper } from './api';
 export class SDK {
   public api: ApiWrapper;
   constructor(private url: string, private apiToken: string) {

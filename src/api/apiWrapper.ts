@@ -1,4 +1,4 @@
-import * as api from './api';
+import * as api from '.';
 
 export class ApiWrapper {
   public channels: api.ChannelsWrapper;
