@@ -8,6 +8,7 @@ import { Error, deletePayloadType } from '../../types';
  *
  * @param url - The URL of the API endpoint.
  * @param apiKey - The API key to be used for authentication.
+ * @param body - An object that contains the id of the token to be deleted.
  * @returns A Promise that resolves to true if successful.
  * @throws An error that occurred while processing the request.
  */
