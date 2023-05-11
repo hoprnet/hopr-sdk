@@ -7,8 +7,52 @@ import { ZodToType } from './general';
 
 // source: https://github.com/hoprnet/hoprnet/blob/7dad5fb60911c8e1a8b9c758caf8575681877227/packages/hoprd/src/api/token.ts#L17
 
+const VALUES = [
+  // Account
+  'accountWithdraw',
+  'accountGetBalances',
+  'accountGetAddresses',
+  // Aliases
+  'aliasesGetAliases',
+  'aliasesSetAlias',
+  'aliasesGetAlias',
+  'aliasesRemoveAlias',
+  // Channels
+  'channelsFundChannels',
+  'channelsOpenChannel',
+  'channelsGetChannels',
+  'channelsRedeemTickets',
+  'channelsGetTickets',
+  'channelsGetChannel',
+  'channelsCloseChannel',
+  // Messages
+  'messagesWebsocket',
+  'messagesSign',
+  'messagesSendMessage',
+  // Node
+  'nodeGetVersion',
+  'nodePing',
+  'nodeGetPeers',
+  'nodeGetMetrics',
+  'nodeGetInfo',
+  'nodeGetEntryNodes',
+  // PeerId
+  'peerInfoGetPeerInfo',
+  // Settings
+  'settingsGetSettings',
+  'settingsSetSetting',
+  // Tickets
+  'ticketsGetStatistics',
+  'ticketsRedeemTickets',
+  'ticketsGetTickets',
+  // Tokens
+  'tokensCreate',
+  'tokensGetToken',
+  'tokensDelete'
+] as const;
+
 export const TokenCapability = z.object({
-  endpoint: z.string(),
+  endpoint: z.enum(VALUES),
   limits: z.array(
     z.object({
       type: z.string(),
