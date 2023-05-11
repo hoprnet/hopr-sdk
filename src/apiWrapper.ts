@@ -1,3 +1,3 @@
-export const apiWrapper = (fn: Function, url: string, apiToken: string) => {
+export const apiWrapper = (url: string, apiToken: string, fn: Function) => {
   return (...args: any[]) => fn(url, apiToken, ...args);
 };
