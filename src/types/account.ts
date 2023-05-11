@@ -23,3 +23,7 @@ export const withdrawPayload = z.object({
 });
 
 export type withdrawPayloadType = ZodToType<typeof withdrawPayload>;
+
+export const withdrawResponse = z.object({
+  receipt: z.string()
+});

@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import { getHeaders } from '../utils';
-import { withdrawPayloadType, Error } from '../../types';
+import { withdrawPayloadType, Error, withdrawResponse } from '../../types';
 import { APIError } from '../../utils';
 
 /**
@@ -25,9 +25,9 @@ export const withdraw = async (
   });
 
   const jsonResponse = await rawResponse.json();
-
-  if (rawResponse.status === 200) {
-    return jsonResponse.receipt;
+  const parsedRes = withdrawResponse.safeParse(jsonResponse);
+  if (parsedRes.success) {
+    return parsedRes.data.receipt;
   } else if (rawResponse.status > 499) {
     throw new APIError({
       status: rawResponse.status.toString(),
