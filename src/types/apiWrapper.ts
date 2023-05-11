@@ -6,6 +6,6 @@ type ExcludeFirstTwoArgs<F> = F extends (
   ? (...args: P) => R
   : never;
 
-export type WrappedApi<T> = {
+export type ApiWrapperType<T> = {
   [K in keyof T]: ExcludeFirstTwoArgs<T[K]>;
 };
