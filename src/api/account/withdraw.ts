@@ -1,7 +1,6 @@
 import fetch from 'cross-fetch';
-import { getHeaders } from '../utils';
 import { withdrawPayloadType, Error, withdrawResponse } from '../../types';
-import { APIError } from '../../utils';
+import { APIError, getHeaders } from '../../utils';
 
 /**
  * Withdraw the given currency amount to the specified recipient address.
