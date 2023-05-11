@@ -17,7 +17,7 @@ export type accountResponseType = ZodToType<typeof accountResponse>;
  */
 
 export const withdrawPayload = z.object({
-  currency: z.string(),
+  currency: z.enum(['NATIVE', 'HOPR']),
   amount: z.string(),
   recipient: z.string()
 });
