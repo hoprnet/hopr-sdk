@@ -2,18 +2,20 @@ import fetch from 'cross-fetch';
 import { Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
-export const getVersion = async (
+/**
+ * Disclaimer: takes really long to succeed
+ */
+export const redeemTickets = async (
   url: string,
   apiKey: string
-): Promise<string> => {
-  const rawResponse = await fetch(`${url}/api/v2/node/version`, {
-    method: 'GET',
+): Promise<boolean> => {
+  const rawResponse = await fetch(`${url}/api/v2/tickets/redeem`, {
+    method: 'POST',
     headers: getHeaders(apiKey)
   });
 
-  if (rawResponse.status === 200) {
-    const textResponse = await rawResponse.text();
-    return textResponse;
+  if (rawResponse.status === 204) {
+    return true;
   } else if (rawResponse.status > 499) {
     // server error that was unexpected
     throw new APIError({
