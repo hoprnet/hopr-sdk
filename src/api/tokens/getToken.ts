@@ -14,7 +14,7 @@ export const getToken = async (
   url: string,
   apiKey: string
 ): Promise<getTokenResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/tokens`, {
+  const rawResponse = await fetch(`${url}/api/v2/token`, {
     method: 'GET',
     headers: getHeaders(apiKey)
   });

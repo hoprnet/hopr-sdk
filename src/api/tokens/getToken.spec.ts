@@ -30,7 +30,7 @@ describe('getToken', () => {
       ]
     };
 
-    nock(API_URL).get('/api/v2/tokens').reply(200, expectedResponse);
+    nock(API_URL).get('/api/v2/token').reply(200, expectedResponse);
 
     expect(await getToken(API_URL, API_KEY)).toEqual(expectedResponse);
   });
@@ -41,7 +41,7 @@ describe('getToken', () => {
       error: 'authentication failed'
     };
 
-    nock(API_URL).get('/api/v2/tokens').reply(401, mockResponse);
+    nock(API_URL).get('/api/v2/token').reply(401, mockResponse);
 
     await expect(getToken(API_URL, 'invalid token')).rejects.toThrow(APIError);
   });
@@ -52,13 +52,13 @@ describe('getToken', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_URL).get('/api/v2/tokens').reply(403, mockResponse);
+    nock(API_URL).get('/api/v2/token').reply(403, mockResponse);
 
     await expect(getToken(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
 
   it('should return 404 if resource not found', async function () {
-    nock(API_URL).get('/api/v2/tokens').reply(404);
+    nock(API_URL).get('/api/v2/token').reply(404);
 
     await expect(getToken(API_URL, API_KEY)).rejects.toThrow(APIError);
   });
