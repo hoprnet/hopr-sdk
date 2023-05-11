@@ -1,28 +1,23 @@
 import fetch from 'cross-fetch';
+import { Error } from '../../types';
 import {
-  Error,
-  GetTicketsResponse,
-  GetTicketsResponseType,
-  type PeerIdPayloadType
-} from '../../types';
+  GetStatisticsResponse,
+  GetStatisticsResponseType
+} from '../../types/tickets';
 import { APIError, getHeaders } from '../../utils';
 
-export const getTickets = async (
+export const getStatistics = async (
   url: string,
-  apiKey: string,
-  body: PeerIdPayloadType
-): Promise<GetTicketsResponseType> => {
-  const rawResponse = await fetch(
-    `${url}/api/v2/channels/${body.peerId}/tickets`,
-    {
-      method: 'GET',
-      headers: getHeaders(apiKey)
-    }
-  );
+  apiKey: string
+): Promise<GetStatisticsResponseType> => {
+  const rawResponse = await fetch(`${url}/api/v2/tickets/statistics`, {
+    method: 'GET',
+    headers: getHeaders(apiKey)
+  });
 
   const jsonResponse = await rawResponse.json();
 
-  const parsedRes = GetTicketsResponse.safeParse(jsonResponse);
+  const parsedRes = GetStatisticsResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;
