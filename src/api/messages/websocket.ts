@@ -1,14 +1,14 @@
 import WebSocket from 'isomorphic-ws';
 
 /**
- * Creates a WebSocket instance with the specified URL and API token.
+ * Creates a WebSocket instance with the specified IP and API token.
  *
- * @param url - The URL to connect to.
+ * @param ip - The IP to connect to.
  * @param apiToken - The API token to use for authentication.
  * @returns A WebSocket instance.
  */
-export const websocket = (url: string, apiToken: string): void => {
-  const endpointUrl = `ws://${url}messages/websocket/?apiToken=${apiToken}`;
+export const websocket = (ip: string, apiToken: string): void => {
+  const endpointUrl = `ws://${ip}/api/v2/messages/websocket/?apiToken=${apiToken}`;
   return new WebSocket(endpointUrl);
 };
 
