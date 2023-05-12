@@ -1,7 +1,6 @@
 import fetch from 'cross-fetch';
-import { getHeaders } from '../utils';
 import { accountResponse, accountResponseType, Error } from '../../types';
-import { APIError } from '../../utils';
+import { APIError, getHeaders } from '../../utils';
 
 /**
  * Gets the HOPR and native addresses associated to the node.
