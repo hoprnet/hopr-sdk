@@ -7,6 +7,7 @@
   "types": "./dist/index.d.ts",
   "repository": "git@github.com:hoprnet/hopr-sdk.git",
   "scripts": {
+    "prepare": "tsup",
     "build": "tsup",
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
