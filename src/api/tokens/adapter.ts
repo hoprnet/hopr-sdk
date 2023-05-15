@@ -6,9 +6,9 @@ import { getToken } from './getToken';
 /**
  * A class that provides a wrapper around tokens-related API endpoints.
  */
-export class TokensWrapper {
+export class TokensAdapter {
   /**
-   * Creates a new instance of the `TokensWrapper` class.
+   * Creates a new instance of the `TokensAdapter` class.
    * @param url - The URL of the API server.
    * @param apiKey - The API key to use for authentication.
    */

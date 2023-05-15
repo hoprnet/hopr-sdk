@@ -6,7 +6,7 @@ import { getPeers } from './getPeers';
 import { getVersion } from './getVersion';
 import { pingNode } from './pingNode';
 
-export class NodeWrapper {
+export class NodeAdapter {
   constructor(private url: string, private apiKey: string) {}
 
   public getEntryNodes() {

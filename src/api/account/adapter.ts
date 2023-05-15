@@ -10,9 +10,9 @@ import { withdraw } from './withdraw';
 /**
  * A class that provides a wrapper around account-related API endpoints.
  */
-export class AccountWrapper {
+export class AccountAdapter {
   /**
-   * Creates a new instance of the `AccountWrapper` class.
+   * Creates a new instance of the `AccountAdapter` class.
    * @param url - The URL of the API server.
    * @param apiKey - The API key to use for authentication.
    */

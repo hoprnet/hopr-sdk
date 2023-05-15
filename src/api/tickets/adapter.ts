@@ -2,7 +2,7 @@ import { getStatistics } from './getStatistics';
 import { getTickets } from './getTickets';
 import { redeemTickets } from './redeemTickets';
 
-export class TicketsWrapper {
+export class TicketsAdapter {
   constructor(private url: string, private apiKey: string) {}
   public getStatistics() {
     return getStatistics(this.url, this.apiKey);

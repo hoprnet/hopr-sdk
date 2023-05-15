@@ -2,4 +2,4 @@ export * from './getAlias';
 export * from './getAliases';
 export * from './setAlias';
 export * from './removeAlias';
-export * from './aliasesWrapper';
+export * from './adapter';

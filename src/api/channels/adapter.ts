@@ -13,7 +13,7 @@ import { getChannels } from './getChannels';
 import { openChannels } from './openChannels';
 import { redeemChannelTickets } from './redeemChannelTickets';
 
-export class ChannelsWrapper {
+export class ChannelsAdapter {
   constructor(private url: string, private apiKey: string) {}
 
   public closeChannel(body: CloseChannelPayloadType) {

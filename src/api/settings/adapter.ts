@@ -2,7 +2,7 @@ import { SetSettingPayloadType } from '../../types';
 import { getSettings } from './getSettings';
 import { setSetting } from './setSetting';
 
-export class SettingsWrapper {
+export class SettingsAdapter {
   constructor(private url: string, private apiKey: string) {}
 
   public getSettings() {

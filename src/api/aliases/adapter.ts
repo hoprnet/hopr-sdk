@@ -7,9 +7,9 @@ import { setAlias } from './setAlias';
 /**
  * A class that provides a wrapper around aliases-related API endpoints.
  */
-export class AliasesWrapper {
+export class AliasesAdapter {
   /**
-   * Creates a new instance of the `AliasesWrapper` class.
+   * Creates a new instance of the `AliasesAdapter` class.
    * @param url - The URL of the API server.
    * @param apiKey - The API key to use for authentication.
    */
