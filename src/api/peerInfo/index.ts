@@ -1,2 +1,2 @@
 export * from './getPeerInfo';
-export * from './peerInfoWrapper';
+export * from './adapter';
