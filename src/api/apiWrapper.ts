@@ -1,6 +1,6 @@
 import * as api from '.';
 
-export class ApiWrapper {
+export class ApiAdapter {
   public account: api.AccountAdapter;
   public aliases: api.AliasesAdapter;
   public channels: api.ChannelsAdapter;
