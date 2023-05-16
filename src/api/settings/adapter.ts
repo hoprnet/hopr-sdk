@@ -1,4 +1,7 @@
-import { SetSettingPayloadType } from '../../types';
+import {
+  RemoveBasicAuthenticationPayloadType,
+  SetSettingPayloadType
+} from '../../types';
 import { getSettings } from './getSettings';
 import { setSetting } from './setSetting';
 
@@ -6,10 +9,17 @@ export class SettingsAdapter {
   constructor(private url: string, private apiKey: string) {}
 
   public getSettings() {
-    return getSettings(this.url, this.apiKey);
+    return getSettings({ url: this.url, apiKey: this.apiKey });
   }
 
-  public setSetting(body: SetSettingPayloadType) {
-    return setSetting(this.url, this.apiKey, body);
+  public setSetting(
+    payload: RemoveBasicAuthenticationPayloadType<SetSettingPayloadType>
+  ) {
+    return setSetting({
+      url: this.url,
+      apiKey: this.apiKey,
+      setting: payload.setting,
+      settingValue: payload.settingValue
+    });
   }
 }
