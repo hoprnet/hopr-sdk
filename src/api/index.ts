@@ -7,4 +7,4 @@ export * from './node';
 export * from './peerInfo';
 export * from './tickets';
 export * from './settings';
-export * from './apiAdapter';
+export * from './adapter';
