@@ -8,20 +8,18 @@ import {
 import { APIError, getHeaders } from '../../utils';
 
 export const getPeers = async (
-  url: string,
-  apiKey: string,
-  body?: GetPeersPayloadType
+  payload: GetPeersPayloadType
 ): Promise<GetPeersResponseType> => {
   const rawResponse = await fetch(
-    body?.quality
-      ? `${url}/api/v2/node/peers?` +
+    payload?.quality
+      ? `${payload.url}/api/v2/node/peers?` +
           new URLSearchParams({
-            quality: (body?.quality ?? 0).toString()
+            quality: (payload.quality ?? 0).toString()
           })
-      : `${url}/api/v2/node/peers`,
+      : `${payload.url}/api/v2/node/peers`,
     {
       method: 'GET',
-      headers: getHeaders(apiKey)
+      headers: getHeaders(payload.apiKey)
     }
   );
 

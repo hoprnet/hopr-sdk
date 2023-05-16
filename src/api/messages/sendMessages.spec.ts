@@ -74,8 +74,8 @@ describe('sendMessage', () => {
 
     await expect(
       sendMessage({
-        apiKey: API_KEY,
-        url: 'invalid-key',
+        apiKey: 'invalid-key',
+        url: API_URL,
         body: BODY,
         recipient: RECIPIENT,
         path: PATH,
