@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import { APIError, getHeaders } from '../../utils';
-import { Error, aliasPayloadType, getAliasResponse } from '../../types';
+import { AliasPayloadType, Error, GetAliasResponse } from '../../types';
 
 /**
  * Get the PeerId (Hopr address) that have this alias assigned to it.
@@ -11,18 +11,17 @@ import { Error, aliasPayloadType, getAliasResponse } from '../../types';
  * @returns A promise that resolves to the peer ID associated with the alias.
  * @throws An error that occurred while processing the request.
  */
-export const getAlias = async (
-  url: string,
-  apiKey: string,
-  body: aliasPayloadType
-): Promise<string> => {
-  const rawResponse = await fetch(`${url}/api/v2/aliases/${body.alias}`, {
-    method: 'GET',
-    headers: getHeaders(apiKey)
-  });
+export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
+  const rawResponse = await fetch(
+    `${payload.url}/api/v2/aliases/${payload.alias}`,
+    {
+      method: 'GET',
+      headers: getHeaders(payload.apiKey)
+    }
+  );
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = getAliasResponse.safeParse(jsonResponse);
+  const parsedRes = GetAliasResponse.safeParse(jsonResponse);
 
   if (rawResponse.status === 200 && parsedRes.success) {
     return parsedRes.data.peerId;

@@ -70,12 +70,12 @@ export class AccountAdapter {
   }
   /**
    * Withdraw the given currency amount to the specified recipient address.
-   * @param body - The withdrawal request payload.
+   * @param payload - The withdrawal request payload.
    * @returns — A Promise that resolves to the transaction receipt.
    */
   public withdraw(
-    body: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType>
+    payload: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType>
   ) {
-    return withdraw({ url: this.url, apiKey: this.apiKey, ...body });
+    return withdraw({ url: this.url, apiKey: this.apiKey, ...payload });
   }
 }

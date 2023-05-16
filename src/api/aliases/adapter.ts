@@ -1,4 +1,8 @@
-import { aliasPayloadType, setAliasPayloadType } from '../../types';
+import {
+  AliasPayloadType,
+  RemoveBasicAuthenticationPayloadType,
+  SetAliasPayloadType
+} from '../../types';
 import { getAlias } from './getAlias';
 import { getAliases } from './getAliases';
 import { removeAlias } from './removeAlias';
@@ -21,7 +25,7 @@ export class AliasesAdapter {
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
   public getAliases(): Promise<Record<string, string>> {
-    return getAliases(this.url, this.apiKey);
+    return getAliases({ url: this.url, apiKey: this.apiKey });
   }
 
   /**
@@ -29,30 +33,49 @@ export class AliasesAdapter {
    * Give an address a more memorable alias and use it instead of Hopr address.
    * Aliases are kept locally and are not saved or shared on the network.
    *
-   * @param body - A object containing the peer ID and alias to link.
+   * @param payload - A object containing the peer ID and alias to link.
    * @returns A Promise that resolves to true if alias succesfully linked to peerId.
    */
-  public setAlias(body: setAliasPayloadType): Promise<boolean> {
-    return setAlias(this.url, this.apiKey, body);
+  public setAlias(
+    payload: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType>
+  ): Promise<boolean> {
+    return setAlias({
+      url: this.url,
+      apiKey: this.apiKey,
+      alias: payload.alias,
+      peerId: payload.peerId
+    });
   }
 
   /**
    * Get the PeerId (Hopr address) that have this alias assigned to it.
    *
-   * @param body - An object containing the alias to retrieve the peer ID for.
+   * @param payload - An object containing the alias to retrieve the peer ID for.
    * @returns A promise that resolves to the peer ID associated with the alias.
    */
-  public getAlias(body: aliasPayloadType): Promise<string> {
-    return getAlias(this.url, this.apiKey, body);
+  public getAlias(
+    payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
+  ): Promise<string> {
+    return getAlias({
+      url: this.url,
+      apiKey: this.apiKey,
+      alias: payload.alias
+    });
   }
 
   /**
    * Unassign an alias from a PeerId.
    *
-   * @param body - The payload containing the details of the alias to remove.
+   * @param payload - The payload containing the details of the alias to remove.
    * @returns A Promise that resolves to true if the alias was successfully removed.
    */
-  public removeAlias(body: aliasPayloadType): Promise<boolean> {
-    return removeAlias(this.url, this.apiKey, body);
+  public removeAlias(
+    payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
+  ): Promise<boolean> {
+    return removeAlias({
+      url: this.url,
+      apiKey: this.apiKey,
+      alias: payload.alias
+    });
   }
 }
