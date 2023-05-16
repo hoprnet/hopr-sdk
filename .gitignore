@@ -44,3 +44,9 @@ dist
 # Mac OS specific file
 .DS_Store
 **/.DS_Store
+
+# vscode files
+.vscode
+
+# e2e env file
+!/src/e2e/.env
