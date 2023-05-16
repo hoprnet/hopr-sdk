@@ -5,14 +5,14 @@ import { redeemTickets } from './redeemTickets';
 export class TicketsAdapter {
   constructor(private url: string, private apiKey: string) {}
   public getStatistics() {
-    return getStatistics(this.url, this.apiKey);
+    return getStatistics({ url: this.url, apiKey: this.apiKey });
   }
 
   public getTickets() {
-    return getTickets(this.url, this.apiKey);
+    return getTickets({ url: this.url, apiKey: this.apiKey });
   }
 
   public redeemTickets() {
-    return redeemTickets(this.url, this.apiKey);
+    return redeemTickets({ url: this.url, apiKey: this.apiKey });
   }
 }

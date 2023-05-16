@@ -1,17 +1,16 @@
 import fetch from 'cross-fetch';
-import { Error } from '../../types';
+import { BasicAuthenticationPayloadType, Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 /**
  * Disclaimer: takes really long to succeed
  */
 export const redeemTickets = async (
-  url: string,
-  apiKey: string
+  payload: BasicAuthenticationPayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(`${url}/api/v2/tickets/redeem`, {
+  const rawResponse = await fetch(`${payload.url}/api/v2/tickets/redeem`, {
     method: 'POST',
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
 
   if (rawResponse.status === 204) {

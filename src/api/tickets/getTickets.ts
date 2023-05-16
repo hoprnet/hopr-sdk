@@ -1,14 +1,18 @@
 import fetch from 'cross-fetch';
-import { Error, GetTicketsResponse, GetTicketsResponseType } from '../../types';
+import {
+  BasicAuthenticationPayloadType,
+  Error,
+  GetTicketsResponse,
+  GetTicketsResponseType
+} from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 export const getTickets = async (
-  url: string,
-  apiKey: string
+  payload: BasicAuthenticationPayloadType
 ): Promise<GetTicketsResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/tickets`, {
+  const rawResponse = await fetch(`${payload.url}/api/v2/tickets`, {
     method: 'GET',
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
 
   const jsonResponse = await rawResponse.json();

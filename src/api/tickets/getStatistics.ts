@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import { Error } from '../../types';
+import { BasicAuthenticationPayloadType, Error } from '../../types';
 import {
   GetStatisticsResponse,
   GetStatisticsResponseType
@@ -7,12 +7,11 @@ import {
 import { APIError, getHeaders } from '../../utils';
 
 export const getStatistics = async (
-  url: string,
-  apiKey: string
+  payload: BasicAuthenticationPayloadType
 ): Promise<GetStatisticsResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/tickets/statistics`, {
+  const rawResponse = await fetch(`${payload.url}/api/v2/tickets/statistics`, {
     method: 'GET',
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
 
   const jsonResponse = await rawResponse.json();
