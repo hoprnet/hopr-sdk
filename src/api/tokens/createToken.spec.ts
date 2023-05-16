@@ -9,28 +9,27 @@ import nock from 'nock';
 // Set up global constants for URL and API key
 const API_URL = 'http://localhost:3001';
 const API_KEY = 'S3CR3T-T0K3N';
-
-describe('create function', () => {
-  const body: CreateTokenPayloadType = {
-    url: API_URL,
-    apiKey: API_KEY,
-    description: 'my test token',
-    lifetime: 360,
-    capabilities: [
-      {
-        endpoint: 'tokensGetToken',
-        limits: [
-          {
-            type: 'calls',
-            conditions: {
-              max: 100
-            }
+const body: CreateTokenPayloadType = {
+  url: API_URL,
+  apiKey: API_KEY,
+  description: 'my test token',
+  lifetime: 360,
+  capabilities: [
+    {
+      endpoint: 'tokensGetToken',
+      limits: [
+        {
+          type: 'calls',
+          conditions: {
+            max: 100
           }
-        ]
-      }
-    ]
-  };
+        }
+      ]
+    }
+  ]
+};
 
+describe('createToken function', () => {
   afterEach(() => {
     nock.cleanAll();
   });
@@ -40,11 +39,7 @@ describe('create function', () => {
       token: 'my-test-token'
     };
 
-    const expectedRequestBody = JSON.stringify(body);
-
-    nock(API_URL)
-      .post('/api/v2/tokens', expectedRequestBody)
-      .reply(201, expectedResponse);
+    nock(API_URL).post('/api/v2/tokens').reply(201, expectedResponse);
 
     const response = await createToken({ ...body });
     expect(response).toEqual(expectedResponse);
@@ -75,11 +70,7 @@ describe('create function', () => {
       ]
     };
 
-    const expectedRequestBody = JSON.stringify(invalidBody);
-
-    nock(API_URL)
-      .post('/api/v2/tokens', expectedRequestBody)
-      .reply(400, mockResponse);
+    nock(API_URL).post('/api/v2/tokens').reply(400, mockResponse);
 
     await expect(createToken({ ...invalidBody })).rejects.toThrow(APIError);
   });
@@ -88,11 +79,7 @@ describe('create function', () => {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
     const mockResponse = { status: expectedStatus };
 
-    const expectedRequestBody = JSON.stringify(body);
-
-    nock(API_URL)
-      .post('/api/v2/tokens', expectedRequestBody)
-      .reply(422, mockResponse);
+    nock(API_URL).post('/api/v2/tokens').reply(422, mockResponse);
 
     await expect(createToken({ ...body })).rejects.toThrow(APIError);
   });

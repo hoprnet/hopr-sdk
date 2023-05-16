@@ -36,6 +36,7 @@ export const createToken = async (
     headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = CreateTokenResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
