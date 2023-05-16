@@ -1,29 +1,29 @@
 import { z } from 'zod';
-import { ZodToType } from './general';
+import { BasicAuthenticationPayload, ZodToType } from './general';
 
 /**
  * General
  */
 
-export const accountResponse = z.object({
+export const AccountResponse = z.object({
   hopr: z.string(),
   native: z.string()
 });
 
-export type accountResponseType = ZodToType<typeof accountResponse>;
+export type AccountResponseType = ZodToType<typeof AccountResponse>;
 
 /**
  * withdraw
  */
 
-export const withdrawPayload = z.object({
+export const WithdrawPayload = BasicAuthenticationPayload.extend({
   currency: z.enum(['NATIVE', 'HOPR']),
   amount: z.string(),
   recipient: z.string()
 });
 
-export type withdrawPayloadType = ZodToType<typeof withdrawPayload>;
+export type WithdrawPayloadType = ZodToType<typeof WithdrawPayload>;
 
-export const withdrawResponse = z.object({
+export const WithdrawResponse = z.object({
   receipt: z.string()
 });
