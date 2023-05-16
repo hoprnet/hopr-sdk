@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import { APIError, getHeaders } from '../../utils';
-import { Error, deletePayloadType } from '../../types';
+import { DeleteTokenPayloadType, Error } from '../../types';
 
 /**
  * Deletes a token. Can only be done before the lifetime expired.
@@ -8,19 +8,20 @@ import { Error, deletePayloadType } from '../../types';
  *
  * @param url - The URL of the API endpoint.
  * @param apiKey - The API key to be used for authentication.
- * @param body - An object that contains the id of the token to be deleted.
+ * @param id - The id of the token to be deleted.
  * @returns A Promise that resolves to true if successful.
  * @throws An error that occurred while processing the request.
  */
 export const deleteToken = async (
-  url: string,
-  apiKey: string,
-  body: deletePayloadType
+  payload: DeleteTokenPayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(`${url}/api/v2/tokens/${body.id}`, {
-    method: 'DELETE',
-    headers: getHeaders(apiKey)
-  });
+  const rawResponse = await fetch(
+    `${payload.url}/api/v2/tokens/${payload.id}`,
+    {
+      method: 'DELETE',
+      headers: getHeaders(payload.apiKey)
+    }
+  );
 
   if (rawResponse.status === 204) {
     return true;

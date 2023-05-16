@@ -1,5 +1,9 @@
-import { createPayloadType, deletePayloadType } from '../../types';
-import { create } from './createToken';
+import {
+  CreateTokenPayloadType,
+  DeleteTokenPayloadType,
+  RemoveBasicAuthenticationPayloadType
+} from '../../types';
+import { createToken } from './createToken';
 import { deleteToken } from './deleteToken';
 import { getToken } from './getToken';
 
@@ -22,22 +26,32 @@ export class TokensAdapter {
    * Or it has a limited lifetime after which it expires.
    * The requested limited lifetime is requested by the client in seconds.
    *
-   * @param body - The necessary data to create the token.
+   * @param payload - The necessary data to create the token.
    * @returns A Promise that resolves to the generated token which must be used when authenticating for API calls.
    */
-  public create(body: createPayloadType) {
-    return create(this.url, this.apiKey, body);
+  public createToken(
+    payload: RemoveBasicAuthenticationPayloadType<CreateTokenPayloadType>
+  ) {
+    return createToken({
+      url: this.url,
+      apiKey: this.apiKey,
+      capabilities: payload.capabilities,
+      description: payload.description,
+      lifetime: payload.lifetime
+    });
   }
 
   /**
    * Deletes a token. Can only be done before the lifetime expired.
    * After the lifetime expired the token is automatically deleted.
    *
-   * @param body - An object that contains the id of the token to be deleted.
+   * @param payload - An object that contains the id of the token to be deleted.
    * @returns A Promise that resolves to true if successful.
    */
-  public deleteToken(body: deletePayloadType) {
-    return deleteToken(this.url, this.apiKey, body);
+  public deleteToken(
+    payload: RemoveBasicAuthenticationPayloadType<DeleteTokenPayloadType>
+  ) {
+    return deleteToken({ url: this.url, apiKey: this.apiKey, id: payload.id });
   }
 
   /**
@@ -46,6 +60,6 @@ export class TokensAdapter {
    * @returns A Promise that resolves to an object with the token info.
    */
   public getToken() {
-    return getToken(this.url, this.apiKey);
+    return getToken({ url: this.url, apiKey: this.apiKey });
   }
 }

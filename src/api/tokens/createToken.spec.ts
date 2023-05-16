@@ -1,6 +1,9 @@
-import { create } from './createToken';
+import { createToken } from './createToken';
 import { APIError } from '../../utils';
-import { createPayloadType, createResponseType } from '../../types';
+import type {
+  CreateTokenPayloadType,
+  CreateTokenResponseType
+} from '../../types';
 import nock from 'nock';
 
 // Set up global constants for URL and API key
@@ -8,7 +11,9 @@ const API_URL = 'http://localhost:3001';
 const API_KEY = 'S3CR3T-T0K3N';
 
 describe('create function', () => {
-  const body: createPayloadType = {
+  const body: CreateTokenPayloadType = {
+    url: API_URL,
+    apiKey: API_KEY,
     description: 'my test token',
     lifetime: 360,
     capabilities: [
@@ -30,8 +35,8 @@ describe('create function', () => {
     nock.cleanAll();
   });
 
-  test('creates token successfully', async function () {
-    const expectedResponse: createResponseType = {
+  it('creates token successfully', async function () {
+    const expectedResponse: CreateTokenResponseType = {
       token: 'my-test-token'
     };
 
@@ -41,7 +46,7 @@ describe('create function', () => {
       .post('/api/v2/tokens', expectedRequestBody)
       .reply(201, expectedResponse);
 
-    const response = await create(API_URL, API_KEY, body);
+    const response = await createToken({ ...body });
     expect(response).toEqual(expectedResponse);
   });
   //   "INVALID_TOKEN_LIFETIME | INVALID_TOKEN_CAPABILITIES"
@@ -50,8 +55,10 @@ describe('create function', () => {
     const expectedStatus =
       'INVALID_TOKEN_LIFETIME | INVALID_TOKEN_CAPABILITIES';
     const mockResponse = { status: expectedStatus };
-    const invalidBody: createPayloadType = {
+    const invalidBody: CreateTokenPayloadType = {
       description: 'my test token',
+      apiKey: API_KEY,
+      url: API_URL,
       lifetime: -500,
       capabilities: [
         {
@@ -74,9 +81,7 @@ describe('create function', () => {
       .post('/api/v2/tokens', expectedRequestBody)
       .reply(400, mockResponse);
 
-    await expect(create(API_URL, API_KEY, invalidBody)).rejects.toThrow(
-      APIError
-    );
+    await expect(createToken({ ...invalidBody })).rejects.toThrow(APIError);
   });
 
   test('throws APIError on 422', async function () {
@@ -89,6 +94,6 @@ describe('create function', () => {
       .post('/api/v2/tokens', expectedRequestBody)
       .reply(422, mockResponse);
 
-    await expect(create(API_URL, API_KEY, body)).rejects.toThrow(APIError);
+    await expect(createToken({ ...body })).rejects.toThrow(APIError);
   });
 });
