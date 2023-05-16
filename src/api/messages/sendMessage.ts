@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import { APIError, getHeaders } from '../../utils';
-import { sendMessagePayloadType, Error as ZodError } from '../../types';
+import { SendMessagePayloadType, Error as ZodError } from '../../types';
 
 /**
  * Send a message to another peer using a given path (list of node addresses that should relay our message through network). If no path is given, HOPR will attempt to find a path.
@@ -15,17 +15,15 @@ import { sendMessagePayloadType, Error as ZodError } from '../../types';
  * @returns - A promise that resolves to the sent message.
  */
 export const sendMessage = async (
-  url: string,
-  apiKey: string,
-  body: sendMessagePayloadType
+  payload: SendMessagePayloadType
 ): Promise<string> => {
-  if (!body.path && !body.hops)
+  if (!payload.path && !payload.hops)
     throw new Error('No path or number of hops provided.');
 
-  const rawResponse = await fetch(`${url}/api/v2/messages`, {
+  const rawResponse = await fetch(`${payload.url}/api/v2/messages`, {
     method: 'POST',
-    headers: getHeaders(apiKey),
-    body: JSON.stringify(body)
+    headers: getHeaders(payload.apiKey),
+    body: JSON.stringify(payload.body)
   });
   if (rawResponse.status === 202) {
     return await rawResponse.text();

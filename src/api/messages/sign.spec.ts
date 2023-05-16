@@ -2,7 +2,7 @@ import nock from 'nock';
 import { sign } from './sign';
 import { APIError } from '../../utils';
 
-const BASE_PATH = 'http://localhost:3001';
+const API_URL = 'http://localhost:3001';
 const API_KEY = 'S3CR3T-T0K3N';
 const MESSAGE = 'my-message';
 
@@ -17,11 +17,15 @@ describe('sign', () => {
     const expectedSignature = '7.115342872866815e+167';
 
     // Mock the sign endpoint with a successful response
-    nock(BASE_PATH)
+    nock(API_URL)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(200, { signature: expectedSignature });
 
-    const signature = await sign(BASE_PATH, API_KEY, { message: MESSAGE });
+    const signature = await sign({
+      apiKey: API_KEY,
+      url: API_URL,
+      message: MESSAGE
+    });
 
     expect(signature).toBe(expectedSignature);
   });
@@ -32,12 +36,12 @@ describe('sign', () => {
       error: 'authentication failed'
     };
 
-    nock(BASE_PATH)
+    nock(API_URL)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(401, expectedResponse);
 
     await expect(
-      sign(BASE_PATH, API_KEY, { message: MESSAGE })
+      sign({ apiKey: API_KEY, url: API_URL, message: MESSAGE })
     ).rejects.toThrow(APIError);
   });
 
@@ -46,12 +50,12 @@ describe('sign', () => {
       status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
-    nock(BASE_PATH)
+    nock(API_URL)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(403, expectedResponse);
 
     await expect(
-      sign(BASE_PATH, API_KEY, { message: MESSAGE })
+      sign({ apiKey: API_KEY, url: API_URL, message: MESSAGE })
     ).rejects.toThrow(APIError);
   });
 
@@ -60,12 +64,12 @@ describe('sign', () => {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
-    nock(BASE_PATH)
+    nock(API_URL)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(422, expectedResponse);
 
     await expect(
-      sign(BASE_PATH, API_KEY, { message: MESSAGE })
+      sign({ apiKey: API_KEY, url: API_URL, message: MESSAGE })
     ).rejects.toThrow(APIError);
   });
 });
