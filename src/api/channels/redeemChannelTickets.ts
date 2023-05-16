@@ -6,15 +6,13 @@ import { APIError, getHeaders } from '../../utils';
  * // TODO: Takes more than 200s to execute
  */
 export const redeemChannelTickets = async (
-  url: string,
-  apiKey: string,
-  body: PeerIdPayloadType
+  payload: PeerIdPayloadType
 ): Promise<boolean> => {
   const rawResponse = await fetch(
-    `${url}/api/v2/channels/${body.peerId}/tickets/redeem`,
+    `${payload.url}/api/v2/channels/${payload.peerId}/tickets/redeem`,
     {
       method: 'POST',
-      headers: getHeaders(apiKey)
+      headers: getHeaders(payload.apiKey)
     }
   );
 
