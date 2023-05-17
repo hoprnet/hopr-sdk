@@ -10,7 +10,8 @@
     "build": "tsup",
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
-    "test": "jest"
+    "test": "jest src/api",
+    "test:e2e": "bash src/e2e/start.sh"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
