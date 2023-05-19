@@ -1,3 +1,4 @@
+import { BasicAuthenticationPayloadType } from '../../types';
 import { getAddresses } from './getAddresses';
 
 /**
@@ -9,11 +10,13 @@ import { getAddresses } from './getAddresses';
  * @throws An error that occurred while processing the request.
  */
 export const getNativeAddress = async (
-  url: string,
-  apiKey: string
+  payload: BasicAuthenticationPayloadType
 ): Promise<string> => {
   try {
-    const addresses = await getAddresses(url, apiKey);
+    const addresses = await getAddresses({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return addresses.native;
   } catch (APIError) {
     throw APIError;

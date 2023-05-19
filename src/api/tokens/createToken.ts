@@ -1,11 +1,12 @@
 import fetch from 'cross-fetch';
-import { APIError, getHeaders } from '../../utils';
 import {
-  createPayloadType,
-  createResponse,
-  createResponseType,
-  Error
+  CreateTokenPayloadType,
+  CreateTokenResponse,
+  CreateTokenResponseType,
+  Error,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
+import { APIError, getHeaders } from '../../utils';
 
 /**
  * Create a new authentication token based on the given information.
@@ -21,18 +22,23 @@ import {
  * @returns A Promise that resolves to the generated token which must be used when authenticating for API calls.
  * @throws An error that occurred while processing the request.
  */
-export const create = async (
-  url: string,
-  apiKey: string,
-  body: createPayloadType
-): Promise<createResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/tokens`, {
+export const createToken = async (
+  payload: CreateTokenPayloadType
+): Promise<CreateTokenResponseType> => {
+  const body: RemoveBasicAuthenticationPayloadType<CreateTokenPayloadType> = {
+    capabilities: payload.capabilities,
+    description: payload.description,
+    lifetime: payload.lifetime
+  };
+
+  const rawResponse = await fetch(`${payload.url}/api/v2/tokens`, {
     method: 'POST',
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
+
   const jsonResponse = await rawResponse.json();
-  const parsedRes = createResponse.safeParse(jsonResponse);
+  const parsedRes = CreateTokenResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {

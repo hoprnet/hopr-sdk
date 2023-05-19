@@ -2,8 +2,8 @@ import { getAlias } from './getAlias';
 import nock from 'nock';
 import { APIError } from '../../utils';
 
-const BASE_PATH = 'http://localhost:3001';
-const API_TOKEN = 'S3CR3T-T0K3N';
+const API_URL = 'http://localhost:3001';
+const API_KEY = 'S3CR3T-T0K3N';
 const ALIAS = 'my-alias';
 
 describe('getAlias', () => {
@@ -13,11 +13,15 @@ describe('getAlias', () => {
 
   it('should return peerId when provided alias exists', async function () {
     const expectedPeerId = '0x1234567890123456789012345678901234567890';
-    nock(BASE_PATH)
+    nock(API_URL)
       .get(`/api/v2/aliases/${ALIAS}`)
       .reply(200, { peerId: expectedPeerId });
 
-    const result = await getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS });
+    const result = await getAlias({
+      alias: ALIAS,
+      apiKey: API_KEY,
+      url: API_URL
+    });
 
     expect(result).toBe(expectedPeerId);
   });
@@ -27,12 +31,14 @@ describe('getAlias', () => {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
-    nock(BASE_PATH)
-      .get(`/api/v2/aliases/${ALIAS}`)
-      .reply(401, expectedResponse);
+    nock(API_URL).get(`/api/v2/aliases/${ALIAS}`).reply(401, expectedResponse);
 
     await expect(
-      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+      getAlias({
+        alias: ALIAS,
+        apiKey: API_KEY,
+        url: API_URL
+      })
     ).rejects.toThrow(APIError);
   });
 
@@ -41,23 +47,29 @@ describe('getAlias', () => {
       status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
-    nock(BASE_PATH)
-      .get(`/api/v2/aliases/${ALIAS}`)
-      .reply(403, expectedResponse);
+    nock(API_URL).get(`/api/v2/aliases/${ALIAS}`).reply(403, expectedResponse);
 
     await expect(
-      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+      getAlias({
+        alias: ALIAS,
+        apiKey: API_KEY,
+        url: API_URL
+      })
     ).rejects.toThrow(APIError);
   });
 
   it('should return 404 when alias is not found', async function () {
     const expectedStatus = 'PEERID_NOT_FOUND';
-    nock(BASE_PATH)
+    nock(API_URL)
       .get(`/api/v2/aliases/${ALIAS}`)
       .reply(404, { status: expectedStatus });
 
     await expect(
-      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+      getAlias({
+        alias: ALIAS,
+        apiKey: API_KEY,
+        url: API_URL
+      })
     ).rejects.toThrow(APIError);
   });
 
@@ -66,12 +78,14 @@ describe('getAlias', () => {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
-    nock(BASE_PATH)
-      .get(`/api/v2/aliases/${ALIAS}`)
-      .reply(422, expectedResponse);
+    nock(API_URL).get(`/api/v2/aliases/${ALIAS}`).reply(422, expectedResponse);
 
     await expect(
-      getAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+      getAlias({
+        alias: ALIAS,
+        apiKey: API_KEY,
+        url: API_URL
+      })
     ).rejects.toThrow(APIError);
   });
 });

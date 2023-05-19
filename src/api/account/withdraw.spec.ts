@@ -18,7 +18,9 @@ describe('withdraw function', () => {
     const mockResponse = { receipt: expectedReceipt };
     nock(API_URL).post('/api/v2/account/withdraw').reply(200, mockResponse);
 
-    const actualResult = await withdraw(API_URL, API_KEY, {
+    const actualResult = await withdraw({
+      apiKey: API_KEY,
+      url: API_URL,
       currency: CURRENCY,
       amount: AMOUNT,
       recipient: RECIPIENT
@@ -33,7 +35,9 @@ describe('withdraw function', () => {
     nock(API_URL).post('/api/v2/account/withdraw').reply(400, mockResponse);
 
     await expect(
-      withdraw(API_URL, API_KEY, {
+      withdraw({
+        apiKey: API_KEY,
+        url: API_URL,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT
@@ -49,7 +53,9 @@ describe('withdraw function', () => {
     nock(API_URL).post('/api/v2/account/withdraw').reply(401, mockResponse);
 
     await expect(
-      withdraw(API_URL, API_KEY, {
+      withdraw({
+        apiKey: API_KEY,
+        url: API_URL,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT
@@ -65,7 +71,9 @@ describe('withdraw function', () => {
     nock(API_URL).post('/api/v2/account/withdraw').reply(403, mockResponse);
 
     await expect(
-      withdraw(API_URL, API_KEY, {
+      withdraw({
+        apiKey: API_KEY,
+        url: API_URL,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT
@@ -79,7 +87,9 @@ describe('withdraw function', () => {
     nock(API_URL).post('/api/v2/account/withdraw').reply(422, mockResponse);
 
     await expect(
-      withdraw(API_URL, API_KEY, {
+      withdraw({
+        apiKey: API_KEY,
+        url: API_URL,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT

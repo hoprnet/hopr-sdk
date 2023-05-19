@@ -1,28 +1,32 @@
 import fetch from 'cross-fetch';
+import {
+  Error,
+  RemoveBasicAuthenticationPayloadType,
+  SignPayloadType,
+  SignResponse
+} from '../../types';
 import { APIError, getHeaders } from '../../utils';
-import { signPayloadType, signResponse, Error } from '../../types';
 
 /**
  * Signs a message given using the node’s private key. Prefixes messsage with “HOPR Signed Message: ” before signing.
  *
  * @param url - The base URL for the API.
  * @param apiKey - The API key to use for authentication.
- * @param body - An object containing the message to sign.
+ * @param message - The message to sign.
  * @returns A Promise that resolves to a string representing the signature.
  * @throws An error that occurred while processing the request.
  */
-export const sign = async (
-  url: string,
-  apiKey: string,
-  body: signPayloadType
-): Promise<string> => {
-  const rawResponse = await fetch(`${url}/api/v2/messages/sign`, {
+export const sign = async (payload: SignPayloadType): Promise<string> => {
+  const body: RemoveBasicAuthenticationPayloadType<SignPayloadType> = {
+    message: payload.message
+  };
+  const rawResponse = await fetch(`${payload.url}/api/v2/messages/sign`, {
     method: 'POST',
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
   const jsonResponse = await rawResponse.json();
-  const parsedRes = signResponse.safeParse(jsonResponse);
+  const parsedRes = SignResponse.safeParse(jsonResponse);
 
   if (rawResponse.status === 200 && parsedRes.success) {
     return parsedRes.data.signature;

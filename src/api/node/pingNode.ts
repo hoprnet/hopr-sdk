@@ -3,18 +3,21 @@ import {
   Error,
   PingNodePayloadType,
   PingNodeResponse,
-  PingNodeResponseType
+  PingNodeResponseType,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 export const pingNode = async (
-  url: string,
-  apiKey: string,
-  body: PingNodePayloadType
+  payload: PingNodePayloadType
 ): Promise<PingNodeResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/node/ping`, {
+  const body: RemoveBasicAuthenticationPayloadType<PingNodePayloadType> = {
+    peerId: payload.peerId
+  };
+
+  const rawResponse = await fetch(`${payload.url}/api/v2/node/ping`, {
     method: 'POST',
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
 

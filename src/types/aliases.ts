@@ -1,39 +1,39 @@
 import { z } from 'zod';
-import { ZodToType } from './general';
+import { BasicAuthenticationPayload, ZodToType } from './general';
 
 /**
  * General
  */
 
-export const aliasPayload = z.object({
+export const AliasPayload = BasicAuthenticationPayload.extend({
   alias: z.string()
 });
 
-export type aliasPayloadType = ZodToType<typeof aliasPayload>;
+export type AliasPayloadType = ZodToType<typeof AliasPayload>;
 
 /**
  * getAliases
  */
 
-export const getAliasesResponse = z.record(z.string());
+export const GetAliasesResponse = z.record(z.string());
 
-export type getAliasesResponseType = ZodToType<typeof getAliasesResponse>;
+export type GetAliasesResponseType = ZodToType<typeof GetAliasesResponse>;
 
 /**
  * setAlias
  */
 
-export const setAliasPayload = z.object({
+export const SetAliasPayload = BasicAuthenticationPayload.extend({
   peerId: z.string(),
   alias: z.string()
 });
 
-export type setAliasPayloadType = ZodToType<typeof setAliasPayload>;
+export type SetAliasPayloadType = ZodToType<typeof SetAliasPayload>;
 
 /**
  * getAlias
  */
 
-export const getAliasResponse = z.object({ peerId: z.string() });
+export const GetAliasResponse = z.object({ peerId: z.string() });
 
-export type getAliasResponseType = ZodToType<typeof getAliasResponse>;
+export type GetAliasResponseType = ZodToType<typeof GetAliasResponse>;

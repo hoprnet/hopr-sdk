@@ -1,4 +1,8 @@
-import { GetPeersPayloadType, PingNodePayloadType } from '../../types';
+import {
+  GetPeersPayloadType,
+  PingNodePayloadType,
+  RemoveBasicAuthenticationPayloadType
+} from '../../types';
 import { getEntryNodes } from './getEntryNodes';
 import { getInfo } from './getInfo';
 import { getMetrics } from './getMetrics';
@@ -10,26 +14,38 @@ export class NodeAdapter {
   constructor(private url: string, private apiKey: string) {}
 
   public getEntryNodes() {
-    return getEntryNodes(this.url, this.apiKey);
+    return getEntryNodes({ url: this.url, apiKey: this.apiKey });
   }
 
   public getInfo() {
-    return getInfo(this.url, this.apiKey);
+    return getInfo({ url: this.url, apiKey: this.apiKey });
   }
 
   public getMetrics() {
-    return getMetrics(this.url, this.apiKey);
+    return getMetrics({ url: this.url, apiKey: this.apiKey });
   }
 
-  public getPeers(body?: GetPeersPayloadType) {
-    return getPeers(this.url, this.apiKey, body);
+  public getPeers(
+    payload: RemoveBasicAuthenticationPayloadType<GetPeersPayloadType>
+  ) {
+    return getPeers({
+      url: this.url,
+      apiKey: this.apiKey,
+      quality: payload.quality
+    });
   }
 
   public getVersion() {
-    return getVersion(this.url, this.apiKey);
+    return getVersion({ url: this.url, apiKey: this.apiKey });
   }
 
-  public pingNode(body: PingNodePayloadType) {
-    return pingNode(this.url, this.apiKey, body);
+  public pingNode(
+    payload: RemoveBasicAuthenticationPayloadType<PingNodePayloadType>
+  ) {
+    return pingNode({
+      url: this.url,
+      apiKey: this.apiKey,
+      peerId: payload.peerId
+    });
   }
 }

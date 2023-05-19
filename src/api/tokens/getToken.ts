@@ -1,6 +1,11 @@
 import fetch from 'cross-fetch';
 import { APIError, getHeaders } from '../../utils';
-import { Error, getTokenResponse, getTokenResponseType } from '../../types';
+import {
+  BasicAuthenticationPayloadType,
+  Error,
+  GetTokenResponse,
+  GetTokenResponseType
+} from '../../types';
 
 /**
  * Get the full token information for the token used in authentication.
@@ -11,12 +16,11 @@ import { Error, getTokenResponse, getTokenResponseType } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const getToken = async (
-  url: string,
-  apiKey: string
-): Promise<getTokenResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/token`, {
+  payload: BasicAuthenticationPayloadType
+): Promise<GetTokenResponseType> => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/token`, {
     method: 'GET',
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
 
   if (rawResponse.status === 404) {
@@ -24,7 +28,7 @@ export const getToken = async (
     throw new APIError({ status: 'RESOURCE WAS NOT FOUND' });
   }
   const jsonResponse = await rawResponse.json();
-  const parsedRes = getTokenResponse.safeParse(jsonResponse);
+  const parsedRes = GetTokenResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {

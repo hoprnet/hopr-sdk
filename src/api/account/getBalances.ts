@@ -1,5 +1,10 @@
 import fetch from 'cross-fetch';
-import { accountResponse, accountResponseType, Error } from '../../types';
+import {
+  AccountResponse,
+  AccountResponseType,
+  BasicAuthenticationPayloadType,
+  Error
+} from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 /**
@@ -11,17 +16,16 @@ import { APIError, getHeaders } from '../../utils';
  * @throws An error that occurred while processing the request.
  */
 export const getBalances = async (
-  url: string,
-  apiKey: string
-): Promise<accountResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/account/balances`, {
+  payload: BasicAuthenticationPayloadType
+): Promise<AccountResponseType> => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/account/balances`, {
     method: 'GET',
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
 
   const jsonResponse = await rawResponse.json();
 
-  const parsedRes = accountResponse.safeParse(jsonResponse);
+  const parsedRes = AccountResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;

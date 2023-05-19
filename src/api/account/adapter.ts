@@ -1,4 +1,7 @@
-import { withdrawPayloadType } from '../../types';
+import {
+  RemoveBasicAuthenticationPayloadType,
+  WithdrawPayloadType
+} from '../../types';
 import { getAddresses } from './getAddresses';
 import { getBalances } from './getBalances';
 import { getHoprAddress } from './getHoprAddress';
@@ -23,7 +26,7 @@ export class AccountAdapter {
    * @returns — A promise that resolves with an object containing the HOPR and native addresses.
    */
   public getAddresses() {
-    return getAddresses(this.url, this.apiKey);
+    return getAddresses({ url: this.url, apiKey: this.apiKey });
   }
 
   /**
@@ -31,7 +34,7 @@ export class AccountAdapter {
    * @returns — A Promise that resolves with an object containing the HOPR and native balances.
    */
   public getBalances() {
-    return getBalances(this.url, this.apiKey);
+    return getBalances({ url: this.url, apiKey: this.apiKey });
   }
 
   /**
@@ -39,7 +42,7 @@ export class AccountAdapter {
    * @returns — A Promise that resolves to the HOPR address.
    */
   public getHoprAddress() {
-    return getHoprAddress(this.url, this.apiKey);
+    return getHoprAddress({ url: this.url, apiKey: this.apiKey });
   }
 
   /**
@@ -47,7 +50,7 @@ export class AccountAdapter {
    * @returns — A Promise that resolves to a string representing the HOPR balance.
    */
   public getHoprBalance() {
-    return getHoprBalance(this.url, this.apiKey);
+    return getHoprBalance({ url: this.url, apiKey: this.apiKey });
   }
 
   /**
@@ -55,7 +58,7 @@ export class AccountAdapter {
    * @returns — A Promise that resolves to the native address.
    */
   public getNativeAddress() {
-    return getNativeAddress(this.url, this.apiKey);
+    return getNativeAddress({ url: this.url, apiKey: this.apiKey });
   }
 
   /**
@@ -63,14 +66,16 @@ export class AccountAdapter {
    * @returns — A Promise that resolves with a string representing the native balance.
    */
   public getNativeBalance() {
-    return getNativeBalance(this.url, this.apiKey);
+    return getNativeBalance({ url: this.url, apiKey: this.apiKey });
   }
   /**
    * Withdraw the given currency amount to the specified recipient address.
-   * @param body - The withdrawal request payload.
+   * @param payload - The withdrawal request payload.
    * @returns — A Promise that resolves to the transaction receipt.
    */
-  public withdraw(body: withdrawPayloadType) {
-    return withdraw(this.url, this.apiKey, body);
+  public withdraw(
+    payload: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType>
+  ) {
+    return withdraw({ url: this.url, apiKey: this.apiKey, ...payload });
   }
 }

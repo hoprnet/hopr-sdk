@@ -8,15 +8,13 @@ import {
 import { APIError, getHeaders } from '../../utils';
 
 export const getChannelTickets = async (
-  url: string,
-  apiKey: string,
-  body: PeerIdPayloadType
+  payload: PeerIdPayloadType
 ): Promise<GetTicketsResponseType> => {
   const rawResponse = await fetch(
-    `${url}/api/v2/channels/${body.peerId}/tickets`,
+    `${payload.url}/api/v2/channels/${payload.peerId}/tickets`,
     {
       method: 'GET',
-      headers: getHeaders(apiKey)
+      headers: getHeaders(payload.apiKey)
     }
   );
 
