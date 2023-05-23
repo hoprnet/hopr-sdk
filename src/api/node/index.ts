@@ -4,4 +4,4 @@ export * from './getMetrics';
 export * from './getPeers';
 export * from './getVersion';
 export * from './pingNode';
-export * from './nodeWrapper';
+export * from './adapter';

@@ -1,6 +1,10 @@
 import fetch from 'cross-fetch';
+import {
+  Error,
+  RemoveBasicAuthenticationPayloadType,
+  SetAliasPayloadType
+} from '../../types';
 import { APIError, getHeaders } from '../../utils';
-import { setAliasPayloadType, Error } from '../../types';
 
 /**
  * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
@@ -14,13 +18,15 @@ import { setAliasPayloadType, Error } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const setAlias = async (
-  url: string,
-  apiKey: string,
-  body: setAliasPayloadType
+  payload: SetAliasPayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(`${url}/api/v2/aliases`, {
+  const body: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType> = {
+    alias: payload.alias,
+    peerId: payload.peerId
+  };
+  const rawResponse = await fetch(`${payload.url}/api/v2/aliases`, {
     method: 'POST',
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
 

@@ -16,7 +16,11 @@ describe('deleteToken', () => {
     nock(API_URL).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(204);
 
     // Call the function and expect it to return true
-    const result = await deleteToken(API_URL, API_KEY, { id: TOKEN_ID });
+    const result = await deleteToken({
+      apiKey: API_KEY,
+      url: API_URL,
+      id: TOKEN_ID
+    });
     expect(result).toBe(true);
   });
 
@@ -29,7 +33,7 @@ describe('deleteToken', () => {
 
     // Call the function and expect it to throw an APIError
     await expect(
-      deleteToken(API_URL, API_KEY, { id: TOKEN_ID })
+      deleteToken({ apiKey: API_KEY, url: API_URL, id: TOKEN_ID })
     ).rejects.toThrow(APIError);
   });
 
@@ -42,7 +46,7 @@ describe('deleteToken', () => {
 
     // Call the function and expect it to throw an APIError
     await expect(
-      deleteToken(API_URL, API_KEY, { id: TOKEN_ID })
+      deleteToken({ apiKey: API_KEY, url: API_URL, id: TOKEN_ID })
     ).rejects.toThrow(APIError);
   });
 
@@ -51,7 +55,7 @@ describe('deleteToken', () => {
 
     // Call the function and expect it to throw an APIError
     await expect(
-      deleteToken(API_URL, API_KEY, { id: TOKEN_ID })
+      deleteToken({ apiKey: API_KEY, url: API_URL, id: TOKEN_ID })
     ).rejects.toThrow(APIError);
   });
 });

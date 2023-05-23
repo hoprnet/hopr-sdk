@@ -1,3 +1,4 @@
+import { BasicAuthenticationPayloadType } from '../../types';
 import { getBalances } from './getBalances';
 
 /**
@@ -9,11 +10,13 @@ import { getBalances } from './getBalances';
  * @throws An error that occurred while processing the request.
  */
 export const getHoprBalance = async (
-  url: string,
-  apiKey: string
+  payload: BasicAuthenticationPayloadType
 ): Promise<string> => {
   try {
-    const balances = await getBalances(url, apiKey);
+    const balances = await getBalances({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return balances.hopr;
   } catch (APIError) {
     throw APIError;

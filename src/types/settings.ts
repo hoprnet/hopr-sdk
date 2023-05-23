@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ZodToType } from './general';
+import { BasicAuthenticationPayload, ZodToType } from './general';
 
 /**
  * Get settings
@@ -16,7 +16,7 @@ export type GetSettingsResponseType = ZodToType<typeof GetSettingsResponse>;
  * Set Setting
  */
 
-export const SetSettingPayload = z.object({
+export const SetSettingPayload = BasicAuthenticationPayload.extend({
   setting: z.string(),
   settingValue: z.any()
 });

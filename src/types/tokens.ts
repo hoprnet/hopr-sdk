@@ -1,5 +1,5 @@
 import z from 'zod';
-import { ZodToType } from './general';
+import { BasicAuthenticationPayload, ZodToType } from './general';
 
 /**
  * GENERAL
@@ -66,37 +66,39 @@ export const TokenCapability = z.object({
  * createToken
  */
 
-export const createPayload = z.object({
+export const CreateTokenPayload = BasicAuthenticationPayload.extend({
   capabilities: z.array(TokenCapability),
   lifetime: z.number().nonnegative(),
   description: z.string()
 });
 
-export type createPayloadType = ZodToType<typeof createPayload>;
+export type CreateTokenPayloadType = ZodToType<typeof CreateTokenPayload>;
 
-export const createResponse = z.object({
+export const CreateTokenResponse = z.object({
   token: z.string()
 });
 
-export type createResponseType = ZodToType<typeof createResponse>;
+export type CreateTokenResponseType = ZodToType<typeof CreateTokenResponse>;
 
 /**
  * getToken
  */
 
-export const getTokenResponse = z.object({
+export const GetTokenResponse = z.object({
   id: z.string(),
   description: z.string().optional(),
   capabilities: z.array(TokenCapability),
   valid_until: z.number().optional()
 });
 
-export type getTokenResponseType = ZodToType<typeof getTokenResponse>;
+export type GetTokenResponseType = ZodToType<typeof GetTokenResponse>;
 
 /**
- * deteleToken
+ * deleteToken
  */
 
-export const deletePayload = z.object({ id: z.string() });
+export const DeleteTokenPayload = BasicAuthenticationPayload.extend({
+  id: z.string()
+});
 
-export type deletePayloadType = ZodToType<typeof deletePayload>;
+export type DeleteTokenPayloadType = ZodToType<typeof DeleteTokenPayload>;

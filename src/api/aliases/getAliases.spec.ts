@@ -2,8 +2,8 @@ import nock from 'nock';
 import { getAliases } from './getAliases';
 import { APIError } from '../../utils';
 
-const BASE_PATH = 'http://localhost:3001';
-const API_TOKEN = 'S3CR3T-T0K3N';
+const API_URL = 'http://localhost:3001';
+const API_KEY = 'S3CR3T-T0K3N';
 
 describe('getAliases', () => {
   beforeEach(() => {
@@ -16,9 +16,9 @@ describe('getAliases', () => {
       bob: '0x0987654321098765432109876543210987654321'
     };
 
-    nock(BASE_PATH).get('/api/v2/aliases').reply(200, expectedResponse);
+    nock(API_URL).get('/api/v2/aliases').reply(200, expectedResponse);
 
-    const result = await getAliases(BASE_PATH, API_TOKEN);
+    const result = await getAliases({ url: API_URL, apiKey: API_KEY });
 
     expect(result).toEqual(expectedResponse);
   });
@@ -29,8 +29,10 @@ describe('getAliases', () => {
       error: 'Full error message.'
     };
 
-    nock(BASE_PATH).get('/api/v2/aliases').reply(422, expectedResponse);
+    nock(API_URL).get('/api/v2/aliases').reply(422, expectedResponse);
 
-    await expect(getAliases(BASE_PATH, API_TOKEN)).rejects.toThrow(APIError);
+    await expect(getAliases({ url: API_URL, apiKey: API_KEY })).rejects.toThrow(
+      APIError
+    );
   });
 });

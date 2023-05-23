@@ -13,3 +13,5 @@ export const getHeaders = (apiKey: string): Headers => {
   headers.set('x-auth-token', apiKey);
   return headers;
 };
+
+export default {};

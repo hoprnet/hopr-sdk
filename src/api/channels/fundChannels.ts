@@ -3,18 +3,23 @@ import {
   Error,
   FundChannelsResponse,
   type FundChannelsPayloadType,
-  type FundChannelsResponseType
+  type FundChannelsResponseType,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 export const fundChannels = async (
-  url: string,
-  apiKey: string,
-  body: FundChannelsPayloadType
+  payload: FundChannelsPayloadType
 ): Promise<FundChannelsResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/fundmulti`, {
+  const body: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType> = {
+    incomingAmount: payload.incomingAmount,
+    outgoingAmount: payload.outgoingAmount,
+    peerId: payload.peerId
+  };
+
+  const rawResponse = await fetch(`${payload.url}/api/v2/fundmulti`, {
     method: 'POST',
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
 
