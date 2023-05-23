@@ -24,10 +24,6 @@ start() {
     docker-compose -f "$DIR/nodes.yml" -p sandbox-nodes \
         up -d --remove-orphans --build --force-recreate --renew-anon-volumes
 
-    # Extract HOPRD_API_TOKEN from env file
-    # shellcheck source=/dev/null
-    source "$DIR"/.env
-
     logs_pluto=""
     logs_error=""
     segmentation_error=""

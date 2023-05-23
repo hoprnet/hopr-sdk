@@ -1,0 +1,54 @@
+import { SDK } from '../sdk';
+
+const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
+  process.env;
+
+const sdk = new SDK(HOPRD_API_ENDPOINT_1!, HOPRD_API_TOKEN!);
+const { aliases } = sdk.api;
+
+describe('Alases E2E test', function () {
+  let peerId: string;
+  const testAlias = 'NodeTest';
+
+  // Set Alias before all the other tests are executed
+  beforeAll(async () => {
+    peerId = await new SDK(
+      HOPRD_API_ENDPOINT_2!,
+      HOPRD_API_TOKEN!
+    ).api.account.getHoprAddress();
+
+    console.log(peerId);
+    const setAliasResponse = await aliases.setAlias({
+      peerId: peerId,
+      alias: testAlias
+    });
+    console.log(setAliasResponse);
+    if (setAliasResponse !== true) {
+      fail("Couldn't set an alias.");
+    }
+  });
+
+  test('gets the aliases set', async function () {
+    const response = await aliases.getAliases();
+    console.log('RESPUESTA ALIASES', JSON.stringify(response));
+
+    expect(response).toStrictEqual(
+      expect.objectContaining({
+        [testAlias]: peerId
+      })
+    );
+  });
+
+  test('gets the peerId for a specific alias', async function () {
+    const response = await aliases.getAlias({ alias: testAlias });
+    console.log('RESPUESTA GET ALIAS', JSON.stringify(response));
+
+    expect(response).toEqual(peerId);
+  });
+  // Remove alias after the tests are executed
+  afterAll(async () => {
+    const removeAliasResponse = await aliases.removeAlias({ alias: testAlias });
+
+    expect(removeAliasResponse).toBe(true);
+  });
+});

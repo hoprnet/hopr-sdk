@@ -20,6 +20,11 @@ trap 'stop; exit 1' SIGINT SIGTERM ERR
 # start sandbox
 start
 
+set -a # automatically export all variables
+# shellcheck source=/dev/null
+source "$DIR"/.env
+set +a
+
 # Run tests with env variables
 npx jest --ci "$DIR"/
 # echo "Started"
