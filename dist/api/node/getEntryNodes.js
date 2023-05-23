@@ -34,10 +34,10 @@ module.exports = __toCommonJS(getEntryNodes_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const getEntryNodes = async (url, apiKey) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/node/entryNodes`, {
+const getEntryNodes = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/node/entryNodes`, {
     method: "GET",
-    headers: (0, import_utils.getHeaders)(apiKey)
+    headers: (0, import_utils.getHeaders)(payload.apiKey)
   });
   const jsonResponse = await rawResponse.json();
   const parsedRes = import_types.GetEntryNodesResponse.safeParse(jsonResponse);

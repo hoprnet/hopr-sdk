@@ -1,5 +1,6 @@
 import { string, z } from "zod";
-const GetPeerInfoPayload = z.object({
+import { BasicAuthenticationPayload } from "./general";
+const GetPeerInfoPayload = BasicAuthenticationPayload.extend({
   peerId: string()
 });
 const GetPeerInfoResponse = z.object({

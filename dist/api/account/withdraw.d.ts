@@ -1,4 +1,4 @@
-import { withdrawPayloadType } from '../../types/account.js';
+import { WithdrawPayloadType } from '../../types/account.js';
 import 'zod';
 import '../../types/general.js';
 
@@ -11,6 +11,6 @@ import '../../types/general.js';
  * @returns A Promise that resolves to the transaction receipt.
  * @throws An error that occurred while processing the request.
  */
-declare const withdraw: (url: string, apiKey: string, body: withdrawPayloadType) => Promise<string>;
+declare const withdraw: (payload: WithdrawPayloadType) => Promise<string>;
 
 export { withdraw };

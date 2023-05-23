@@ -2,6 +2,6 @@ import { OpenChannelsPayloadType, OpenChannelsResponseType } from '../../types/c
 import 'zod';
 import '../../types/general.js';
 
-declare const openChannels: (url: string, apiKey: string, body: OpenChannelsPayloadType) => Promise<OpenChannelsResponseType>;
+declare const openChannels: (payload: OpenChannelsPayloadType) => Promise<OpenChannelsResponseType>;
 
 export { openChannels };

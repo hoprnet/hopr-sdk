@@ -34,10 +34,10 @@ module.exports = __toCommonJS(getVersion_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const getVersion = async (url, apiKey) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/node/version`, {
+const getVersion = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/node/version`, {
     method: "GET",
-    headers: (0, import_utils.getHeaders)(apiKey)
+    headers: (0, import_utils.getHeaders)(payload.apiKey)
   });
   if (rawResponse.status === 200) {
     const textResponse = await rawResponse.text();

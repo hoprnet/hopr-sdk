@@ -1,17 +1,22 @@
 import fetch from "cross-fetch";
-import { APIError, getHeaders } from "../../utils";
 import {
-  createResponse,
+  CreateTokenResponse,
   Error
 } from "../../types";
-const create = async (url, apiKey, body) => {
-  const rawResponse = await fetch(`${url}/api/v2/tokens`, {
+import { APIError, getHeaders } from "../../utils";
+const createToken = async (payload) => {
+  const body = {
+    capabilities: payload.capabilities,
+    description: payload.description,
+    lifetime: payload.lifetime
+  };
+  const rawResponse = await fetch(`${payload.url}/api/v2/tokens`, {
     method: "POST",
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
   const jsonResponse = await rawResponse.json();
-  const parsedRes = createResponse.safeParse(jsonResponse);
+  const parsedRes = CreateTokenResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {
@@ -24,5 +29,5 @@ const create = async (url, apiKey, body) => {
   }
 };
 export {
-  create
+  createToken
 };

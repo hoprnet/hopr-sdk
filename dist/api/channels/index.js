@@ -22,7 +22,7 @@ __reExport(channels_exports, require("./getChannels"), module.exports);
 __reExport(channels_exports, require("./getChannelTickets"), module.exports);
 __reExport(channels_exports, require("./openChannels"), module.exports);
 __reExport(channels_exports, require("./redeemChannelTickets"), module.exports);
-__reExport(channels_exports, require("./channelsWrapper"), module.exports);
+__reExport(channels_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./closeChannel"),
@@ -32,5 +32,5 @@ __reExport(channels_exports, require("./channelsWrapper"), module.exports);
   ...require("./getChannelTickets"),
   ...require("./openChannels"),
   ...require("./redeemChannelTickets"),
-  ...require("./channelsWrapper")
+  ...require("./adapter")
 });

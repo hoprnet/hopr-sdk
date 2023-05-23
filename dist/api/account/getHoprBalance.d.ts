@@ -1,3 +1,6 @@
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
+import 'zod';
+
 /**
  * Get the HOPR balance of the node.
  *
@@ -6,6 +9,6 @@
  * @returns A Promise that resolves to a string representing the HOPR balance.
  * @throws An error that occurred while processing the request.
  */
-declare const getHoprBalance: (url: string, apiKey: string) => Promise<string>;
+declare const getHoprBalance: (payload: BasicAuthenticationPayloadType) => Promise<string>;
 
 export { getHoprBalance };

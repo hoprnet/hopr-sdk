@@ -6,6 +6,8 @@ const getHeaders = (apiKey) => {
   headers.set("x-auth-token", apiKey);
   return headers;
 };
+var headers_default = {};
 export {
+  headers_default as default,
   getHeaders
 };

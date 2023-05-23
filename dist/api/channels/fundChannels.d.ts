@@ -2,6 +2,6 @@ import { FundChannelsPayloadType, FundChannelsResponseType } from '../../types/c
 import 'zod';
 import '../../types/general.js';
 
-declare const fundChannels: (url: string, apiKey: string, body: FundChannelsPayloadType) => Promise<FundChannelsResponseType>;
+declare const fundChannels: (payload: FundChannelsPayloadType) => Promise<FundChannelsResponseType>;
 
 export { fundChannels };

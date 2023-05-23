@@ -4,12 +4,12 @@ import {
   GetTicketsResponse
 } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const getChannelTickets = async (url, apiKey, body) => {
+const getChannelTickets = async (payload) => {
   const rawResponse = await fetch(
-    `${url}/api/v2/channels/${body.peerId}/tickets`,
+    `${payload.url}/api/v2/channels/${payload.peerId}/tickets`,
     {
       method: "GET",
-      headers: getHeaders(apiKey)
+      headers: getHeaders(payload.apiKey)
     }
   );
   const jsonResponse = await rawResponse.json();

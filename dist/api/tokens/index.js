@@ -18,9 +18,11 @@ module.exports = __toCommonJS(tokens_exports);
 __reExport(tokens_exports, require("./createToken"), module.exports);
 __reExport(tokens_exports, require("./deleteToken"), module.exports);
 __reExport(tokens_exports, require("./getToken"), module.exports);
+__reExport(tokens_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./createToken"),
   ...require("./deleteToken"),
-  ...require("./getToken")
+  ...require("./getToken"),
+  ...require("./adapter")
 });

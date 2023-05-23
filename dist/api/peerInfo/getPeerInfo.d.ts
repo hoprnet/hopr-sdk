@@ -2,6 +2,6 @@ import { GetPeerInfoPayloadType, GetPeerInfoResponseType } from '../../types/pee
 import 'zod';
 import '../../types/general.js';
 
-declare const getPeerInfo: (url: string, apiKey: string, body: GetPeerInfoPayloadType) => Promise<GetPeerInfoResponseType>;
+declare const getPeerInfo: (payload: GetPeerInfoPayloadType) => Promise<GetPeerInfoResponseType>;
 
 export { getPeerInfo };

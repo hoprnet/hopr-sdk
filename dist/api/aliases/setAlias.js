@@ -32,12 +32,16 @@ __export(setAlias_exports, {
 });
 module.exports = __toCommonJS(setAlias_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
-var import_utils = require("../../utils");
 var import_types = require("../../types");
-const setAlias = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/aliases`, {
+var import_utils = require("../../utils");
+const setAlias = async (payload) => {
+  const body = {
+    alias: payload.alias,
+    peerId: payload.peerId
+  };
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/aliases`, {
     method: "POST",
-    headers: (0, import_utils.getHeaders)(apiKey),
+    headers: (0, import_utils.getHeaders)(payload.apiKey),
     body: JSON.stringify(body)
   });
   if (rawResponse.status === 201) {

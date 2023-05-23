@@ -1,4 +1,4 @@
-import { aliasPayloadType } from '../../types/aliases.js';
+import { AliasPayloadType } from '../../types/aliases.js';
 import 'zod';
 import '../../types/general.js';
 
@@ -11,6 +11,6 @@ import '../../types/general.js';
  * @returns A Promise that resolves to true if the alias was successfully removed.
  * @throws An error that occurred while processing the request.
  */
-declare const removeAlias: (url: string, apiKey: string, body: aliasPayloadType) => Promise<boolean>;
+declare const removeAlias: (payload: AliasPayloadType) => Promise<boolean>;
 
 export { removeAlias };

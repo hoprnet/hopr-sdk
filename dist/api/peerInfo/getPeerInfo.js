@@ -34,11 +34,14 @@ module.exports = __toCommonJS(getPeerInfo_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_utils = require("../../utils");
 var import_types = require("../../types");
-const getPeerInfo = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/peerInfo/${body.peerId}`, {
-    method: "GET",
-    headers: (0, import_utils.getHeaders)(apiKey)
-  });
+const getPeerInfo = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(
+    `${payload.url}/api/v2/peerInfo/${payload.peerId}`,
+    {
+      method: "GET",
+      headers: (0, import_utils.getHeaders)(payload.apiKey)
+    }
+  );
   const jsonResponse = await rawResponse.json();
   const parsedRes = import_types.GetPeerInfoResponse.safeParse(jsonResponse);
   if (parsedRes.success) {

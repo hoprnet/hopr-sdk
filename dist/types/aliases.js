@@ -18,26 +18,27 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var aliases_exports = {};
 __export(aliases_exports, {
-  aliasPayload: () => aliasPayload,
-  getAliasResponse: () => getAliasResponse,
-  getAliasesResponse: () => getAliasesResponse,
-  setAliasPayload: () => setAliasPayload
+  AliasPayload: () => AliasPayload,
+  GetAliasResponse: () => GetAliasResponse,
+  GetAliasesResponse: () => GetAliasesResponse,
+  SetAliasPayload: () => SetAliasPayload
 });
 module.exports = __toCommonJS(aliases_exports);
 var import_zod = require("zod");
-const aliasPayload = import_zod.z.object({
+var import_general = require("./general");
+const AliasPayload = import_general.BasicAuthenticationPayload.extend({
   alias: import_zod.z.string()
 });
-const getAliasesResponse = import_zod.z.record(import_zod.z.string());
-const setAliasPayload = import_zod.z.object({
+const GetAliasesResponse = import_zod.z.record(import_zod.z.string());
+const SetAliasPayload = import_general.BasicAuthenticationPayload.extend({
   peerId: import_zod.z.string(),
   alias: import_zod.z.string()
 });
-const getAliasResponse = import_zod.z.object({ peerId: import_zod.z.string() });
+const GetAliasResponse = import_zod.z.object({ peerId: import_zod.z.string() });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  aliasPayload,
-  getAliasResponse,
-  getAliasesResponse,
-  setAliasPayload
+  AliasPayload,
+  GetAliasResponse,
+  GetAliasesResponse,
+  SetAliasPayload
 });

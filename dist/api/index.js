@@ -15,6 +15,7 @@ var __reExport = (target, mod, secondTarget) => (__copyProps(target, mod, "defau
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var api_exports = {};
 module.exports = __toCommonJS(api_exports);
+__reExport(api_exports, require("./messages"), module.exports);
 __reExport(api_exports, require("./aliases"), module.exports);
 __reExport(api_exports, require("./channels"), module.exports);
 __reExport(api_exports, require("./tokens"), module.exports);
@@ -23,9 +24,10 @@ __reExport(api_exports, require("./node"), module.exports);
 __reExport(api_exports, require("./peerInfo"), module.exports);
 __reExport(api_exports, require("./tickets"), module.exports);
 __reExport(api_exports, require("./settings"), module.exports);
-__reExport(api_exports, require("./apiWrapper"), module.exports);
+__reExport(api_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  ...require("./messages"),
   ...require("./aliases"),
   ...require("./channels"),
   ...require("./tokens"),
@@ -34,5 +36,5 @@ __reExport(api_exports, require("./apiWrapper"), module.exports);
   ...require("./peerInfo"),
   ...require("./tickets"),
   ...require("./settings"),
-  ...require("./apiWrapper")
+  ...require("./adapter")
 });

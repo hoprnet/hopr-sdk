@@ -1,16 +1,16 @@
+import { RemoveBasicAuthenticationPayloadType } from '../../types/general.js';
 import { CloseChannelPayloadType, FundChannelsPayloadType, GetChannelPayloadType, OpenChannelsPayloadType, PeerIdPayloadType } from '../../types/channels.js';
 import 'zod';
-import '../../types/general.js';
 
-declare class ChannelsWrapper {
+declare class ChannelsAdapter {
     private url;
     private apiKey;
     constructor(url: string, apiKey: string);
-    closeChannel(body: CloseChannelPayloadType): Promise<{
+    closeChannel(payload: RemoveBasicAuthenticationPayloadType<CloseChannelPayloadType>): Promise<{
         channelStatus: string;
         receipt?: string | undefined;
     }>;
-    fundChannels(body: FundChannelsPayloadType): Promise<{
+    fundChannels(payload: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType>): Promise<{
         receipt: string;
     }>;
     getChannels(): Promise<{
@@ -29,18 +29,18 @@ declare class ChannelsWrapper {
             balance: string;
         }[];
     }>;
-    getChannel(body: GetChannelPayloadType): Promise<{
+    getChannel(payload: RemoveBasicAuthenticationPayloadType<GetChannelPayloadType>): Promise<{
         type: "incoming" | "outgoing";
         status: "WaitingForCommitment" | "Open" | "PendingToClose" | "Closed";
         peerId: string;
         channelId: string;
         balance: string;
     }>;
-    openChannels(body: OpenChannelsPayloadType): Promise<{
+    openChannels(payload: RemoveBasicAuthenticationPayloadType<OpenChannelsPayloadType>): Promise<{
         receipt: string;
         channelId: string;
     }>;
-    getChannelTickets(body: PeerIdPayloadType): Promise<{
+    getChannelTickets(payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>): Promise<{
         amount: string;
         counterparty: string;
         challenge: string;
@@ -50,7 +50,7 @@ declare class ChannelsWrapper {
         channelEpoch: string;
         signature: string;
     }[]>;
-    redeemChannelTickets(body: PeerIdPayloadType): Promise<boolean>;
+    redeemChannelTickets(payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>): Promise<boolean>;
 }
 
-export { ChannelsWrapper };
+export { ChannelsAdapter };

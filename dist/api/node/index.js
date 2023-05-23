@@ -21,7 +21,7 @@ __reExport(node_exports, require("./getMetrics"), module.exports);
 __reExport(node_exports, require("./getPeers"), module.exports);
 __reExport(node_exports, require("./getVersion"), module.exports);
 __reExport(node_exports, require("./pingNode"), module.exports);
-__reExport(node_exports, require("./nodeWrapper"), module.exports);
+__reExport(node_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./getEntryNodes"),
@@ -30,5 +30,5 @@ __reExport(node_exports, require("./nodeWrapper"), module.exports);
   ...require("./getPeers"),
   ...require("./getVersion"),
   ...require("./pingNode"),
-  ...require("./nodeWrapper")
+  ...require("./adapter")
 });

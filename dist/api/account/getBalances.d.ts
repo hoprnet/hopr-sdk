@@ -1,6 +1,6 @@
-import { accountResponseType } from '../../types/account.js';
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
+import { AccountResponseType } from '../../types/account.js';
 import 'zod';
-import '../../types/general.js';
 
 /**
  * Fetches the HOPR and native balances of the node.
@@ -10,6 +10,6 @@ import '../../types/general.js';
  * @returns A Promise that resolves with an object containing the HOPR and native balances.
  * @throws An error that occurred while processing the request.
  */
-declare const getBalances: (url: string, apiKey: string) => Promise<accountResponseType>;
+declare const getBalances: (payload: BasicAuthenticationPayloadType) => Promise<AccountResponseType>;
 
 export { getBalances };

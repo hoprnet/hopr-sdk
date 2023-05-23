@@ -18,9 +18,11 @@ module.exports = __toCommonJS(utils_exports);
 __reExport(utils_exports, require("./log"), module.exports);
 __reExport(utils_exports, require("./error"), module.exports);
 __reExport(utils_exports, require("./headers"), module.exports);
+__reExport(utils_exports, require("./fetchWithTimeout"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./log"),
   ...require("./error"),
-  ...require("./headers")
+  ...require("./headers"),
+  ...require("./fetchWithTimeout")
 });

@@ -34,10 +34,10 @@ module.exports = __toCommonJS(getTickets_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const getTickets = async (url, apiKey) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/tickets`, {
+const getTickets = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/tickets`, {
     method: "GET",
-    headers: (0, import_utils.getHeaders)(apiKey)
+    headers: (0, import_utils.getHeaders)(payload.apiKey)
   });
   const jsonResponse = await rawResponse.json();
   const parsedRes = import_types.GetTicketsResponse.safeParse(jsonResponse);

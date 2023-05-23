@@ -1,6 +1,6 @@
-import { getAliasesResponseType } from '../../types/aliases.js';
+import { GetAliasesResponseType } from '../../types/aliases.js';
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
 import 'zod';
-import '../../types/general.js';
 
 /**
  * Get all aliases you set previously and their corresponding peer IDs.
@@ -10,6 +10,6 @@ import '../../types/general.js';
  * @returns An object with alias names as keys and the peerId associated with the alias.
  * @throws An error that occurred while processing the request.
  */
-declare const getAliases: (url: string, apiKey: string) => Promise<getAliasesResponseType>;
+declare const getAliases: (payload: BasicAuthenticationPayloadType) => Promise<GetAliasesResponseType>;
 
 export { getAliases };

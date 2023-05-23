@@ -23,7 +23,8 @@ __export(peerInfo_exports, {
 });
 module.exports = __toCommonJS(peerInfo_exports);
 var import_zod = require("zod");
-const GetPeerInfoPayload = import_zod.z.object({
+var import_general = require("./general");
+const GetPeerInfoPayload = import_general.BasicAuthenticationPayload.extend({
   peerId: (0, import_zod.string)()
 });
 const GetPeerInfoResponse = import_zod.z.object({

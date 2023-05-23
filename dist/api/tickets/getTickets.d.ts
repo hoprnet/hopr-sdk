@@ -1,7 +1,7 @@
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
 import { GetTicketsResponseType } from '../../types/channels.js';
 import 'zod';
-import '../../types/general.js';
 
-declare const getTickets: (url: string, apiKey: string) => Promise<GetTicketsResponseType>;
+declare const getTickets: (payload: BasicAuthenticationPayloadType) => Promise<GetTicketsResponseType>;
 
 export { getTickets };

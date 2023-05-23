@@ -1,3 +1,6 @@
-declare const getMetrics: (url: string, apiKey: string) => Promise<string>;
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
+import 'zod';
+
+declare const getMetrics: (payload: BasicAuthenticationPayloadType) => Promise<string>;
 
 export { getMetrics };

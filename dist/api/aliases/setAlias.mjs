@@ -1,10 +1,16 @@
 import fetch from "cross-fetch";
+import {
+  Error
+} from "../../types";
 import { APIError, getHeaders } from "../../utils";
-import { Error } from "../../types";
-const setAlias = async (url, apiKey, body) => {
-  const rawResponse = await fetch(`${url}/api/v2/aliases`, {
+const setAlias = async (payload) => {
+  const body = {
+    alias: payload.alias,
+    peerId: payload.peerId
+  };
+  const rawResponse = await fetch(`${payload.url}/api/v2/aliases`, {
     method: "POST",
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
   if (rawResponse.status === 201) {

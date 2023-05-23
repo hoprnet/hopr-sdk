@@ -1,6 +1,6 @@
-import { getTokenResponseType } from '../../types/tokens.js';
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
+import { GetTokenResponseType } from '../../types/tokens.js';
 import 'zod';
-import '../../types/general.js';
 
 /**
  * Get the full token information for the token used in authentication.
@@ -10,6 +10,6 @@ import '../../types/general.js';
  * @returns A Promise that resolves to an object with the token info.
  * @throws An error that occurred while processing the request.
  */
-declare const getToken: (url: string, apiKey: string) => Promise<getTokenResponseType>;
+declare const getToken: (payload: BasicAuthenticationPayloadType) => Promise<GetTokenResponseType>;
 
 export { getToken };

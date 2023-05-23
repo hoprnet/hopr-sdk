@@ -17,10 +17,10 @@ var settings_exports = {};
 module.exports = __toCommonJS(settings_exports);
 __reExport(settings_exports, require("./getSettings"), module.exports);
 __reExport(settings_exports, require("./setSetting"), module.exports);
-__reExport(settings_exports, require("./settingsWrapper"), module.exports);
+__reExport(settings_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./getSettings"),
   ...require("./setSetting"),
-  ...require("./settingsWrapper")
+  ...require("./adapter")
 });

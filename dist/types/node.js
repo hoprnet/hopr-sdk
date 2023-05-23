@@ -28,8 +28,9 @@ __export(node_exports, {
 });
 module.exports = __toCommonJS(node_exports);
 var import_zod = require("zod");
-const GetPeersPayload = import_zod.z.object({
-  quality: import_zod.z.number()
+var import_general = require("./general");
+const GetPeersPayload = import_general.BasicAuthenticationPayload.extend({
+  quality: import_zod.z.number().optional()
 });
 const Peer = import_zod.z.object({
   peerId: import_zod.z.string(),
@@ -64,7 +65,7 @@ const nodeSchema = import_zod.z.object({
   isEligible: import_zod.z.boolean()
 });
 const GetEntryNodesResponse = import_zod.z.record(nodeSchema);
-const PingNodePayload = import_zod.z.object({
+const PingNodePayload = import_general.BasicAuthenticationPayload.extend({
   peerId: import_zod.z.string()
 });
 const PingNodeResponse = import_zod.z.object({

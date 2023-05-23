@@ -1,4 +1,5 @@
 import z from "zod";
+import { BasicAuthenticationPayload } from "./general";
 const VALUES = [
   // Account
   "accountWithdraw",
@@ -52,25 +53,27 @@ const TokenCapability = z.object({
     })
   )
 });
-const createPayload = z.object({
+const CreateTokenPayload = BasicAuthenticationPayload.extend({
   capabilities: z.array(TokenCapability),
   lifetime: z.number().nonnegative(),
   description: z.string()
 });
-const createResponse = z.object({
+const CreateTokenResponse = z.object({
   token: z.string()
 });
-const getTokenResponse = z.object({
+const GetTokenResponse = z.object({
   id: z.string(),
   description: z.string().optional(),
   capabilities: z.array(TokenCapability),
   valid_until: z.number().optional()
 });
-const deletePayload = z.object({ id: z.string() });
+const DeleteTokenPayload = BasicAuthenticationPayload.extend({
+  id: z.string()
+});
 export {
-  TokenCapability,
-  createPayload,
-  createResponse,
-  deletePayload,
-  getTokenResponse
+  CreateTokenPayload,
+  CreateTokenResponse,
+  DeleteTokenPayload,
+  GetTokenResponse,
+  TokenCapability
 };

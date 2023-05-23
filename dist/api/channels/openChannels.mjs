@@ -4,10 +4,14 @@ import {
   OpenChannelsResponse
 } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const openChannels = async (url, apiKey, body) => {
-  const rawResponse = await fetch(`${url}/api/v2/channels`, {
+const openChannels = async (payload) => {
+  const body = {
+    amount: payload.amount,
+    peerId: payload.peerId
+  };
+  const rawResponse = await fetch(`${payload.url}/api/v2/channels`, {
     method: "POST",
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
   const jsonResponse = await rawResponse.json();

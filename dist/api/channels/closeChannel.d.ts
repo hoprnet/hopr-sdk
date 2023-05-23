@@ -2,6 +2,6 @@ import { CloseChannelPayloadType, CloseChannelResponseType } from '../../types/c
 import 'zod';
 import '../../types/general.js';
 
-declare const closeChannel: (url: string, apiKey: string, body: CloseChannelPayloadType) => Promise<CloseChannelResponseType>;
+declare const closeChannel: (payload: CloseChannelPayloadType) => Promise<CloseChannelResponseType>;
 
 export { closeChannel };

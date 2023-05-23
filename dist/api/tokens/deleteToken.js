@@ -34,11 +34,14 @@ module.exports = __toCommonJS(deleteToken_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_utils = require("../../utils");
 var import_types = require("../../types");
-const deleteToken = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/tokens/${body.id}`, {
-    method: "DELETE",
-    headers: (0, import_utils.getHeaders)(apiKey)
-  });
+const deleteToken = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(
+    `${payload.url}/api/v2/tokens/${payload.id}`,
+    {
+      method: "DELETE",
+      headers: (0, import_utils.getHeaders)(payload.apiKey)
+    }
+  );
   if (rawResponse.status === 204) {
     return true;
   } else if (rawResponse.status > 499) {

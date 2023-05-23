@@ -22,9 +22,12 @@ __export(getNativeBalance_exports, {
 });
 module.exports = __toCommonJS(getNativeBalance_exports);
 var import_getBalances = require("./getBalances");
-const getNativeBalance = async (url, apiKey) => {
+const getNativeBalance = async (payload) => {
   try {
-    const balances = await (0, import_getBalances.getBalances)(url, apiKey);
+    const balances = await (0, import_getBalances.getBalances)({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return balances.native;
   } catch (APIError) {
     throw APIError;

@@ -5,10 +5,16 @@ import { ZodToType } from './general.js';
  * General types
  */
 declare const PeerIdPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     peerId: string;
 }, {
+    url: string;
+    apiKey: string;
     peerId: string;
 }>;
 type PeerIdPayloadType = ZodToType<typeof PeerIdPayload>;
@@ -16,14 +22,20 @@ type PeerIdPayloadType = ZodToType<typeof PeerIdPayload>;
  * Fund channel
  */
 declare const FundChannelsPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
     outgoingAmount: z.ZodString;
     incomingAmount: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     peerId: string;
     outgoingAmount: string;
     incomingAmount: string;
 }, {
+    url: string;
+    apiKey: string;
     peerId: string;
     outgoingAmount: string;
     incomingAmount: string;
@@ -39,12 +51,18 @@ declare const FundChannelsResponse: z.ZodObject<{
 type FundChannelsResponseType = ZodToType<typeof FundChannelsResponse>;
 /** Open channel */
 declare const OpenChannelsPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
     amount: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     peerId: string;
     amount: string;
 }, {
+    url: string;
+    apiKey: string;
     peerId: string;
     amount: string;
 }>;
@@ -211,12 +229,18 @@ declare const GetTicketsResponse: z.ZodArray<z.ZodObject<{
 type GetTicketsResponseType = ZodToType<typeof GetTicketsResponse>;
 /** Close channel */
 declare const CloseChannelPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
     direction: z.ZodEnum<["incoming", "outgoing"]>;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     peerId: string;
     direction: "incoming" | "outgoing";
 }, {
+    url: string;
+    apiKey: string;
     peerId: string;
     direction: "incoming" | "outgoing";
 }>;
@@ -234,12 +258,18 @@ declare const CloseChannelResponse: z.ZodObject<{
 type CloseChannelResponseType = ZodToType<typeof CloseChannelResponse>;
 /** Get channel */
 declare const GetChannelPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
     direction: z.ZodEnum<["incoming", "outgoing"]>;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     peerId: string;
     direction: "incoming" | "outgoing";
 }, {
+    url: string;
+    apiKey: string;
     peerId: string;
     direction: "incoming" | "outgoing";
 }>;

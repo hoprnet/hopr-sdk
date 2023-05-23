@@ -1,10 +1,13 @@
 import fetch from "cross-fetch";
-import { Error, GetTicketsResponse } from "../../types";
+import {
+  Error,
+  GetTicketsResponse
+} from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const getTickets = async (url, apiKey) => {
-  const rawResponse = await fetch(`${url}/api/v2/tickets`, {
+const getTickets = async (payload) => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/tickets`, {
     method: "GET",
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetTicketsResponse.safeParse(jsonResponse);

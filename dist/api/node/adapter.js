@@ -16,42 +16,50 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var nodeWrapper_exports = {};
-__export(nodeWrapper_exports, {
-  NodeWrapper: () => NodeWrapper
+var adapter_exports = {};
+__export(adapter_exports, {
+  NodeAdapter: () => NodeAdapter
 });
-module.exports = __toCommonJS(nodeWrapper_exports);
+module.exports = __toCommonJS(adapter_exports);
 var import_getEntryNodes = require("./getEntryNodes");
 var import_getInfo = require("./getInfo");
 var import_getMetrics = require("./getMetrics");
 var import_getPeers = require("./getPeers");
 var import_getVersion = require("./getVersion");
 var import_pingNode = require("./pingNode");
-class NodeWrapper {
+class NodeAdapter {
   constructor(url, apiKey) {
     this.url = url;
     this.apiKey = apiKey;
   }
   getEntryNodes() {
-    return (0, import_getEntryNodes.getEntryNodes)(this.url, this.apiKey);
+    return (0, import_getEntryNodes.getEntryNodes)({ url: this.url, apiKey: this.apiKey });
   }
   getInfo() {
-    return (0, import_getInfo.getInfo)(this.url, this.apiKey);
+    return (0, import_getInfo.getInfo)({ url: this.url, apiKey: this.apiKey });
   }
   getMetrics() {
-    return (0, import_getMetrics.getMetrics)(this.url, this.apiKey);
+    return (0, import_getMetrics.getMetrics)({ url: this.url, apiKey: this.apiKey });
   }
-  getPeers(body) {
-    return (0, import_getPeers.getPeers)(this.url, this.apiKey, body);
+  getPeers(payload) {
+    return (0, import_getPeers.getPeers)({
+      url: this.url,
+      apiKey: this.apiKey,
+      quality: payload.quality
+    });
   }
   getVersion() {
-    return (0, import_getVersion.getVersion)(this.url, this.apiKey);
+    return (0, import_getVersion.getVersion)({ url: this.url, apiKey: this.apiKey });
   }
-  pingNode(body) {
-    return (0, import_pingNode.pingNode)(this.url, this.apiKey, body);
+  pingNode(payload) {
+    return (0, import_pingNode.pingNode)({
+      url: this.url,
+      apiKey: this.apiKey,
+      peerId: payload.peerId
+    });
   }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  NodeWrapper
+  NodeAdapter
 });

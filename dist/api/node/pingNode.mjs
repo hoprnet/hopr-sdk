@@ -4,10 +4,13 @@ import {
   PingNodeResponse
 } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const pingNode = async (url, apiKey, body) => {
-  const rawResponse = await fetch(`${url}/api/v2/node/ping`, {
+const pingNode = async (payload) => {
+  const body = {
+    peerId: payload.peerId
+  };
+  const rawResponse = await fetch(`${payload.url}/api/v2/node/ping`, {
     method: "POST",
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
   const jsonResponse = await rawResponse.json();

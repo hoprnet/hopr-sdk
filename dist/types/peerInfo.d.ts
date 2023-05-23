@@ -5,10 +5,16 @@ import { ZodToType } from './general.js';
  * Get peer info
  */
 declare const GetPeerInfoPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     peerId: string;
 }, {
+    url: string;
+    apiKey: string;
     peerId: string;
 }>;
 type GetPeerInfoPayloadType = ZodToType<typeof GetPeerInfoPayload>;

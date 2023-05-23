@@ -1,10 +1,11 @@
-export { aliasPayload, aliasPayloadType, getAliasResponse, getAliasResponseType, getAliasesResponse, getAliasesResponseType, setAliasPayload, setAliasPayloadType } from './aliases.js';
-export { Error, ErrorType } from './error.js';
-export { ZodToType } from './general.js';
+export { AliasPayload, AliasPayloadType, GetAliasResponse, GetAliasResponseType, GetAliasesResponse, GetAliasesResponseType, SetAliasPayload, SetAliasPayloadType } from './aliases.js';
+export { BasicAuthenticationPayload, BasicAuthenticationPayloadType, RemoveBasicAuthenticationPayloadType, ZodToType } from './general.js';
 export { Channel, CloseChannelPayload, CloseChannelPayloadType, CloseChannelResponse, CloseChannelResponseType, FundChannelsPayload, FundChannelsPayloadType, FundChannelsResponse, FundChannelsResponseType, GetChannelPayload, GetChannelPayloadType, GetChannelResponse, GetChannelResponseType, GetChannelsResponse, GetChannelsResponseType, GetTicketsResponse, GetTicketsResponseType, OpenChannelsPayload, OpenChannelsPayloadType, OpenChannelsResponse, OpenChannelsResponseType, PeerIdPayload, PeerIdPayloadType, Ticket } from './channels.js';
+export { Error, ErrorType } from './error.js';
 export { GetEntryNodesResponse, GetEntryNodesResponseType, GetInfoResponse, GetInfoResponseType, GetPeersPayload, GetPeersPayloadType, GetPeersResponse, GetPeersResponseType, Peer, PingNodePayload, PingNodePayloadType, PingNodeResponse, PingNodeResponseType } from './node.js';
-export { TokenCapability, createPayload, createPayloadType, createResponse, createResponseType, deletePayload, deletePayloadType, getTokenResponse, getTokenResponseType } from './tokens.js';
-export { accountResponse, accountResponseType, withdrawPayload, withdrawPayloadType, withdrawResponse } from './account.js';
+export { SendMessagePayload, SendMessagePayloadType, SignPayload, SignPayloadType, SignResponse } from './messages.js';
+export { CreateTokenPayload, CreateTokenPayloadType, CreateTokenResponse, CreateTokenResponseType, DeleteTokenPayload, DeleteTokenPayloadType, GetTokenResponse, GetTokenResponseType, TokenCapability } from './tokens.js';
+export { AccountResponse, AccountResponseType, WithdrawPayload, WithdrawPayloadType, WithdrawResponse } from './account.js';
 export { GetPeerInfoPayload, GetPeerInfoPayloadType, GetPeerInfoResponse, GetPeerInfoResponseType } from './peerInfo.js';
 export { GetSettingsResponse, GetSettingsResponseType, SetSettingPayload, SetSettingPayloadType } from './settings.js';
 import 'zod';

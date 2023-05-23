@@ -19,10 +19,12 @@ __reExport(aliases_exports, require("./getAlias"), module.exports);
 __reExport(aliases_exports, require("./getAliases"), module.exports);
 __reExport(aliases_exports, require("./setAlias"), module.exports);
 __reExport(aliases_exports, require("./removeAlias"), module.exports);
+__reExport(aliases_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./getAlias"),
   ...require("./getAliases"),
   ...require("./setAlias"),
-  ...require("./removeAlias")
+  ...require("./removeAlias"),
+  ...require("./adapter")
 });

@@ -1,7 +1,10 @@
 import { getBalances } from "./getBalances";
-const getHoprBalance = async (url, apiKey) => {
+const getHoprBalance = async (payload) => {
   try {
-    const balances = await getBalances(url, apiKey);
+    const balances = await getBalances({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return balances.hopr;
   } catch (APIError) {
     throw APIError;

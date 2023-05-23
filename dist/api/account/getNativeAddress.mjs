@@ -1,7 +1,10 @@
 import { getAddresses } from "./getAddresses";
-const getNativeAddress = async (url, apiKey) => {
+const getNativeAddress = async (payload) => {
   try {
-    const addresses = await getAddresses(url, apiKey);
+    const addresses = await getAddresses({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return addresses.native;
   } catch (APIError) {
     throw APIError;

@@ -16,26 +16,30 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var settingsWrapper_exports = {};
-__export(settingsWrapper_exports, {
-  SettingsWrapper: () => SettingsWrapper
+var messages_exports = {};
+__export(messages_exports, {
+  SendMessagePayload: () => SendMessagePayload,
+  SignPayload: () => SignPayload,
+  SignResponse: () => SignResponse
 });
-module.exports = __toCommonJS(settingsWrapper_exports);
-var import_getSettings = require("./getSettings");
-var import_setSetting = require("./setSetting");
-class SettingsWrapper {
-  constructor(url, apiKey) {
-    this.url = url;
-    this.apiKey = apiKey;
-  }
-  getSettings() {
-    return (0, import_getSettings.getSettings)(this.url, this.apiKey);
-  }
-  setSetting(body) {
-    return (0, import_setSetting.setSetting)(this.url, this.apiKey, body);
-  }
-}
+module.exports = __toCommonJS(messages_exports);
+var import_zod = require("zod");
+var import_general = require("./general");
+const SignPayload = import_general.BasicAuthenticationPayload.extend({
+  message: import_zod.z.string()
+});
+const SignResponse = import_zod.z.object({
+  signature: import_zod.z.string()
+});
+const SendMessagePayload = import_general.BasicAuthenticationPayload.extend({
+  body: import_zod.z.string(),
+  recipient: import_zod.z.string(),
+  path: import_zod.z.array(import_zod.z.string()).optional(),
+  hops: import_zod.z.number().optional()
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  SettingsWrapper
+  SendMessagePayload,
+  SignPayload,
+  SignResponse
 });

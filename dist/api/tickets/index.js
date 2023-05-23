@@ -18,11 +18,11 @@ module.exports = __toCommonJS(tickets_exports);
 __reExport(tickets_exports, require("./getStatistics"), module.exports);
 __reExport(tickets_exports, require("./getTickets"), module.exports);
 __reExport(tickets_exports, require("./redeemTickets"), module.exports);
-__reExport(tickets_exports, require("./ticketsWrapper"), module.exports);
+__reExport(tickets_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./getStatistics"),
   ...require("./getTickets"),
   ...require("./redeemTickets"),
-  ...require("./ticketsWrapper")
+  ...require("./adapter")
 });

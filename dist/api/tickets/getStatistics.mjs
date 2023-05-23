@@ -4,10 +4,10 @@ import {
   GetStatisticsResponse
 } from "../../types/tickets";
 import { APIError, getHeaders } from "../../utils";
-const getStatistics = async (url, apiKey) => {
-  const rawResponse = await fetch(`${url}/api/v2/tickets/statistics`, {
+const getStatistics = async (payload) => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/tickets/statistics`, {
     method: "GET",
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetStatisticsResponse.safeParse(jsonResponse);

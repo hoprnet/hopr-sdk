@@ -1,8 +1,9 @@
 import { z } from "zod";
-const PeerIdPayload = z.object({
+import { BasicAuthenticationPayload } from "./general";
+const PeerIdPayload = BasicAuthenticationPayload.extend({
   peerId: z.string()
 });
-const FundChannelsPayload = z.object({
+const FundChannelsPayload = BasicAuthenticationPayload.extend({
   peerId: z.string(),
   outgoingAmount: z.string(),
   incomingAmount: z.string()
@@ -10,7 +11,7 @@ const FundChannelsPayload = z.object({
 const FundChannelsResponse = z.object({
   receipt: z.string()
 });
-const OpenChannelsPayload = z.object({
+const OpenChannelsPayload = BasicAuthenticationPayload.extend({
   peerId: z.string(),
   amount: z.string()
 });
@@ -40,7 +41,7 @@ const Ticket = z.object({
   signature: z.string()
 });
 const GetTicketsResponse = z.array(Ticket);
-const CloseChannelPayload = z.object({
+const CloseChannelPayload = BasicAuthenticationPayload.extend({
   peerId: z.string(),
   direction: z.enum(["incoming", "outgoing"])
 });
@@ -48,7 +49,7 @@ const CloseChannelResponse = z.object({
   receipt: z.string().optional(),
   channelStatus: z.string()
 });
-const GetChannelPayload = z.object({
+const GetChannelPayload = BasicAuthenticationPayload.extend({
   peerId: z.string(),
   direction: z.enum(["incoming", "outgoing"])
 });

@@ -34,10 +34,10 @@ module.exports = __toCommonJS(getMetrics_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const getMetrics = async (url, apiKey) => {
-  const headersForMetrics = (0, import_utils.getHeaders)(apiKey);
+const getMetrics = async (payload) => {
+  const headersForMetrics = (0, import_utils.getHeaders)(payload.apiKey);
   headersForMetrics.set("Accept-Content", "text/plain");
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/node/metrics`, {
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/node/metrics`, {
     method: "GET",
     headers: headersForMetrics
   });

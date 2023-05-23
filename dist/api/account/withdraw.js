@@ -34,14 +34,19 @@ module.exports = __toCommonJS(withdraw_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const withdraw = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/account/withdraw`, {
+const withdraw = async (payload) => {
+  const body = {
+    amount: payload.amount,
+    currency: payload.currency,
+    recipient: payload.recipient
+  };
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/account/withdraw`, {
     method: "POST",
-    headers: (0, import_utils.getHeaders)(apiKey),
-    body: JSON.stringify(body)
+    headers: (0, import_utils.getHeaders)(payload.apiKey),
+    body: JSON.stringify({ body })
   });
   const jsonResponse = await rawResponse.json();
-  const parsedRes = import_types.withdrawResponse.safeParse(jsonResponse);
+  const parsedRes = import_types.WithdrawResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data.receipt;
   } else if (rawResponse.status > 499) {

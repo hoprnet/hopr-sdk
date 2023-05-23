@@ -1,4 +1,4 @@
-declare class TicketsWrapper {
+declare class TicketsAdapter {
     private url;
     private apiKey;
     constructor(url: string, apiKey: string);
@@ -27,4 +27,4 @@ declare class TicketsWrapper {
     redeemTickets(): Promise<boolean>;
 }
 
-export { TicketsWrapper };
+export { TicketsAdapter };

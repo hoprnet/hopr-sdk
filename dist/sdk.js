@@ -26,7 +26,7 @@ class SDK {
   constructor(url, apiToken) {
     this.url = url;
     this.apiToken = apiToken;
-    this.api = new import_api.ApiWrapper(this.url, this.apiToken);
+    this.api = new import_api.ApiAdapter(this.url, this.apiToken);
   }
 }
 // Annotate the CommonJS export names for ESM import in node:

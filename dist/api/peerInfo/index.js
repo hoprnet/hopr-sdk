@@ -16,9 +16,9 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var peerInfo_exports = {};
 module.exports = __toCommonJS(peerInfo_exports);
 __reExport(peerInfo_exports, require("./getPeerInfo"), module.exports);
-__reExport(peerInfo_exports, require("./peerInfoWrapper"), module.exports);
+__reExport(peerInfo_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./getPeerInfo"),
-  ...require("./peerInfoWrapper")
+  ...require("./adapter")
 });

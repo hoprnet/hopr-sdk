@@ -16,30 +16,30 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var ticketsWrapper_exports = {};
-__export(ticketsWrapper_exports, {
-  TicketsWrapper: () => TicketsWrapper
+var adapter_exports = {};
+__export(adapter_exports, {
+  TicketsAdapter: () => TicketsAdapter
 });
-module.exports = __toCommonJS(ticketsWrapper_exports);
+module.exports = __toCommonJS(adapter_exports);
 var import_getStatistics = require("./getStatistics");
 var import_getTickets = require("./getTickets");
 var import_redeemTickets = require("./redeemTickets");
-class TicketsWrapper {
+class TicketsAdapter {
   constructor(url, apiKey) {
     this.url = url;
     this.apiKey = apiKey;
   }
   getStatistics() {
-    return (0, import_getStatistics.getStatistics)(this.url, this.apiKey);
+    return (0, import_getStatistics.getStatistics)({ url: this.url, apiKey: this.apiKey });
   }
   getTickets() {
-    return (0, import_getTickets.getTickets)(this.url, this.apiKey);
+    return (0, import_getTickets.getTickets)({ url: this.url, apiKey: this.apiKey });
   }
   redeemTickets() {
-    return (0, import_redeemTickets.redeemTickets)(this.url, this.apiKey);
+    return (0, import_redeemTickets.redeemTickets)({ url: this.url, apiKey: this.apiKey });
   }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  TicketsWrapper
+  TicketsAdapter
 });

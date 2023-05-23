@@ -34,12 +34,12 @@ module.exports = __toCommonJS(redeemChannelTickets_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const redeemChannelTickets = async (url, apiKey, body) => {
+const redeemChannelTickets = async (payload) => {
   const rawResponse = await (0, import_cross_fetch.default)(
-    `${url}/api/v2/channels/${body.peerId}/tickets/redeem`,
+    `${payload.url}/api/v2/channels/${payload.peerId}/tickets/redeem`,
     {
       method: "POST",
-      headers: (0, import_utils.getHeaders)(apiKey)
+      headers: (0, import_utils.getHeaders)(payload.apiKey)
     }
   );
   if (rawResponse.status === 204) {

@@ -18,27 +18,28 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var account_exports = {};
 __export(account_exports, {
-  accountResponse: () => accountResponse,
-  withdrawPayload: () => withdrawPayload,
-  withdrawResponse: () => withdrawResponse
+  AccountResponse: () => AccountResponse,
+  WithdrawPayload: () => WithdrawPayload,
+  WithdrawResponse: () => WithdrawResponse
 });
 module.exports = __toCommonJS(account_exports);
 var import_zod = require("zod");
-const accountResponse = import_zod.z.object({
+var import_general = require("./general");
+const AccountResponse = import_zod.z.object({
   hopr: import_zod.z.string(),
   native: import_zod.z.string()
 });
-const withdrawPayload = import_zod.z.object({
+const WithdrawPayload = import_general.BasicAuthenticationPayload.extend({
   currency: import_zod.z.enum(["NATIVE", "HOPR"]),
   amount: import_zod.z.string(),
   recipient: import_zod.z.string()
 });
-const withdrawResponse = import_zod.z.object({
+const WithdrawResponse = import_zod.z.object({
   receipt: import_zod.z.string()
 });
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  accountResponse,
-  withdrawPayload,
-  withdrawResponse
+  AccountResponse,
+  WithdrawPayload,
+  WithdrawResponse
 });

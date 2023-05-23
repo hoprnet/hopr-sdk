@@ -1,21 +1,21 @@
 import { getStatistics } from "./getStatistics";
 import { getTickets } from "./getTickets";
 import { redeemTickets } from "./redeemTickets";
-class TicketsWrapper {
+class TicketsAdapter {
   constructor(url, apiKey) {
     this.url = url;
     this.apiKey = apiKey;
   }
   getStatistics() {
-    return getStatistics(this.url, this.apiKey);
+    return getStatistics({ url: this.url, apiKey: this.apiKey });
   }
   getTickets() {
-    return getTickets(this.url, this.apiKey);
+    return getTickets({ url: this.url, apiKey: this.apiKey });
   }
   redeemTickets() {
-    return redeemTickets(this.url, this.apiKey);
+    return redeemTickets({ url: this.url, apiKey: this.apiKey });
   }
 }
 export {
-  TicketsWrapper
+  TicketsAdapter
 };

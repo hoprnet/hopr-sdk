@@ -1,10 +1,10 @@
 import fetch from "cross-fetch";
 import { Error } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const getMetrics = async (url, apiKey) => {
-  const headersForMetrics = getHeaders(apiKey);
+const getMetrics = async (payload) => {
+  const headersForMetrics = getHeaders(payload.apiKey);
   headersForMetrics.set("Accept-Content", "text/plain");
-  const rawResponse = await fetch(`${url}/api/v2/node/metrics`, {
+  const rawResponse = await fetch(`${payload.url}/api/v2/node/metrics`, {
     method: "GET",
     headers: headersForMetrics
   });

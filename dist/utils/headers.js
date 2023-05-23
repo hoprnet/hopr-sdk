@@ -18,6 +18,7 @@ var __copyProps = (to, from, except, desc) => {
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var headers_exports = {};
 __export(headers_exports, {
+  default: () => headers_default,
   getHeaders: () => getHeaders
 });
 module.exports = __toCommonJS(headers_exports);
@@ -29,6 +30,7 @@ const getHeaders = (apiKey) => {
   headers.set("x-auth-token", apiKey);
   return headers;
 };
+var headers_default = {};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   getHeaders

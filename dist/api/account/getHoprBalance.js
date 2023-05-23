@@ -22,9 +22,12 @@ __export(getHoprBalance_exports, {
 });
 module.exports = __toCommonJS(getHoprBalance_exports);
 var import_getBalances = require("./getBalances");
-const getHoprBalance = async (url, apiKey) => {
+const getHoprBalance = async (payload) => {
   try {
-    const balances = await (0, import_getBalances.getBalances)(url, apiKey);
+    const balances = await (0, import_getBalances.getBalances)({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return balances.hopr;
   } catch (APIError) {
     throw APIError;

@@ -1,11 +1,14 @@
 import fetch from "cross-fetch";
 import { APIError, getHeaders } from "../../utils";
 import { Error } from "../../types";
-const deleteToken = async (url, apiKey, body) => {
-  const rawResponse = await fetch(`${url}/api/v2/tokens/${body.id}`, {
-    method: "DELETE",
-    headers: getHeaders(apiKey)
-  });
+const deleteToken = async (payload) => {
+  const rawResponse = await fetch(
+    `${payload.url}/api/v2/tokens/${payload.id}`,
+    {
+      method: "DELETE",
+      headers: getHeaders(payload.apiKey)
+    }
+  );
   if (rawResponse.status === 204) {
     return true;
   } else if (rawResponse.status > 499) {

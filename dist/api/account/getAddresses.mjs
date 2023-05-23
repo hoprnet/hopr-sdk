@@ -1,13 +1,16 @@
 import fetch from "cross-fetch";
-import { accountResponse, Error } from "../../types";
+import {
+  AccountResponse,
+  Error
+} from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const getAddresses = async (url, apiKey) => {
-  const rawResponse = await fetch(`${url}/api/v2/account/addresses`, {
+const getAddresses = async (payload) => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/account/addresses`, {
     method: "GET",
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
   const jsonResponse = await rawResponse.json();
-  const parsedRes = accountResponse.safeParse(jsonResponse);
+  const parsedRes = AccountResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {

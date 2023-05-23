@@ -16,11 +16,11 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var types_exports = {};
 module.exports = __toCommonJS(types_exports);
 __reExport(types_exports, require("./aliases"), module.exports);
-__reExport(types_exports, require("./error"), module.exports);
 __reExport(types_exports, require("./general"), module.exports);
 __reExport(types_exports, require("./channels"), module.exports);
 __reExport(types_exports, require("./error"), module.exports);
 __reExport(types_exports, require("./node"), module.exports);
+__reExport(types_exports, require("./messages"), module.exports);
 __reExport(types_exports, require("./tokens"), module.exports);
 __reExport(types_exports, require("./account"), module.exports);
 __reExport(types_exports, require("./peerInfo"), module.exports);
@@ -28,11 +28,11 @@ __reExport(types_exports, require("./settings"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./aliases"),
-  ...require("./error"),
   ...require("./general"),
   ...require("./channels"),
   ...require("./error"),
   ...require("./node"),
+  ...require("./messages"),
   ...require("./tokens"),
   ...require("./account"),
   ...require("./peerInfo"),

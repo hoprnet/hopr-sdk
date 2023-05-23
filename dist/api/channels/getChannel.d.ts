@@ -2,6 +2,6 @@ import { GetChannelPayloadType, GetChannelResponseType } from '../../types/chann
 import 'zod';
 import '../../types/general.js';
 
-declare const getChannel: (url: string, apiKey: string, body: GetChannelPayloadType) => Promise<GetChannelResponseType>;
+declare const getChannel: (payload: GetChannelPayloadType) => Promise<GetChannelResponseType>;
 
 export { getChannel };

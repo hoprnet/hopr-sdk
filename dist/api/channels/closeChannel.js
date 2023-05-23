@@ -34,12 +34,12 @@ module.exports = __toCommonJS(closeChannel_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const closeChannel = async (url, apiKey, body) => {
+const closeChannel = async (payload) => {
   const rawResponse = await (0, import_cross_fetch.default)(
-    `${url}/api/v2/channels/${body.peerId}/${body.direction}`,
+    `${payload.url}/api/v2/channels/${payload.peerId}/${payload.direction}`,
     {
       method: "DELETE",
-      headers: (0, import_utils.getHeaders)(apiKey)
+      headers: (0, import_utils.getHeaders)(payload.apiKey)
     }
   );
   const jsonResponse = await rawResponse.json();

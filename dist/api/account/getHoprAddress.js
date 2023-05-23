@@ -22,9 +22,12 @@ __export(getHoprAddress_exports, {
 });
 module.exports = __toCommonJS(getHoprAddress_exports);
 var import_getAddresses = require("./getAddresses");
-const getHoprAddress = async (url, apiKey) => {
+const getHoprAddress = async (payload) => {
   try {
-    const addresses = await (0, import_getAddresses.getAddresses)(url, apiKey);
+    const addresses = await (0, import_getAddresses.getAddresses)({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return addresses.hopr;
   } catch (APIError2) {
     throw APIError2;

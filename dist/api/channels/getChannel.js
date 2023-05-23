@@ -34,12 +34,12 @@ module.exports = __toCommonJS(getChannel_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const getChannel = async (url, apiKey, body) => {
+const getChannel = async (payload) => {
   const rawResponse = await (0, import_cross_fetch.default)(
-    `${url}/api/v2/channels/${body.peerId}/${body.direction}`,
+    `${payload.url}/api/v2/channels/${payload.peerId}/${payload.direction}`,
     {
       method: "GET",
-      headers: (0, import_utils.getHeaders)(apiKey)
+      headers: (0, import_utils.getHeaders)(payload.apiKey)
     }
   );
   const jsonResponse = await rawResponse.json();

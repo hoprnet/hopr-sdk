@@ -4,7 +4,7 @@ import { ZodToType } from './general.js';
 /**
  * General
  */
-declare const accountResponse: z.ZodObject<{
+declare const AccountResponse: z.ZodObject<{
     hopr: z.ZodString;
     native: z.ZodString;
 }, "strip", z.ZodTypeAny, {
@@ -14,25 +14,31 @@ declare const accountResponse: z.ZodObject<{
     hopr: string;
     native: string;
 }>;
-type accountResponseType = ZodToType<typeof accountResponse>;
+type AccountResponseType = ZodToType<typeof AccountResponse>;
 /**
  * withdraw
  */
-declare const withdrawPayload: z.ZodObject<{
+declare const WithdrawPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     currency: z.ZodEnum<["NATIVE", "HOPR"]>;
     amount: z.ZodString;
     recipient: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     amount: string;
-    currency: "NATIVE" | "HOPR";
     recipient: string;
+    currency: "NATIVE" | "HOPR";
 }, {
+    url: string;
+    apiKey: string;
     amount: string;
-    currency: "NATIVE" | "HOPR";
     recipient: string;
+    currency: "NATIVE" | "HOPR";
 }>;
-type withdrawPayloadType = ZodToType<typeof withdrawPayload>;
-declare const withdrawResponse: z.ZodObject<{
+type WithdrawPayloadType = ZodToType<typeof WithdrawPayload>;
+declare const WithdrawResponse: z.ZodObject<{
     receipt: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     receipt: string;
@@ -40,4 +46,4 @@ declare const withdrawResponse: z.ZodObject<{
     receipt: string;
 }>;
 
-export { accountResponse, accountResponseType, withdrawPayload, withdrawPayloadType, withdrawResponse };
+export { AccountResponse, AccountResponseType, WithdrawPayload, WithdrawPayloadType, WithdrawResponse };

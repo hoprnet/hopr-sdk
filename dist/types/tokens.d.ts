@@ -48,7 +48,9 @@ declare const TokenCapability: z.ZodObject<{
 /**
  * createToken
  */
-declare const createPayload: z.ZodObject<{
+declare const CreateTokenPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     capabilities: z.ZodArray<z.ZodObject<{
         endpoint: z.ZodEnum<["accountWithdraw", "accountGetBalances", "accountGetAddresses", "aliasesGetAliases", "aliasesSetAlias", "aliasesGetAlias", "aliasesRemoveAlias", "channelsFundChannels", "channelsOpenChannel", "channelsGetChannels", "channelsRedeemTickets", "channelsGetTickets", "channelsGetChannel", "channelsCloseChannel", "messagesWebsocket", "messagesSign", "messagesSendMessage", "nodeGetVersion", "nodePing", "nodeGetPeers", "nodeGetMetrics", "nodeGetInfo", "nodeGetEntryNodes", "peerInfoGetPeerInfo", "settingsGetSettings", "settingsSetSetting", "ticketsGetStatistics", "ticketsRedeemTickets", "ticketsGetTickets", "tokensCreate", "tokensGetToken", "tokensDelete"]>;
         limits: z.ZodArray<z.ZodObject<{
@@ -96,6 +98,8 @@ declare const createPayload: z.ZodObject<{
     lifetime: z.ZodNumber;
     description: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     capabilities: {
         endpoint: "accountWithdraw" | "accountGetBalances" | "accountGetAddresses" | "aliasesGetAliases" | "aliasesSetAlias" | "aliasesGetAlias" | "aliasesRemoveAlias" | "channelsFundChannels" | "channelsOpenChannel" | "channelsGetChannels" | "channelsRedeemTickets" | "channelsGetTickets" | "channelsGetChannel" | "channelsCloseChannel" | "messagesWebsocket" | "messagesSign" | "messagesSendMessage" | "nodeGetVersion" | "nodePing" | "nodeGetPeers" | "nodeGetMetrics" | "nodeGetInfo" | "nodeGetEntryNodes" | "peerInfoGetPeerInfo" | "settingsGetSettings" | "settingsSetSetting" | "ticketsGetStatistics" | "ticketsRedeemTickets" | "ticketsGetTickets" | "tokensCreate" | "tokensGetToken" | "tokensDelete";
         limits: {
@@ -109,6 +113,8 @@ declare const createPayload: z.ZodObject<{
     lifetime: number;
     description: string;
 }, {
+    url: string;
+    apiKey: string;
     capabilities: {
         endpoint: "accountWithdraw" | "accountGetBalances" | "accountGetAddresses" | "aliasesGetAliases" | "aliasesSetAlias" | "aliasesGetAlias" | "aliasesRemoveAlias" | "channelsFundChannels" | "channelsOpenChannel" | "channelsGetChannels" | "channelsRedeemTickets" | "channelsGetTickets" | "channelsGetChannel" | "channelsCloseChannel" | "messagesWebsocket" | "messagesSign" | "messagesSendMessage" | "nodeGetVersion" | "nodePing" | "nodeGetPeers" | "nodeGetMetrics" | "nodeGetInfo" | "nodeGetEntryNodes" | "peerInfoGetPeerInfo" | "settingsGetSettings" | "settingsSetSetting" | "ticketsGetStatistics" | "ticketsRedeemTickets" | "ticketsGetTickets" | "tokensCreate" | "tokensGetToken" | "tokensDelete";
         limits: {
@@ -122,19 +128,19 @@ declare const createPayload: z.ZodObject<{
     lifetime: number;
     description: string;
 }>;
-type createPayloadType = ZodToType<typeof createPayload>;
-declare const createResponse: z.ZodObject<{
+type CreateTokenPayloadType = ZodToType<typeof CreateTokenPayload>;
+declare const CreateTokenResponse: z.ZodObject<{
     token: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     token: string;
 }, {
     token: string;
 }>;
-type createResponseType = ZodToType<typeof createResponse>;
+type CreateTokenResponseType = ZodToType<typeof CreateTokenResponse>;
 /**
  * getToken
  */
-declare const getTokenResponse: z.ZodObject<{
+declare const GetTokenResponse: z.ZodObject<{
     id: z.ZodString;
     description: z.ZodOptional<z.ZodString>;
     capabilities: z.ZodArray<z.ZodObject<{
@@ -211,17 +217,23 @@ declare const getTokenResponse: z.ZodObject<{
     description?: string | undefined;
     valid_until?: number | undefined;
 }>;
-type getTokenResponseType = ZodToType<typeof getTokenResponse>;
+type GetTokenResponseType = ZodToType<typeof GetTokenResponse>;
 /**
- * deteleToken
+ * deleteToken
  */
-declare const deletePayload: z.ZodObject<{
+declare const DeleteTokenPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     id: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     id: string;
 }, {
+    url: string;
+    apiKey: string;
     id: string;
 }>;
-type deletePayloadType = ZodToType<typeof deletePayload>;
+type DeleteTokenPayloadType = ZodToType<typeof DeleteTokenPayload>;
 
-export { TokenCapability, createPayload, createPayloadType, createResponse, createResponseType, deletePayload, deletePayloadType, getTokenResponse, getTokenResponseType };
+export { CreateTokenPayload, CreateTokenPayloadType, CreateTokenResponse, CreateTokenResponseType, DeleteTokenPayload, DeleteTokenPayloadType, GetTokenResponse, GetTokenResponseType, TokenCapability };

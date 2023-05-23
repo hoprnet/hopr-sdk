@@ -22,9 +22,12 @@ __export(getNativeAddress_exports, {
 });
 module.exports = __toCommonJS(getNativeAddress_exports);
 var import_getAddresses = require("./getAddresses");
-const getNativeAddress = async (url, apiKey) => {
+const getNativeAddress = async (payload) => {
   try {
-    const addresses = await (0, import_getAddresses.getAddresses)(url, apiKey);
+    const addresses = await (0, import_getAddresses.getAddresses)({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return addresses.native;
   } catch (APIError) {
     throw APIError;

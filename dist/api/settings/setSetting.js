@@ -32,14 +32,17 @@ __export(setSetting_exports, {
 });
 module.exports = __toCommonJS(setSetting_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
-var import_utils = require("../../utils");
 var import_types = require("../../types");
-const setSetting = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/settings/${body.setting}`, {
-    method: "PUT",
-    headers: (0, import_utils.getHeaders)(apiKey),
-    body: JSON.stringify({ settingValue: body.settingValue })
-  });
+var import_utils = require("../../utils");
+const setSetting = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(
+    `${payload.url}/api/v2/settings/${payload.setting}`,
+    {
+      method: "PUT",
+      headers: (0, import_utils.getHeaders)(payload.apiKey),
+      body: JSON.stringify({ settingValue: payload.settingValue })
+    }
+  );
   if (rawResponse.status === 204) {
     return true;
   } else if (rawResponse.status > 499) {

@@ -1,7 +1,7 @@
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
 import { GetInfoResponseType } from '../../types/node.js';
 import 'zod';
-import '../../types/general.js';
 
-declare const getInfo: (url: string, apiKey: string) => Promise<GetInfoResponseType>;
+declare const getInfo: (payload: BasicAuthenticationPayloadType) => Promise<GetInfoResponseType>;
 
 export { getInfo };

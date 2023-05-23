@@ -1,4 +1,4 @@
-import { createPayloadType, createResponseType } from '../../types/tokens.js';
+import { CreateTokenPayloadType, CreateTokenResponseType } from '../../types/tokens.js';
 import 'zod';
 import '../../types/general.js';
 
@@ -16,6 +16,6 @@ import '../../types/general.js';
  * @returns A Promise that resolves to the generated token which must be used when authenticating for API calls.
  * @throws An error that occurred while processing the request.
  */
-declare const create: (url: string, apiKey: string, body: createPayloadType) => Promise<createResponseType>;
+declare const createToken: (payload: CreateTokenPayloadType) => Promise<CreateTokenResponseType>;
 
-export { create };
+export { createToken };

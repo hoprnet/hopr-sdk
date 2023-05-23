@@ -4,43 +4,55 @@ import { ZodToType } from './general.js';
 /**
  * General
  */
-declare const aliasPayload: z.ZodObject<{
+declare const AliasPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     alias: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     alias: string;
 }, {
+    url: string;
+    apiKey: string;
     alias: string;
 }>;
-type aliasPayloadType = ZodToType<typeof aliasPayload>;
+type AliasPayloadType = ZodToType<typeof AliasPayload>;
 /**
  * getAliases
  */
-declare const getAliasesResponse: z.ZodRecord<z.ZodString, z.ZodString>;
-type getAliasesResponseType = ZodToType<typeof getAliasesResponse>;
+declare const GetAliasesResponse: z.ZodRecord<z.ZodString, z.ZodString>;
+type GetAliasesResponseType = ZodToType<typeof GetAliasesResponse>;
 /**
  * setAlias
  */
-declare const setAliasPayload: z.ZodObject<{
+declare const SetAliasPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
     alias: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     alias: string;
     peerId: string;
 }, {
+    url: string;
+    apiKey: string;
     alias: string;
     peerId: string;
 }>;
-type setAliasPayloadType = ZodToType<typeof setAliasPayload>;
+type SetAliasPayloadType = ZodToType<typeof SetAliasPayload>;
 /**
  * getAlias
  */
-declare const getAliasResponse: z.ZodObject<{
+declare const GetAliasResponse: z.ZodObject<{
     peerId: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     peerId: string;
 }, {
     peerId: string;
 }>;
-type getAliasResponseType = ZodToType<typeof getAliasResponse>;
+type GetAliasResponseType = ZodToType<typeof GetAliasResponse>;
 
-export { aliasPayload, aliasPayloadType, getAliasResponse, getAliasResponseType, getAliasesResponse, getAliasesResponseType, setAliasPayload, setAliasPayloadType };
+export { AliasPayload, AliasPayloadType, GetAliasResponse, GetAliasResponseType, GetAliasesResponse, GetAliasesResponseType, SetAliasPayload, SetAliasPayloadType };

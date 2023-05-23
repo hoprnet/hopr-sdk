@@ -1,10 +1,10 @@
 import fetch from "cross-fetch";
 import { Error } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const redeemTickets = async (url, apiKey) => {
-  const rawResponse = await fetch(`${url}/api/v2/tickets/redeem`, {
+const redeemTickets = async (payload) => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/tickets/redeem`, {
     method: "POST",
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
   if (rawResponse.status === 204) {
     return true;

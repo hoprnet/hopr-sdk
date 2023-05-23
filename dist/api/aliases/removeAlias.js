@@ -32,13 +32,16 @@ __export(removeAlias_exports, {
 });
 module.exports = __toCommonJS(removeAlias_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
-var import_utils = require("../../utils");
 var import_types = require("../../types");
-const removeAlias = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/aliases/${body.alias}`, {
-    method: "DELETE",
-    headers: (0, import_utils.getHeaders)(apiKey)
-  });
+var import_utils = require("../../utils");
+const removeAlias = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(
+    `${payload.url}/api/v2/aliases/${payload.alias}`,
+    {
+      method: "DELETE",
+      headers: (0, import_utils.getHeaders)(payload.apiKey)
+    }
+  );
   if (rawResponse.status === 204) {
     return true;
   } else if (rawResponse.status > 499) {

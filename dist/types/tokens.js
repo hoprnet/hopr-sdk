@@ -28,14 +28,15 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var tokens_exports = {};
 __export(tokens_exports, {
-  TokenCapability: () => TokenCapability,
-  createPayload: () => createPayload,
-  createResponse: () => createResponse,
-  deletePayload: () => deletePayload,
-  getTokenResponse: () => getTokenResponse
+  CreateTokenPayload: () => CreateTokenPayload,
+  CreateTokenResponse: () => CreateTokenResponse,
+  DeleteTokenPayload: () => DeleteTokenPayload,
+  GetTokenResponse: () => GetTokenResponse,
+  TokenCapability: () => TokenCapability
 });
 module.exports = __toCommonJS(tokens_exports);
 var import_zod = __toESM(require("zod"));
+var import_general = require("./general");
 const VALUES = [
   // Account
   "accountWithdraw",
@@ -89,26 +90,28 @@ const TokenCapability = import_zod.default.object({
     })
   )
 });
-const createPayload = import_zod.default.object({
+const CreateTokenPayload = import_general.BasicAuthenticationPayload.extend({
   capabilities: import_zod.default.array(TokenCapability),
   lifetime: import_zod.default.number().nonnegative(),
   description: import_zod.default.string()
 });
-const createResponse = import_zod.default.object({
+const CreateTokenResponse = import_zod.default.object({
   token: import_zod.default.string()
 });
-const getTokenResponse = import_zod.default.object({
+const GetTokenResponse = import_zod.default.object({
   id: import_zod.default.string(),
   description: import_zod.default.string().optional(),
   capabilities: import_zod.default.array(TokenCapability),
   valid_until: import_zod.default.number().optional()
 });
-const deletePayload = import_zod.default.object({ id: import_zod.default.string() });
+const DeleteTokenPayload = import_general.BasicAuthenticationPayload.extend({
+  id: import_zod.default.string()
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  TokenCapability,
-  createPayload,
-  createResponse,
-  deletePayload,
-  getTokenResponse
+  CreateTokenPayload,
+  CreateTokenResponse,
+  DeleteTokenPayload,
+  GetTokenResponse,
+  TokenCapability
 });

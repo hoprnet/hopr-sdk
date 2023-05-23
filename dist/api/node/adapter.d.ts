@@ -1,8 +1,8 @@
+import { RemoveBasicAuthenticationPayloadType } from '../../types/general.js';
 import { GetPeersPayloadType, PingNodePayloadType } from '../../types/node.js';
 import 'zod';
-import '../../types/general.js';
 
-declare class NodeWrapper {
+declare class NodeAdapter {
     private url;
     private apiKey;
     constructor(url: string, apiKey: string);
@@ -23,7 +23,7 @@ declare class NodeWrapper {
         hoprNetworkRegistryAddress?: string | undefined;
     }>;
     getMetrics(): Promise<string>;
-    getPeers(body?: GetPeersPayloadType): Promise<{
+    getPeers(payload: RemoveBasicAuthenticationPayloadType<GetPeersPayloadType>): Promise<{
         connected: {
             peerId: string;
             quality: number;
@@ -50,9 +50,9 @@ declare class NodeWrapper {
         }[];
     }>;
     getVersion(): Promise<string>;
-    pingNode(body: PingNodePayloadType): Promise<{
+    pingNode(payload: RemoveBasicAuthenticationPayloadType<PingNodePayloadType>): Promise<{
         latency: number;
     }>;
 }
 
-export { NodeWrapper };
+export { NodeAdapter };

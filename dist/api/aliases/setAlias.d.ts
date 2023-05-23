@@ -1,4 +1,4 @@
-import { setAliasPayloadType } from '../../types/aliases.js';
+import { SetAliasPayloadType } from '../../types/aliases.js';
 import 'zod';
 import '../../types/general.js';
 
@@ -13,6 +13,6 @@ import '../../types/general.js';
  * @returns A Promise that resolves to true if alias succesfully linked to peerId.
  * @throws An error that occurred while processing the request.
  */
-declare const setAlias: (url: string, apiKey: string, body: setAliasPayloadType) => Promise<boolean>;
+declare const setAlias: (payload: SetAliasPayloadType) => Promise<boolean>;
 
 export { setAlias };

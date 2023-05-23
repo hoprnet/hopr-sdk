@@ -4,11 +4,14 @@ import {
   GetPeerInfoResponse,
   Error
 } from "../../types";
-const getPeerInfo = async (url, apiKey, body) => {
-  const rawResponse = await fetch(`${url}/api/v2/peerInfo/${body.peerId}`, {
-    method: "GET",
-    headers: getHeaders(apiKey)
-  });
+const getPeerInfo = async (payload) => {
+  const rawResponse = await fetch(
+    `${payload.url}/api/v2/peerInfo/${payload.peerId}`,
+    {
+      method: "GET",
+      headers: getHeaders(payload.apiKey)
+    }
+  );
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetPeerInfoResponse.safeParse(jsonResponse);
   if (parsedRes.success) {

@@ -32,15 +32,15 @@ __export(getAliases_exports, {
 });
 module.exports = __toCommonJS(getAliases_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
-var import_utils = require("../../utils");
 var import_types = require("../../types");
-const getAliases = async (url, apiKey) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/aliases`, {
+var import_utils = require("../../utils");
+const getAliases = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/aliases`, {
     method: "GET",
-    headers: (0, import_utils.getHeaders)(apiKey)
+    headers: (0, import_utils.getHeaders)(payload.apiKey)
   });
   const jsonResponse = await rawResponse.json();
-  const parsedRes = import_types.getAliasesResponse.safeParse(jsonResponse);
+  const parsedRes = import_types.GetAliasesResponse.safeParse(jsonResponse);
   if (parsedRes.success && rawResponse.status === 200) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {

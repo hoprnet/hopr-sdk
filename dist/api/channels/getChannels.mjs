@@ -4,10 +4,10 @@ import {
   GetChannelsResponse
 } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const getChannels = async (url, apiKey) => {
-  const rawResponse = await fetch(`${url}/api/v2/channels`, {
+const getChannels = async (payload) => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/channels`, {
     method: "GET",
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetChannelsResponse.safeParse(jsonResponse);

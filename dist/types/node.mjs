@@ -1,6 +1,7 @@
 import { z } from "zod";
-const GetPeersPayload = z.object({
-  quality: z.number()
+import { BasicAuthenticationPayload } from "./general";
+const GetPeersPayload = BasicAuthenticationPayload.extend({
+  quality: z.number().optional()
 });
 const Peer = z.object({
   peerId: z.string(),
@@ -35,7 +36,7 @@ const nodeSchema = z.object({
   isEligible: z.boolean()
 });
 const GetEntryNodesResponse = z.record(nodeSchema);
-const PingNodePayload = z.object({
+const PingNodePayload = BasicAuthenticationPayload.extend({
   peerId: z.string()
 });
 const PingNodeResponse = z.object({

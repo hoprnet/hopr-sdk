@@ -1,3 +1,6 @@
-declare const getVersion: (url: string, apiKey: string) => Promise<string>;
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
+import 'zod';
+
+declare const getVersion: (payload: BasicAuthenticationPayloadType) => Promise<string>;
 
 export { getVersion };

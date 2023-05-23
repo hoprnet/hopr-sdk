@@ -7,5 +7,6 @@ import { Headers } from 'cross-fetch';
  * @returns The headers for making API requests.
  */
 declare const getHeaders: (apiKey: string) => Headers;
+declare const _default: {};
 
-export { getHeaders };
+export { _default as default, getHeaders };

@@ -1,10 +1,10 @@
 import fetch from "cross-fetch";
 import { Error } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const getVersion = async (url, apiKey) => {
-  const rawResponse = await fetch(`${url}/api/v2/node/version`, {
+const getVersion = async (payload) => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/node/version`, {
     method: "GET",
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
   if (rawResponse.status === 200) {
     const textResponse = await rawResponse.text();

@@ -1,8 +1,8 @@
+import { RemoveBasicAuthenticationPayloadType } from '../../types/general.js';
 import { SetSettingPayloadType } from '../../types/settings.js';
 import 'zod';
-import '../../types/general.js';
 
-declare class SettingsWrapper {
+declare class SettingsAdapter {
     private url;
     private apiKey;
     constructor(url: string, apiKey: string);
@@ -10,7 +10,7 @@ declare class SettingsWrapper {
         includeRecipient: boolean;
         strategy: string;
     }>;
-    setSetting(body: SetSettingPayloadType): Promise<boolean>;
+    setSetting(payload: RemoveBasicAuthenticationPayloadType<SetSettingPayloadType>): Promise<boolean>;
 }
 
-export { SettingsWrapper };
+export { SettingsAdapter };

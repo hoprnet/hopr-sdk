@@ -5,11 +5,17 @@ import { ZodToType } from './general.js';
  * Get peers
  */
 declare const GetPeersPayload: z.ZodObject<{
-    quality: z.ZodNumber;
+    url: z.ZodString;
+    apiKey: z.ZodString;
+    quality: z.ZodOptional<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
-    quality: number;
+    url: string;
+    apiKey: string;
+    quality?: number | undefined;
 }, {
-    quality: number;
+    url: string;
+    apiKey: string;
+    quality?: number | undefined;
 }>;
 type GetPeersPayloadType = ZodToType<typeof GetPeersPayload>;
 declare const Peer: z.ZodObject<{
@@ -238,10 +244,16 @@ type GetEntryNodesResponseType = ZodToType<typeof GetEntryNodesResponse>;
  * Ping node
  */
 declare const PingNodePayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     peerId: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     peerId: string;
 }, {
+    url: string;
+    apiKey: string;
     peerId: string;
 }>;
 type PingNodePayloadType = ZodToType<typeof PingNodePayload>;

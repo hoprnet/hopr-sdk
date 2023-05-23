@@ -34,15 +34,15 @@ module.exports = __toCommonJS(getPeers_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const getPeers = async (url, apiKey, body) => {
+const getPeers = async (payload) => {
   var _a;
   const rawResponse = await (0, import_cross_fetch.default)(
-    (body == null ? void 0 : body.quality) ? `${url}/api/v2/node/peers?` + new URLSearchParams({
-      quality: ((_a = body == null ? void 0 : body.quality) != null ? _a : 0).toString()
-    }) : `${url}/api/v2/node/peers`,
+    (payload == null ? void 0 : payload.quality) ? `${payload.url}/api/v2/node/peers?` + new URLSearchParams({
+      quality: ((_a = payload.quality) != null ? _a : 0).toString()
+    }) : `${payload.url}/api/v2/node/peers`,
     {
       method: "GET",
-      headers: (0, import_utils.getHeaders)(apiKey)
+      headers: (0, import_utils.getHeaders)(payload.apiKey)
     }
   );
   const jsonResponse = await rawResponse.json();

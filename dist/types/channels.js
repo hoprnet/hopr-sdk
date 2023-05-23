@@ -34,10 +34,11 @@ __export(channels_exports, {
 });
 module.exports = __toCommonJS(channels_exports);
 var import_zod = require("zod");
-const PeerIdPayload = import_zod.z.object({
+var import_general = require("./general");
+const PeerIdPayload = import_general.BasicAuthenticationPayload.extend({
   peerId: import_zod.z.string()
 });
-const FundChannelsPayload = import_zod.z.object({
+const FundChannelsPayload = import_general.BasicAuthenticationPayload.extend({
   peerId: import_zod.z.string(),
   outgoingAmount: import_zod.z.string(),
   incomingAmount: import_zod.z.string()
@@ -45,7 +46,7 @@ const FundChannelsPayload = import_zod.z.object({
 const FundChannelsResponse = import_zod.z.object({
   receipt: import_zod.z.string()
 });
-const OpenChannelsPayload = import_zod.z.object({
+const OpenChannelsPayload = import_general.BasicAuthenticationPayload.extend({
   peerId: import_zod.z.string(),
   amount: import_zod.z.string()
 });
@@ -75,7 +76,7 @@ const Ticket = import_zod.z.object({
   signature: import_zod.z.string()
 });
 const GetTicketsResponse = import_zod.z.array(Ticket);
-const CloseChannelPayload = import_zod.z.object({
+const CloseChannelPayload = import_general.BasicAuthenticationPayload.extend({
   peerId: import_zod.z.string(),
   direction: import_zod.z.enum(["incoming", "outgoing"])
 });
@@ -83,7 +84,7 @@ const CloseChannelResponse = import_zod.z.object({
   receipt: import_zod.z.string().optional(),
   channelStatus: import_zod.z.string()
 });
-const GetChannelPayload = import_zod.z.object({
+const GetChannelPayload = import_general.BasicAuthenticationPayload.extend({
   peerId: import_zod.z.string(),
   direction: import_zod.z.enum(["incoming", "outgoing"])
 });

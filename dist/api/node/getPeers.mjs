@@ -4,15 +4,15 @@ import {
   GetPeersResponse
 } from "../../types";
 import { APIError, getHeaders } from "../../utils";
-const getPeers = async (url, apiKey, body) => {
+const getPeers = async (payload) => {
   var _a;
   const rawResponse = await fetch(
-    (body == null ? void 0 : body.quality) ? `${url}/api/v2/node/peers?` + new URLSearchParams({
-      quality: ((_a = body == null ? void 0 : body.quality) != null ? _a : 0).toString()
-    }) : `${url}/api/v2/node/peers`,
+    (payload == null ? void 0 : payload.quality) ? `${payload.url}/api/v2/node/peers?` + new URLSearchParams({
+      quality: ((_a = payload.quality) != null ? _a : 0).toString()
+    }) : `${payload.url}/api/v2/node/peers`,
     {
       method: "GET",
-      headers: getHeaders(apiKey)
+      headers: getHeaders(payload.apiKey)
     }
   );
   const jsonResponse = await rawResponse.json();

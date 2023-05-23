@@ -1,3 +1,6 @@
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
+import 'zod';
+
 /**
  * Get the native address of the node.
  *
@@ -6,6 +9,6 @@
  * @returns A Promise that resolves to the native address.
  * @throws An error that occurred while processing the request.
  */
-declare const getNativeAddress: (url: string, apiKey: string) => Promise<string>;
+declare const getNativeAddress: (payload: BasicAuthenticationPayloadType) => Promise<string>;
 
 export { getNativeAddress };

@@ -1,4 +1,4 @@
-import { aliasPayloadType } from '../../types/aliases.js';
+import { AliasPayloadType } from '../../types/aliases.js';
 import 'zod';
 import '../../types/general.js';
 
@@ -11,6 +11,6 @@ import '../../types/general.js';
  * @returns A promise that resolves to the peer ID associated with the alias.
  * @throws An error that occurred while processing the request.
  */
-declare const getAlias: (url: string, apiKey: string, body: aliasPayloadType) => Promise<string>;
+declare const getAlias: (payload: AliasPayloadType) => Promise<string>;
 
 export { getAlias };

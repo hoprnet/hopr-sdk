@@ -22,6 +22,7 @@ __reExport(account_exports, require("./getBalances"), module.exports);
 __reExport(account_exports, require("./getHoprAddress"), module.exports);
 __reExport(account_exports, require("./getNativeBalance"), module.exports);
 __reExport(account_exports, require("./withdraw"), module.exports);
+__reExport(account_exports, require("./adapter"), module.exports);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ...require("./getAddresses"),
@@ -30,5 +31,6 @@ __reExport(account_exports, require("./withdraw"), module.exports);
   ...require("./getBalances"),
   ...require("./getHoprAddress"),
   ...require("./getNativeBalance"),
-  ...require("./withdraw")
+  ...require("./withdraw"),
+  ...require("./adapter")
 });

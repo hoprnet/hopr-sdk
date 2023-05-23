@@ -16,22 +16,26 @@ var __copyProps = (to, from, except, desc) => {
   return to;
 };
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var peerInfoWrapper_exports = {};
-__export(peerInfoWrapper_exports, {
-  PeerInfoWrapper: () => PeerInfoWrapper
+var adapter_exports = {};
+__export(adapter_exports, {
+  PeerInfoAdapter: () => PeerInfoAdapter
 });
-module.exports = __toCommonJS(peerInfoWrapper_exports);
+module.exports = __toCommonJS(adapter_exports);
 var import_getPeerInfo = require("./getPeerInfo");
-class PeerInfoWrapper {
+class PeerInfoAdapter {
   constructor(url, apiKey) {
     this.url = url;
     this.apiKey = apiKey;
   }
-  getPeerInfo(body) {
-    return (0, import_getPeerInfo.getPeerInfo)(this.url, this.apiKey, body);
+  getPeerInfo(payload) {
+    return (0, import_getPeerInfo.getPeerInfo)({
+      url: this.url,
+      apiKey: this.apiKey,
+      peerId: payload.peerId
+    });
   }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  PeerInfoWrapper
+  PeerInfoAdapter
 });

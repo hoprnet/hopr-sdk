@@ -1,6 +1,6 @@
-import { accountResponseType } from '../../types/account.js';
+import { BasicAuthenticationPayloadType } from '../../types/general.js';
+import { AccountResponseType } from '../../types/account.js';
 import 'zod';
-import '../../types/general.js';
 
 /**
  * Gets the HOPR and native addresses associated to the node.
@@ -10,6 +10,6 @@ import '../../types/general.js';
  * @returns A promise that resolves with an object containing the HOPR and native addresses.
  * @throws An error that occurred while processing the request.
  */
-declare const getAddresses: (url: string, apiKey: string) => Promise<accountResponseType>;
+declare const getAddresses: (payload: BasicAuthenticationPayloadType) => Promise<AccountResponseType>;
 
 export { getAddresses };

@@ -34,16 +34,16 @@ module.exports = __toCommonJS(getToken_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_utils = require("../../utils");
 var import_types = require("../../types");
-const getToken = async (url, apiKey) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/token`, {
+const getToken = async (payload) => {
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/token`, {
     method: "GET",
-    headers: (0, import_utils.getHeaders)(apiKey)
+    headers: (0, import_utils.getHeaders)(payload.apiKey)
   });
   if (rawResponse.status === 404) {
     throw new import_utils.APIError({ status: "RESOURCE WAS NOT FOUND" });
   }
   const jsonResponse = await rawResponse.json();
-  const parsedRes = import_types.getTokenResponse.safeParse(jsonResponse);
+  const parsedRes = import_types.GetTokenResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {

@@ -19,12 +19,18 @@ type GetSettingsResponseType = ZodToType<typeof GetSettingsResponse>;
  * Set Setting
  */
 declare const SetSettingPayload: z.ZodObject<{
+    url: z.ZodString;
+    apiKey: z.ZodString;
     setting: z.ZodString;
     settingValue: z.ZodAny;
 }, "strip", z.ZodTypeAny, {
+    url: string;
+    apiKey: string;
     setting: string;
     settingValue?: any;
 }, {
+    url: string;
+    apiKey: string;
     setting: string;
     settingValue?: any;
 }>;

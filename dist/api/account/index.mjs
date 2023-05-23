@@ -5,3 +5,4 @@ export * from "./getBalances";
 export * from "./getHoprAddress";
 export * from "./getNativeBalance";
 export * from "./withdraw";
+export * from "./adapter";

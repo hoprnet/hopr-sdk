@@ -1,18 +1,19 @@
 import { z } from "zod";
-const accountResponse = z.object({
+import { BasicAuthenticationPayload } from "./general";
+const AccountResponse = z.object({
   hopr: z.string(),
   native: z.string()
 });
-const withdrawPayload = z.object({
+const WithdrawPayload = BasicAuthenticationPayload.extend({
   currency: z.enum(["NATIVE", "HOPR"]),
   amount: z.string(),
   recipient: z.string()
 });
-const withdrawResponse = z.object({
+const WithdrawResponse = z.object({
   receipt: z.string()
 });
 export {
-  accountResponse,
-  withdrawPayload,
-  withdrawResponse
+  AccountResponse,
+  WithdrawPayload,
+  WithdrawResponse
 };

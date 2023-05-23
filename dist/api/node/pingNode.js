@@ -34,10 +34,13 @@ module.exports = __toCommonJS(pingNode_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
 var import_types = require("../../types");
 var import_utils = require("../../utils");
-const pingNode = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/node/ping`, {
+const pingNode = async (payload) => {
+  const body = {
+    peerId: payload.peerId
+  };
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/node/ping`, {
     method: "POST",
-    headers: (0, import_utils.getHeaders)(apiKey),
+    headers: (0, import_utils.getHeaders)(payload.apiKey),
     body: JSON.stringify(body)
   });
   const jsonResponse = await rawResponse.json();

@@ -23,11 +23,12 @@ __export(settings_exports, {
 });
 module.exports = __toCommonJS(settings_exports);
 var import_zod = require("zod");
+var import_general = require("./general");
 const GetSettingsResponse = import_zod.z.object({
   includeRecipient: import_zod.z.boolean(),
   strategy: import_zod.z.string()
 });
-const SetSettingPayload = import_zod.z.object({
+const SetSettingPayload = import_general.BasicAuthenticationPayload.extend({
   setting: import_zod.z.string(),
   settingValue: import_zod.z.any()
 });

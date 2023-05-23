@@ -1,7 +1,10 @@
 import { getBalances } from "./getBalances";
-const getNativeBalance = async (url, apiKey) => {
+const getNativeBalance = async (payload) => {
   try {
-    const balances = await getBalances(url, apiKey);
+    const balances = await getBalances({
+      url: payload.url,
+      apiKey: payload.apiKey
+    });
     return balances.native;
   } catch (APIError) {
     throw APIError;

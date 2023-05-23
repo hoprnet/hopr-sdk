@@ -26,24 +26,27 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var apiWrapper_exports = {};
-__export(apiWrapper_exports, {
-  ApiWrapper: () => ApiWrapper
+var fetchWithTimeout_exports = {};
+__export(fetchWithTimeout_exports, {
+  fetchWithTimeout: () => fetchWithTimeout
 });
-module.exports = __toCommonJS(apiWrapper_exports);
-var api = __toESM(require("."));
-class ApiWrapper {
-  constructor(url, apiKey) {
-    this.url = url;
-    this.apiKey = apiKey;
-    this.channels = new api.ChannelsWrapper(this.url, this.apiKey);
-    this.node = new api.NodeWrapper(this.url, this.apiKey);
-    this.peerInfo = new api.PeerInfoWrapper(this.url, this.apiKey);
-    this.settings = new api.SettingsWrapper(this.url, this.apiKey);
-    this.tickets = new api.TicketsWrapper(this.url, this.apiKey);
-  }
-}
+module.exports = __toCommonJS(fetchWithTimeout_exports);
+var import_cross_fetch = __toESM(require("cross-fetch"));
+var import_error = require("./error");
+const fetchWithTimeout = (url, options, ms = 3e4) => {
+  const controller = new AbortController();
+  const promise = (0, import_cross_fetch.default)(url, { ...options, signal: controller.signal }).catch(
+    () => {
+      throw new import_error.APIError({
+        error: "TIMEOUT",
+        status: "504"
+      });
+    }
+  );
+  const timeout = setTimeout(() => controller.abort(), ms);
+  return promise.finally(() => clearTimeout(timeout));
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  ApiWrapper
+  fetchWithTimeout
 });

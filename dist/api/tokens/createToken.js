@@ -28,20 +28,25 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 var createToken_exports = {};
 __export(createToken_exports, {
-  create: () => create
+  createToken: () => createToken
 });
 module.exports = __toCommonJS(createToken_exports);
 var import_cross_fetch = __toESM(require("cross-fetch"));
-var import_utils = require("../../utils");
 var import_types = require("../../types");
-const create = async (url, apiKey, body) => {
-  const rawResponse = await (0, import_cross_fetch.default)(`${url}/api/v2/tokens`, {
+var import_utils = require("../../utils");
+const createToken = async (payload) => {
+  const body = {
+    capabilities: payload.capabilities,
+    description: payload.description,
+    lifetime: payload.lifetime
+  };
+  const rawResponse = await (0, import_cross_fetch.default)(`${payload.url}/api/v2/tokens`, {
     method: "POST",
-    headers: (0, import_utils.getHeaders)(apiKey),
+    headers: (0, import_utils.getHeaders)(payload.apiKey),
     body: JSON.stringify(body)
   });
   const jsonResponse = await rawResponse.json();
-  const parsedRes = import_types.createResponse.safeParse(jsonResponse);
+  const parsedRes = import_types.CreateTokenResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {
@@ -55,5 +60,5 @@ const create = async (url, apiKey, body) => {
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  create
+  createToken
 });

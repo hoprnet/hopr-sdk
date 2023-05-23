@@ -1,16 +1,17 @@
 import { z } from "zod";
-const aliasPayload = z.object({
+import { BasicAuthenticationPayload } from "./general";
+const AliasPayload = BasicAuthenticationPayload.extend({
   alias: z.string()
 });
-const getAliasesResponse = z.record(z.string());
-const setAliasPayload = z.object({
+const GetAliasesResponse = z.record(z.string());
+const SetAliasPayload = BasicAuthenticationPayload.extend({
   peerId: z.string(),
   alias: z.string()
 });
-const getAliasResponse = z.object({ peerId: z.string() });
+const GetAliasResponse = z.object({ peerId: z.string() });
 export {
-  aliasPayload,
-  getAliasResponse,
-  getAliasesResponse,
-  setAliasPayload
+  AliasPayload,
+  GetAliasResponse,
+  GetAliasesResponse,
+  SetAliasPayload
 };
