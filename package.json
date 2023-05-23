@@ -3,15 +3,7 @@
   "version": "0.0.1",
   "license": "GPL-3.0",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
-    }
-  },
   "repository": "git@github.com:hoprnet/hopr-sdk.git",
   "scripts": {
     "prepare": "tsup",
