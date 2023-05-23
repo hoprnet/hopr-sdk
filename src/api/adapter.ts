@@ -9,6 +9,7 @@ export class ApiAdapter {
   public settings: api.SettingsAdapter;
   public tickets: api.TicketsAdapter;
   public tokens: api.TokensAdapter;
+
   constructor(private url: string, private apiKey: string) {
     this.account = new api.AccountAdapter(this.url, this.apiKey);
     this.aliases = new api.AliasesAdapter(this.url, this.apiKey);
