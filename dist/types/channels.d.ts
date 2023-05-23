@@ -58,13 +58,13 @@ declare const OpenChannelsPayload: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     url: string;
     apiKey: string;
-    peerId: string;
     amount: string;
+    peerId: string;
 }, {
     url: string;
     apiKey: string;
-    peerId: string;
     amount: string;
+    peerId: string;
 }>;
 type OpenChannelsPayloadType = ZodToType<typeof OpenChannelsPayload>;
 declare const OpenChannelsResponse: z.ZodObject<{

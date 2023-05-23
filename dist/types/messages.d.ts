@@ -9,13 +9,13 @@ declare const SignPayload: z.ZodObject<{
     apiKey: z.ZodString;
     message: z.ZodString;
 }, "strip", z.ZodTypeAny, {
+    message: string;
     url: string;
     apiKey: string;
-    message: string;
 }, {
+    message: string;
     url: string;
     apiKey: string;
-    message: string;
 }>;
 type SignPayloadType = ZodToType<typeof SignPayload>;
 declare const SignResponse: z.ZodObject<{
@@ -38,15 +38,15 @@ declare const SendMessagePayload: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     url: string;
     apiKey: string;
-    body: string;
     recipient: string;
+    body: string;
     path?: string[] | undefined;
     hops?: number | undefined;
 }, {
     url: string;
     apiKey: string;
-    body: string;
     recipient: string;
+    body: string;
     path?: string[] | undefined;
     hops?: number | undefined;
 }>;

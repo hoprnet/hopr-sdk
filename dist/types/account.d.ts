@@ -27,15 +27,15 @@ declare const WithdrawPayload: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     url: string;
     apiKey: string;
+    currency: "NATIVE" | "HOPR";
     amount: string;
     recipient: string;
-    currency: "NATIVE" | "HOPR";
 }, {
     url: string;
     apiKey: string;
+    currency: "NATIVE" | "HOPR";
     amount: string;
     recipient: string;
-    currency: "NATIVE" | "HOPR";
 }>;
 type WithdrawPayloadType = ZodToType<typeof WithdrawPayload>;
 declare const WithdrawResponse: z.ZodObject<{
