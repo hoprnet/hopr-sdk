@@ -5,4 +5,3 @@ export * from './getChannels';
 export * from './getChannelTickets';
 export * from './openChannels';
 export * from './redeemChannelTickets';
-export * from './adapter';
