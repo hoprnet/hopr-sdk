@@ -1,6 +1,7 @@
 import { AccountAdapter } from './account/adapter';
 import { AliasesAdapter } from './aliases/adapter';
 import { ChannelsAdapter } from './channels/adapter';
+import { MessagesAdapter } from './messages/adapter';
 import { NodeAdapter } from './node/adapter';
 import { PeerInfoAdapter } from './peerInfo/adapter';
 import { SettingsAdapter } from './settings/adapter';
@@ -15,6 +16,7 @@ export class ApiAdapter {
   public settings: SettingsAdapter;
   public tickets: TicketsAdapter;
   public tokens: TokensAdapter;
+  public messages: MessagesAdapter;
 
   constructor(private url: string, private apiKey: string) {
     this.account = new AccountAdapter(this.url, this.apiKey);
@@ -25,5 +27,6 @@ export class ApiAdapter {
     this.settings = new SettingsAdapter(this.url, this.apiKey);
     this.tickets = new TicketsAdapter(this.url, this.apiKey);
     this.tokens = new TokensAdapter(this.url, this.apiKey);
+    this.messages = new MessagesAdapter(this.url, this.apiKey);
   }
 }
