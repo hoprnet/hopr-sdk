@@ -35,7 +35,7 @@ start() {
 
     until [[ $pluto == true ]]; do
         docker logs sandbox-nodes-pluto-1 &>"$DIR/logs"
-        tail -n 1 "$DIR/logs"
+
         logs_pluto=$(grep "Terminating this script will clean up the running local cluster" "$DIR/logs" | head -1)
         logs_error=$(grep "Cleaning up processes" "$DIR/logs" | head -1)
         segmentation_error=$(grep "Segmentation fault" "$DIR/logs" | head -1)
