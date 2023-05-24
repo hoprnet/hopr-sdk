@@ -1,6 +1,6 @@
 import { getAddresses } from './getAddresses';
 import { APIError } from '../../utils';
-import { ExtendedBasicPayloadType } from '../../types';
+import { BasePayloadType } from '../../types';
 
 /**
  * Get the HOPR address of the node.
@@ -11,7 +11,7 @@ import { ExtendedBasicPayloadType } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const getHoprAddress = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<string> => {
   try {
     const addresses = await getAddresses({

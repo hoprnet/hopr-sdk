@@ -1,11 +1,11 @@
-import { ExtendedBasicPayloadType, Error } from '../../types';
+import { BasePayloadType, Error } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Disclaimer: takes really long to succeed
  */
 export const redeemTickets = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<boolean> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/tickets/redeem`,

@@ -1,7 +1,7 @@
 import {
   AccountResponse,
   AccountResponseType,
-  ExtendedBasicPayloadType,
+  BasePayloadType,
   Error
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
@@ -15,7 +15,7 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
  * @throws An error that occurred while processing the request.
  */
 export const getBalances = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<AccountResponseType> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/account/balances`,

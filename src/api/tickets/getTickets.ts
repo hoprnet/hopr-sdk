@@ -1,5 +1,5 @@
 import {
-  ExtendedBasicPayloadType,
+  BasePayloadType,
   Error,
   GetTicketsResponse,
   GetTicketsResponseType
@@ -7,7 +7,7 @@ import {
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getTickets = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<GetTicketsResponseType> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/tickets`,

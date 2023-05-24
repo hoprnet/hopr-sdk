@@ -9,11 +9,36 @@ import { setSetting } from './setSetting';
 const log = createLogger('settings');
 
 export class SettingsAdapter {
-  constructor(private url: string, private apiKey: string) {}
+  private url: string;
+  private apiKey: string;
+  private timeout: number | undefined;
+
+  /**
+   * Creates a new instance of the `SettingsAdapter` class.
+   * @param url - The URL of the API server.
+   * @param apiKey - The API key to use for authentication.
+   * @param timeout - optional timeout for all functions
+   */
+  constructor({
+    url,
+    apiKey
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.url = url;
+    this.apiKey = apiKey;
+    this.timeout = this.timeout;
+  }
 
   public async getSettings() {
     try {
-      return await getSettings({ url: this.url, apiKey: this.apiKey });
+      return await getSettings({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status } = e;
@@ -31,6 +56,7 @@ export class SettingsAdapter {
       return await setSetting({
         url: this.url,
         apiKey: this.apiKey,
+        timeout: this.timeout,
         setting: payload.setting,
         settingValue: payload.settingValue
       });

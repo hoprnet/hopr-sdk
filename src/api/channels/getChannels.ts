@@ -1,5 +1,5 @@
 import {
-  ExtendedBasicPayloadType,
+  BasePayloadType,
   Error,
   GetChannelsResponse,
   GetChannelsResponseType
@@ -7,7 +7,7 @@ import {
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getChannels = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<GetChannelsResponseType> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/channels`,

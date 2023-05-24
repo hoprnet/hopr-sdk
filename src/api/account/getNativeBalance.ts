@@ -1,4 +1,4 @@
-import { ExtendedBasicPayloadType } from '../../types';
+import { BasePayloadType } from '../../types';
 import { getBalances } from './getBalances';
 
 /**
@@ -10,7 +10,7 @@ import { getBalances } from './getBalances';
  * @throws An error that occurred while processing the request.
  */
 export const getNativeBalance = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<string> => {
   try {
     const balances = await getBalances({

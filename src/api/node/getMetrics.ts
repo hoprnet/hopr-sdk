@@ -1,9 +1,7 @@
-import { ExtendedBasicPayloadType, Error } from '../../types';
+import { BasePayloadType, Error } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getMetrics = async (
-  payload: ExtendedBasicPayloadType
-): Promise<string> => {
+export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   const headersForMetrics = getHeaders(payload.apiKey);
   headersForMetrics.set('Accept-Content', 'text/plain');
 

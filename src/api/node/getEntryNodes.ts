@@ -1,5 +1,5 @@
 import {
-  ExtendedBasicPayloadType,
+  BasePayloadType,
   Error,
   GetEntryNodesResponse,
   GetEntryNodesResponseType
@@ -7,7 +7,7 @@ import {
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getEntryNodes = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<GetEntryNodesResponseType> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/node/entryNodes`,

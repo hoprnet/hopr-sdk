@@ -1,5 +1,5 @@
 import {
-  ExtendedBasicPayloadType,
+  BasePayloadType,
   Error,
   GetAliasesResponse,
   GetAliasesResponseType
@@ -15,7 +15,7 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
  * @throws An error that occurred while processing the request.
  */
 export const getAliases = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<GetAliasesResponseType> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/aliases`,

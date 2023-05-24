@@ -1,6 +1,6 @@
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import {
-  ExtendedBasicPayloadType,
+  BasePayloadType,
   Error,
   GetTokenResponse,
   GetTokenResponseType
@@ -15,7 +15,7 @@ import {
  * @throws An error that occurred while processing the request.
  */
 export const getToken = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<GetTokenResponseType> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/token`,

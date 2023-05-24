@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BasicAuthenticationPayload, ZodToType } from './general';
+import { BasePayload, ZodToType } from './general';
 
 /**
  * General
@@ -16,7 +16,7 @@ export type AccountResponseType = ZodToType<typeof AccountResponse>;
  * withdraw
  */
 
-export const WithdrawPayload = ExtendedBasicPayload.extend({
+export const WithdrawPayload = BasePayload.extend({
   currency: z.enum(['NATIVE', 'HOPR']),
   amount: z.string(),
   recipient: z.string()

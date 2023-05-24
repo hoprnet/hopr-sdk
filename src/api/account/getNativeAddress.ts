@@ -1,4 +1,4 @@
-import { ExtendedBasicPayloadType } from '../../types';
+import { BasePayloadType } from '../../types';
 import { getAddresses } from './getAddresses';
 
 /**
@@ -10,7 +10,7 @@ import { getAddresses } from './getAddresses';
  * @throws An error that occurred while processing the request.
  */
 export const getNativeAddress = async (
-  payload: ExtendedBasicPayloadType
+  payload: BasePayloadType
 ): Promise<string> => {
   try {
     const addresses = await getAddresses({

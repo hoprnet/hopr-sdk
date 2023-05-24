@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { BasicAuthenticationPayload, ZodToType } from './general';
+import { BasePayload, ZodToType } from './general';
 
 /**
  * Get peers
  */
 
-export const GetPeersPayload = ExtendedBasicPayload.extend({
+export const GetPeersPayload = BasePayload.extend({
   quality: z.number().optional()
 });
 
@@ -66,7 +66,7 @@ export type GetEntryNodesResponseType = ZodToType<typeof GetEntryNodesResponse>;
  * Ping node
  */
 
-export const PingNodePayload = ExtendedBasicPayload.extend({
+export const PingNodePayload = BasePayload.extend({
   peerId: z.string()
 });
 

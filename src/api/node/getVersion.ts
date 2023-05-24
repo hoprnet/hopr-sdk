@@ -1,9 +1,7 @@
-import { ExtendedBasicPayloadType, Error } from '../../types';
+import { BasePayloadType, Error } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getVersion = async (
-  payload: ExtendedBasicPayloadType
-): Promise<string> => {
+export const getVersion = async (payload: BasePayloadType): Promise<string> => {
   const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/node/version`,
     {

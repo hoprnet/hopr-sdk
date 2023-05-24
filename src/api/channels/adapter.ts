@@ -18,7 +18,28 @@ import { redeemChannelTickets } from './redeemChannelTickets';
 const log = createLogger('channels');
 
 export class ChannelsAdapter {
-  constructor(private url: string, private apiKey: string) {}
+  private url: string;
+  private apiKey: string;
+  private timeout: number | undefined;
+
+  /**
+   * Creates a new instance of the `ChannelsAdapter` class.
+   * @param url - The URL of the API server.
+   * @param apiKey - The API key to use for authentication.
+   * @param timeout - optional timeout for all functions
+   */
+  constructor({
+    url,
+    apiKey
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.url = url;
+    this.apiKey = apiKey;
+    this.timeout = this.timeout;
+  }
 
   public async closeChannel(
     payload: RemoveBasicAuthenticationPayloadType<CloseChannelPayloadType>
@@ -27,6 +48,7 @@ export class ChannelsAdapter {
       return await closeChannel({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         direction: payload.direction,
         peerId: payload.peerId
       });
@@ -47,6 +69,7 @@ export class ChannelsAdapter {
       return await fundChannels({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         incomingAmount: payload.incomingAmount,
         outgoingAmount: payload.outgoingAmount,
         peerId: payload.peerId
@@ -63,7 +86,11 @@ export class ChannelsAdapter {
 
   public async getChannels() {
     try {
-      return await getChannels({ url: this.url, apiKey: this.apiKey });
+      return await getChannels({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status } = e;
@@ -81,6 +108,7 @@ export class ChannelsAdapter {
       return await getChannel({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         direction: payload.direction,
         peerId: payload.peerId
       });
@@ -101,6 +129,7 @@ export class ChannelsAdapter {
       return await openChannels({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         amount: payload.amount,
         peerId: payload.peerId
       });
@@ -121,6 +150,7 @@ export class ChannelsAdapter {
       return await getChannelTickets({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         peerId: payload.peerId
       });
     } catch (e) {
@@ -140,6 +170,7 @@ export class ChannelsAdapter {
       return await redeemChannelTickets({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         peerId: payload.peerId
       });
     } catch (e) {
