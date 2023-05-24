@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch';
 import { APIError } from './error';
 
 export const fetchWithTimeout = (

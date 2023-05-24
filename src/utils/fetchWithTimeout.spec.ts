@@ -1,4 +1,4 @@
-import { fetchWithTimeout } from './fetchWithTimeout'; // Import fetchWithTimeout from your module
+import { fetchWithTimeout } from './fetchWithTimeout';
 import nock from 'nock';
 
 describe('fetchWithTimeout', () => {
