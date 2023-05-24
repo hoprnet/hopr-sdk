@@ -5,7 +5,7 @@ import { BasicAuthenticationPayload, ZodToType } from './general';
  * Get peer info
  */
 
-export const GetPeerInfoPayload = BasicAuthenticationPayload.extend({
+export const GetPeerInfoPayload = ExtendedBasicPayload.extend({
   peerId: string()
 });
 

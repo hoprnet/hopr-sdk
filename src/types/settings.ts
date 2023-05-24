@@ -16,7 +16,7 @@ export type GetSettingsResponseType = ZodToType<typeof GetSettingsResponse>;
  * Set Setting
  */
 
-export const SetSettingPayload = BasicAuthenticationPayload.extend({
+export const SetSettingPayload = ExtendedBasicPayload.extend({
   setting: z.string(),
   settingValue: z.any()
 });

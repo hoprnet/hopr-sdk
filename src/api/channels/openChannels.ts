@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch';
 import {
   Error,
   OpenChannelsResponse,
@@ -6,7 +5,7 @@ import {
   type OpenChannelsPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const openChannels = async (
   payload: OpenChannelsPayloadType
@@ -16,11 +15,15 @@ export const openChannels = async (
     peerId: payload.peerId
   };
 
-  const rawResponse = await fetch(`${payload.url}/api/v2/channels`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/channels`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
 
   const jsonResponse = await rawResponse.json();
 

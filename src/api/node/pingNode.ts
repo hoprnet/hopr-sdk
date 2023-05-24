@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch';
 import {
   Error,
   PingNodePayloadType,
@@ -6,7 +5,7 @@ import {
   PingNodeResponseType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const pingNode = async (
   payload: PingNodePayloadType
@@ -15,11 +14,15 @@ export const pingNode = async (
     peerId: payload.peerId
   };
 
-  const rawResponse = await fetch(`${payload.url}/api/v2/node/ping`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/node/ping`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
 
   const jsonResponse = await rawResponse.json();
 

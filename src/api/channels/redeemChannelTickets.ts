@@ -1,6 +1,5 @@
-import fetch from 'cross-fetch';
 import { Error, type PeerIdPayloadType } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * // TODO: Takes more than 200s to execute
@@ -8,12 +7,13 @@ import { APIError, getHeaders } from '../../utils';
 export const redeemChannelTickets = async (
   payload: PeerIdPayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/channels/${payload.peerId}/tickets/redeem`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiKey)
-    }
+    },
+    payload.timeout
   );
 
   if (rawResponse.status === 204) {

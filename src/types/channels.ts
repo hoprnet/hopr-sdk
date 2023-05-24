@@ -5,7 +5,7 @@ import { BasicAuthenticationPayload, ZodToType } from './general';
  * General types
  */
 
-export const PeerIdPayload = BasicAuthenticationPayload.extend({
+export const PeerIdPayload = ExtendedBasicPayload.extend({
   peerId: z.string()
 });
 
@@ -15,7 +15,7 @@ export type PeerIdPayloadType = ZodToType<typeof PeerIdPayload>;
  * Fund channel
  */
 
-export const FundChannelsPayload = BasicAuthenticationPayload.extend({
+export const FundChannelsPayload = ExtendedBasicPayload.extend({
   peerId: z.string(),
   outgoingAmount: z.string(),
   incomingAmount: z.string()
@@ -31,7 +31,7 @@ export type FundChannelsResponseType = ZodToType<typeof FundChannelsResponse>;
 
 /** Open channel */
 
-export const OpenChannelsPayload = BasicAuthenticationPayload.extend({
+export const OpenChannelsPayload = ExtendedBasicPayload.extend({
   peerId: z.string(),
   amount: z.string()
 });
@@ -81,7 +81,7 @@ export type GetTicketsResponseType = ZodToType<typeof GetTicketsResponse>;
 
 /** Close channel */
 
-export const CloseChannelPayload = BasicAuthenticationPayload.extend({
+export const CloseChannelPayload = ExtendedBasicPayload.extend({
   peerId: z.string(),
   direction: z.enum(['incoming', 'outgoing'])
 });
@@ -97,7 +97,7 @@ export type CloseChannelResponseType = ZodToType<typeof CloseChannelResponse>;
 
 /** Get channel */
 
-export const GetChannelPayload = BasicAuthenticationPayload.extend({
+export const GetChannelPayload = ExtendedBasicPayload.extend({
   peerId: z.string(),
   direction: z.enum(['incoming', 'outgoing'])
 });

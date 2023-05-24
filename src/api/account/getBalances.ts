@@ -1,11 +1,10 @@
-import fetch from 'cross-fetch';
 import {
   AccountResponse,
   AccountResponseType,
-  BasicAuthenticationPayloadType,
+  ExtendedBasicPayloadType,
   Error
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Fetches the HOPR and native balances of the node.
@@ -16,12 +15,16 @@ import { APIError, getHeaders } from '../../utils';
  * @throws An error that occurred while processing the request.
  */
 export const getBalances = async (
-  payload: BasicAuthenticationPayloadType
+  payload: ExtendedBasicPayloadType
 ): Promise<AccountResponseType> => {
-  const rawResponse = await fetch(`${payload.url}/api/v2/account/balances`, {
-    method: 'GET',
-    headers: getHeaders(payload.apiKey)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/account/balances`,
+    {
+      method: 'GET',
+      headers: getHeaders(payload.apiKey)
+    },
+    payload.timeout
+  );
 
   const jsonResponse = await rawResponse.json();
 

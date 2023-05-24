@@ -66,7 +66,7 @@ export const TokenCapability = z.object({
  * createToken
  */
 
-export const CreateTokenPayload = BasicAuthenticationPayload.extend({
+export const CreateTokenPayload = ExtendedBasicPayload.extend({
   capabilities: z.array(TokenCapability),
   lifetime: z.number().nonnegative(),
   description: z.string()
@@ -97,7 +97,7 @@ export type GetTokenResponseType = ZodToType<typeof GetTokenResponse>;
  * deleteToken
  */
 
-export const DeleteTokenPayload = BasicAuthenticationPayload.extend({
+export const DeleteTokenPayload = ExtendedBasicPayload.extend({
   id: z.string()
 });
 

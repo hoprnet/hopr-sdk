@@ -1,4 +1,4 @@
-import { BasicAuthenticationPayloadType } from '../../types';
+import { ExtendedBasicPayloadType } from '../../types';
 import { getAddresses } from './getAddresses';
 
 /**
@@ -10,12 +10,13 @@ import { getAddresses } from './getAddresses';
  * @throws An error that occurred while processing the request.
  */
 export const getNativeAddress = async (
-  payload: BasicAuthenticationPayloadType
+  payload: ExtendedBasicPayloadType
 ): Promise<string> => {
   try {
     const addresses = await getAddresses({
       url: payload.url,
-      apiKey: payload.apiKey
+      apiKey: payload.apiKey,
+      timeout: payload.timeout
     });
     return addresses.native;
   } catch (APIError) {

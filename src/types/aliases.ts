@@ -5,7 +5,7 @@ import { BasicAuthenticationPayload, ZodToType } from './general';
  * General
  */
 
-export const AliasPayload = BasicAuthenticationPayload.extend({
+export const AliasPayload = ExtendedBasicPayload.extend({
   alias: z.string()
 });
 
@@ -23,7 +23,7 @@ export type GetAliasesResponseType = ZodToType<typeof GetAliasesResponse>;
  * setAlias
  */
 
-export const SetAliasPayload = BasicAuthenticationPayload.extend({
+export const SetAliasPayload = ExtendedBasicPayload.extend({
   peerId: z.string(),
   alias: z.string()
 });

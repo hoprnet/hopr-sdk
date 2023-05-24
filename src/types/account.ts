@@ -16,7 +16,7 @@ export type AccountResponseType = ZodToType<typeof AccountResponse>;
  * withdraw
  */
 
-export const WithdrawPayload = BasicAuthenticationPayload.extend({
+export const WithdrawPayload = ExtendedBasicPayload.extend({
   currency: z.enum(['NATIVE', 'HOPR']),
   amount: z.string(),
   recipient: z.string()

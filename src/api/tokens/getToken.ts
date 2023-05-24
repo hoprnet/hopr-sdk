@@ -1,7 +1,6 @@
-import fetch from 'cross-fetch';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import {
-  BasicAuthenticationPayloadType,
+  ExtendedBasicPayloadType,
   Error,
   GetTokenResponse,
   GetTokenResponseType
@@ -16,12 +15,16 @@ import {
  * @throws An error that occurred while processing the request.
  */
 export const getToken = async (
-  payload: BasicAuthenticationPayloadType
+  payload: ExtendedBasicPayloadType
 ): Promise<GetTokenResponseType> => {
-  const rawResponse = await fetch(`${payload.url}/api/v2/token`, {
-    method: 'GET',
-    headers: getHeaders(payload.apiKey)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/token`,
+    {
+      method: 'GET',
+      headers: getHeaders(payload.apiKey)
+    },
+    payload.timeout
+  );
 
   if (rawResponse.status === 404) {
     // 404 The specified resource was not found

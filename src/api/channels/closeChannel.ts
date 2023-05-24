@@ -1,21 +1,21 @@
-import fetch from 'cross-fetch';
 import {
   CloseChannelResponse,
   CloseChannelResponseType,
   Error,
   type CloseChannelPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const closeChannel = async (
   payload: CloseChannelPayloadType
 ): Promise<CloseChannelResponseType> => {
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/channels/${payload.peerId}/${payload.direction}`,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiKey)
-    }
+    },
+    payload.timeout
   );
 
   const jsonResponse = await rawResponse.json();

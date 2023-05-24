@@ -1,11 +1,10 @@
-import fetch from 'cross-fetch';
 import {
   Error,
   RemoveBasicAuthenticationPayloadType,
   WithdrawPayloadType,
   WithdrawResponse
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Withdraw the given currency amount to the specified recipient address.
@@ -25,11 +24,15 @@ export const withdraw = async (
     currency: payload.currency,
     recipient: payload.recipient
   };
-  const rawResponse = await fetch(`${payload.url}/api/v2/account/withdraw`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify({ body })
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/account/withdraw`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify({ body })
+    },
+    payload.timeout
+  );
 
   const jsonResponse = await rawResponse.json();
   const parsedRes = WithdrawResponse.safeParse(jsonResponse);

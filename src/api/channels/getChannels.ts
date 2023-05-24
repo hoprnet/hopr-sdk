@@ -1,19 +1,22 @@
-import fetch from 'cross-fetch';
 import {
-  BasicAuthenticationPayloadType,
+  ExtendedBasicPayloadType,
   Error,
   GetChannelsResponse,
   GetChannelsResponseType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getChannels = async (
-  payload: BasicAuthenticationPayloadType
+  payload: ExtendedBasicPayloadType
 ): Promise<GetChannelsResponseType> => {
-  const rawResponse = await fetch(`${payload.url}/api/v2/channels`, {
-    method: 'GET',
-    headers: getHeaders(payload.apiKey)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/channels`,
+    {
+      method: 'GET',
+      headers: getHeaders(payload.apiKey)
+    },
+    payload.timeout
+  );
 
   const jsonResponse = await rawResponse.json();
 

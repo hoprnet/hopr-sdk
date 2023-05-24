@@ -28,6 +28,18 @@ export type BasicAuthenticationPayloadType = ZodToType<
 >;
 
 /**
+ * Represents the extended basic payload schema, adding an optional timeout field to the base schema.
+ */
+export const ExtendedBasicPayload = BasicAuthenticationPayload.extend({
+  timeout: z.number().optional()
+});
+
+/**
+ * Represents the TypeScript type inferred from the ExtendedBasicPayload schema.
+ */
+export type ExtendedBasicPayloadType = ZodToType<typeof ExtendedBasicPayload>;
+
+/**
  * Removes the basic authentication properties from a payload type.
  * @typeparam T - The payload type from which to remove the properties.
  */

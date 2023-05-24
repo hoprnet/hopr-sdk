@@ -1,4 +1,4 @@
-import { BasicAuthenticationPayloadType } from '../../types';
+import { ExtendedBasicPayloadType } from '../../types';
 import { getBalances } from './getBalances';
 
 /**
@@ -10,12 +10,13 @@ import { getBalances } from './getBalances';
  * @throws An error that occurred while processing the request.
  */
 export const getNativeBalance = async (
-  payload: BasicAuthenticationPayloadType
+  payload: ExtendedBasicPayloadType
 ): Promise<string> => {
   try {
     const balances = await getBalances({
       url: payload.url,
-      apiKey: payload.apiKey
+      apiKey: payload.apiKey,
+      timeout: payload.timeout
     });
     return balances.native;
   } catch (APIError) {

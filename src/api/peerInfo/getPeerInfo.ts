@@ -1,5 +1,4 @@
-import fetch from 'cross-fetch';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import {
   GetPeerInfoPayloadType,
   GetPeerInfoResponse,
@@ -10,12 +9,13 @@ import {
 export const getPeerInfo = async (
   payload: GetPeerInfoPayloadType
 ): Promise<GetPeerInfoResponseType> => {
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/peerInfo/${payload.peerId}`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiKey)
-    }
+    },
+    payload.timeout
   );
 
   const jsonResponse = await rawResponse.json();
