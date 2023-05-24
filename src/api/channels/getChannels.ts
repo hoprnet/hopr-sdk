@@ -18,7 +18,7 @@ export const getChannels = async (
   const jsonResponse = await rawResponse.json();
 
   const parsedRes = GetChannelsResponse.safeParse(jsonResponse);
-
+  console.log(parsedRes);
   if (parsedRes.success) {
     return parsedRes.data;
   } else if (rawResponse.status > 499) {
