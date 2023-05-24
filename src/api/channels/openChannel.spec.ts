@@ -1,11 +1,11 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
-import { openChannels } from './openChannels';
+import { openChannel } from './openChannel';
 
 const API_URL = 'http://localhost:3001';
 const API_KEY = 'S3CR3T-T0K3N';
 
-describe('test openChannels', function () {
+describe('test openChannel', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
@@ -17,7 +17,7 @@ describe('test openChannels', function () {
         '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
     });
 
-    const response = await openChannels({
+    const response = await openChannel({
       apiKey: API_KEY,
       url: API_URL,
       peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
@@ -37,7 +37,7 @@ describe('test openChannels', function () {
     });
 
     await expect(
-      openChannels({
+      openChannel({
         apiKey: API_KEY,
         url: API_URL,
         peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
@@ -52,7 +52,7 @@ describe('test openChannels', function () {
     });
 
     await expect(
-      openChannels({
+      openChannel({
         apiKey: API_KEY,
         url: API_URL,
         peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
@@ -66,7 +66,7 @@ describe('test openChannels', function () {
     });
 
     await expect(
-      openChannels({
+      openChannel({
         apiKey: API_KEY,
         url: API_URL,
         peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
@@ -80,7 +80,7 @@ describe('test openChannels', function () {
     });
 
     await expect(
-      openChannels({
+      openChannel({
         apiKey: API_KEY,
         url: API_URL,
         peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
@@ -94,7 +94,7 @@ describe('test openChannels', function () {
       error: 'Full error message.'
     });
     await expect(
-      openChannels({
+      openChannel({
         apiKey: API_KEY,
         url: API_URL,
         peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
