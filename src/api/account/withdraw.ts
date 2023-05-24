@@ -1,5 +1,10 @@
 import fetch from 'cross-fetch';
-import { withdrawPayloadType, Error, withdrawResponse } from '../../types';
+import {
+  Error,
+  RemoveBasicAuthenticationPayloadType,
+  WithdrawPayloadType,
+  WithdrawResponse
+} from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 /**
@@ -12,19 +17,22 @@ import { APIError, getHeaders } from '../../utils';
  * @throws An error that occurred while processing the request.
  */
 export const withdraw = async (
-  url: string,
-  apiKey: string,
-  body: withdrawPayloadType
+  payload: WithdrawPayloadType
 ): Promise<string> => {
   // Fetch and check error responses
-  const rawResponse = await fetch(`${url}/api/v2/account/withdraw`, {
+  const body: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType> = {
+    amount: payload.amount,
+    currency: payload.currency,
+    recipient: payload.recipient
+  };
+  const rawResponse = await fetch(`${payload.url}/api/v2/account/withdraw`, {
     method: 'POST',
-    headers: getHeaders(apiKey),
+    headers: getHeaders(payload.apiKey),
     body: JSON.stringify(body)
   });
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = withdrawResponse.safeParse(jsonResponse);
+  const parsedRes = WithdrawResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data.receipt;
   } else if (rawResponse.status > 499) {

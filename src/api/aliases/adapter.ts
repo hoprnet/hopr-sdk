@@ -1,8 +1,15 @@
-import { aliasPayloadType, setAliasPayloadType } from '../../types';
+import {
+  AliasPayloadType,
+  RemoveBasicAuthenticationPayloadType,
+  SetAliasPayloadType
+} from '../../types';
+import { APIError, createLogger } from '../../utils';
 import { getAlias } from './getAlias';
 import { getAliases } from './getAliases';
 import { removeAlias } from './removeAlias';
 import { setAlias } from './setAlias';
+
+const log = createLogger('aliases');
 
 /**
  * A class that provides a wrapper around aliases-related API endpoints.
@@ -20,8 +27,17 @@ export class AliasesAdapter {
    *
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
-  public getAliases(): Promise<Record<string, string>> {
-    return getAliases(this.url, this.apiKey);
+  public async getAliases(): Promise<Record<string, string> | undefined> {
+    try {
+      return await getAliases({ url: this.url, apiKey: this.apiKey });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
@@ -29,30 +45,76 @@ export class AliasesAdapter {
    * Give an address a more memorable alias and use it instead of Hopr address.
    * Aliases are kept locally and are not saved or shared on the network.
    *
-   * @param body - A object containing the peer ID and alias to link.
+   * @param payload - A object containing the peer ID and alias to link.
    * @returns A Promise that resolves to true if alias succesfully linked to peerId.
    */
-  public setAlias(body: setAliasPayloadType): Promise<boolean> {
-    return setAlias(this.url, this.apiKey, body);
+  public async setAlias(
+    payload: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType>
+  ): Promise<boolean | undefined> {
+    try {
+      return await setAlias({
+        url: this.url,
+        apiKey: this.apiKey,
+        alias: payload.alias,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
    * Get the PeerId (Hopr address) that have this alias assigned to it.
    *
-   * @param body - An object containing the alias to retrieve the peer ID for.
+   * @param payload - An object containing the alias to retrieve the peer ID for.
    * @returns A promise that resolves to the peer ID associated with the alias.
    */
-  public getAlias(body: aliasPayloadType): Promise<string> {
-    return getAlias(this.url, this.apiKey, body);
+  public async getAlias(
+    payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
+  ): Promise<string | undefined> {
+    try {
+      return await getAlias({
+        url: this.url,
+        apiKey: this.apiKey,
+        alias: payload.alias
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
    * Unassign an alias from a PeerId.
    *
-   * @param body - The payload containing the details of the alias to remove.
+   * @param payload - The payload containing the details of the alias to remove.
    * @returns A Promise that resolves to true if the alias was successfully removed.
    */
-  public removeAlias(body: aliasPayloadType): Promise<boolean> {
-    return removeAlias(this.url, this.apiKey, body);
+  public async removeAlias(
+    payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
+  ): Promise<boolean | undefined> {
+    try {
+      return await removeAlias({
+        url: this.url,
+        apiKey: this.apiKey,
+        alias: payload.alias
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 }

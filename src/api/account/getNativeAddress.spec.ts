@@ -18,7 +18,7 @@ describe('getNativeAddress', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(200, expectedResponse);
 
-    const result = await getNativeAddress(API_URL, API_KEY);
+    const result = await getNativeAddress({ url: API_URL, apiKey: API_KEY });
     expect(result).toEqual(expectedResponse.native);
   });
 
@@ -31,9 +31,9 @@ describe('getNativeAddress', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(401, expectedResponse);
 
-    await expect(getNativeAddress(API_URL, invalidApiKey)).rejects.toThrow(
-      APIError
-    );
+    await expect(
+      getNativeAddress({ url: API_URL, apiKey: invalidApiKey })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 403 if authorization fails', async function () {
@@ -44,7 +44,9 @@ describe('getNativeAddress', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(403, expectedResponse);
 
-    await expect(getNativeAddress(API_URL, API_KEY)).rejects.toThrow(APIError);
+    await expect(
+      getNativeAddress({ url: API_URL, apiKey: API_KEY })
+    ).rejects.toThrow(APIError);
   });
 
   test('should return 422 if there is an unknown failure', async function () {
@@ -55,6 +57,8 @@ describe('getNativeAddress', () => {
 
     nock(API_URL).get('/api/v2/account/addresses').reply(422, expectedResponse);
 
-    await expect(getNativeAddress(API_URL, API_KEY)).rejects.toThrow(APIError);
+    await expect(
+      getNativeAddress({ url: API_URL, apiKey: API_KEY })
+    ).rejects.toThrow(APIError);
   });
 });

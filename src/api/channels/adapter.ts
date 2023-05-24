@@ -3,8 +3,10 @@ import {
   FundChannelsPayloadType,
   GetChannelPayloadType,
   OpenChannelsPayloadType,
-  PeerIdPayloadType
+  PeerIdPayloadType,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
+import { APIError, createLogger } from '../../utils';
 import { closeChannel } from './closeChannel';
 import { fundChannels } from './fundChannels';
 import { getChannel } from './getChannel';
@@ -13,34 +15,140 @@ import { getChannels } from './getChannels';
 import { openChannels } from './openChannels';
 import { redeemChannelTickets } from './redeemChannelTickets';
 
+const log = createLogger('channels');
+
 export class ChannelsAdapter {
   constructor(private url: string, private apiKey: string) {}
 
-  public closeChannel(body: CloseChannelPayloadType) {
-    return closeChannel(this.url, this.apiKey, body);
+  public async closeChannel(
+    payload: RemoveBasicAuthenticationPayloadType<CloseChannelPayloadType>
+  ) {
+    try {
+      return await closeChannel({
+        apiKey: this.apiKey,
+        url: this.url,
+        direction: payload.direction,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
-  public fundChannels(body: FundChannelsPayloadType) {
-    return fundChannels(this.url, this.apiKey, body);
+  public async fundChannels(
+    payload: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType>
+  ) {
+    try {
+      return await fundChannels({
+        apiKey: this.apiKey,
+        url: this.url,
+        incomingAmount: payload.incomingAmount,
+        outgoingAmount: payload.outgoingAmount,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
-  public getChannels() {
-    return getChannels(this.url, this.apiKey);
+  public async getChannels() {
+    try {
+      return await getChannels({ url: this.url, apiKey: this.apiKey });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
-  public getChannel(body: GetChannelPayloadType) {
-    return getChannel(this.url, this.apiKey, body);
+  public async getChannel(
+    payload: RemoveBasicAuthenticationPayloadType<GetChannelPayloadType>
+  ) {
+    try {
+      return await getChannel({
+        apiKey: this.apiKey,
+        url: this.url,
+        direction: payload.direction,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
-  public openChannels(body: OpenChannelsPayloadType) {
-    return openChannels(this.url, this.apiKey, body);
+  public async openChannels(
+    payload: RemoveBasicAuthenticationPayloadType<OpenChannelsPayloadType>
+  ) {
+    try {
+      return await openChannels({
+        apiKey: this.apiKey,
+        url: this.url,
+        amount: payload.amount,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
-  public getChannelTickets(body: PeerIdPayloadType) {
-    return getChannelTickets(this.url, this.apiKey, body);
+  public async getChannelTickets(
+    payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>
+  ) {
+    try {
+      return await getChannelTickets({
+        apiKey: this.apiKey,
+        url: this.url,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
-  public redeemChannelTickets(body: PeerIdPayloadType) {
-    return redeemChannelTickets(this.url, this.apiKey, body);
+  public async redeemChannelTickets(
+    payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>
+  ) {
+    try {
+      return await redeemChannelTickets({
+        apiKey: this.apiKey,
+        url: this.url,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 }

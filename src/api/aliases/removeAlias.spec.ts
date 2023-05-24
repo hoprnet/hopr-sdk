@@ -2,8 +2,8 @@ import { APIError } from '../../utils';
 import { removeAlias } from './removeAlias';
 import nock from 'nock';
 
-const BASE_PATH = 'http://localhost:3001';
-const API_TOKEN = 'S3CR3T-T0K3N';
+const API_URL = 'http://localhost:3001';
+const API_KEY = 'S3CR3T-T0K3N';
 const ALIAS = 'my-alias';
 
 describe('removeAlias', () => {
@@ -12,11 +12,15 @@ describe('removeAlias', () => {
   });
 
   test('should return 204 if alias is removed successfully', async function () {
-    const API_TOKEN = 'my-api-key';
+    const API_KEY = 'my-api-key';
 
-    nock(BASE_PATH).delete(`/api/v2/aliases/${ALIAS}`).reply(204);
+    nock(API_URL).delete(`/api/v2/aliases/${ALIAS}`).reply(204);
 
-    const response = await removeAlias(BASE_PATH, API_TOKEN, { alias: ALIAS });
+    const response = await removeAlias({
+      url: API_URL,
+      apiKey: API_KEY,
+      alias: ALIAS
+    });
     expect(response).toBe(true);
   });
 
@@ -27,12 +31,12 @@ describe('removeAlias', () => {
       error: 'authentication failed'
     };
 
-    nock(BASE_PATH)
+    nock(API_URL)
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(401, expectedResponse);
 
     await expect(
-      removeAlias(BASE_PATH, invalidApikey, { alias: ALIAS })
+      removeAlias({ alias: ALIAS, apiKey: invalidApikey, url: API_URL })
     ).rejects.toThrow(APIError);
   });
 
@@ -42,11 +46,11 @@ describe('removeAlias', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(BASE_PATH)
+    nock(API_URL)
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(403, expectedResponse);
     await expect(
-      removeAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+      removeAlias({ url: API_URL, apiKey: API_KEY, alias: ALIAS })
     ).rejects.toThrow(APIError);
   });
 
@@ -56,12 +60,12 @@ describe('removeAlias', () => {
       error: 'Full error message.'
     };
 
-    nock(BASE_PATH)
+    nock(API_URL)
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(422, expectedResponse);
 
     await expect(
-      removeAlias(BASE_PATH, API_TOKEN, { alias: ALIAS })
+      removeAlias({ url: API_URL, apiKey: API_KEY, alias: ALIAS })
     ).rejects.toThrow(APIError);
   });
 });

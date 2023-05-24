@@ -1,6 +1,11 @@
 import fetch from 'cross-fetch';
-import { getHeaders, APIError } from '../../utils';
-import { getAliasesResponse, getAliasesResponseType, Error } from '../../types';
+import {
+  BasicAuthenticationPayloadType,
+  Error,
+  GetAliasesResponse,
+  GetAliasesResponseType
+} from '../../types';
+import { APIError, getHeaders } from '../../utils';
 
 /**
  * Get all aliases you set previously and their corresponding peer IDs.
@@ -11,17 +16,16 @@ import { getAliasesResponse, getAliasesResponseType, Error } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const getAliases = async (
-  url: string,
-  apiKey: string
-): Promise<getAliasesResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/aliases`, {
+  payload: BasicAuthenticationPayloadType
+): Promise<GetAliasesResponseType> => {
+  const rawResponse = await fetch(`${payload.url}/api/v2/aliases`, {
     method: 'GET',
-    headers: getHeaders(apiKey)
+    headers: getHeaders(payload.apiKey)
   });
 
   const jsonResponse = await rawResponse.json();
 
-  const parsedRes = getAliasesResponse.safeParse(jsonResponse);
+  const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
 
   if (parsedRes.success && rawResponse.status === 200) {
     return parsedRes.data;

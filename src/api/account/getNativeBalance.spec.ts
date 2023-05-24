@@ -18,7 +18,7 @@ describe('getNativeBalance', () => {
 
     nock(API_URL).get('/api/v2/account/balances').reply(200, response);
 
-    const result = await getNativeBalance(API_URL, API_KEY);
+    const result = await getNativeBalance({ url: API_URL, apiKey: API_KEY });
     expect(result).toEqual(response.native);
   });
 
@@ -30,7 +30,9 @@ describe('getNativeBalance', () => {
 
     nock(API_URL).get('/api/v2/account/balances').reply(401, response);
 
-    await expect(getNativeBalance(API_URL, API_KEY)).rejects.toThrow(APIError);
+    await expect(
+      getNativeBalance({ url: API_URL, apiKey: API_KEY })
+    ).rejects.toThrow(APIError);
   });
 
   it('should return 403 if authorization fails', async () => {
@@ -41,7 +43,9 @@ describe('getNativeBalance', () => {
 
     nock(API_URL).get('/api/v2/account/balances').reply(403, response);
 
-    await expect(getNativeBalance(API_URL, API_KEY)).rejects.toThrow(APIError);
+    await expect(
+      getNativeBalance({ url: API_URL, apiKey: API_KEY })
+    ).rejects.toThrow(APIError);
   });
 
   it('should return 422 if unknown failure', async () => {
@@ -52,6 +56,8 @@ describe('getNativeBalance', () => {
 
     nock(API_URL).get('/api/v2/account/balances').reply(422, response);
 
-    await expect(getNativeBalance(API_URL, API_KEY)).rejects.toThrow(APIError);
+    await expect(
+      getNativeBalance({ url: API_URL, apiKey: API_KEY })
+    ).rejects.toThrow(APIError);
   });
 });

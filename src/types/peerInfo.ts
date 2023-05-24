@@ -1,11 +1,11 @@
 import { string, z } from 'zod';
-import { ZodToType } from './general';
+import { BasicAuthenticationPayload, ZodToType } from './general';
 
 /**
  * Get peer info
  */
 
-export const GetPeerInfoPayload = z.object({
+export const GetPeerInfoPayload = BasicAuthenticationPayload.extend({
   peerId: string()
 });
 

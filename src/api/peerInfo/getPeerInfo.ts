@@ -8,14 +8,15 @@ import {
 } from '../../types';
 
 export const getPeerInfo = async (
-  url: string,
-  apiKey: string,
-  body: GetPeerInfoPayloadType
+  payload: GetPeerInfoPayloadType
 ): Promise<GetPeerInfoResponseType> => {
-  const rawResponse = await fetch(`${url}/api/v2/peerInfo/${body.peerId}`, {
-    method: 'GET',
-    headers: getHeaders(apiKey)
-  });
+  const rawResponse = await fetch(
+    `${payload.url}/api/v2/peerInfo/${payload.peerId}`,
+    {
+      method: 'GET',
+      headers: getHeaders(payload.apiKey)
+    }
+  );
 
   const jsonResponse = await rawResponse.json();
 

@@ -1,7 +1,14 @@
-import { createPayloadType, deletePayloadType } from '../../types';
-import { create } from './createToken';
+import {
+  CreateTokenPayloadType,
+  DeleteTokenPayloadType,
+  RemoveBasicAuthenticationPayloadType
+} from '../../types';
+import { APIError, createLogger } from '../../utils';
+import { createToken } from './createToken';
 import { deleteToken } from './deleteToken';
 import { getToken } from './getToken';
+
+const log = createLogger('tokens');
 
 /**
  * A class that provides a wrapper around tokens-related API endpoints.
@@ -22,22 +29,54 @@ export class TokensAdapter {
    * Or it has a limited lifetime after which it expires.
    * The requested limited lifetime is requested by the client in seconds.
    *
-   * @param body - The necessary data to create the token.
+   * @param payload - The necessary data to create the token.
    * @returns A Promise that resolves to the generated token which must be used when authenticating for API calls.
    */
-  public create(body: createPayloadType) {
-    return create(this.url, this.apiKey, body);
+  public async createToken(
+    payload: RemoveBasicAuthenticationPayloadType<CreateTokenPayloadType>
+  ) {
+    try {
+      return await createToken({
+        url: this.url,
+        apiKey: this.apiKey,
+        capabilities: payload.capabilities,
+        description: payload.description,
+        lifetime: payload.lifetime
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
    * Deletes a token. Can only be done before the lifetime expired.
    * After the lifetime expired the token is automatically deleted.
    *
-   * @param body - An object that contains the id of the token to be deleted.
+   * @param payload - An object that contains the id of the token to be deleted.
    * @returns A Promise that resolves to true if successful.
    */
-  public deleteToken(body: deletePayloadType) {
-    return deleteToken(this.url, this.apiKey, body);
+  public async deleteToken(
+    payload: RemoveBasicAuthenticationPayloadType<DeleteTokenPayloadType>
+  ) {
+    try {
+      return await deleteToken({
+        url: this.url,
+        apiKey: this.apiKey,
+        id: payload.id
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
@@ -45,7 +84,16 @@ export class TokensAdapter {
    *
    * @returns A Promise that resolves to an object with the token info.
    */
-  public getToken() {
-    return getToken(this.url, this.apiKey);
+  public async getToken() {
+    try {
+      return await getToken({ url: this.url, apiKey: this.apiKey });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 }

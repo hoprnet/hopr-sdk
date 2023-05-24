@@ -32,7 +32,9 @@ describe('getToken', () => {
 
     nock(API_URL).get('/api/v2/token').reply(200, expectedResponse);
 
-    expect(await getToken(API_URL, API_KEY)).toEqual(expectedResponse);
+    expect(await getToken({ apiKey: API_KEY, url: API_URL })).toEqual(
+      expectedResponse
+    );
   });
 
   it('should return 401 if authentication failed', async function () {
@@ -43,7 +45,9 @@ describe('getToken', () => {
 
     nock(API_URL).get('/api/v2/token').reply(401, mockResponse);
 
-    await expect(getToken(API_URL, 'invalid token')).rejects.toThrow(APIError);
+    await expect(
+      getToken({ url: API_URL, apiKey: 'invalid token' })
+    ).rejects.toThrow(APIError);
   });
 
   it('should return 403 if authorization failed', async function () {
@@ -54,12 +58,16 @@ describe('getToken', () => {
 
     nock(API_URL).get('/api/v2/token').reply(403, mockResponse);
 
-    await expect(getToken(API_URL, API_KEY)).rejects.toThrow(APIError);
+    await expect(getToken({ apiKey: API_KEY, url: API_URL })).rejects.toThrow(
+      APIError
+    );
   });
 
   it('should return 404 if resource not found', async function () {
     nock(API_URL).get('/api/v2/token').reply(404);
 
-    await expect(getToken(API_URL, API_KEY)).rejects.toThrow(APIError);
+    await expect(getToken({ apiKey: API_KEY, url: API_URL })).rejects.toThrow(
+      APIError
+    );
   });
 });

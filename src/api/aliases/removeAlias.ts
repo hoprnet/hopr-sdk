@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
+import { AliasPayloadType, Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
-import { aliasPayloadType, Error } from '../../types';
 
 /**
  * Unassign an alias from a PeerId.
@@ -12,14 +12,15 @@ import { aliasPayloadType, Error } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const removeAlias = async (
-  url: string,
-  apiKey: string,
-  body: aliasPayloadType
+  payload: AliasPayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(`${url}/api/v2/aliases/${body.alias}`, {
-    method: 'DELETE',
-    headers: getHeaders(apiKey)
-  });
+  const rawResponse = await fetch(
+    `${payload.url}/api/v2/aliases/${payload.alias}`,
+    {
+      method: 'DELETE',
+      headers: getHeaders(payload.apiKey)
+    }
+  );
 
   if (rawResponse.status === 204) {
     return true;
