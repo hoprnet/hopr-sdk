@@ -1,12 +1,8 @@
-import { ApiAdapter } from './api';
-import { createLogger } from './utils';
-
-const log = createLogger('HoprSdk');
-
+import { ApiAdapter } from './api/adapter';
 export class HoprSdk {
   public api: ApiAdapter;
-  constructor(private url: string, private apiToken: string) {
-    this.api = new ApiAdapter(this.url, this.apiToken);
+  constructor({ url, apiToken }: { url: string; apiToken: string }) {
+    this.api = new ApiAdapter(url, apiToken);
   }
 
   public async safeSendMessage([payload]: Parameters<
