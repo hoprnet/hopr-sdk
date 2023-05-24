@@ -3,10 +3,13 @@ import {
   RemoveBasicAuthenticationPayloadType,
   SetAliasPayloadType
 } from '../../types';
+import { APIError, createLogger } from '../../utils';
 import { getAlias } from './getAlias';
 import { getAliases } from './getAliases';
 import { removeAlias } from './removeAlias';
 import { setAlias } from './setAlias';
+
+const log = createLogger('aliases');
 
 /**
  * A class that provides a wrapper around aliases-related API endpoints.
@@ -24,8 +27,17 @@ export class AliasesAdapter {
    *
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
-  public getAliases(): Promise<Record<string, string>> {
-    return getAliases({ url: this.url, apiKey: this.apiKey });
+  public async getAliases(): Promise<Record<string, string> | undefined> {
+    try {
+      return await getAliases({ url: this.url, apiKey: this.apiKey });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
@@ -36,15 +48,24 @@ export class AliasesAdapter {
    * @param payload - A object containing the peer ID and alias to link.
    * @returns A Promise that resolves to true if alias succesfully linked to peerId.
    */
-  public setAlias(
+  public async setAlias(
     payload: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType>
-  ): Promise<boolean> {
-    return setAlias({
-      url: this.url,
-      apiKey: this.apiKey,
-      alias: payload.alias,
-      peerId: payload.peerId
-    });
+  ): Promise<boolean | undefined> {
+    try {
+      return await setAlias({
+        url: this.url,
+        apiKey: this.apiKey,
+        alias: payload.alias,
+        peerId: payload.peerId
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
@@ -53,14 +74,23 @@ export class AliasesAdapter {
    * @param payload - An object containing the alias to retrieve the peer ID for.
    * @returns A promise that resolves to the peer ID associated with the alias.
    */
-  public getAlias(
+  public async getAlias(
     payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
-  ): Promise<string> {
-    return getAlias({
-      url: this.url,
-      apiKey: this.apiKey,
-      alias: payload.alias
-    });
+  ): Promise<string | undefined> {
+    try {
+      return await getAlias({
+        url: this.url,
+        apiKey: this.apiKey,
+        alias: payload.alias
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 
   /**
@@ -69,13 +99,22 @@ export class AliasesAdapter {
    * @param payload - The payload containing the details of the alias to remove.
    * @returns A Promise that resolves to true if the alias was successfully removed.
    */
-  public removeAlias(
+  public async removeAlias(
     payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
-  ): Promise<boolean> {
-    return removeAlias({
-      url: this.url,
-      apiKey: this.apiKey,
-      alias: payload.alias
-    });
+  ): Promise<boolean | undefined> {
+    try {
+      return await removeAlias({
+        url: this.url,
+        apiKey: this.apiKey,
+        alias: payload.alias
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
   }
 }
