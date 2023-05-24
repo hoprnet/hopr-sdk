@@ -66,8 +66,6 @@ export class ChannelsAdapter {
       return await getChannels({ url: this.url, apiKey: this.apiKey });
     } catch (e) {
       if (e instanceof APIError) {
-        log.debug(e);
-
         const { message, error, status } = e;
         log.error({ status, error, message });
       } else {
