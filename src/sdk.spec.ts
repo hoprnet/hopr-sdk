@@ -230,7 +230,97 @@ describe('test HoprdSdk class', function () {
     });
   });
 
-  describe('cashOut', function () {});
+  describe('cashOut', function () {
+    it('does not call withdraw without balance', async function () {
+      // mock hoprd node get balances
+      nock(API_URL).get('/api/v2/account/balances').reply(200, {
+        native: '0',
+        hopr: '0'
+      });
+      const withdrawSpy = jest.spyOn(sdk.api.account, 'withdraw');
 
-  describe('openMultipleChannels', function () {});
+      const res = await sdk.cashOut({
+        recipient: 'vitalik.eth'
+      });
+
+      expect(res.hopr).toEqual(undefined);
+      expect(res.native).toEqual(undefined);
+      expect(withdrawSpy.mock.calls.length).toEqual(0);
+    });
+    it('sends tx to recipient', async function () {
+      // mock hoprd node get balances
+      nock(API_URL).get('/api/v2/account/balances').reply(200, {
+        native: '10',
+        hopr: '10'
+      });
+      // mock hoprd node withdraw response
+      const expectedReceipt = '0x123456789abcdef';
+      nock(API_URL)
+        .post('/api/v2/account/withdraw')
+        .times(2)
+        .reply(200, { receipt: expectedReceipt });
+      const withdrawSpy = jest.spyOn(sdk.api.account, 'withdraw');
+
+      const res = await sdk.cashOut({
+        recipient: 'vitalik.eth'
+      });
+
+      expect(res.hopr).toEqual(expectedReceipt);
+      expect(res.native).toEqual(expectedReceipt);
+      expect(withdrawSpy.mock.calls.at(0)?.at(0)?.recipient).toEqual(
+        'vitalik.eth'
+      );
+      expect(withdrawSpy.mock.calls.length).toEqual(2);
+    });
+  });
+
+  describe('openMultipleChannels', function () {
+    it('should not attempt to open channels if node does not have enough balance', async function () {
+      // mock hoprd node get balances
+      nock(API_URL).get('/api/v2/account/balances').reply(200, {
+        native: '10',
+        hopr: '0'
+      });
+      const openChannelSpy = jest.spyOn(sdk.api.channels, 'openChannels');
+
+      const res = await sdk.openMultipleChannels({
+        peerIds: ['id1', 'id2'],
+        amount: '6'
+      });
+
+      expect(openChannelSpy.mock.calls.length).toEqual(0);
+      expect(res).toEqual(undefined);
+    });
+    it('should not attempt to open channels if node does not have enough balance', async function () {
+      const peerIds = ['id1', 'id2'];
+      // mock hoprd node get balances
+      nock(API_URL).get('/api/v2/account/balances').reply(200, {
+        native: '10',
+        hopr: '0'
+      });
+
+      // mock hoprd node open channel
+      nock(API_URL).post('/api/v2/channels').times(peerIds.length).reply(201, {
+        channelId:
+          '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
+        receipt:
+          '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
+      });
+
+      const openChannelSpy = jest.spyOn(sdk.api.channels, 'openChannels');
+
+      const res = await sdk.openMultipleChannels({
+        peerIds,
+        amount: '3'
+      });
+
+      expect(openChannelSpy.mock.calls.length).toEqual(peerIds.length);
+      expect(res?.[peerIds.at(0) ?? '']).toEqual({
+        channelId:
+          '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
+        receipt:
+          '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
+      });
+    });
+  });
 });

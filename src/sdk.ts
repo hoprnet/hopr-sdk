@@ -74,7 +74,7 @@ export class HoprSdk {
     const balance = await this.api.account.getBalances();
     const receipts: { native?: string; hopr?: string } = {};
 
-    if (balance?.native) {
+    if (balance?.native && !!BigInt(balance?.native)) {
       const transferNativeFunds = await this.api.account.withdraw({
         recipient,
         amount: balance?.native,
@@ -83,7 +83,7 @@ export class HoprSdk {
       receipts.native = transferNativeFunds;
     }
 
-    if (balance?.hopr) {
+    if (balance?.hopr && !!BigInt(balance?.hopr)) {
       const transferHoprFunds = await this.api.account.withdraw({
         recipient,
         amount: balance?.hopr,
