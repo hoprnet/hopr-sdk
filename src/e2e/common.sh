@@ -8,7 +8,7 @@ NC='\033[0m' # No Color
 # stop sandbox
 stop() {
     echo Stopping 'nodes'
-    docker-compose -f "$DIR"/nodes.yml -p sandbox-nodes down -v
+    docker compose -f "$DIR"/nodes.yml -p sandbox-nodes down -v
     rm -f "$DIR"/logs
     echo "Sandbox has stopped!"
 }
@@ -21,7 +21,7 @@ start() {
     echo "Starting 'nodes'"
 
     #  Run docker compose as daemon
-    docker-compose -f "$DIR/nodes.yml" -p sandbox-nodes \
+    docker compose -f "$DIR/nodes.yml" -p sandbox-nodes \
         up -d --remove-orphans --build --force-recreate --renew-anon-volumes
 
     logs_pluto=""
