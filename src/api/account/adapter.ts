@@ -166,6 +166,7 @@ export class AccountAdapter {
   }
   /**
    * Withdraw the given currency amount to the specified recipient address.
+   * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    * @param payload - The withdrawal request payload.
    * @returns — A Promise that resolves to the transaction receipt.
    */

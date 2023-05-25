@@ -63,6 +63,10 @@ export class TicketsAdapter {
     }
   }
 
+  /**
+   * Redeems all the unredeemed HOPR tickets owned by the HOPR node.
+   * This operation may take more than 5 minutes to complete as it involves on-chain operations.
+   */
   public async redeemTickets() {
     try {
       return await redeemTickets({
