@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch';
 import {
   Error,
   OpenChannelsResponse,
@@ -5,8 +6,16 @@ import {
   type OpenChannelsPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { APIError, getHeaders } from '../../utils';
 
+/**
+ * Opens a HOPR channel given a payload that specifies the URL of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
+ *
+ * This operation may take more than 5 minutes to complete as it involves on-chain operations.
+ *
+ * @returns A Promise that resolves with the response of the open channel operation.
+ * @throws APIError - If the operation fails. The error object contains the status code and the error message.
+ */
 export const openChannels = async (
   payload: OpenChannelsPayloadType
 ): Promise<OpenChannelsResponseType> => {
@@ -15,15 +24,11 @@ export const openChannels = async (
     peerId: payload.peerId
   };
 
-  const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/channels`,
-    {
-      method: 'POST',
-      headers: getHeaders(payload.apiKey),
-      body: JSON.stringify(body)
-    },
-    payload.timeout
-  );
+  const rawResponse = await fetch(`${payload.url}/api/v2/channels`, {
+    method: 'POST',
+    headers: getHeaders(payload.apiKey),
+    body: JSON.stringify(body)
+  });
 
   const jsonResponse = await rawResponse.json();
 

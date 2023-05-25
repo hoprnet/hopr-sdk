@@ -1,21 +1,29 @@
+import fetch from 'cross-fetch';
 import {
   CloseChannelResponse,
   CloseChannelResponseType,
   Error,
   type CloseChannelPayloadType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { APIError, getHeaders } from '../../utils';
 
+/**
+ * Closes a HOPR channel given a payload that specifies the URL of the HOPR node, the peerId and the direction of the channel.
+ *
+ * This operation may take more than 5 minutes to complete as it involves on-chain operations.
+ *
+ * @returns A Promise that resolves with the response of the close channel operation.
+ * @throws APIError - If the operation fails. The error object contains the status code and the error message.
+ */
 export const closeChannel = async (
   payload: CloseChannelPayloadType
 ): Promise<CloseChannelResponseType> => {
-  const rawResponse = await fetchWithTimeout(
+  const rawResponse = await fetch(
     `${payload.url}/api/v2/channels/${payload.peerId}/${payload.direction}`,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiKey)
-    },
-    payload.timeout
+    }
   );
 
   const jsonResponse = await rawResponse.json();

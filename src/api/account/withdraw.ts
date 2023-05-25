@@ -4,14 +4,11 @@ import {
   WithdrawPayloadType,
   WithdrawResponse
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { APIError, getHeaders } from '../../utils';
 
 /**
  * Withdraw the given currency amount to the specified recipient address.
- *
- * @param url - The API endpoint URL.
- * @param apiKey - The API key used to authenticate the request.
- * @param body - The necessary data to withdraw from a node;
+ * This operation may take more than 5 minutes to complete as it involves on-chain operations.
  * @returns A Promise that resolves to the transaction receipt.
  * @throws An error that occurred while processing the request.
  */
@@ -24,15 +21,11 @@ export const withdraw = async (
     currency: payload.currency,
     recipient: payload.recipient
   };
-  const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/account/withdraw`,
-    {
-      method: 'POST',
-      headers: getHeaders(payload.apiKey),
-      body: JSON.stringify({ body })
-    },
-    payload.timeout
-  );
+  const rawResponse = await fetch(`${payload.url}/api/v2/account/withdraw`, {
+    method: 'POST',
+    headers: getHeaders(payload.apiKey),
+    body: JSON.stringify({ body })
+  });
 
   const jsonResponse = await rawResponse.json();
   const parsedRes = WithdrawResponse.safeParse(jsonResponse);
