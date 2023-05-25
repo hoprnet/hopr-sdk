@@ -6,12 +6,27 @@ const log = createLogger('HoprSdk');
 
 // minimum amount of balance needed to do a transaction on gnosis chain
 const MINIMUM_GNOSIS_GAS = 0.01;
+
+/**
+ * Main SDK class that exposes all functionality of the HOPR SDK.
+ */
 export class HoprSdk {
   public api: ApiAdapter;
+
+  /**
+   * Creates a new instance of the HOPR SDK.
+   * @param url - The URL for the HOPR node API.
+   * @param apiToken - The API token for the HOPR node.
+   */
   constructor({ url, apiToken }: { url: string; apiToken: string }) {
     this.api = new ApiAdapter(url, apiToken);
   }
 
+  /**
+   * Gets the outgoing channels with optional status filter.
+   * @param status - Optional status filter.
+   * @returns An array of outgoing channels matching the status filter.
+   */
   private async getOutgoingChannels(status?: GetChannelResponseType['status']) {
     const channels = await this.api.channels.getChannels();
 
@@ -23,6 +38,11 @@ export class HoprSdk {
     return outgoingChannels;
   }
 
+  /**
+   * Safely send a message through the network. Checks if node has at least
+   * one open outgoing channel
+   * @param payload - The payload of the message.
+   */
   public async safeSendMessage(
     // receive same payload as sendMessage function
     payload: Parameters<ApiAdapter['messages']['sendMessage']>[0]
@@ -38,8 +58,11 @@ export class HoprSdk {
     return await this.api.messages.sendMessage(payload);
   }
 
+  /**
+   * Closes all open outgoing channels and redeems any pending tickets.
+   * This is a long running function and may take a more than 5 minutes to run
+   */
   public async closeEverything() {
-    // close outgoing
     const outgoingChannels = await this.getOutgoingChannels('Open');
     const closedChannels = [];
     // close outgoing open channels
@@ -71,6 +94,13 @@ export class HoprSdk {
     };
   }
 
+  /**
+   * Withdraw all funds from the node.
+   * Does not include funds locked in open channels and pending tickets.
+   * This is a long running function and may take a more than 5 minutes to run
+   * @param recipient - The address of the recipient.
+   * @returns The transaction receipts for the cash out transactions.
+   */
   public async cashOut({ recipient }: { recipient: string }) {
     // get balance to proceed to withdraw that balance
     const balance = await this.api.account.getBalances();
