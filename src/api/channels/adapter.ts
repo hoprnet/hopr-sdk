@@ -2,7 +2,7 @@ import {
   CloseChannelPayloadType,
   FundChannelsPayloadType,
   GetChannelPayloadType,
-  OpenChannelsPayloadType,
+  OpenChannelPayloadType,
   PeerIdPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
@@ -10,9 +10,9 @@ import { APIError, createLogger } from '../../utils';
 import { closeChannel } from './closeChannel';
 import { fundChannels } from './fundChannels';
 import { getChannel } from './getChannel';
-import { getChannelTickets } from './getChannelTickets';
 import { getChannels } from './getChannels';
-import { openChannels } from './openChannels';
+import { getChannelTickets } from './getChannelTickets';
+import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
 
 const log = createLogger('channels');
@@ -130,11 +130,11 @@ export class ChannelsAdapter {
    * Opens a HOPR channel given a payload that specifies the URL of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
-  public async openChannels(
-    payload: RemoveBasicAuthenticationPayloadType<OpenChannelsPayloadType>
+  public async openChannel(
+    payload: RemoveBasicAuthenticationPayloadType<OpenChannelPayloadType>
   ) {
     try {
-      return await openChannels({
+      return await openChannel({
         apiKey: this.apiKey,
         url: this.url,
         timeout: this.timeout,

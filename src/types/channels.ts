@@ -31,19 +31,19 @@ export type FundChannelsResponseType = ZodToType<typeof FundChannelsResponse>;
 
 /** Open channel */
 
-export const OpenChannelsPayload = BasePayload.extend({
+export const OpenChannelPayload = BasePayload.extend({
   peerId: z.string(),
   amount: z.string()
 });
 
-export type OpenChannelsPayloadType = ZodToType<typeof OpenChannelsPayload>;
+export type OpenChannelPayloadType = ZodToType<typeof OpenChannelPayload>;
 
-export const OpenChannelsResponse = z.object({
+export const OpenChannelResponse = z.object({
   channelId: z.string(),
   receipt: z.string()
 });
 
-export type OpenChannelsResponseType = ZodToType<typeof OpenChannelsResponse>;
+export type OpenChannelResponseType = ZodToType<typeof OpenChannelResponse>;
 
 /** Get channels */
 
