@@ -291,12 +291,12 @@ describe('test HoprdSdk class', function () {
       expect(openChannelSpy.mock.calls.length).toEqual(0);
       expect(res).toEqual(undefined);
     });
-    it('should not attempt to open channels if node does not have enough balance', async function () {
+    it('should open channels', async function () {
       const peerIds = ['id1', 'id2'];
       // mock hoprd node get balances
       nock(API_URL).get('/api/v2/account/balances').reply(200, {
-        native: '10',
-        hopr: '0'
+        native: '1',
+        hopr: '10'
       });
 
       // mock hoprd node open channel
