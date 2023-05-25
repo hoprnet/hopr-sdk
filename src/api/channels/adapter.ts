@@ -2,7 +2,7 @@ import {
   CloseChannelPayloadType,
   FundChannelsPayloadType,
   GetChannelPayloadType,
-  OpenChannelsPayloadType,
+  OpenChannelPayloadType,
   PeerIdPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
@@ -12,7 +12,7 @@ import { fundChannels } from './fundChannels';
 import { getChannel } from './getChannel';
 import { getChannelTickets } from './getChannelTickets';
 import { getChannels } from './getChannels';
-import { openChannels } from './openChannels';
+import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
 
 const log = createLogger('channels');
@@ -94,11 +94,11 @@ export class ChannelsAdapter {
     }
   }
 
-  public async openChannels(
-    payload: RemoveBasicAuthenticationPayloadType<OpenChannelsPayloadType>
+  public async openChannel(
+    payload: RemoveBasicAuthenticationPayloadType<OpenChannelPayloadType>
   ) {
     try {
-      return await openChannels({
+      return await openChannel({
         apiKey: this.apiKey,
         url: this.url,
         amount: payload.amount,

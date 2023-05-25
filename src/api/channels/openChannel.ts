@@ -1,17 +1,17 @@
 import fetch from 'cross-fetch';
 import {
   Error,
-  OpenChannelsResponse,
-  OpenChannelsResponseType,
-  type OpenChannelsPayloadType,
+  OpenChannelResponse,
+  OpenChannelResponseType,
+  type OpenChannelPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
-export const openChannels = async (
-  payload: OpenChannelsPayloadType
-): Promise<OpenChannelsResponseType> => {
-  const body: RemoveBasicAuthenticationPayloadType<OpenChannelsPayloadType> = {
+export const openChannel = async (
+  payload: OpenChannelPayloadType
+): Promise<OpenChannelResponseType> => {
+  const body: RemoveBasicAuthenticationPayloadType<OpenChannelPayloadType> = {
     amount: payload.amount,
     peerId: payload.peerId
   };
@@ -24,7 +24,7 @@ export const openChannels = async (
 
   const jsonResponse = await rawResponse.json();
 
-  const parsedRes = OpenChannelsResponse.safeParse(jsonResponse);
+  const parsedRes = OpenChannelResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;
