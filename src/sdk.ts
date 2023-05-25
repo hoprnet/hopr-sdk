@@ -4,6 +4,8 @@ import { createLogger } from './utils';
 
 const log = createLogger('HoprSdk');
 
+// minimum amount of balance needed to do a transaction on gnosis chain
+const MINIMUM_GNOSIS_GAS = 0.01;
 export class HoprSdk {
   public api: ApiAdapter;
   constructor({ url, apiToken }: { url: string; apiToken: string }) {
@@ -104,15 +106,19 @@ export class HoprSdk {
   }) {
     // check if node has enough funds
     const balance = await this.api.account.getBalances();
-    const sumOfBalanceExpectedInFunds = BigInt(amount) * BigInt(peerIds.length);
-    const nodeHasEnoughBalance =
-      BigInt(balance?.native ?? 0) > sumOfBalanceExpectedInFunds;
+    const sumOfHoprBalanceExpectedInFunds =
+      BigInt(amount) * BigInt(peerIds.length);
 
-    if (!nodeHasEnoughBalance) {
+    const nodeHasEnoughHoprBalance =
+      BigInt(balance?.hopr ?? 0) > sumOfHoprBalanceExpectedInFunds;
+    const nodeHasEnoughNativeBalance =
+      BigInt(balance?.native ?? 0) > MINIMUM_GNOSIS_GAS;
+
+    if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
       log.debug(
         `node does not have enough balance to fund channels it needs: ${
           balance?.native
-        }, and has:${sumOfBalanceExpectedInFunds.toString()}`
+        }, and has:${sumOfHoprBalanceExpectedInFunds.toString()}`
       );
       return;
     }
