@@ -8,7 +8,7 @@ describe('test HoprdSdk class', function () {
   let sdk: HoprSdk;
   beforeEach(function () {
     sdk = new HoprSdk({
-      apiToken: API_KEY,
+      apiKey: API_KEY,
       url: API_URL
     });
   });
@@ -281,7 +281,7 @@ describe('test HoprdSdk class', function () {
         native: '10',
         hopr: '0'
       });
-      const openChannelSpy = jest.spyOn(sdk.api.channels, 'openChannels');
+      const openChannelSpy = jest.spyOn(sdk.api.channels, 'openChannel');
 
       const res = await sdk.openMultipleChannels({
         peerIds: ['id1', 'id2'],
@@ -307,7 +307,7 @@ describe('test HoprdSdk class', function () {
           '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
       });
 
-      const openChannelSpy = jest.spyOn(sdk.api.channels, 'openChannels');
+      const openChannelSpy = jest.spyOn(sdk.api.channels, 'openChannel');
 
       const res = await sdk.openMultipleChannels({
         peerIds,
