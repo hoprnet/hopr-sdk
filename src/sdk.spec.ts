@@ -294,10 +294,12 @@ describe('test HoprdSdk class', function () {
     it('should open channels', async function () {
       const peerIds = ['id1', 'id2'];
       // mock hoprd node get balances
-      nock(API_URL).get('/api/v2/account/balances').reply(200, {
-        native: '1',
-        hopr: '10'
-      });
+      nock(API_URL)
+        .get('/api/v2/account/balances')
+        .reply(200, {
+          native: BigInt(0.03 * 10e18).toString(),
+          hopr: '10'
+        });
 
       // mock hoprd node open channel
       nock(API_URL).post('/api/v2/channels').times(peerIds.length).reply(201, {

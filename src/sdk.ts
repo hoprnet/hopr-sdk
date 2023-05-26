@@ -4,8 +4,10 @@ import { createLogger } from './utils';
 
 const log = createLogger('HoprSdk');
 
+const ETH_TO_WEI = 10e18;
+
 // minimum amount of balance needed to do a transaction on gnosis chain
-const MINIMUM_GNOSIS_GAS = 0.01;
+const MINIMUM_GNOSIS_GAS = BigInt(0.01 * ETH_TO_WEI);
 
 /**
  * Main SDK class that exposes all functionality of the HOPR SDK.
@@ -150,7 +152,8 @@ export class HoprSdk {
     const nodeHasEnoughHoprBalance =
       BigInt(balance?.hopr ?? 0) > sumOfHoprBalanceExpectedInFunds;
     const nodeHasEnoughNativeBalance =
-      BigInt(balance?.native ?? 0) > MINIMUM_GNOSIS_GAS;
+      BigInt(balance?.native ?? 0) >
+      MINIMUM_GNOSIS_GAS * BigInt(peerIds.length);
 
     if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
       log.debug(
