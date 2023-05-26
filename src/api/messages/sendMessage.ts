@@ -1,5 +1,4 @@
-import fetch from 'cross-fetch';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import {
   RemoveBasicAuthenticationPayloadType,
   SendMessagePayloadType,
@@ -31,11 +30,16 @@ export const sendMessage = async (
     path: payload.path
   };
 
-  const rawResponse = await fetch(`${payload.url}/api/v2/messages`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/messages`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
+
   if (rawResponse.status === 202) {
     return await rawResponse.text();
   } else if (rawResponse.status > 499) {

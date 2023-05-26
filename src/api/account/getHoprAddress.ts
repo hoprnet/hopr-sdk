@@ -1,6 +1,6 @@
 import { getAddresses } from './getAddresses';
 import { APIError } from '../../utils';
-import { BasicAuthenticationPayloadType } from '../../types';
+import { BasePayloadType } from '../../types';
 
 /**
  * Get the HOPR address of the node.
@@ -11,12 +11,13 @@ import { BasicAuthenticationPayloadType } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const getHoprAddress = async (
-  payload: BasicAuthenticationPayloadType
+  payload: BasePayloadType
 ): Promise<string> => {
   try {
     const addresses = await getAddresses({
       url: payload.url,
-      apiKey: payload.apiKey
+      apiKey: payload.apiKey,
+      timeout: payload.timeout
     });
     return addresses.hopr;
   } catch (APIError) {

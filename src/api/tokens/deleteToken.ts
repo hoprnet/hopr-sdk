@@ -1,5 +1,4 @@
-import fetch from 'cross-fetch';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import { DeleteTokenPayloadType, Error } from '../../types';
 
 /**
@@ -15,12 +14,13 @@ import { DeleteTokenPayloadType, Error } from '../../types';
 export const deleteToken = async (
   payload: DeleteTokenPayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/tokens/${payload.id}`,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiKey)
-    }
+    },
+    payload.timeout
   );
 
   if (rawResponse.status === 204) {

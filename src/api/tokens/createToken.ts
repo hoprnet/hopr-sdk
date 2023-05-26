@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch';
 import {
   CreateTokenPayloadType,
   CreateTokenResponse,
@@ -6,7 +5,7 @@ import {
   Error,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Create a new authentication token based on the given information.
@@ -31,11 +30,15 @@ export const createToken = async (
     lifetime: payload.lifetime
   };
 
-  const rawResponse = await fetch(`${payload.url}/api/v2/tokens`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/tokens`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
 
   const jsonResponse = await rawResponse.json();
   const parsedRes = CreateTokenResponse.safeParse(jsonResponse);

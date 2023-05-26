@@ -1,17 +1,17 @@
-import fetch from 'cross-fetch';
 import { Error, SetSettingPayloadType } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const setSetting = async (
   payload: SetSettingPayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/settings/${payload.setting}`,
     {
       method: 'PUT',
       headers: getHeaders(payload.apiKey),
       body: JSON.stringify({ settingValue: payload.settingValue })
-    }
+    },
+    payload.timeout
   );
 
   if (rawResponse.status === 204) {

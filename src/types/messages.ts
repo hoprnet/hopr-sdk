@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { BasicAuthenticationPayload, ZodToType } from './general';
+import { BasePayload, ZodToType } from './general';
 
 /**
  * sign
  */
 
-export const SignPayload = BasicAuthenticationPayload.extend({
+export const SignPayload = BasePayload.extend({
   message: z.string()
 });
 
@@ -19,7 +19,7 @@ export const SignResponse = z.object({
  * sendMessage
  */
 
-export const SendMessagePayload = BasicAuthenticationPayload.extend({
+export const SendMessagePayload = BasePayload.extend({
   body: z.string(),
   recipient: z.string(),
   path: z.array(z.string()).optional(),

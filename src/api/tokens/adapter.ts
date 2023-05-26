@@ -14,12 +14,28 @@ const log = createLogger('tokens');
  * A class that provides a wrapper around tokens-related API endpoints.
  */
 export class TokensAdapter {
+  private url: string;
+  private apiKey: string;
+  private timeout: number | undefined;
+
   /**
    * Creates a new instance of the `TokensAdapter` class.
    * @param url - The URL of the API server.
    * @param apiKey - The API key to use for authentication.
+   * @param timeout - optional timeout for all functions
    */
-  constructor(private url: string, private apiKey: string) {}
+  constructor({
+    url,
+    apiKey
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.url = url;
+    this.apiKey = apiKey;
+    this.timeout = this.timeout;
+  }
 
   /**
    * Create a new authentication token based on the given information.
@@ -39,6 +55,7 @@ export class TokensAdapter {
       return await createToken({
         url: this.url,
         apiKey: this.apiKey,
+        timeout: this.timeout,
         capabilities: payload.capabilities,
         description: payload.description,
         lifetime: payload.lifetime
@@ -67,6 +84,7 @@ export class TokensAdapter {
       return await deleteToken({
         url: this.url,
         apiKey: this.apiKey,
+        timeout: this.timeout,
         id: payload.id
       });
     } catch (e) {
@@ -86,7 +104,11 @@ export class TokensAdapter {
    */
   public async getToken() {
     try {
-      return await getToken({ url: this.url, apiKey: this.apiKey });
+      return await getToken({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status } = e;
