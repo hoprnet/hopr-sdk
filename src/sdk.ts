@@ -171,7 +171,7 @@ export class HoprSdk {
 
     // open channels for each peerId
     for (const peerId of peerIds) {
-      const receipt = await this.api.channels.openChannels({ peerId, amount });
+      const receipt = await this.api.channels.openChannel({ peerId, amount });
       if (receipt) {
         receipts[peerId] = receipt;
       }
