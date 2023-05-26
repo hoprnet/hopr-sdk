@@ -18,15 +18,23 @@ export class ApiAdapter {
   public tokens: TokensAdapter;
   public messages: MessagesAdapter;
 
-  constructor(private url: string, private apiKey: string) {
-    this.account = new AccountAdapter(this.url, this.apiKey);
-    this.aliases = new AliasesAdapter(this.url, this.apiKey);
-    this.channels = new ChannelsAdapter(this.url, this.apiKey);
-    this.node = new NodeAdapter(this.url, this.apiKey);
-    this.peerInfo = new PeerInfoAdapter(this.url, this.apiKey);
-    this.settings = new SettingsAdapter(this.url, this.apiKey);
-    this.tickets = new TicketsAdapter(this.url, this.apiKey);
-    this.tokens = new TokensAdapter(this.url, this.apiKey);
-    this.messages = new MessagesAdapter(this.url, this.apiKey);
+  constructor({
+    url,
+    apiKey,
+    timeout
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.account = new AccountAdapter({ url, apiKey, timeout });
+    this.aliases = new AliasesAdapter({ url, apiKey, timeout });
+    this.channels = new ChannelsAdapter({ url, apiKey, timeout });
+    this.node = new NodeAdapter({ url, apiKey, timeout });
+    this.peerInfo = new PeerInfoAdapter({ url, apiKey, timeout });
+    this.settings = new SettingsAdapter({ url, apiKey, timeout });
+    this.tickets = new TicketsAdapter({ url, apiKey, timeout });
+    this.tokens = new TokensAdapter({ url, apiKey, timeout });
+    this.messages = new MessagesAdapter({ url, apiKey, timeout });
   }
 }

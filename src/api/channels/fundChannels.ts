@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch';
 import {
   Error,
   FundChannelsResponse,
@@ -6,7 +5,7 @@ import {
   type FundChannelsResponseType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const fundChannels = async (
   payload: FundChannelsPayloadType
@@ -17,11 +16,15 @@ export const fundChannels = async (
     peerId: payload.peerId
   };
 
-  const rawResponse = await fetch(`${payload.url}/api/v2/fundmulti`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/fundmulti`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
 
   const jsonResponse = await rawResponse.json();
 

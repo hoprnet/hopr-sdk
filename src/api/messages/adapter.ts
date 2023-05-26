@@ -11,7 +11,28 @@ import { websocket } from './websocket';
 const log = createLogger('messages');
 
 export class MessagesAdapter {
-  constructor(private url: string, private apiKey: string) {}
+  private url: string;
+  private apiKey: string;
+  private timeout: number | undefined;
+
+  /**
+   * Creates a new instance of the `MessagesAdapter` class.
+   * @param url - The URL of the API server.
+   * @param apiKey - The API key to use for authentication.
+   * @param timeout - optional timeout for all functions
+   */
+  constructor({
+    url,
+    apiKey
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.url = url;
+    this.apiKey = apiKey;
+    this.timeout = this.timeout;
+  }
 
   public async sendMessage(
     payload: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType>
@@ -20,6 +41,7 @@ export class MessagesAdapter {
       return await sendMessage({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         body: payload.body,
         recipient: payload.recipient,
         hops: payload.hops,
@@ -42,6 +64,7 @@ export class MessagesAdapter {
       return await sign({
         apiKey: this.apiKey,
         url: this.url,
+        timeout: this.timeout,
         message: payload.message
       });
     } catch (e) {

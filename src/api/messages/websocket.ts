@@ -1,5 +1,5 @@
 import WebSocket from 'isomorphic-ws';
-import { BasicAuthenticationPayloadType } from '../../types';
+import { BasePayloadType } from '../../types';
 
 /**
  * Creates a WebSocket instance with the specified IP and API token.
@@ -8,9 +8,7 @@ import { BasicAuthenticationPayloadType } from '../../types';
  * @param apiKey - The API token to use for authentication.
  * @returns A WebSocket instance.
  */
-export const websocket = (
-  payload: BasicAuthenticationPayloadType
-): WebSocket => {
+export const websocket = (payload: BasePayloadType): WebSocket => {
   const endpointUrl = getWsUrl(
     payload.url,
     '/api/v2/messages/websocket/',

@@ -1,14 +1,15 @@
-import fetch from 'cross-fetch';
-import { BasicAuthenticationPayloadType, Error } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { BasePayloadType, Error } from '../../types';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getVersion = async (
-  payload: BasicAuthenticationPayloadType
-): Promise<string> => {
-  const rawResponse = await fetch(`${payload.url}/api/v2/node/version`, {
-    method: 'GET',
-    headers: getHeaders(payload.apiKey)
-  });
+export const getVersion = async (payload: BasePayloadType): Promise<string> => {
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/node/version`,
+    {
+      method: 'GET',
+      headers: getHeaders(payload.apiKey)
+    },
+    payload.timeout
+  );
 
   if (rawResponse.status === 200) {
     const textResponse = await rawResponse.text();

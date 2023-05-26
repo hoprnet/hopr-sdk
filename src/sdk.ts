@@ -18,8 +18,16 @@ export class HoprSdk {
    * @param url - The URL for the HOPR node API.
    * @param apiToken - The API token for the HOPR node.
    */
-  constructor({ url, apiToken }: { url: string; apiToken: string }) {
-    this.api = new ApiAdapter(url, apiToken);
+  constructor({
+    url,
+    apiKey,
+    timeout
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.api = new ApiAdapter({ url, apiKey, timeout });
   }
 
   /**

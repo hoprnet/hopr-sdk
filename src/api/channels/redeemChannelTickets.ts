@@ -3,7 +3,14 @@ import { Error, type PeerIdPayloadType } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 /**
- * // TODO: Takes more than 200s to execute
+ * Redeems all the unredeemed HOPR tickets in a channel.
+ *
+ * This operation may take more than 5 minutes to complete as it involves on-chain operations.
+ *
+ * @returns A Promise that resolves to a boolean indicating the success of the operation.
+ * True if the operation is successful, false otherwise.
+ *
+ * @throws APIError - If the operation fails. The error object contains the status code and the error message.
  */
 export const redeemChannelTickets = async (
   payload: PeerIdPayloadType

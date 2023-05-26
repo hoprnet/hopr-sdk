@@ -17,12 +17,27 @@ const log = createLogger('account');
  * A class that provides a wrapper around account-related API endpoints.
  */
 export class AccountAdapter {
+  private url: string;
+  private apiKey: string;
+  private timeout: number | undefined;
   /**
    * Creates a new instance of the `AccountAdapter` class.
    * @param url - The URL of the API server.
    * @param apiKey - The API key to use for authentication.
+   * @param timeout - optional timeout for all functions
    */
-  constructor(private url: string, private apiKey: string) {}
+  constructor({
+    url,
+    apiKey
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.url = url;
+    this.apiKey = apiKey;
+    this.timeout = this.timeout;
+  }
 
   /**
    * Gets the HOPR and native addresses associated to the node.
@@ -30,7 +45,11 @@ export class AccountAdapter {
    */
   public async getAddresses() {
     try {
-      return await getAddresses({ url: this.url, apiKey: this.apiKey });
+      return await getAddresses({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status, stack } = e;
@@ -47,7 +66,11 @@ export class AccountAdapter {
    */
   public async getBalances() {
     try {
-      return await getBalances({ url: this.url, apiKey: this.apiKey });
+      return await getBalances({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status, stack } = e;
@@ -64,7 +87,11 @@ export class AccountAdapter {
    */
   public async getHoprAddress() {
     try {
-      return await getHoprAddress({ url: this.url, apiKey: this.apiKey });
+      return await getHoprAddress({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status, stack } = e;
@@ -81,7 +108,11 @@ export class AccountAdapter {
    */
   public async getHoprBalance() {
     try {
-      return await getHoprBalance({ url: this.url, apiKey: this.apiKey });
+      return await getHoprBalance({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status, stack } = e;
@@ -98,7 +129,11 @@ export class AccountAdapter {
    */
   public async getNativeAddress() {
     try {
-      return await getNativeAddress({ url: this.url, apiKey: this.apiKey });
+      return await getNativeAddress({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status, stack } = e;
@@ -115,7 +150,11 @@ export class AccountAdapter {
    */
   public async getNativeBalance() {
     try {
-      return await getNativeBalance({ url: this.url, apiKey: this.apiKey });
+      return await getNativeBalance({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status, stack } = e;
@@ -127,6 +166,7 @@ export class AccountAdapter {
   }
   /**
    * Withdraw the given currency amount to the specified recipient address.
+   * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    * @param payload - The withdrawal request payload.
    * @returns — A Promise that resolves to the transaction receipt.
    */
@@ -134,7 +174,12 @@ export class AccountAdapter {
     payload: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType>
   ) {
     try {
-      return await withdraw({ url: this.url, apiKey: this.apiKey, ...payload });
+      return await withdraw({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout,
+        ...payload
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status, stack } = e;

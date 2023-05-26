@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { BasicAuthenticationPayload, ZodToType } from './general';
+import { BasePayload, ZodToType } from './general';
 
 /**
  * General types
  */
 
-export const PeerIdPayload = BasicAuthenticationPayload.extend({
+export const PeerIdPayload = BasePayload.extend({
   peerId: z.string()
 });
 
@@ -15,7 +15,7 @@ export type PeerIdPayloadType = ZodToType<typeof PeerIdPayload>;
  * Fund channel
  */
 
-export const FundChannelsPayload = BasicAuthenticationPayload.extend({
+export const FundChannelsPayload = BasePayload.extend({
   peerId: z.string(),
   outgoingAmount: z.string(),
   incomingAmount: z.string()
@@ -31,19 +31,19 @@ export type FundChannelsResponseType = ZodToType<typeof FundChannelsResponse>;
 
 /** Open channel */
 
-export const OpenChannelsPayload = BasicAuthenticationPayload.extend({
+export const OpenChannelPayload = BasePayload.extend({
   peerId: z.string(),
   amount: z.string()
 });
 
-export type OpenChannelsPayloadType = ZodToType<typeof OpenChannelsPayload>;
+export type OpenChannelPayloadType = ZodToType<typeof OpenChannelPayload>;
 
-export const OpenChannelsResponse = z.object({
+export const OpenChannelResponse = z.object({
   channelId: z.string(),
   receipt: z.string()
 });
 
-export type OpenChannelsResponseType = ZodToType<typeof OpenChannelsResponse>;
+export type OpenChannelResponseType = ZodToType<typeof OpenChannelResponse>;
 
 /** Get channels */
 
@@ -81,7 +81,7 @@ export type GetTicketsResponseType = ZodToType<typeof GetTicketsResponse>;
 
 /** Close channel */
 
-export const CloseChannelPayload = BasicAuthenticationPayload.extend({
+export const CloseChannelPayload = BasePayload.extend({
   peerId: z.string(),
   direction: z.enum(['incoming', 'outgoing'])
 });
@@ -97,7 +97,7 @@ export type CloseChannelResponseType = ZodToType<typeof CloseChannelResponse>;
 
 /** Get channel */
 
-export const GetChannelPayload = BasicAuthenticationPayload.extend({
+export const GetChannelPayload = BasePayload.extend({
   peerId: z.string(),
   direction: z.enum(['incoming', 'outgoing'])
 });

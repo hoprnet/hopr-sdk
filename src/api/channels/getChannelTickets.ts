@@ -1,21 +1,21 @@
-import fetch from 'cross-fetch';
 import {
   Error,
   GetTicketsResponse,
   GetTicketsResponseType,
   type PeerIdPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getChannelTickets = async (
   payload: PeerIdPayloadType
 ): Promise<GetTicketsResponseType> => {
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/channels/${payload.peerId}/tickets`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiKey)
-    }
+    },
+    payload.timeout
   );
 
   const jsonResponse = await rawResponse.json();
