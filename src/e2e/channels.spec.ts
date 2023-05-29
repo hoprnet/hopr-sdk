@@ -2,7 +2,7 @@ import { HoprSdk as SDK } from '../sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
   process.env;
-const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiToken: HOPRD_API_TOKEN! });
+const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiKey: HOPRD_API_TOKEN! });
 const { channels } = sdk.api;
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -11,12 +11,12 @@ describe('Channels E2E test', function () {
   let peerId: string;
   const sdk2 = new SDK({
     url: HOPRD_API_ENDPOINT_2!,
-    apiToken: HOPRD_API_TOKEN!
+    apiKey: HOPRD_API_TOKEN!
   });
   // Open a channel before all the other tests are executed
   beforeAll(async () => {
     peerId = (await sdk2.api.account.getHoprAddress()) as string;
-    const openChannelResponse = await channels.openChannels({
+    const openChannelResponse = await channels.openChannel({
       peerId: peerId,
       amount: '10000000'
     });

@@ -3,7 +3,7 @@ import { HoprSdk as SDK } from '../sdk';
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
   process.env;
 
-const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiToken: HOPRD_API_TOKEN! });
+const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiKey: HOPRD_API_TOKEN! });
 const { aliases } = sdk.api;
 
 describe('Alases E2E test', function () {
@@ -14,7 +14,7 @@ describe('Alases E2E test', function () {
   beforeAll(async () => {
     peerId = (await new SDK({
       url: HOPRD_API_ENDPOINT_2!,
-      apiToken: HOPRD_API_TOKEN!
+      apiKey: HOPRD_API_TOKEN!
     }).api.account.getHoprAddress()) as string;
 
     const setAliasResponse = await aliases.setAlias({
