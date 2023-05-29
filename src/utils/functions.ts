@@ -7,7 +7,6 @@ import { decode } from 'rlp';
  * @returns a string representing the decoded message
  */
 export const decodeMessage = (msg: string): string => {
-  console.log('WB: decodeMessage');
   let uint8Array = new Uint8Array(JSON.parse(`[${msg}]`));
   let decodedArray = decode(uint8Array);
   if (decodedArray[0] instanceof Uint8Array) {
