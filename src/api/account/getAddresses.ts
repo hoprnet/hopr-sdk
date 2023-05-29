@@ -9,8 +9,8 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 /**
  * Gets the HOPR and native addresses associated to the node.
  *
- * @param url - The URL of the API endpoint.
- * @param apiKey - The API key to be used for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to be used for authentication.
  * @returns A promise that resolves with an object containing the HOPR and native addresses.
  * @throws An error that occurred while processing the request.
  */
@@ -18,10 +18,10 @@ export const getAddresses = async (
   payload: BasePayloadType
 ): Promise<AccountResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/account/addresses`,
+    `${payload.apiEndpoint}/api/v2/account/addresses`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

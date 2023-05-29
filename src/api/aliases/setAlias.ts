@@ -10,8 +10,8 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
  * Give an address a more memorable alias and use it instead of Hopr address.
  * Aliases are kept locally and are not saved or shared on the network.
  *
- * @param url - The base URL of the server.
- * @param apiKey - The API key to be used for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to be used for authentication.
  * @param body - A object containing the peer ID and alias to link.
  * @returns A Promise that resolves to true if alias successfully linked to peerId.
  * @throws An error that occurred while processing the request.
@@ -24,10 +24,10 @@ export const setAlias = async (
     peerId: payload.peerId
   };
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/aliases`,
+    `${payload.apiEndpoint}/api/v2/aliases`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiKey),
+      headers: getHeaders(payload.apiToken),
       body: JSON.stringify(body)
     },
     payload.timeout

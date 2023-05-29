@@ -5,8 +5,8 @@ import { DeleteTokenPayloadType, Error } from '../../types';
  * Deletes a token. Can only be done before the lifetime expired.
  * After the lifetime expired the token is automatically deleted.
  *
- * @param url - The URL of the API endpoint.
- * @param apiKey - The API key to be used for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to be used for authentication.
  * @param id - The id of the token to be deleted.
  * @returns A Promise that resolves to true if successful.
  * @throws An error that occurred while processing the request.
@@ -15,10 +15,10 @@ export const deleteToken = async (
   payload: DeleteTokenPayloadType
 ): Promise<boolean> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/tokens/${payload.id}`,
+    `${payload.apiEndpoint}/api/v2/tokens/${payload.id}`,
     {
       method: 'DELETE',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

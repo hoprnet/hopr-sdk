@@ -17,10 +17,10 @@ export const fundChannels = async (
   };
 
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/fundmulti`,
+    `${payload.apiEndpoint}/api/v2/fundmulti`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiKey),
+      headers: getHeaders(payload.apiToken),
       body: JSON.stringify(body)
     },
     payload.timeout

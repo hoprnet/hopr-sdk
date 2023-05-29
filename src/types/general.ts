@@ -10,14 +10,14 @@ export type ZodToType<T extends ZodType<any, any, any>> = z.infer<T>;
  */
 export const BasePayload = z.object({
   /**
-   * The URL for authentication.
+   * The API endpoint for authentication.
    */
-  url: z.string(),
+  apiEndpoint: z.string(),
 
   /**
-   * The API key for authentication.
+   * The API token for authentication.
    */
-  apiKey: z.string(),
+  apiToken: z.string(),
 
   /**
    * optional timeout for the requests
@@ -35,4 +35,4 @@ export type BasePayloadType = ZodToType<typeof BasePayload>;
  * @typeparam T - The payload type from which to remove the properties.
  */
 export type RemoveBasicAuthenticationPayloadType<T extends BasePayloadType> =
-  Pick<T, Exclude<keyof T, 'url' | 'apiKey' | 'timeout'>>;
+  Pick<T, Exclude<keyof T, 'apiEndpoint' | 'apiToken' | 'timeout'>>;

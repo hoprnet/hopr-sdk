@@ -10,10 +10,10 @@ export const getSettings = async (
   payload: BasePayloadType
 ): Promise<GetSettingsResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/settings`,
+    `${payload.apiEndpoint}/api/v2/settings`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

@@ -4,8 +4,8 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 /**
  * Unassign an alias from a PeerId.
  *
- * @param url - The base URL of the server.
- * @param apiKey - The API key used to authenticate the request.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token used to authenticate the request.
  * @param body - The payload containing the details of the alias to remove.
  * @returns A Promise that resolves to true if the alias was successfully removed.
  * @throws An error that occurred while processing the request.
@@ -14,10 +14,10 @@ export const removeAlias = async (
   payload: AliasPayloadType
 ): Promise<boolean> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/aliases/${payload.alias}`,
+    `${payload.apiEndpoint}/api/v2/aliases/${payload.alias}`,
     {
       method: 'DELETE',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

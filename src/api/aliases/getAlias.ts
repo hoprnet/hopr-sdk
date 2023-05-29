@@ -4,18 +4,18 @@ import { AliasPayloadType, Error, GetAliasResponse } from '../../types';
 /**
  * Get the PeerId (Hopr address) that have this alias assigned to it.
  *
- * @param url - The base URL of the server.
- * @param apiKey - The API key to use for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to use for authentication.
  * @param body - An object containing the alias to retrieve the peer ID for.
  * @returns A promise that resolves to the peer ID associated with the alias.
  * @throws An error that occurred while processing the request.
  */
 export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/aliases/${payload.alias}`,
+    `${payload.apiEndpoint}/api/v2/aliases/${payload.alias}`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

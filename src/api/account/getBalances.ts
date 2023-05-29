@@ -9,8 +9,8 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 /**
  * Fetches the HOPR and native balances of the node.
  *
- * @param url - The URL of the API endpoint.
- * @param apiKey - The API key to be used for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to be used for authentication.
  * @returns A Promise that resolves with an object containing the HOPR and native balances.
  * @throws An error that occurred while processing the request.
  */
@@ -18,10 +18,10 @@ export const getBalances = async (
   payload: BasePayloadType
 ): Promise<AccountResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/account/balances`,
+    `${payload.apiEndpoint}/api/v2/account/balances`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
