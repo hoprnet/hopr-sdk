@@ -1,11 +1,23 @@
 {
   "name": "hopr-sdk",
   "version": "0.0.1-alpha.0",
+  "description": "A SDK for HOPRd's Rest API functions",
+  "author": "HOPR Association",
   "license": "GPL-3.0",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "repository": "git@github.com:hoprnet/hopr-sdk.git",
+  "keywords": [
+    "hopr-sdk",
+    "hopr",
+    "hoprd",
+    "adapter",
+    "apiAdapter"
+  ],
+  "bugs": {
+    "url": "https://github.com/hoprnet/hopr-sdk/issues"
+  },
   "scripts": {
     "build": "tsup",
     "lint": "tsc",
@@ -23,6 +35,8 @@
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.0",
     "tsup": "^6.7.0",
+    "typedoc": "^0.24.7",
+    "typedoc-plugin-markdown": "^3.15.3",
     "typescript": "^5.0.4"
   },
   "engines": {
