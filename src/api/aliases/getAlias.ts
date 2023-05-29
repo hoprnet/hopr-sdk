@@ -1,5 +1,4 @@
-import fetch from 'cross-fetch';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import { AliasPayloadType, Error, GetAliasResponse } from '../../types';
 
 /**
@@ -12,12 +11,13 @@ import { AliasPayloadType, Error, GetAliasResponse } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${payload.url}/api/v2/aliases/${payload.alias}`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiKey)
-    }
+    },
+    payload.timeout
   );
 
   const jsonResponse = await rawResponse.json();

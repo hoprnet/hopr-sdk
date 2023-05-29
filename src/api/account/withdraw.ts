@@ -9,10 +9,7 @@ import { APIError, getHeaders } from '../../utils';
 
 /**
  * Withdraw the given currency amount to the specified recipient address.
- *
- * @param url - The API endpoint URL.
- * @param apiKey - The API key used to authenticate the request.
- * @param body - The necessary data to withdraw from a node;
+ * This operation may take more than 5 minutes to complete as it involves on-chain operations.
  * @returns A Promise that resolves to the transaction receipt.
  * @throws An error that occurred while processing the request.
  */

@@ -6,9 +6,9 @@ import { ZodType, z } from 'zod';
 export type ZodToType<T extends ZodType<any, any, any>> = z.infer<T>;
 
 /**
- * Represents the payload needed to interact with hoprd node.
+ * Represents the minimum payload needed to interact with hoprd node.
  */
-export const BasicAuthenticationPayload = z.object({
+export const BasePayload = z.object({
   /**
    * The URL for authentication.
    */
@@ -17,20 +17,22 @@ export const BasicAuthenticationPayload = z.object({
   /**
    * The API key for authentication.
    */
-  apiKey: z.string()
+  apiKey: z.string(),
+
+  /**
+   * optional timeout for the requests
+   */
+  timeout: z.number().optional()
 });
 
 /**
  * Represents the inferred TypeScript type from BasicAuthenticationPayload.
  */
-export type BasicAuthenticationPayloadType = ZodToType<
-  typeof BasicAuthenticationPayload
->;
+export type BasePayloadType = ZodToType<typeof BasePayload>;
 
 /**
  * Removes the basic authentication properties from a payload type.
  * @typeparam T - The payload type from which to remove the properties.
  */
-export type RemoveBasicAuthenticationPayloadType<
-  T extends BasicAuthenticationPayloadType
-> = Pick<T, Exclude<keyof T, 'url' | 'apiKey'>>;
+export type RemoveBasicAuthenticationPayloadType<T extends BasePayloadType> =
+  Pick<T, Exclude<keyof T, 'url' | 'apiKey' | 'timeout'>>;

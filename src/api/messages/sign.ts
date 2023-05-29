@@ -1,11 +1,10 @@
-import fetch from 'cross-fetch';
 import {
   Error,
   RemoveBasicAuthenticationPayloadType,
   SignPayloadType,
   SignResponse
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Signs a message given using the node’s private key. Prefixes messsage with “HOPR Signed Message: ” before signing.
@@ -20,11 +19,15 @@ export const sign = async (payload: SignPayloadType): Promise<string> => {
   const body: RemoveBasicAuthenticationPayloadType<SignPayloadType> = {
     message: payload.message
   };
-  const rawResponse = await fetch(`${payload.url}/api/v2/messages/sign`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/messages/sign`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
   const jsonResponse = await rawResponse.json();
   const parsedRes = SignResponse.safeParse(jsonResponse);
 

@@ -1,17 +1,18 @@
-import fetch from 'cross-fetch';
-import { BasicAuthenticationPayloadType, Error } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { BasePayloadType, Error } from '../../types';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getMetrics = async (
-  payload: BasicAuthenticationPayloadType
-): Promise<string> => {
+export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   const headersForMetrics = getHeaders(payload.apiKey);
   headersForMetrics.set('Accept-Content', 'text/plain');
 
-  const rawResponse = await fetch(`${payload.url}/api/v2/node/metrics`, {
-    method: 'GET',
-    headers: headersForMetrics
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/node/metrics`,
+    {
+      method: 'GET',
+      headers: headersForMetrics
+    },
+    payload.timeout
+  );
 
   if (rawResponse.status === 200) {
     const textResponse = await rawResponse.text();

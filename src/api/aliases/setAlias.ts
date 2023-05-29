@@ -1,10 +1,9 @@
-import fetch from 'cross-fetch';
 import {
   Error,
   RemoveBasicAuthenticationPayloadType,
   SetAliasPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
@@ -14,7 +13,7 @@ import { APIError, getHeaders } from '../../utils';
  * @param url - The base URL of the server.
  * @param apiKey - The API key to be used for authentication.
  * @param body - A object containing the peer ID and alias to link.
- * @returns A Promise that resolves to true if alias succesfully linked to peerId.
+ * @returns A Promise that resolves to true if alias successfully linked to peerId.
  * @throws An error that occurred while processing the request.
  */
 export const setAlias = async (
@@ -24,11 +23,15 @@ export const setAlias = async (
     alias: payload.alias,
     peerId: payload.peerId
   };
-  const rawResponse = await fetch(`${payload.url}/api/v2/aliases`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${payload.url}/api/v2/aliases`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiKey),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
 
   if (rawResponse.status === 201) {
     return true;

@@ -1,12 +1,18 @@
 import fetch from 'cross-fetch';
-import { BasicAuthenticationPayloadType, Error } from '../../types';
+import { BasePayloadType, Error } from '../../types';
 import { APIError, getHeaders } from '../../utils';
 
 /**
- * Disclaimer: takes really long to succeed
+ * Redeems all the unredeemed HOPR tickets owned by the HOPR node.
+ *
+ * This operation may take more than 5 minutes to complete as it involves on-chain operations.
+ * @returns A Promise that resolves to a boolean indicating the success of the operation.
+ * True if the operation is successful, false otherwise.
+ *
+ * @throws APIError - If the operation fails. The error object contains the status code and the error message.
  */
 export const redeemTickets = async (
-  payload: BasicAuthenticationPayloadType
+  payload: BasePayloadType
 ): Promise<boolean> => {
   const rawResponse = await fetch(`${payload.url}/api/v2/tickets/redeem`, {
     method: 'POST',

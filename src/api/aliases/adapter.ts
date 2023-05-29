@@ -15,12 +15,27 @@ const log = createLogger('aliases');
  * A class that provides a wrapper around aliases-related API endpoints.
  */
 export class AliasesAdapter {
+  private url: string;
+  private apiKey: string;
+  private timeout: number | undefined;
+
   /**
    * Creates a new instance of the `AliasesAdapter` class.
    * @param url - The URL of the API server.
    * @param apiKey - The API key to use for authentication.
    */
-  constructor(private url: string, private apiKey: string) {}
+  constructor({
+    url,
+    apiKey
+  }: {
+    url: string;
+    apiKey: string;
+    timeout?: number;
+  }) {
+    this.url = url;
+    this.apiKey = apiKey;
+    this.timeout = this.timeout;
+  }
 
   /**
    * Get all aliases you set previously and their corresponding peer IDs.
@@ -29,7 +44,11 @@ export class AliasesAdapter {
    */
   public async getAliases(): Promise<Record<string, string> | undefined> {
     try {
-      return await getAliases({ url: this.url, apiKey: this.apiKey });
+      return await getAliases({
+        url: this.url,
+        apiKey: this.apiKey,
+        timeout: this.timeout
+      });
     } catch (e) {
       if (e instanceof APIError) {
         const { message, error, status } = e;
@@ -55,6 +74,7 @@ export class AliasesAdapter {
       return await setAlias({
         url: this.url,
         apiKey: this.apiKey,
+        timeout: this.timeout,
         alias: payload.alias,
         peerId: payload.peerId
       });
@@ -81,6 +101,7 @@ export class AliasesAdapter {
       return await getAlias({
         url: this.url,
         apiKey: this.apiKey,
+        timeout: this.timeout,
         alias: payload.alias
       });
     } catch (e) {
@@ -106,6 +127,7 @@ export class AliasesAdapter {
       return await removeAlias({
         url: this.url,
         apiKey: this.apiKey,
+        timeout: this.timeout,
         alias: payload.alias
       });
     } catch (e) {
