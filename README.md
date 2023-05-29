@@ -1,12 +1,14 @@
-# HOPR-SDK
+# hopr-sdk
 
 ## Description
+
 ---
 
-The HOPR-SDK package is a software development kit for interacting with [HOPRd's Rest API functions](https://docs.hoprnet.org/developers/rest-api).
+The `hopr-sdk` package is a software development kit for interacting with [HOPRd's Rest API functions](https://docs.hoprnet.org/developers/rest-api).
 It provides a set of functions that allow developers to interact with the HOPR protocol and perform various actions such as account management, address retrieval, balance retrieval, and withdrawal operations.
 
 ## Installation
+
 ---
 
 To install the HOPR-SDK package, follow these steps:
@@ -25,6 +27,7 @@ yarn add hopr-sdk
 ```
 
 ## Usage
+
 ---
 
 You can use the HOPR-SDK in three different ways:
@@ -36,7 +39,7 @@ By creating a new instance of the HoprSdk class.
 1. Import the HoprSdk class from the package:
 
 ```ts
-import { HoprSdk } from 'hopr-sdk';
+import { HoprSdk } from '@hoprnet/hopr-sdk';
 ```
 
 2. Create an instance of the HoprSdk class by providing the required parameters:
@@ -64,7 +67,7 @@ By using the api object, which is the purest way of doing ... ///
 1. Import the api object from the package:
 
 ```ts
-import { api } from 'hopr-sdk';
+import { api } from '@hoprnet/hopr-sdk';
 ```
 
 2. Access the desired function, keep in mind that you'll need to provide a **payload object** with the `apiEndpoint` and `apiToken` for each individual function:
@@ -80,14 +83,17 @@ console.log(addresses);
 ```
 
 #### Importing directly the api functions
+
 If your ts config includes `"moduleResolution": "nodenext" or "node16"`.
 
 1. Import the desired function:
+
 ```ts
-import { getAddresses } from 'hopr-sdk/api';
+import { getAddresses } from '@hoprnet/hopr-sdk/api';
 ```
 
 2. Provide the **payload object** with the `apiEndpoint` and `apiToken`:
+
 ```ts
 const addresses = await getAddresses({
   apiEndpoint: 'https://api.example.com', // Replace with the !!URL of the HOPR API server!!
@@ -99,7 +105,9 @@ console.log(addresses);
 ```
 
 ## HoprSdk
+
 ---
 
 ## Functions
+
 ---
