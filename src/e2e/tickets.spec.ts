@@ -5,7 +5,7 @@ const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1 } = process.env;
 const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiKey: HOPRD_API_TOKEN! });
 const { tickets } = sdk.api;
 
-describe('settings E2E Tests', function () {
+describe('tickets E2E Tests', function () {
   test('should get the statistics regarding all your tickets', async function () {
     const response = await tickets.getStatistics();
 

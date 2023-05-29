@@ -32,8 +32,6 @@ describe('Messages E2E Tests', function () {
     wsSdk = (await sdk2.api.messages.websocket()) as unknown as WebSocket;
   });
 
-  test.todo('test messages');
-
   test('sends a message to another peer', async function () {
     let receivedMessage: string | undefined;
     wsSdk.onmessage = (event) => {
@@ -62,11 +60,6 @@ describe('Messages E2E Tests', function () {
   }, 30e4);
 
   test('should sign message and prefix with "HOPR Signed Message:"', async function () {
-    let receivedMessage: string | undefined;
-    wsSdk.onmessage = (event) => {
-      receivedMessage = event.data;
-    };
-
     const signMessageResponse = await messages.sign({
       message: MESSAGE
     });

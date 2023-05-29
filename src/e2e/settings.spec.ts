@@ -24,7 +24,7 @@ describe('settings E2E Tests', function () {
     });
 
     const newSettings = await settings.getSettings();
-
+    expect(newSettings).toBeDefined();
     expect(newSettings).not.toEqual(oldSettings);
   });
 });

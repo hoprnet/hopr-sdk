@@ -61,5 +61,9 @@ describe('Tokens E2E Tests', function () {
     });
   });
 
-  test.todo('should delete a token');
+  afterAll(async () => {
+    const deleteTokenResponse = await tokens.deleteToken({ id: newToken });
+
+    expect(deleteTokenResponse).toBe(true);
+  });
 });
