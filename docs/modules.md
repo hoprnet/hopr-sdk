@@ -53,7 +53,6 @@
 - [SetSettingPayloadType](modules.md#setsettingpayloadtype)
 - [SignPayloadType](modules.md#signpayloadtype)
 - [WithdrawPayloadType](modules.md#withdrawpayloadtype)
-- [ZodToType](modules.md#zodtotype)
 
 ### Variables
 
@@ -105,323 +104,566 @@
 
 ### AccountResponseType
 
-Ƭ **AccountResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`AccountResponse`](modules.md#accountresponse)\>
+Ƭ **AccountResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `hopr` | `string` |
+| `native` | `string` |
 
 #### Defined in
 
-[src/types/account.ts:13](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/account.ts#L13)
+[src/types/account.ts:13](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/account.ts#L13)
 
 ___
 
 ### AliasPayloadType
 
-Ƭ **AliasPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`AliasPayload`](modules.md#aliaspayload)\>
+Ƭ **AliasPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `alias` | `string` | - |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/aliases.ts:12](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L12)
+[src/types/aliases.ts:12](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L12)
 
 ___
 
 ### BasePayloadType
 
-Ƭ **BasePayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`BasePayload`](modules.md#basepayload)\>
+Ƭ **BasePayloadType**: `Object`
 
 Represents the inferred TypeScript type from BasicAuthenticationPayload.
 
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `timeout?` | `number` | optional timeout for the requests |
+
 #### Defined in
 
-[src/types/general.ts:31](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/general.ts#L31)
+[src/types/general.ts:26](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/general.ts#L26)
 
 ___
 
 ### CloseChannelPayloadType
 
-Ƭ **CloseChannelPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`CloseChannelPayload`](modules.md#closechannelpayload)\>
+Ƭ **CloseChannelPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `direction` | ``"incoming"`` \| ``"outgoing"`` | - |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/channels.ts:91](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L91)
+[src/types/channels.ts:91](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L91)
 
 ___
 
 ### CloseChannelResponseType
 
-Ƭ **CloseChannelResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`CloseChannelResponse`](modules.md#closechannelresponse)\>
+Ƭ **CloseChannelResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `channelStatus` | `string` |
+| `receipt?` | `string` |
 
 #### Defined in
 
-[src/types/channels.ts:98](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L98)
+[src/types/channels.ts:98](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L98)
 
 ___
 
 ### CreateTokenPayloadType
 
-Ƭ **CreateTokenPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`CreateTokenPayload`](modules.md#createtokenpayload)\>
+Ƭ **CreateTokenPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `capabilities` | { `endpoint`: ``"accountWithdraw"`` \| ``"accountGetBalances"`` \| ``"accountGetAddresses"`` \| ``"aliasesGetAliases"`` \| ``"aliasesSetAlias"`` \| ``"aliasesGetAlias"`` \| ``"aliasesRemoveAlias"`` \| ``"channelsFundChannels"`` \| ``"channelsOpenChannel"`` \| ``"channelsGetChannels"`` \| ``"channelsRedeemTickets"`` \| ``"channelsGetTickets"`` \| ``"channelsGetChannel"`` \| ``"channelsCloseChannel"`` \| ``"messagesWebsocket"`` \| ``"messagesSign"`` \| ``"messagesSendMessage"`` \| ``"nodeGetVersion"`` \| ``"nodePing"`` \| ``"nodeGetPeers"`` \| ``"nodeGetMetrics"`` \| ``"nodeGetInfo"`` \| ``"nodeGetEntryNodes"`` \| ``"peerInfoGetPeerInfo"`` \| ``"settingsGetSettings"`` \| ``"settingsSetSetting"`` \| ``"ticketsGetStatistics"`` \| ``"ticketsRedeemTickets"`` \| ``"ticketsGetTickets"`` \| ``"tokensCreate"`` \| ``"tokensGetToken"`` \| ``"tokensDelete"`` ; `limits`: { type: string; conditions?: { max?: number \| undefined; } \| undefined; used?: number \| undefined; }[]  }[] | - |
+| `description` | `string` | - |
+| `lifetime` | `number` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/tokens.ts:75](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L75)
+[src/types/tokens.ts:75](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L75)
 
 ___
 
 ### CreateTokenResponseType
 
-Ƭ **CreateTokenResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`CreateTokenResponse`](modules.md#createtokenresponse)\>
+Ƭ **CreateTokenResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `token` | `string` |
 
 #### Defined in
 
-[src/types/tokens.ts:81](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L81)
+[src/types/tokens.ts:81](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L81)
 
 ___
 
 ### DeleteTokenPayloadType
 
-Ƭ **DeleteTokenPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`DeleteTokenPayload`](modules.md#deletetokenpayload)\>
+Ƭ **DeleteTokenPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `id` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/tokens.ts:104](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L104)
+[src/types/tokens.ts:104](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L104)
 
 ___
 
 ### ErrorType
 
-Ƭ **ErrorType**: [`ZodToType`](modules.md#zodtotype)<typeof [`Error`](modules.md#error)\>
+Ƭ **ErrorType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `error?` | `string` |
+| `status?` | `string` |
 
 #### Defined in
 
-[src/types/error.ts:9](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/error.ts#L9)
+[src/types/error.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/error.ts#L8)
 
 ___
 
 ### FundChannelsPayloadType
 
-Ƭ **FundChannelsPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`FundChannelsPayload`](modules.md#fundchannelspayload)\>
+Ƭ **FundChannelsPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `incomingAmount` | `string` | - |
+| `outgoingAmount` | `string` | - |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/channels.ts:24](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L24)
+[src/types/channels.ts:24](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L24)
 
 ___
 
 ### FundChannelsResponseType
 
-Ƭ **FundChannelsResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`FundChannelsResponse`](modules.md#fundchannelsresponse)\>
+Ƭ **FundChannelsResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `receipt` | `string` |
 
 #### Defined in
 
-[src/types/channels.ts:30](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L30)
+[src/types/channels.ts:30](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L30)
 
 ___
 
 ### GetAliasResponseType
 
-Ƭ **GetAliasResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetAliasResponse`](modules.md#getaliasresponse)\>
+Ƭ **GetAliasResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `peerId` | `string` |
 
 #### Defined in
 
-[src/types/aliases.ts:39](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L39)
+[src/types/aliases.ts:39](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L39)
 
 ___
 
 ### GetAliasesResponseType
 
-Ƭ **GetAliasesResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetAliasesResponse`](modules.md#getaliasesresponse)\>
+Ƭ **GetAliasesResponseType**: `Record`<`string`, `string`\>
 
 #### Defined in
 
-[src/types/aliases.ts:20](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L20)
+[src/types/aliases.ts:20](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L20)
 
 ___
 
 ### GetChannelPayloadType
 
-Ƭ **GetChannelPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetChannelPayload`](modules.md#getchannelpayload)\>
+Ƭ **GetChannelPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `direction` | ``"incoming"`` \| ``"outgoing"`` | - |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/channels.ts:107](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L107)
+[src/types/channels.ts:107](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L107)
 
 ___
 
 ### GetChannelResponseType
 
-Ƭ **GetChannelResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetChannelResponse`](modules.md#getchannelresponse)\>
+Ƭ **GetChannelResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `balance` | `string` |
+| `channelId` | `string` |
+| `peerId` | `string` |
+| `status` | ``"WaitingForCommitment"`` \| ``"Open"`` \| ``"PendingToClose"`` \| ``"Closed"`` |
+| `type` | ``"incoming"`` \| ``"outgoing"`` |
 
 #### Defined in
 
-[src/types/channels.ts:111](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L111)
+[src/types/channels.ts:111](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L111)
 
 ___
 
 ### GetChannelTicketsResponseType
 
-Ƭ **GetChannelTicketsResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetChannelTicketsResponse`](modules.md#getchannelticketsresponse)\>
+Ƭ **GetChannelTicketsResponseType**: { `amount`: `string` ; `challenge`: `string` ; `channelEpoch`: `string` ; `counterparty`: `string` ; `epoch`: `string` ; `index`: `string` ; `signature`: `string` ; `winProb`: `string`  }[]
 
 #### Defined in
 
-[src/types/channels.ts:80](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L80)
+[src/types/channels.ts:80](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L80)
 
 ___
 
 ### GetChannelsResponseType
 
-Ƭ **GetChannelsResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetChannelsResponse`](modules.md#getchannelsresponse)\>
+Ƭ **GetChannelsResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `incoming` | { type: "incoming" \| "outgoing"; status: "WaitingForCommitment" \| "Open" \| "PendingToClose" \| "Closed"; peerId: string; channelId: string; balance: string; }[] |
+| `outgoing` | { type: "incoming" \| "outgoing"; status: "WaitingForCommitment" \| "Open" \| "PendingToClose" \| "Closed"; peerId: string; channelId: string; balance: string; }[] |
 
 #### Defined in
 
-[src/types/channels.ts:63](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L63)
+[src/types/channels.ts:63](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L63)
 
 ___
 
 ### GetEntryNodesResponseType
 
-Ƭ **GetEntryNodesResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetEntryNodesResponse`](modules.md#getentrynodesresponse)\>
+Ƭ **GetEntryNodesResponseType**: `Record`<`string`, { `isEligible`: `boolean` ; `multiaddrs`: `string`[]  }\>
 
 #### Defined in
 
-[src/types/node.ts:63](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L63)
+[src/types/node.ts:63](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L63)
 
 ___
 
 ### GetInfoResponseType
 
-Ƭ **GetInfoResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetInfoResponse`](modules.md#getinforesponse)\>
+Ƭ **GetInfoResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `announcedAddress` | `string`[] |
+| `channelClosurePeriod` | `number` |
+| `connectivityStatus` | `string` |
+| `environment` | `string` |
+| `hoprChannels` | `string` |
+| `hoprNetworkRegistryAddress?` | `string` |
+| `hoprToken` | `string` |
+| `isEligible` | `boolean` |
+| `listeningAddress` | `string`[] |
+| `network` | `string` |
 
 #### Defined in
 
-[src/types/node.ts:50](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L50)
+[src/types/node.ts:50](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L50)
 
 ___
 
 ### GetPeerInfoPayloadType
 
-Ƭ **GetPeerInfoPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetPeerInfoPayload`](modules.md#getpeerinfopayload)\>
+Ƭ **GetPeerInfoPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/peerInfo.ts:12](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/peerInfo.ts#L12)
+[src/types/peerInfo.ts:12](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/peerInfo.ts#L12)
 
 ___
 
 ### GetPeerInfoResponseType
 
-Ƭ **GetPeerInfoResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetPeerInfoResponse`](modules.md#getpeerinforesponse)\>
+Ƭ **GetPeerInfoResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `announced` | `string`[] |
+| `observed` | `string`[] |
 
 #### Defined in
 
-[src/types/peerInfo.ts:19](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/peerInfo.ts#L19)
+[src/types/peerInfo.ts:19](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/peerInfo.ts#L19)
 
 ___
 
 ### GetPeersPayloadType
 
-Ƭ **GetPeersPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetPeersPayload`](modules.md#getpeerspayload)\>
+Ƭ **GetPeersPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `quality?` | `number` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/node.ts:12](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L12)
+[src/types/node.ts:12](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L12)
 
 ___
 
 ### GetPeersResponseType
 
-Ƭ **GetPeersResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetPeersResponse`](modules.md#getpeersresponse)\>
+Ƭ **GetPeersResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `announced` | { peerId: string; quality: number; multiAddr: string; heartbeats: { sent: number; success: number; }; lastSeen: number; backoff: number; isNew: boolean; }[] |
+| `connected` | { peerId: string; quality: number; multiAddr: string; heartbeats: { sent: number; success: number; }; lastSeen: number; backoff: number; isNew: boolean; }[] |
 
 #### Defined in
 
-[src/types/node.ts:31](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L31)
+[src/types/node.ts:31](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L31)
 
 ___
 
 ### GetSettingsResponseType
 
-Ƭ **GetSettingsResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetSettingsResponse`](modules.md#getsettingsresponse)\>
+Ƭ **GetSettingsResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `includeRecipient` | `boolean` |
+| `strategy` | `string` |
 
 #### Defined in
 
-[src/types/settings.ts:13](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/settings.ts#L13)
+[src/types/settings.ts:13](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/settings.ts#L13)
 
 ___
 
 ### GetStatisticsResponseType
 
-Ƭ **GetStatisticsResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetStatisticsResponse`](modules.md#getstatisticsresponse)\>
+Ƭ **GetStatisticsResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `losingTickets` | `number` |
+| `neglected` | `number` |
+| `pending` | `number` |
+| `redeemed` | `number` |
+| `redeemedValue` | `string` |
+| `rejected` | `number` |
+| `rejectedValue` | `string` |
+| `unredeemed` | `number` |
+| `unredeemedValue` | `string` |
+| `winProportion` | `number` |
 
 #### Defined in
 
-[src/types/tickets.ts:21](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tickets.ts#L21)
+[src/types/tickets.ts:20](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tickets.ts#L20)
 
 ___
 
 ### GetTicketsResponseType
 
-Ƭ **GetTicketsResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetTicketsResponse`](modules.md#getticketsresponse)\>
+Ƭ **GetTicketsResponseType**: { `amount`: `string` ; `challenge`: `string` ; `channelEpoch`: `string` ; `counterparty`: `string` ; `epoch`: `string` ; `index`: `string` ; `signature`: `string` ; `winProb`: `string`  }[]
 
 #### Defined in
 
-[src/types/tickets.ts:40](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tickets.ts#L40)
+[src/types/tickets.ts:39](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tickets.ts#L39)
 
 ___
 
 ### GetTokenResponseType
 
-Ƭ **GetTokenResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`GetTokenResponse`](modules.md#gettokenresponse)\>
+Ƭ **GetTokenResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `capabilities` | { endpoint: "accountWithdraw" \| "accountGetBalances" \| "accountGetAddresses" \| "aliasesGetAliases" \| "aliasesSetAlias" \| "aliasesGetAlias" \| "aliasesRemoveAlias" \| "channelsFundChannels" \| ... 23 more ... \| "tokensDelete"; limits: { ...; }[]; }[] |
+| `description?` | `string` |
+| `id` | `string` |
+| `valid_until?` | `number` |
 
 #### Defined in
 
-[src/types/tokens.ts:94](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L94)
+[src/types/tokens.ts:94](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L94)
 
 ___
 
 ### OpenChannelPayloadType
 
-Ƭ **OpenChannelPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`OpenChannelPayload`](modules.md#openchannelpayload)\>
+Ƭ **OpenChannelPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `amount` | `string` | - |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/channels.ts:39](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L39)
+[src/types/channels.ts:39](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L39)
 
 ___
 
 ### OpenChannelResponseType
 
-Ƭ **OpenChannelResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`OpenChannelResponse`](modules.md#openchannelresponse)\>
+Ƭ **OpenChannelResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `channelId` | `string` |
+| `receipt` | `string` |
 
 #### Defined in
 
-[src/types/channels.ts:46](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L46)
+[src/types/channels.ts:46](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L46)
 
 ___
 
 ### PeerIdPayloadType
 
-Ƭ **PeerIdPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`PeerIdPayload`](modules.md#peeridpayload)\>
+Ƭ **PeerIdPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/channels.ts:12](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L12)
+[src/types/channels.ts:12](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L12)
 
 ___
 
 ### PingNodePayloadType
 
-Ƭ **PingNodePayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`PingNodePayload`](modules.md#pingnodepayload)\>
+Ƭ **PingNodePayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/node.ts:73](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L73)
+[src/types/node.ts:73](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L73)
 
 ___
 
 ### PingNodeResponseType
 
-Ƭ **PingNodeResponseType**: [`ZodToType`](modules.md#zodtotype)<typeof [`PingNodeResponse`](modules.md#pingnoderesponse)\>
+Ƭ **PingNodeResponseType**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `latency` | `number` |
 
 #### Defined in
 
-[src/types/node.ts:79](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L79)
+[src/types/node.ts:79](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L79)
 
 ___
 
@@ -443,111 +685,145 @@ T - The payload type from which to remove the properties.
 
 #### Defined in
 
-[src/types/general.ts:37](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/general.ts#L37)
+[src/types/general.ts:32](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/general.ts#L32)
 
 ___
 
 ### SendMessagePayloadType
 
-Ƭ **SendMessagePayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`SendMessagePayload`](modules.md#sendmessagepayload)\>
+Ƭ **SendMessagePayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `body` | `string` | - |
+| `hops?` | `number` | - |
+| `path?` | `string`[] | - |
+| `recipient` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/messages.ts:29](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/messages.ts#L29)
+[src/types/messages.ts:29](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/messages.ts#L29)
 
 ___
 
 ### SetAliasPayloadType
 
-Ƭ **SetAliasPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`SetAliasPayload`](modules.md#setaliaspayload)\>
+Ƭ **SetAliasPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `alias` | `string` | - |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `peerId` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/aliases.ts:31](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L31)
+[src/types/aliases.ts:31](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L31)
 
 ___
 
 ### SetSettingPayloadType
 
-Ƭ **SetSettingPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`SetSettingPayload`](modules.md#setsettingpayload)\>
+Ƭ **SetSettingPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `setting` | `string` | - |
+| `settingValue?` | `any` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/settings.ts:24](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/settings.ts#L24)
+[src/types/settings.ts:24](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/settings.ts#L24)
 
 ___
 
 ### SignPayloadType
 
-Ƭ **SignPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`SignPayload`](modules.md#signpayload)\>
+Ƭ **SignPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `message` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/messages.ts:12](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/messages.ts#L12)
+[src/types/messages.ts:12](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/messages.ts#L12)
 
 ___
 
 ### WithdrawPayloadType
 
-Ƭ **WithdrawPayloadType**: [`ZodToType`](modules.md#zodtotype)<typeof [`WithdrawPayload`](modules.md#withdrawpayload)\>
+Ƭ **WithdrawPayloadType**: `Object`
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `amount` | `string` | - |
+| `apiEndpoint` | `string` | The API endpoint for authentication. |
+| `apiToken` | `string` | The API token for authentication. |
+| `currency` | ``"NATIVE"`` \| ``"HOPR"`` | - |
+| `recipient` | `string` | - |
+| `timeout?` | `number` | optional timeout for the requests |
 
 #### Defined in
 
-[src/types/account.ts:25](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/account.ts#L25)
-
-___
-
-### ZodToType
-
-Ƭ **ZodToType**<`T`\>: `z.infer`<`T`\>
-
-Converts a ZodType to its inferred TypeScript type.
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends `ZodType`<`any`, `any`, `any`\> |
-
-#### Defined in
-
-[src/types/general.ts:6](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/general.ts#L6)
+[src/types/account.ts:25](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/account.ts#L25)
 
 ## Variables
 
 ### AccountResponse
 
-• `Const` **AccountResponse**: `ZodObject`<{ `hopr`: `ZodString` ; `native`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `hopr`: `string` ; `native`: `string`  }, { `hopr`: `string` ; `native`: `string`  }\>
+• `Const` **AccountResponse**: `ZodObject`<[`AccountResponseType`](modules.md#accountresponsetype)\>
 
 General
 
 #### Defined in
 
-[src/types/account.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/account.ts#L8)
+[src/types/account.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/account.ts#L8)
 
 ___
 
 ### AliasPayload
 
-• `Const` **AliasPayload**: `ZodObject`<{ `alias`: `ZodString` ; `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `alias`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `timeout?`: `number`  }, { `alias`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `timeout?`: `number`  }\>
+• `Const` **AliasPayload**: `ZodObject`<[`AliasPayloadType`](modules.md#aliaspayloadtype)\>
 
 General
 
 #### Defined in
 
-[src/types/aliases.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L8)
+[src/types/aliases.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L8)
 
 ___
 
 ### BasePayload
 
-• `Const` **BasePayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `timeout?`: `number`  }\>
+• `Const` **BasePayload**: `ZodObject`<[`BasePayloadType`](modules.md#basepayloadtype)\>
 
 Represents the minimum payload needed to interact with hoprd node.
 
 #### Defined in
 
-[src/types/general.ts:11](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/general.ts#L11)
+[src/types/general.ts:6](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/general.ts#L6)
 
 ___
 
@@ -559,297 +835,297 @@ Get channels
 
 #### Defined in
 
-[src/types/channels.ts:50](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L50)
+[src/types/channels.ts:50](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L50)
 
 ___
 
 ### CloseChannelPayload
 
-• `Const` **CloseChannelPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `direction`: `ZodEnum`<[``"incoming"``, ``"outgoing"``]\> ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `direction`: ``"incoming"`` \| ``"outgoing"`` ; `peerId`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `direction`: ``"incoming"`` \| ``"outgoing"`` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **CloseChannelPayload**: `ZodObject`<[`CloseChannelPayloadType`](modules.md#closechannelpayloadtype)\>
 
 Close channel
 
 #### Defined in
 
-[src/types/channels.ts:86](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L86)
+[src/types/channels.ts:86](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L86)
 
 ___
 
 ### CloseChannelResponse
 
-• `Const` **CloseChannelResponse**: `ZodObject`<{ `channelStatus`: `ZodString` ; `receipt`: `ZodOptional`<`ZodString`\>  }, ``"strip"``, `ZodTypeAny`, { `channelStatus`: `string` ; `receipt?`: `string`  }, { `channelStatus`: `string` ; `receipt?`: `string`  }\>
+• `Const` **CloseChannelResponse**: `ZodObject`<[`CloseChannelResponseType`](modules.md#closechannelresponsetype)\>
 
 #### Defined in
 
-[src/types/channels.ts:93](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L93)
+[src/types/channels.ts:93](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L93)
 
 ___
 
 ### CreateTokenPayload
 
-• `Const` **CreateTokenPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `capabilities`: `ZodArray`<`ZodObject`<{ `endpoint`: `ZodEnum`<[``"accountWithdraw"``, ``"accountGetBalances"``, ``"accountGetAddresses"``, ``"aliasesGetAliases"``, ``"aliasesSetAlias"``, ``"aliasesGetAlias"``, ``"aliasesRemoveAlias"``, ``"channelsFundChannels"``, ``"channelsOpenChannel"``, ``"channelsGetChannels"``]\> ; `limits`: `ZodArray`<`ZodObject`<{ `conditions`: `ZodOptional`<`ZodObject`<{ `max`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `max?`: `number`  }, { `max?`: `number`  }\>\> ; `type`: `ZodString` ; `used`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `conditions?`: { max?: number \| undefined; } ; `type`: `string` ; `used?`: `number`  }, { `conditions?`: { max?: number \| undefined; } ; `type`: `string` ; `used?`: `number`  }\>, ``"many"``\>  }, ``"strip"``, `ZodTypeAny`, { `endpoint`: ``"accountWithdraw"`` \| ``"accountGetBalances"`` \| ``"accountGetAddresses"`` \| ``"aliasesGetAliases"`` \| ``"aliasesSetAlias"`` \| ``"aliasesGetAlias"`` \| ``"aliasesRemoveAlias"`` \| ``"channelsFundChannels"`` \| ``"channelsOpenChannel"`` \| ``"channelsGetChannels"`` \| ``"channelsRedeemTickets"`` \| ``"channelsGetTickets"`` \| ``"channelsGetChannel"`` \| ``"channelsCloseChannel"`` \| ``"messagesWebsocket"`` \| ``"messagesSign"`` \| ``"messagesSendMessage"`` \| ``"nodeGetVersion"`` \| ``"nodePing"`` \| ``"nodeGetPeers"`` \| ``"nodeGetMetrics"`` \| ``"nodeGetInfo"`` \| ``"nodeGetEntryNodes"`` \| ``"peerInfoGetPeerInfo"`` \| ``"settingsGetSettings"`` \| ``"settingsSetSetting"`` \| ``"ticketsGetStatistics"`` \| ``"ticketsRedeemTickets"`` \| ``"ticketsGetTickets"`` \| ``"tokensCreate"`` \| ``"tokensGetToken"`` \| ``"tokensDelete"`` ; `limits`: { type: string; conditions?: { max?: number \| undefined; } \| undefined; used?: number \| undefined; }[]  }, { `endpoint`: ``"accountWithdraw"`` \| ``"accountGetBalances"`` \| ``"accountGetAddresses"`` \| ``"aliasesGetAliases"`` \| ``"aliasesSetAlias"`` \| ``"aliasesGetAlias"`` \| ``"aliasesRemoveAlias"`` \| ``"channelsFundChannels"`` \| ``"channelsOpenChannel"`` \| ``"channelsGetChannels"`` \| ``"channelsRedeemTickets"`` \| ``"channelsGetTickets"`` \| ``"channelsGetChannel"`` \| ``"channelsCloseChannel"`` \| ``"messagesWebsocket"`` \| ``"messagesSign"`` \| ``"messagesSendMessage"`` \| ``"nodeGetVersion"`` \| ``"nodePing"`` \| ``"nodeGetPeers"`` \| ``"nodeGetMetrics"`` \| ``"nodeGetInfo"`` \| ``"nodeGetEntryNodes"`` \| ``"peerInfoGetPeerInfo"`` \| ``"settingsGetSettings"`` \| ``"settingsSetSetting"`` \| ``"ticketsGetStatistics"`` \| ``"ticketsRedeemTickets"`` \| ``"ticketsGetTickets"`` \| ``"tokensCreate"`` \| ``"tokensGetToken"`` \| ``"tokensDelete"`` ; `limits`: { type: string; conditions?: { max?: number \| undefined; } \| undefined; used?: number \| undefined; }[]  }\>, ``"many"``\> ; `description`: `ZodString` ; `lifetime`: `ZodNumber` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `capabilities`: { `endpoint`: ``"accountWithdraw"`` \| ``"accountGetBalances"`` \| ``"accountGetAddresses"`` \| ``"aliasesGetAliases"`` \| ``"aliasesSetAlias"`` \| ``"aliasesGetAlias"`` \| ``"aliasesRemoveAlias"`` \| ``"channelsFundChannels"`` \| ``"channelsOpenChannel"`` \| ``"channelsGetChannels"`` \| ``"channelsRedeemTickets"`` \| ``"channelsGetTickets"`` \| ``"channelsGetChannel"`` \| ``"channelsCloseChannel"`` \| ``"messagesWebsocket"`` \| ``"messagesSign"`` \| ``"messagesSendMessage"`` \| ``"nodeGetVersion"`` \| ``"nodePing"`` \| ``"nodeGetPeers"`` \| ``"nodeGetMetrics"`` \| ``"nodeGetInfo"`` \| ``"nodeGetEntryNodes"`` \| ``"peerInfoGetPeerInfo"`` \| ``"settingsGetSettings"`` \| ``"settingsSetSetting"`` \| ``"ticketsGetStatistics"`` \| ``"ticketsRedeemTickets"`` \| ``"ticketsGetTickets"`` \| ``"tokensCreate"`` \| ``"tokensGetToken"`` \| ``"tokensDelete"`` ; `limits`: { type: string; conditions?: { max?: number \| undefined; } \| undefined; used?: number \| undefined; }[]  }[] ; `description`: `string` ; `lifetime`: `number` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `capabilities`: { `endpoint`: ``"accountWithdraw"`` \| ``"accountGetBalances"`` \| ``"accountGetAddresses"`` \| ``"aliasesGetAliases"`` \| ``"aliasesSetAlias"`` \| ``"aliasesGetAlias"`` \| ``"aliasesRemoveAlias"`` \| ``"channelsFundChannels"`` \| ``"channelsOpenChannel"`` \| ``"channelsGetChannels"`` \| ``"channelsRedeemTickets"`` \| ``"channelsGetTickets"`` \| ``"channelsGetChannel"`` \| ``"channelsCloseChannel"`` \| ``"messagesWebsocket"`` \| ``"messagesSign"`` \| ``"messagesSendMessage"`` \| ``"nodeGetVersion"`` \| ``"nodePing"`` \| ``"nodeGetPeers"`` \| ``"nodeGetMetrics"`` \| ``"nodeGetInfo"`` \| ``"nodeGetEntryNodes"`` \| ``"peerInfoGetPeerInfo"`` \| ``"settingsGetSettings"`` \| ``"settingsSetSetting"`` \| ``"ticketsGetStatistics"`` \| ``"ticketsRedeemTickets"`` \| ``"ticketsGetTickets"`` \| ``"tokensCreate"`` \| ``"tokensGetToken"`` \| ``"tokensDelete"`` ; `limits`: { type: string; conditions?: { max?: number \| undefined; } \| undefined; used?: number \| undefined; }[]  }[] ; `description`: `string` ; `lifetime`: `number` ; `timeout?`: `number`  }\>
+• `Const` **CreateTokenPayload**: `ZodObject`<[`CreateTokenPayloadType`](modules.md#createtokenpayloadtype)\>
 
 createToken
 
 #### Defined in
 
-[src/types/tokens.ts:69](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L69)
+[src/types/tokens.ts:69](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L69)
 
 ___
 
 ### CreateTokenResponse
 
-• `Const` **CreateTokenResponse**: `ZodObject`<{ `token`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `token`: `string`  }, { `token`: `string`  }\>
+• `Const` **CreateTokenResponse**: `ZodObject`<[`CreateTokenResponseType`](modules.md#createtokenresponsetype)\>
 
 #### Defined in
 
-[src/types/tokens.ts:77](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L77)
+[src/types/tokens.ts:77](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L77)
 
 ___
 
 ### DeleteTokenPayload
 
-• `Const` **DeleteTokenPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `id`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `id`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `id`: `string` ; `timeout?`: `number`  }\>
+• `Const` **DeleteTokenPayload**: `ZodObject`<[`DeleteTokenPayloadType`](modules.md#deletetokenpayloadtype)\>
 
 deleteToken
 
 #### Defined in
 
-[src/types/tokens.ts:100](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L100)
+[src/types/tokens.ts:100](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L100)
 
 ___
 
 ### Error
 
-• `Const` **Error**: `ZodObject`<{ `error`: `ZodOptional`<`ZodString`\> ; `status`: `ZodOptional`<`ZodString`\>  }, ``"strip"``, `ZodTypeAny`, { `error?`: `string` ; `status?`: `string`  }, { `error?`: `string` ; `status?`: `string`  }\>
+• `Const` **Error**: `ZodObject`<[`ErrorType`](modules.md#errortype)\>
 
 #### Defined in
 
-[src/types/error.ts:4](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/error.ts#L4)
+[src/types/error.ts:3](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/error.ts#L3)
 
 ___
 
 ### FundChannelsPayload
 
-• `Const` **FundChannelsPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `incomingAmount`: `ZodString` ; `outgoingAmount`: `ZodString` ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `incomingAmount`: `string` ; `outgoingAmount`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `incomingAmount`: `string` ; `outgoingAmount`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **FundChannelsPayload**: `ZodObject`<[`FundChannelsPayloadType`](modules.md#fundchannelspayloadtype)\>
 
 Fund channel
 
 #### Defined in
 
-[src/types/channels.ts:18](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L18)
+[src/types/channels.ts:18](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L18)
 
 ___
 
 ### FundChannelsResponse
 
-• `Const` **FundChannelsResponse**: `ZodObject`<{ `receipt`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `receipt`: `string`  }, { `receipt`: `string`  }\>
+• `Const` **FundChannelsResponse**: `ZodObject`<[`FundChannelsResponseType`](modules.md#fundchannelsresponsetype)\>
 
 #### Defined in
 
-[src/types/channels.ts:26](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L26)
+[src/types/channels.ts:26](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L26)
 
 ___
 
 ### GetAliasResponse
 
-• `Const` **GetAliasResponse**: `ZodObject`<{ `peerId`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `peerId`: `string`  }, { `peerId`: `string`  }\>
+• `Const` **GetAliasResponse**: `ZodObject`<[`GetAliasResponseType`](modules.md#getaliasresponsetype)\>
 
 getAlias
 
 #### Defined in
 
-[src/types/aliases.ts:37](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L37)
+[src/types/aliases.ts:37](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L37)
 
 ___
 
 ### GetAliasesResponse
 
-• `Const` **GetAliasesResponse**: `ZodRecord`<`ZodString`, `ZodString`\>
+• `Const` **GetAliasesResponse**: `ZodRecord`<[`GetAliasesResponseType`](modules.md#getaliasesresponsetype)\>
 
 getAliases
 
 #### Defined in
 
-[src/types/aliases.ts:18](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L18)
+[src/types/aliases.ts:18](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L18)
 
 ___
 
 ### GetChannelPayload
 
-• `Const` **GetChannelPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `direction`: `ZodEnum`<[``"incoming"``, ``"outgoing"``]\> ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `direction`: ``"incoming"`` \| ``"outgoing"`` ; `peerId`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `direction`: ``"incoming"`` \| ``"outgoing"`` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **GetChannelPayload**: `ZodObject`<[`GetChannelPayloadType`](modules.md#getchannelpayloadtype)\>
 
 Get channel
 
 #### Defined in
 
-[src/types/channels.ts:102](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L102)
+[src/types/channels.ts:102](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L102)
 
 ___
 
 ### GetChannelResponse
 
-• `Const` **GetChannelResponse**: `ZodObject`<{ `balance`: `ZodString` ; `channelId`: `ZodString` ; `peerId`: `ZodString` ; `status`: `ZodEnum`<[``"WaitingForCommitment"``, ``"Open"``, ``"PendingToClose"``, ``"Closed"``]\> ; `type`: `ZodEnum`<[``"incoming"``, ``"outgoing"``]\>  }, ``"strip"``, `ZodTypeAny`, { `balance`: `string` ; `channelId`: `string` ; `peerId`: `string` ; `status`: ``"WaitingForCommitment"`` \| ``"Open"`` \| ``"PendingToClose"`` \| ``"Closed"`` ; `type`: ``"incoming"`` \| ``"outgoing"``  }, { `balance`: `string` ; `channelId`: `string` ; `peerId`: `string` ; `status`: ``"WaitingForCommitment"`` \| ``"Open"`` \| ``"PendingToClose"`` \| ``"Closed"`` ; `type`: ``"incoming"`` \| ``"outgoing"``  }\> = `Channel`
+• `Const` **GetChannelResponse**: `ZodObject`<[`GetChannelResponseType`](modules.md#getchannelresponsetype)\> = `Channel`
 
 #### Defined in
 
-[src/types/channels.ts:109](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L109)
+[src/types/channels.ts:109](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L109)
 
 ___
 
 ### GetChannelTicketsResponse
 
-• `Const` **GetChannelTicketsResponse**: `ZodArray`<`ZodObject`<{ `amount`: `ZodString` ; `challenge`: `ZodString` ; `channelEpoch`: `ZodString` ; `counterparty`: `ZodString` ; `epoch`: `ZodString` ; `index`: `ZodString` ; `signature`: `ZodString` ; `winProb`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `amount`: `string` ; `challenge`: `string` ; `channelEpoch`: `string` ; `counterparty`: `string` ; `epoch`: `string` ; `index`: `string` ; `signature`: `string` ; `winProb`: `string`  }, { `amount`: `string` ; `challenge`: `string` ; `channelEpoch`: `string` ; `counterparty`: `string` ; `epoch`: `string` ; `index`: `string` ; `signature`: `string` ; `winProb`: `string`  }\>, ``"many"``\>
+• `Const` **GetChannelTicketsResponse**: `ZodArray`<[`GetChannelTicketsResponseType`](modules.md#getchannelticketsresponsetype)\>
 
 #### Defined in
 
-[src/types/channels.ts:78](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L78)
+[src/types/channels.ts:78](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L78)
 
 ___
 
 ### GetChannelsResponse
 
-• `Const` **GetChannelsResponse**: `ZodObject`<{ `incoming`: `ZodArray`<`ZodObject`<{ `balance`: `ZodString` ; `channelId`: `ZodString` ; `peerId`: `ZodString` ; `status`: `ZodEnum`<[``"WaitingForCommitment"``, ``"Open"``, ``"PendingToClose"``, ``"Closed"``]\> ; `type`: `ZodEnum`<[``"incoming"``, ``"outgoing"``]\>  }, ``"strip"``, `ZodTypeAny`, { `balance`: `string` ; `channelId`: `string` ; `peerId`: `string` ; `status`: ``"WaitingForCommitment"`` \| ``"Open"`` \| ``"PendingToClose"`` \| ``"Closed"`` ; `type`: ``"incoming"`` \| ``"outgoing"``  }, { `balance`: `string` ; `channelId`: `string` ; `peerId`: `string` ; `status`: ``"WaitingForCommitment"`` \| ``"Open"`` \| ``"PendingToClose"`` \| ``"Closed"`` ; `type`: ``"incoming"`` \| ``"outgoing"``  }\>, ``"many"``\> ; `outgoing`: `ZodArray`<`ZodObject`<{ `balance`: `ZodString` ; `channelId`: `ZodString` ; `peerId`: `ZodString` ; `status`: `ZodEnum`<[``"WaitingForCommitment"``, ``"Open"``, ``"PendingToClose"``, ``"Closed"``]\> ; `type`: `ZodEnum`<[``"incoming"``, ``"outgoing"``]\>  }, ``"strip"``, `ZodTypeAny`, { `balance`: `string` ; `channelId`: `string` ; `peerId`: `string` ; `status`: ``"WaitingForCommitment"`` \| ``"Open"`` \| ``"PendingToClose"`` \| ``"Closed"`` ; `type`: ``"incoming"`` \| ``"outgoing"``  }, { `balance`: `string` ; `channelId`: `string` ; `peerId`: `string` ; `status`: ``"WaitingForCommitment"`` \| ``"Open"`` \| ``"PendingToClose"`` \| ``"Closed"`` ; `type`: ``"incoming"`` \| ``"outgoing"``  }\>, ``"many"``\>  }, ``"strip"``, `ZodTypeAny`, { `incoming`: { type: "incoming" \| "outgoing"; status: "WaitingForCommitment" \| "Open" \| "PendingToClose" \| "Closed"; peerId: string; channelId: string; balance: string; }[] ; `outgoing`: { type: "incoming" \| "outgoing"; status: "WaitingForCommitment" \| "Open" \| "PendingToClose" \| "Closed"; peerId: string; channelId: string; balance: string; }[]  }, { `incoming`: { type: "incoming" \| "outgoing"; status: "WaitingForCommitment" \| "Open" \| "PendingToClose" \| "Closed"; peerId: string; channelId: string; balance: string; }[] ; `outgoing`: { type: "incoming" \| "outgoing"; status: "WaitingForCommitment" \| "Open" \| "PendingToClose" \| "Closed"; peerId: string; channelId: string; balance: string; }[]  }\>
+• `Const` **GetChannelsResponse**: `ZodObject`<[`GetChannelsResponseType`](modules.md#getchannelsresponsetype)\>
 
 #### Defined in
 
-[src/types/channels.ts:58](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L58)
+[src/types/channels.ts:58](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L58)
 
 ___
 
 ### GetEntryNodesResponse
 
-• `Const` **GetEntryNodesResponse**: `ZodRecord`<`ZodString`, `ZodObject`<{ `isEligible`: `ZodBoolean` ; `multiaddrs`: `ZodArray`<`ZodString`, ``"many"``\>  }, ``"strip"``, `ZodTypeAny`, { `isEligible`: `boolean` ; `multiaddrs`: `string`[]  }, { `isEligible`: `boolean` ; `multiaddrs`: `string`[]  }\>\>
+• `Const` **GetEntryNodesResponse**: `ZodRecord`<[`GetEntryNodesResponseType`](modules.md#getentrynodesresponsetype)\>
 
 #### Defined in
 
-[src/types/node.ts:61](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L61)
+[src/types/node.ts:61](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L61)
 
 ___
 
 ### GetInfoResponse
 
-• `Const` **GetInfoResponse**: `ZodObject`<{ `announcedAddress`: `ZodArray`<`ZodString`, ``"many"``\> ; `channelClosurePeriod`: `ZodNumber` ; `connectivityStatus`: `ZodString` ; `environment`: `ZodString` ; `hoprChannels`: `ZodString` ; `hoprNetworkRegistryAddress`: `ZodOptional`<`ZodString`\> ; `hoprToken`: `ZodString` ; `isEligible`: `ZodBoolean` ; `listeningAddress`: `ZodArray`<`ZodString`, ``"many"``\> ; `network`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `announcedAddress`: `string`[] ; `channelClosurePeriod`: `number` ; `connectivityStatus`: `string` ; `environment`: `string` ; `hoprChannels`: `string` ; `hoprNetworkRegistryAddress?`: `string` ; `hoprToken`: `string` ; `isEligible`: `boolean` ; `listeningAddress`: `string`[] ; `network`: `string`  }, { `announcedAddress`: `string`[] ; `channelClosurePeriod`: `number` ; `connectivityStatus`: `string` ; `environment`: `string` ; `hoprChannels`: `string` ; `hoprNetworkRegistryAddress?`: `string` ; `hoprToken`: `string` ; `isEligible`: `boolean` ; `listeningAddress`: `string`[] ; `network`: `string`  }\>
+• `Const` **GetInfoResponse**: `ZodObject`<[`GetInfoResponseType`](modules.md#getinforesponsetype)\>
 
 Get Info
 
 #### Defined in
 
-[src/types/node.ts:37](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L37)
+[src/types/node.ts:37](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L37)
 
 ___
 
 ### GetPeerInfoPayload
 
-• `Const` **GetPeerInfoPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **GetPeerInfoPayload**: `ZodObject`<[`GetPeerInfoPayloadType`](modules.md#getpeerinfopayloadtype)\>
 
 Get peer info
 
 #### Defined in
 
-[src/types/peerInfo.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/peerInfo.ts#L8)
+[src/types/peerInfo.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/peerInfo.ts#L8)
 
 ___
 
 ### GetPeerInfoResponse
 
-• `Const` **GetPeerInfoResponse**: `ZodObject`<{ `announced`: `ZodArray`<`ZodString`, ``"many"``\> ; `observed`: `ZodArray`<`ZodString`, ``"many"``\>  }, ``"strip"``, `ZodTypeAny`, { `announced`: `string`[] ; `observed`: `string`[]  }, { `announced`: `string`[] ; `observed`: `string`[]  }\>
+• `Const` **GetPeerInfoResponse**: `ZodObject`<[`GetPeerInfoResponseType`](modules.md#getpeerinforesponsetype)\>
 
 #### Defined in
 
-[src/types/peerInfo.ts:14](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/peerInfo.ts#L14)
+[src/types/peerInfo.ts:14](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/peerInfo.ts#L14)
 
 ___
 
 ### GetPeersPayload
 
-• `Const` **GetPeersPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `quality`: `ZodOptional`<`ZodNumber`\> ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `quality?`: `number` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `quality?`: `number` ; `timeout?`: `number`  }\>
+• `Const` **GetPeersPayload**: `ZodObject`<[`GetPeersPayloadType`](modules.md#getpeerspayloadtype)\>
 
 Get peers
 
 #### Defined in
 
-[src/types/node.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L8)
+[src/types/node.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L8)
 
 ___
 
 ### GetPeersResponse
 
-• `Const` **GetPeersResponse**: `ZodObject`<{ `announced`: `ZodArray`<`ZodObject`<{ `backoff`: `ZodNumber` ; `heartbeats`: `ZodObject`<{ `sent`: `ZodNumber` ; `success`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `sent`: `number` ; `success`: `number`  }, { `sent`: `number` ; `success`: `number`  }\> ; `isNew`: `ZodBoolean` ; `lastSeen`: `ZodNumber` ; `multiAddr`: `ZodString` ; `peerId`: `ZodString` ; `quality`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `backoff`: `number` ; `heartbeats`: { sent: number; success: number; } ; `isNew`: `boolean` ; `lastSeen`: `number` ; `multiAddr`: `string` ; `peerId`: `string` ; `quality`: `number`  }, { `backoff`: `number` ; `heartbeats`: { sent: number; success: number; } ; `isNew`: `boolean` ; `lastSeen`: `number` ; `multiAddr`: `string` ; `peerId`: `string` ; `quality`: `number`  }\>, ``"many"``\> ; `connected`: `ZodArray`<`ZodObject`<{ `backoff`: `ZodNumber` ; `heartbeats`: `ZodObject`<{ `sent`: `ZodNumber` ; `success`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `sent`: `number` ; `success`: `number`  }, { `sent`: `number` ; `success`: `number`  }\> ; `isNew`: `ZodBoolean` ; `lastSeen`: `ZodNumber` ; `multiAddr`: `ZodString` ; `peerId`: `ZodString` ; `quality`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `backoff`: `number` ; `heartbeats`: { sent: number; success: number; } ; `isNew`: `boolean` ; `lastSeen`: `number` ; `multiAddr`: `string` ; `peerId`: `string` ; `quality`: `number`  }, { `backoff`: `number` ; `heartbeats`: { sent: number; success: number; } ; `isNew`: `boolean` ; `lastSeen`: `number` ; `multiAddr`: `string` ; `peerId`: `string` ; `quality`: `number`  }\>, ``"many"``\>  }, ``"strip"``, `ZodTypeAny`, { `announced`: { peerId: string; quality: number; multiAddr: string; heartbeats: { sent: number; success: number; }; lastSeen: number; backoff: number; isNew: boolean; }[] ; `connected`: { peerId: string; quality: number; multiAddr: string; heartbeats: { sent: number; success: number; }; lastSeen: number; backoff: number; isNew: boolean; }[]  }, { `announced`: { peerId: string; quality: number; multiAddr: string; heartbeats: { sent: number; success: number; }; lastSeen: number; backoff: number; isNew: boolean; }[] ; `connected`: { peerId: string; quality: number; multiAddr: string; heartbeats: { sent: number; success: number; }; lastSeen: number; backoff: number; isNew: boolean; }[]  }\>
+• `Const` **GetPeersResponse**: `ZodObject`<[`GetPeersResponseType`](modules.md#getpeersresponsetype)\>
 
 #### Defined in
 
-[src/types/node.ts:26](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L26)
+[src/types/node.ts:26](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L26)
 
 ___
 
 ### GetSettingsResponse
 
-• `Const` **GetSettingsResponse**: `ZodObject`<{ `includeRecipient`: `ZodBoolean` ; `strategy`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `includeRecipient`: `boolean` ; `strategy`: `string`  }, { `includeRecipient`: `boolean` ; `strategy`: `string`  }\>
+• `Const` **GetSettingsResponse**: `ZodObject`<[`GetSettingsResponseType`](modules.md#getsettingsresponsetype)\>
 
 Get settings
 
 #### Defined in
 
-[src/types/settings.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/settings.ts#L8)
+[src/types/settings.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/settings.ts#L8)
 
 ___
 
 ### GetStatisticsResponse
 
-• `Const` **GetStatisticsResponse**: `ZodObject`<{ `losingTickets`: `ZodNumber` ; `neglected`: `ZodNumber` ; `pending`: `ZodNumber` ; `redeemed`: `ZodNumber` ; `redeemedValue`: `ZodString` ; `rejected`: `ZodNumber` ; `rejectedValue`: `ZodString` ; `unredeemed`: `ZodNumber` ; `unredeemedValue`: `ZodString` ; `winProportion`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `losingTickets`: `number` ; `neglected`: `number` ; `pending`: `number` ; `redeemed`: `number` ; `redeemedValue`: `string` ; `rejected`: `number` ; `rejectedValue`: `string` ; `unredeemed`: `number` ; `unredeemedValue`: `string` ; `winProportion`: `number`  }, { `losingTickets`: `number` ; `neglected`: `number` ; `pending`: `number` ; `redeemed`: `number` ; `redeemedValue`: `string` ; `rejected`: `number` ; `rejectedValue`: `string` ; `unredeemed`: `number` ; `unredeemedValue`: `string` ; `winProportion`: `number`  }\>
+• `Const` **GetStatisticsResponse**: `ZodObject`<[`GetStatisticsResponseType`](modules.md#getstatisticsresponsetype)\>
 
 Get statistics
 
 #### Defined in
 
-[src/types/tickets.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tickets.ts#L8)
+[src/types/tickets.ts:7](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tickets.ts#L7)
 
 ___
 
 ### GetTicketsResponse
 
-• `Const` **GetTicketsResponse**: `ZodArray`<`ZodObject`<{ `amount`: `ZodString` ; `challenge`: `ZodString` ; `channelEpoch`: `ZodString` ; `counterparty`: `ZodString` ; `epoch`: `ZodString` ; `index`: `ZodString` ; `signature`: `ZodString` ; `winProb`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `amount`: `string` ; `challenge`: `string` ; `channelEpoch`: `string` ; `counterparty`: `string` ; `epoch`: `string` ; `index`: `string` ; `signature`: `string` ; `winProb`: `string`  }, { `amount`: `string` ; `challenge`: `string` ; `channelEpoch`: `string` ; `counterparty`: `string` ; `epoch`: `string` ; `index`: `string` ; `signature`: `string` ; `winProb`: `string`  }\>, ``"many"``\>
+• `Const` **GetTicketsResponse**: `ZodArray`<[`GetTicketsResponseType`](modules.md#getticketsresponsetype)\>
 
 Get tickets
 
 #### Defined in
 
-[src/types/tickets.ts:27](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tickets.ts#L27)
+[src/types/tickets.ts:26](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tickets.ts#L26)
 
 ___
 
 ### GetTokenResponse
 
-• `Const` **GetTokenResponse**: `ZodObject`<{ `capabilities`: `ZodArray`<`ZodObject`<{ `endpoint`: `ZodEnum`<[``"accountWithdraw"``, ``"accountGetBalances"``, ``"accountGetAddresses"``, ``"aliasesGetAliases"``, ``"aliasesSetAlias"``, ``"aliasesGetAlias"``, ``"aliasesRemoveAlias"``, ``"channelsFundChannels"``, ``"channelsOpenChannel"``, ``"channelsGetChannels"``]\> ; `limits`: `ZodArray`<`ZodObject`<{ `conditions`: `ZodOptional`<`ZodObject`<{ `max`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `max?`: `number`  }, { `max?`: `number`  }\>\> ; `type`: `ZodString` ; `used`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `conditions?`: { max?: number \| undefined; } ; `type`: `string` ; `used?`: `number`  }, { `conditions?`: { max?: number \| undefined; } ; `type`: `string` ; `used?`: `number`  }\>, ``"many"``\>  }, ``"strip"``, `ZodTypeAny`, { `endpoint`: ``"accountWithdraw"`` \| ``"accountGetBalances"`` \| ``"accountGetAddresses"`` \| ``"aliasesGetAliases"`` \| ``"aliasesSetAlias"`` \| ``"aliasesGetAlias"`` \| ``"aliasesRemoveAlias"`` \| ``"channelsFundChannels"`` \| ``"channelsOpenChannel"`` \| ``"channelsGetChannels"`` \| ``"channelsRedeemTickets"`` \| ``"channelsGetTickets"`` \| ``"channelsGetChannel"`` \| ``"channelsCloseChannel"`` \| ``"messagesWebsocket"`` \| ``"messagesSign"`` \| ``"messagesSendMessage"`` \| ``"nodeGetVersion"`` \| ``"nodePing"`` \| ``"nodeGetPeers"`` \| ``"nodeGetMetrics"`` \| ``"nodeGetInfo"`` \| ``"nodeGetEntryNodes"`` \| ``"peerInfoGetPeerInfo"`` \| ``"settingsGetSettings"`` \| ``"settingsSetSetting"`` \| ``"ticketsGetStatistics"`` \| ``"ticketsRedeemTickets"`` \| ``"ticketsGetTickets"`` \| ``"tokensCreate"`` \| ``"tokensGetToken"`` \| ``"tokensDelete"`` ; `limits`: { type: string; conditions?: { max?: number \| undefined; } \| undefined; used?: number \| undefined; }[]  }, { `endpoint`: ``"accountWithdraw"`` \| ``"accountGetBalances"`` \| ``"accountGetAddresses"`` \| ``"aliasesGetAliases"`` \| ``"aliasesSetAlias"`` \| ``"aliasesGetAlias"`` \| ``"aliasesRemoveAlias"`` \| ``"channelsFundChannels"`` \| ``"channelsOpenChannel"`` \| ``"channelsGetChannels"`` \| ``"channelsRedeemTickets"`` \| ``"channelsGetTickets"`` \| ``"channelsGetChannel"`` \| ``"channelsCloseChannel"`` \| ``"messagesWebsocket"`` \| ``"messagesSign"`` \| ``"messagesSendMessage"`` \| ``"nodeGetVersion"`` \| ``"nodePing"`` \| ``"nodeGetPeers"`` \| ``"nodeGetMetrics"`` \| ``"nodeGetInfo"`` \| ``"nodeGetEntryNodes"`` \| ``"peerInfoGetPeerInfo"`` \| ``"settingsGetSettings"`` \| ``"settingsSetSetting"`` \| ``"ticketsGetStatistics"`` \| ``"ticketsRedeemTickets"`` \| ``"ticketsGetTickets"`` \| ``"tokensCreate"`` \| ``"tokensGetToken"`` \| ``"tokensDelete"`` ; `limits`: { type: string; conditions?: { max?: number \| undefined; } \| undefined; used?: number \| undefined; }[]  }\>, ``"many"``\> ; `description`: `ZodOptional`<`ZodString`\> ; `id`: `ZodString` ; `valid_until`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `capabilities`: { endpoint: "accountWithdraw" \| "accountGetBalances" \| "accountGetAddresses" \| "aliasesGetAliases" \| "aliasesSetAlias" \| "aliasesGetAlias" \| "aliasesRemoveAlias" \| "channelsFundChannels" \| ... 23 more ... \| "tokensDelete"; limits: { ...; }[]; }[] ; `description?`: `string` ; `id`: `string` ; `valid_until?`: `number`  }, { `capabilities`: { endpoint: "accountWithdraw" \| "accountGetBalances" \| "accountGetAddresses" \| "aliasesGetAliases" \| "aliasesSetAlias" \| "aliasesGetAlias" \| "aliasesRemoveAlias" \| "channelsFundChannels" \| ... 23 more ... \| "tokensDelete"; limits: { ...; }[]; }[] ; `description?`: `string` ; `id`: `string` ; `valid_until?`: `number`  }\>
+• `Const` **GetTokenResponse**: `ZodObject`<[`GetTokenResponseType`](modules.md#gettokenresponsetype)\>
 
 getToken
 
 #### Defined in
 
-[src/types/tokens.ts:87](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L87)
+[src/types/tokens.ts:87](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L87)
 
 ___
 
 ### OpenChannelPayload
 
-• `Const` **OpenChannelPayload**: `ZodObject`<{ `amount`: `ZodString` ; `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `amount`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }, { `amount`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **OpenChannelPayload**: `ZodObject`<[`OpenChannelPayloadType`](modules.md#openchannelpayloadtype)\>
 
 Open channel
 
 #### Defined in
 
-[src/types/channels.ts:34](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L34)
+[src/types/channels.ts:34](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L34)
 
 ___
 
 ### OpenChannelResponse
 
-• `Const` **OpenChannelResponse**: `ZodObject`<{ `channelId`: `ZodString` ; `receipt`: `ZodString`  }, ``"strip"``, `ZodTypeAny`, { `channelId`: `string` ; `receipt`: `string`  }, { `channelId`: `string` ; `receipt`: `string`  }\>
+• `Const` **OpenChannelResponse**: `ZodObject`<[`OpenChannelResponseType`](modules.md#openchannelresponsetype)\>
 
 #### Defined in
 
-[src/types/channels.ts:41](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L41)
+[src/types/channels.ts:41](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L41)
 
 ___
 
@@ -859,89 +1135,89 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:14](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L14)
+[src/types/node.ts:14](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L14)
 
 ___
 
 ### PeerIdPayload
 
-• `Const` **PeerIdPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **PeerIdPayload**: `ZodObject`<[`PeerIdPayloadType`](modules.md#peeridpayloadtype)\>
 
 General types
 
 #### Defined in
 
-[src/types/channels.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L8)
+[src/types/channels.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L8)
 
 ___
 
 ### PingNodePayload
 
-• `Const` **PingNodePayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **PingNodePayload**: `ZodObject`<[`PingNodePayloadType`](modules.md#pingnodepayloadtype)\>
 
 Ping node
 
 #### Defined in
 
-[src/types/node.ts:69](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L69)
+[src/types/node.ts:69](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L69)
 
 ___
 
 ### PingNodeResponse
 
-• `Const` **PingNodeResponse**: `ZodObject`<{ `latency`: `ZodNumber`  }, ``"strip"``, `ZodTypeAny`, { `latency`: `number`  }, { `latency`: `number`  }\>
+• `Const` **PingNodeResponse**: `ZodObject`<[`PingNodeResponseType`](modules.md#pingnoderesponsetype)\>
 
 #### Defined in
 
-[src/types/node.ts:75](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/node.ts#L75)
+[src/types/node.ts:75](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/node.ts#L75)
 
 ___
 
 ### SendMessagePayload
 
-• `Const` **SendMessagePayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `body`: `ZodString` ; `hops`: `ZodOptional`<`ZodNumber`\> ; `path`: `ZodOptional`<`ZodArray`<`ZodString`, ``"many"``\>\> ; `recipient`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `body`: `string` ; `hops?`: `number` ; `path?`: `string`[] ; `recipient`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `body`: `string` ; `hops?`: `number` ; `path?`: `string`[] ; `recipient`: `string` ; `timeout?`: `number`  }\>
+• `Const` **SendMessagePayload**: `ZodObject`<[`SendMessagePayloadType`](modules.md#sendmessagepayloadtype)\>
 
 sendMessage
 
 #### Defined in
 
-[src/types/messages.ts:22](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/messages.ts#L22)
+[src/types/messages.ts:22](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/messages.ts#L22)
 
 ___
 
 ### SetAliasPayload
 
-• `Const` **SetAliasPayload**: `ZodObject`<{ `alias`: `ZodString` ; `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `peerId`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `alias`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }, { `alias`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `peerId`: `string` ; `timeout?`: `number`  }\>
+• `Const` **SetAliasPayload**: `ZodObject`<[`SetAliasPayloadType`](modules.md#setaliaspayloadtype)\>
 
 setAlias
 
 #### Defined in
 
-[src/types/aliases.ts:26](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/aliases.ts#L26)
+[src/types/aliases.ts:26](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/aliases.ts#L26)
 
 ___
 
 ### SetSettingPayload
 
-• `Const` **SetSettingPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `setting`: `ZodString` ; `settingValue`: `ZodAny` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `setting`: `string` ; `settingValue?`: `any` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `setting`: `string` ; `settingValue?`: `any` ; `timeout?`: `number`  }\>
+• `Const` **SetSettingPayload**: `ZodObject`<[`SetSettingPayloadType`](modules.md#setsettingpayloadtype)\>
 
 Set Setting
 
 #### Defined in
 
-[src/types/settings.ts:19](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/settings.ts#L19)
+[src/types/settings.ts:19](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/settings.ts#L19)
 
 ___
 
 ### SignPayload
 
-• `Const` **SignPayload**: `ZodObject`<{ `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `message`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `message`: `string` ; `timeout?`: `number`  }, { `apiEndpoint`: `string` ; `apiToken`: `string` ; `message`: `string` ; `timeout?`: `number`  }\>
+• `Const` **SignPayload**: `ZodObject`<[`SignPayloadType`](modules.md#signpayloadtype)\>
 
 sign
 
 #### Defined in
 
-[src/types/messages.ts:8](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/messages.ts#L8)
+[src/types/messages.ts:8](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/messages.ts#L8)
 
 ___
 
@@ -951,7 +1227,7 @@ ___
 
 #### Defined in
 
-[src/types/messages.ts:14](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/messages.ts#L14)
+[src/types/messages.ts:14](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/messages.ts#L14)
 
 ___
 
@@ -963,7 +1239,7 @@ Get tickets
 
 #### Defined in
 
-[src/types/channels.ts:67](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/channels.ts#L67)
+[src/types/channels.ts:67](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/channels.ts#L67)
 
 ___
 
@@ -973,19 +1249,19 @@ ___
 
 #### Defined in
 
-[src/types/tokens.ts:54](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/tokens.ts#L54)
+[src/types/tokens.ts:54](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/tokens.ts#L54)
 
 ___
 
 ### WithdrawPayload
 
-• `Const` **WithdrawPayload**: `ZodObject`<{ `amount`: `ZodString` ; `apiEndpoint`: `ZodString` ; `apiToken`: `ZodString` ; `currency`: `ZodEnum`<[``"NATIVE"``, ``"HOPR"``]\> ; `recipient`: `ZodString` ; `timeout`: `ZodOptional`<`ZodNumber`\>  }, ``"strip"``, `ZodTypeAny`, { `amount`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `currency`: ``"NATIVE"`` \| ``"HOPR"`` ; `recipient`: `string` ; `timeout?`: `number`  }, { `amount`: `string` ; `apiEndpoint`: `string` ; `apiToken`: `string` ; `currency`: ``"NATIVE"`` \| ``"HOPR"`` ; `recipient`: `string` ; `timeout?`: `number`  }\>
+• `Const` **WithdrawPayload**: `ZodObject`<[`WithdrawPayloadType`](modules.md#withdrawpayloadtype)\>
 
 withdraw
 
 #### Defined in
 
-[src/types/account.ts:19](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/account.ts#L19)
+[src/types/account.ts:19](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/account.ts#L19)
 
 ___
 
@@ -995,4 +1271,4 @@ ___
 
 #### Defined in
 
-[src/types/account.ts:27](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/types/account.ts#L27)
+[src/types/account.ts:27](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/types/account.ts#L27)

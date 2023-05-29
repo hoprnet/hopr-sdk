@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[src/sdk.ts:4](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/sdk.ts#L4)
+[src/sdk.ts:4](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/sdk.ts#L4)
 
 ## Properties
 
@@ -39,4 +39,4 @@
 
 #### Defined in
 
-[src/sdk.ts:3](https://github.com/hoprnet/hopr-sdk/blob/3ed1006/src/sdk.ts#L3)
+[src/sdk.ts:3](https://github.com/hoprnet/hopr-sdk/blob/5642d04/src/sdk.ts#L3)
