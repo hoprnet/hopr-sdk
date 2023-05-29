@@ -10,10 +10,10 @@ export const getPeerInfo = async (
   payload: GetPeerInfoPayloadType
 ): Promise<GetPeerInfoResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/peerInfo/${payload.peerId}`,
+    `${payload.apiEndpoint}/api/v2/peerInfo/${payload.peerId}`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

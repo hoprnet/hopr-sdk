@@ -2,8 +2,8 @@ import nock from 'nock';
 import { sign } from './sign';
 import { APIError } from '../../utils';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 const MESSAGE = 'my-message';
 
 describe('sign', () => {
@@ -17,13 +17,13 @@ describe('sign', () => {
     const expectedSignature = '7.115342872866815e+167';
 
     // Mock the sign endpoint with a successful response
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(200, { signature: expectedSignature });
 
     const signature = await sign({
-      apiKey: API_KEY,
-      url: API_URL,
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
       message: MESSAGE
     });
 
@@ -36,12 +36,12 @@ describe('sign', () => {
       error: 'authentication failed'
     };
 
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(401, expectedResponse);
 
     await expect(
-      sign({ apiKey: API_KEY, url: API_URL, message: MESSAGE })
+      sign({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT, message: MESSAGE })
     ).rejects.toThrow(APIError);
   });
 
@@ -50,12 +50,12 @@ describe('sign', () => {
       status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(403, expectedResponse);
 
     await expect(
-      sign({ apiKey: API_KEY, url: API_URL, message: MESSAGE })
+      sign({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT, message: MESSAGE })
     ).rejects.toThrow(APIError);
   });
 
@@ -64,12 +64,12 @@ describe('sign', () => {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .post('/api/v2/messages/sign', { message: MESSAGE })
       .reply(422, expectedResponse);
 
     await expect(
-      sign({ apiKey: API_KEY, url: API_URL, message: MESSAGE })
+      sign({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT, message: MESSAGE })
     ).rejects.toThrow(APIError);
   });
 });

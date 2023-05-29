@@ -3,8 +3,8 @@ import WS from 'isomorphic-ws';
 import { websocket, getWsUrl } from './websocket';
 
 describe('websocket', function () {
-  const API_URL = 'http://localhost:1234';
-  const API_KEY = 'S3CR3T-T0K3N';
+  const API_ENDPOINT = 'http://localhost:1234';
+  const API_TOKEN = 'S3CR3T-T0K3N';
   let server: WS.Server;
   let httpServer: http.Server;
 
@@ -22,8 +22,8 @@ describe('websocket', function () {
 
   it('gets a successful connection', (done) => {
     let connection = websocket({
-      apiKey: API_KEY,
-      url: API_URL
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT
     });
 
     connection.onopen = () => {
@@ -32,8 +32,10 @@ describe('websocket', function () {
     };
   });
 
-  it('builds the url to create the websocket', function () {
-    expect(getWsUrl(API_URL, '/api/v2/messages/websocket/', API_KEY)).toBe(
+  it('builds the apiEndpoint to create the websocket', function () {
+    expect(
+      getWsUrl(API_ENDPOINT, '/api/v2/messages/websocket/', API_TOKEN)
+    ).toBe(
       'ws://localhost:1234/api/v2/messages/websocket/?apiToken=S3CR3T-T0K3N'
     );
   });

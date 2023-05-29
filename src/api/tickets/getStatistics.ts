@@ -9,10 +9,10 @@ export const getStatistics = async (
   payload: BasePayloadType
 ): Promise<GetStatisticsResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/tickets/statistics`,
+    `${payload.apiEndpoint}/api/v2/tickets/statistics`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

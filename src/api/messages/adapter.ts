@@ -11,26 +11,26 @@ import { websocket } from './websocket';
 const log = createLogger('messages');
 
 export class MessagesAdapter {
-  private url: string;
-  private apiKey: string;
+  private apiEndpoint: string;
+  private apiToken: string;
   private timeout: number | undefined;
 
   /**
    * Creates a new instance of the `MessagesAdapter` class.
-   * @param url - The URL of the API server.
-   * @param apiKey - The API key to use for authentication.
+   * @param apiEndpoint - The API endpoint of the API server.
+   * @param apiToken - The API token to use for authentication.
    * @param timeout - optional timeout for all functions
    */
   constructor({
-    url,
-    apiKey
+    apiEndpoint,
+    apiToken
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.url = url;
-    this.apiKey = apiKey;
+    this.apiEndpoint = apiEndpoint;
+    this.apiToken = apiToken;
     this.timeout = this.timeout;
   }
 
@@ -39,8 +39,8 @@ export class MessagesAdapter {
   ) {
     try {
       return await sendMessage({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         body: payload.body,
         recipient: payload.recipient,
@@ -62,8 +62,8 @@ export class MessagesAdapter {
   ) {
     try {
       return await sign({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         message: payload.message
       });
@@ -80,8 +80,8 @@ export class MessagesAdapter {
   public async websocket() {
     try {
       return await websocket({
-        apiKey: this.apiKey,
-        url: this.url
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint
       });
     } catch (e) {
       if (e instanceof APIError) {

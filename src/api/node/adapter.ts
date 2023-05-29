@@ -14,34 +14,34 @@ import { pingNode } from './pingNode';
 const log = createLogger('node');
 
 export class NodeAdapter {
-  private url: string;
-  private apiKey: string;
+  private apiEndpoint: string;
+  private apiToken: string;
   private timeout: number | undefined;
 
   /**
    * Creates a new instance of the `NodeAdapter` class.
-   * @param url - The URL of the API server.
-   * @param apiKey - The API key to use for authentication.
+   * @param apiEndpoint - The API endpoint of the API server.
+   * @param apiToken - The API token to use for authentication.
    * @param timeout - optional timeout for all functions
    */
   constructor({
-    url,
-    apiKey
+    apiEndpoint,
+    apiToken
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.url = url;
-    this.apiKey = apiKey;
+    this.apiEndpoint = apiEndpoint;
+    this.apiToken = apiToken;
     this.timeout = this.timeout;
   }
 
   public async getEntryNodes() {
     try {
       return await getEntryNodes({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -57,8 +57,8 @@ export class NodeAdapter {
   public async getInfo() {
     try {
       return await getInfo({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -74,8 +74,8 @@ export class NodeAdapter {
   public async getMetrics() {
     try {
       return await getMetrics({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -93,8 +93,8 @@ export class NodeAdapter {
   ) {
     try {
       return await getPeers({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout,
         quality: payload.quality
       });
@@ -111,8 +111,8 @@ export class NodeAdapter {
   public async getVersion() {
     try {
       return await getVersion({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -130,8 +130,8 @@ export class NodeAdapter {
   ) {
     try {
       return await pingNode({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout,
         peerId: payload.peerId
       });

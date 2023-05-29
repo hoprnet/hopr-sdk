@@ -2,8 +2,8 @@ import { APIError } from '../../utils';
 import { sendMessage } from './sendMessage';
 import nock from 'nock';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 const BODY = 'Hello';
 const RECIPIENT = '16Uiu2HAm2SF8EdwwUaaSoYTiZSddnG4hLVF7dizh32QFTNWMic2b';
 const PATH = ['16Uiu2HAm1uV82HyD1iJ5DmwJr4LftmJUeMfj8zFypBRACmrJc16n'];
@@ -17,7 +17,7 @@ describe('sendMessage', () => {
   });
 
   it('should send a message successfully with path', async () => {
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .post('/api/v2/messages', {
         body: BODY,
         recipient: RECIPIENT,
@@ -26,8 +26,8 @@ describe('sendMessage', () => {
       .reply(202, 'challenge-token');
 
     const response = await sendMessage({
-      apiKey: API_KEY,
-      url: API_URL,
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
       body: BODY,
       recipient: RECIPIENT,
       path: PATH
@@ -36,7 +36,7 @@ describe('sendMessage', () => {
   });
 
   it('should send a message successfully with hops', async () => {
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .post('/api/v2/messages', {
         body: BODY,
         recipient: RECIPIENT,
@@ -45,8 +45,8 @@ describe('sendMessage', () => {
       .reply(202, 'challenge-token');
 
     const response = await sendMessage({
-      apiKey: API_KEY,
-      url: API_URL,
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
       body: BODY,
       recipient: RECIPIENT,
       hops: HOPS
@@ -57,8 +57,8 @@ describe('sendMessage', () => {
   it('should throw an error if no PATH or hops provided', async () => {
     await expect(
       sendMessage({
-        apiKey: API_KEY,
-        url: API_URL,
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
         body: BODY,
         recipient: RECIPIENT
       })
@@ -70,12 +70,14 @@ describe('sendMessage', () => {
       status: 'authentication failed',
       error: 'invalid api key'
     };
-    nock(API_URL).post('/api/v2/messages', PAYLOAD).reply(401, errorResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/messages', PAYLOAD)
+      .reply(401, errorResponse);
 
     await expect(
       sendMessage({
-        apiKey: 'invalid-key',
-        url: API_URL,
+        apiToken: 'invalid-key',
+        apiEndpoint: API_ENDPOINT,
         body: BODY,
         recipient: RECIPIENT,
         path: PATH,
@@ -89,12 +91,14 @@ describe('sendMessage', () => {
       status: 'authorization failed',
       error: 'permission denied'
     };
-    nock(API_URL).post('/api/v2/messages', PAYLOAD).reply(403, errorResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/messages', PAYLOAD)
+      .reply(403, errorResponse);
 
     await expect(
       sendMessage({
-        apiKey: API_KEY,
-        url: API_URL,
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
         body: BODY,
         recipient: RECIPIENT,
         path: PATH,
@@ -105,12 +109,14 @@ describe('sendMessage', () => {
 
   it('should return 422 if unknown failure occurred', async () => {
     const errorResponse = { status: 'unknown failure', error: 'server error' };
-    nock(API_URL).post('/api/v2/messages', PAYLOAD).reply(422, errorResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/messages', PAYLOAD)
+      .reply(422, errorResponse);
 
     await expect(
       sendMessage({
-        apiKey: API_KEY,
-        url: API_URL,
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
         body: BODY,
         recipient: RECIPIENT,
         path: PATH,

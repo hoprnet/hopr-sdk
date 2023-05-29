@@ -2,8 +2,8 @@ import { APIError } from '../../utils';
 import { removeAlias } from './removeAlias';
 import nock from 'nock';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 const ALIAS = 'my-alias';
 
 describe('removeAlias', () => {
@@ -12,31 +12,35 @@ describe('removeAlias', () => {
   });
 
   test('should return 204 if alias is removed successfully', async function () {
-    const API_KEY = 'my-api-key';
+    const API_TOKEN = 'my-api-key';
 
-    nock(API_URL).delete(`/api/v2/aliases/${ALIAS}`).reply(204);
+    nock(API_ENDPOINT).delete(`/api/v2/aliases/${ALIAS}`).reply(204);
 
     const response = await removeAlias({
-      url: API_URL,
-      apiKey: API_KEY,
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN,
       alias: ALIAS
     });
     expect(response).toBe(true);
   });
 
   test('should return 401 if authentication failed', async function () {
-    const invalidApikey = 'my-invalid-api-key';
+    const invalidApiToken = 'my-invalid-api-key';
     const expectedResponse = {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(401, expectedResponse);
 
     await expect(
-      removeAlias({ alias: ALIAS, apiKey: invalidApikey, url: API_URL })
+      removeAlias({
+        alias: ALIAS,
+        apiToken: invalidApiToken,
+        apiEndpoint: API_ENDPOINT
+      })
     ).rejects.toThrow(APIError);
   });
 
@@ -46,11 +50,15 @@ describe('removeAlias', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(403, expectedResponse);
     await expect(
-      removeAlias({ url: API_URL, apiKey: API_KEY, alias: ALIAS })
+      removeAlias({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN,
+        alias: ALIAS
+      })
     ).rejects.toThrow(APIError);
   });
 
@@ -60,12 +68,16 @@ describe('removeAlias', () => {
       error: 'Full error message.'
     };
 
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .delete(`/api/v2/aliases/${ALIAS}`)
       .reply(422, expectedResponse);
 
     await expect(
-      removeAlias({ url: API_URL, apiKey: API_KEY, alias: ALIAS })
+      removeAlias({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN,
+        alias: ALIAS
+      })
     ).rejects.toThrow(APIError);
   });
 });
