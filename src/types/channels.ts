@@ -75,9 +75,11 @@ export const Ticket = z.object({
   signature: z.string()
 });
 
-export const GetTicketsResponse = z.array(Ticket);
+export const GetChannelTicketsResponse = z.array(Ticket);
 
-export type GetTicketsResponseType = ZodToType<typeof GetTicketsResponse>;
+export type GetChannelTicketsResponseType = ZodToType<
+  typeof GetChannelTicketsResponse
+>;
 
 /** Close channel */
 
