@@ -1,7 +1,7 @@
 import { decode } from 'rlp';
 
 /**
- * Decodes the message sent from a hoprd node
+ * Decodes the message received by a hoprd node
  *
  * @param msg - The message to decode
  * @returns a string representing the decoded message
