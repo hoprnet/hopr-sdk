@@ -23,13 +23,12 @@ describe('Alases E2E test', function () {
     });
 
     if (setAliasResponse !== true) {
-      fail("Couldn't set an alias.");
+      throw new Error("Couldn't set an alias.");
     }
   });
 
   test('gets the aliases set', async function () {
     const response = await aliases.getAliases();
-    console.log('RESPUESTA ALIASES', JSON.stringify(response));
 
     expect(response).toStrictEqual(
       expect.objectContaining({
@@ -40,7 +39,6 @@ describe('Alases E2E test', function () {
 
   test('gets the peerId for a specific alias', async function () {
     const response = await aliases.getAlias({ alias: testAlias });
-    console.log('RESPUESTA GET ALIAS', JSON.stringify(response));
 
     expect(response).toEqual(peerId);
   });

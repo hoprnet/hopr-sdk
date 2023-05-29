@@ -9,12 +9,10 @@ describe('Account E2E tests', function () {
   it('receives the hopr and native node address', async function () {
     const response = await account.getAddresses();
 
-    expect(response).toEqual(
-      expect.objectContaining({
-        hopr: expect.any(String),
-        native: expect.any(String)
-      })
-    );
+    expect(response).toStrictEqual({
+      hopr: expect.any(String),
+      native: expect.any(String)
+    });
   });
 
   it('receives the hopr address', async function () {
@@ -32,12 +30,10 @@ describe('Account E2E tests', function () {
   it('receives the hopr and native balances', async function () {
     const response = await account.getBalances();
 
-    expect(response).toEqual(
-      expect.objectContaining({
-        hopr: expect.any(String),
-        native: expect.any(String)
-      })
-    );
+    expect(response).toStrictEqual({
+      hopr: expect.any(String),
+      native: expect.any(String)
+    });
   });
 
   it('receives the hopr balance', async function () {
@@ -55,7 +51,7 @@ describe('Account E2E tests', function () {
   it('withdraws HOPR balance', async function () {
     const response = await account.withdraw({
       currency: 'HOPR',
-      amount: '100000000',
+      amount: '10000',
       recipient: nativeAddress
     });
 
@@ -65,7 +61,7 @@ describe('Account E2E tests', function () {
   it('withdraws NATIVE balance', async function () {
     const response = await account.withdraw({
       currency: 'NATIVE',
-      amount: '100000000',
+      amount: '10000',
       recipient: nativeAddress
     });
 
