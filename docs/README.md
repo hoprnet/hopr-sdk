@@ -1,3 +1,5 @@
+@hoprnet/hopr-sdk / [Exports](modules.md)
+
 # hopr-sdk
 
 ## Description
@@ -92,7 +94,6 @@ console.log(addresses);
 
 ---
 [doc](/docs/classes/HoprSdk.md)
-
 
 ## Functions
 
