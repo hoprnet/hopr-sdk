@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BasePayload, ZodToType } from './general';
+import { BasePayload } from './general';
 
 /**
  * General
@@ -9,7 +9,7 @@ export const AliasPayload = BasePayload.extend({
   alias: z.string()
 });
 
-export type AliasPayloadType = ZodToType<typeof AliasPayload>;
+export type AliasPayloadType = z.infer<typeof AliasPayload>;
 
 /**
  * getAliases
@@ -17,7 +17,7 @@ export type AliasPayloadType = ZodToType<typeof AliasPayload>;
 
 export const GetAliasesResponse = z.record(z.string());
 
-export type GetAliasesResponseType = ZodToType<typeof GetAliasesResponse>;
+export type GetAliasesResponseType = z.infer<typeof GetAliasesResponse>;
 
 /**
  * setAlias
@@ -28,7 +28,7 @@ export const SetAliasPayload = BasePayload.extend({
   alias: z.string()
 });
 
-export type SetAliasPayloadType = ZodToType<typeof SetAliasPayload>;
+export type SetAliasPayloadType = z.infer<typeof SetAliasPayload>;
 
 /**
  * getAlias
@@ -36,4 +36,4 @@ export type SetAliasPayloadType = ZodToType<typeof SetAliasPayload>;
 
 export const GetAliasResponse = z.object({ peerId: z.string() });
 
-export type GetAliasResponseType = ZodToType<typeof GetAliasResponse>;
+export type GetAliasResponseType = z.infer<typeof GetAliasResponse>;

@@ -1,5 +1,5 @@
 import z from 'zod';
-import { BasePayload, ZodToType } from './general';
+import { BasePayload } from './general';
 
 /**
  * GENERAL
@@ -72,13 +72,13 @@ export const CreateTokenPayload = BasePayload.extend({
   description: z.string()
 });
 
-export type CreateTokenPayloadType = ZodToType<typeof CreateTokenPayload>;
+export type CreateTokenPayloadType = z.infer<typeof CreateTokenPayload>;
 
 export const CreateTokenResponse = z.object({
   token: z.string()
 });
 
-export type CreateTokenResponseType = ZodToType<typeof CreateTokenResponse>;
+export type CreateTokenResponseType = z.infer<typeof CreateTokenResponse>;
 
 /**
  * getToken
@@ -91,7 +91,7 @@ export const GetTokenResponse = z.object({
   valid_until: z.number().optional()
 });
 
-export type GetTokenResponseType = ZodToType<typeof GetTokenResponse>;
+export type GetTokenResponseType = z.infer<typeof GetTokenResponse>;
 
 /**
  * deleteToken
@@ -101,4 +101,4 @@ export const DeleteTokenPayload = BasePayload.extend({
   id: z.string()
 });
 
-export type DeleteTokenPayloadType = ZodToType<typeof DeleteTokenPayload>;
+export type DeleteTokenPayloadType = z.infer<typeof DeleteTokenPayload>;

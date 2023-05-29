@@ -1,9 +1,4 @@
-import { ZodType, z } from 'zod';
-
-/**
- * Converts a ZodType to its inferred TypeScript type.
- */
-export type ZodToType<T extends ZodType<any, any, any>> = z.infer<T>;
+import { z } from 'zod';
 
 /**
  * Represents the minimum payload needed to interact with hoprd node.
@@ -28,7 +23,7 @@ export const BasePayload = z.object({
 /**
  * Represents the inferred TypeScript type from BasicAuthenticationPayload.
  */
-export type BasePayloadType = ZodToType<typeof BasePayload>;
+export type BasePayloadType = z.infer<typeof BasePayload>;
 
 /**
  * Removes the basic authentication properties from a payload type.

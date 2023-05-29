@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BasePayload, ZodToType } from './general';
+import { BasePayload } from './general';
 
 /**
  * Get settings
@@ -10,7 +10,7 @@ export const GetSettingsResponse = z.object({
   strategy: z.string()
 });
 
-export type GetSettingsResponseType = ZodToType<typeof GetSettingsResponse>;
+export type GetSettingsResponseType = z.infer<typeof GetSettingsResponse>;
 
 /**
  * Set Setting
@@ -21,4 +21,4 @@ export const SetSettingPayload = BasePayload.extend({
   settingValue: z.any()
 });
 
-export type SetSettingPayloadType = ZodToType<typeof SetSettingPayload>;
+export type SetSettingPayloadType = z.infer<typeof SetSettingPayload>;

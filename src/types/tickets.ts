@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { ZodToType } from './general';
 
 /**
  * Get statistics
@@ -18,7 +17,7 @@ export const GetStatisticsResponse = z.object({
   rejectedValue: z.string()
 });
 
-export type GetStatisticsResponseType = ZodToType<typeof GetStatisticsResponse>;
+export type GetStatisticsResponseType = z.infer<typeof GetStatisticsResponse>;
 
 /**
  * Get tickets
@@ -37,4 +36,4 @@ export const GetTicketsResponse = z
   })
   .array();
 
-export type GetTicketsResponseType = ZodToType<typeof GetTicketsResponse>;
+export type GetTicketsResponseType = z.infer<typeof GetTicketsResponse>;
