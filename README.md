@@ -87,3 +87,10 @@ const addresses = await api.getAddresses({
 
 console.log(addresses);
 ```
+
+## Documentation
+---
+- [HoprSdk Class](/docs/classes/HoprSdk.md)
+- [API functions](/docs/modules/api.md)
+- [Utils](/docs/modules/utils.md)
+- [Type Aliases and Variables](/docs/modules.md)
