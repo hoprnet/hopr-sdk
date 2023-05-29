@@ -32,7 +32,8 @@
     "build": "tsup",
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
-    "test": "jest"
+    "test": "jest",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --hideBreadcrumbs true --plugin typedoc-plugin-zod"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
