@@ -1,5 +1,5 @@
 {
-  "name": "hopr-sdk",
+  "name": "@hoprnet/hopr-sdk",
   "version": "0.0.1-alpha.0",
   "license": "GPL-3.0",
   "main": "./dist/index.js",
@@ -42,5 +42,8 @@
     "isomorphic-ws": "^5.0.0",
     "ws": "^8.13.0",
     "zod": "^3.21.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
