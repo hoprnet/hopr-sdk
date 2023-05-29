@@ -17,26 +17,27 @@ const log = createLogger('account');
  * A class that provides a wrapper around account-related API endpoints.
  */
 export class AccountAdapter {
-  private url: string;
-  private apiKey: string;
+  private apiEndpoint: string;
+  private apiToken: string;
   private timeout: number | undefined;
   /**
    * Creates a new instance of the `AccountAdapter` class.
-   * @param url - The URL of the API server.
-   * @param apiKey - The API key to use for authentication.
+   * @param apiEndpoint - The API endpoint of the API server.
+   * @param apiToken - The API token to use for authentication.
    * @param timeout - optional timeout for all functions
    */
   constructor({
-    url,
-    apiKey
+    apiEndpoint,
+    apiToken,
+    timeout
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.url = url;
-    this.apiKey = apiKey;
-    this.timeout = this.timeout;
+    this.apiEndpoint = apiEndpoint;
+    this.apiToken = apiToken;
+    this.timeout = timeout;
   }
 
   /**
@@ -46,8 +47,8 @@ export class AccountAdapter {
   public async getAddresses() {
     try {
       return await getAddresses({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -67,8 +68,8 @@ export class AccountAdapter {
   public async getBalances() {
     try {
       return await getBalances({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -88,8 +89,8 @@ export class AccountAdapter {
   public async getHoprAddress() {
     try {
       return await getHoprAddress({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -109,8 +110,8 @@ export class AccountAdapter {
   public async getHoprBalance() {
     try {
       return await getHoprBalance({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -130,8 +131,8 @@ export class AccountAdapter {
   public async getNativeAddress() {
     try {
       return await getNativeAddress({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -151,8 +152,8 @@ export class AccountAdapter {
   public async getNativeBalance() {
     try {
       return await getNativeBalance({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -175,8 +176,8 @@ export class AccountAdapter {
   ) {
     try {
       return await withdraw({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout,
         ...payload
       });

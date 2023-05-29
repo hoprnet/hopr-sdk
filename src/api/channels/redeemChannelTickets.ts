@@ -16,10 +16,10 @@ export const redeemChannelTickets = async (
   payload: PeerIdPayloadType
 ): Promise<boolean> => {
   const rawResponse = await fetch(
-    `${payload.url}/api/v2/channels/${payload.peerId}/tickets/redeem`,
+    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/tickets/redeem`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     }
   );
 

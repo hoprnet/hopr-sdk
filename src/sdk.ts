@@ -2,14 +2,14 @@ import { ApiAdapter } from './api/adapter';
 export class HoprSdk {
   public api: ApiAdapter;
   constructor({
-    url,
-    apiKey,
+    apiEndpoint,
+    apiToken,
     timeout
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.api = new ApiAdapter({ url, apiKey, timeout });
+    this.api = new ApiAdapter({ apiEndpoint, apiToken, timeout });
   }
 }

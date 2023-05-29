@@ -9,8 +9,8 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 /**
  * Signs a message given using the node’s private key. Prefixes messsage with “HOPR Signed Message: ” before signing.
  *
- * @param url - The base URL for the API.
- * @param apiKey - The API key to use for authentication.
+ * @param apiEndpoint - The API endpoint.
+ * @param apiToken - The API token to use for authentication.
  * @param message - The message to sign.
  * @returns A Promise that resolves to a string representing the signature.
  * @throws An error that occurred while processing the request.
@@ -20,10 +20,10 @@ export const sign = async (payload: SignPayloadType): Promise<string> => {
     message: payload.message
   };
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/messages/sign`,
+    `${payload.apiEndpoint}/api/v2/messages/sign`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiKey),
+      headers: getHeaders(payload.apiToken),
       body: JSON.stringify(body)
     },
     payload.timeout

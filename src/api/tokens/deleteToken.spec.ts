@@ -2,9 +2,9 @@ import nock from 'nock';
 import { deleteToken } from './deleteToken';
 import { APIError } from '../../utils';
 
-// Set up global constants for URL and API key
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+// Set up global constants for API endpoint and API token
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 const TOKEN_ID = 'someTOKENid1234';
 
 describe('deleteToken', () => {
@@ -13,12 +13,12 @@ describe('deleteToken', () => {
   });
 
   it('returns true when token is successfully deleted', async function () {
-    nock(API_URL).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(204);
+    nock(API_ENDPOINT).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(204);
 
     // Call the function and expect it to return true
     const result = await deleteToken({
-      apiKey: API_KEY,
-      url: API_URL,
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
       id: TOKEN_ID
     });
     expect(result).toBe(true);
@@ -29,11 +29,17 @@ describe('deleteToken', () => {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
-    nock(API_URL).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(401, mockResponse);
+    nock(API_ENDPOINT)
+      .delete(`/api/v2/tokens/${TOKEN_ID}`)
+      .reply(401, mockResponse);
 
     // Call the function and expect it to throw an APIError
     await expect(
-      deleteToken({ apiKey: API_KEY, url: API_URL, id: TOKEN_ID })
+      deleteToken({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        id: TOKEN_ID
+      })
     ).rejects.toThrow(APIError);
   });
 
@@ -42,20 +48,30 @@ describe('deleteToken', () => {
       status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
-    nock(API_URL).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(403, mockResponse);
+    nock(API_ENDPOINT)
+      .delete(`/api/v2/tokens/${TOKEN_ID}`)
+      .reply(403, mockResponse);
 
     // Call the function and expect it to throw an APIError
     await expect(
-      deleteToken({ apiKey: API_KEY, url: API_URL, id: TOKEN_ID })
+      deleteToken({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        id: TOKEN_ID
+      })
     ).rejects.toThrow(APIError);
   });
 
   it('should throw APIError on internal server error', async function () {
-    nock(API_URL).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(500);
+    nock(API_ENDPOINT).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(500);
 
     // Call the function and expect it to throw an APIError
     await expect(
-      deleteToken({ apiKey: API_KEY, url: API_URL, id: TOKEN_ID })
+      deleteToken({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        id: TOKEN_ID
+      })
     ).rejects.toThrow(APIError);
   });
 });

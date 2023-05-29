@@ -14,10 +14,13 @@ import { APIError, getHeaders } from '../../utils';
 export const redeemTickets = async (
   payload: BasePayloadType
 ): Promise<boolean> => {
-  const rawResponse = await fetch(`${payload.url}/api/v2/tickets/redeem`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey)
-  });
+  const rawResponse = await fetch(
+    `${payload.apiEndpoint}/api/v2/tickets/redeem`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken)
+    }
+  );
 
   if (rawResponse.status === 204) {
     return true;

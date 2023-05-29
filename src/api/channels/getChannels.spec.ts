@@ -2,15 +2,15 @@ import nock from 'nock';
 import { APIError } from '../../utils';
 import { getChannels } from './getChannels';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 
 describe('test getChannels', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_URL)
+    nock(API_ENDPOINT)
       .get('/api/v2/channels')
       .reply(200, {
         incoming: [
@@ -35,7 +35,10 @@ describe('test getChannels', function () {
         ]
       });
 
-    const response = await getChannels({ apiKey: API_KEY, url: API_URL });
+    const response = await getChannels({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT
+    });
 
     expect(response.incoming.at(0)?.peerId).toEqual(
       '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX'
@@ -43,31 +46,31 @@ describe('test getChannels', function () {
     expect(response.outgoing.at(0)?.balance).toEqual('500000000000000000');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_URL).get('/api/v2/channels').reply(400, {
+    nock(API_ENDPOINT).get('/api/v2/channels').reply(400, {
       status: 'INVALID_PEERID'
     });
 
     await expect(
-      getChannels({ apiKey: API_KEY, url: API_URL })
+      getChannels({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_URL).get('/api/v2/channels').reply(403, {
+    nock(API_ENDPOINT).get('/api/v2/channels').reply(403, {
       status: 'NOT_ENOUGH_BALANCE'
     });
 
     await expect(
-      getChannels({ apiKey: API_KEY, url: API_URL })
+      getChannels({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_URL).get('/api/v2/channels').reply(422, {
+    nock(API_ENDPOINT).get('/api/v2/channels').reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
 
     await expect(
-      getChannels({ apiKey: API_KEY, url: API_URL })
+      getChannels({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(APIError);
   });
 });

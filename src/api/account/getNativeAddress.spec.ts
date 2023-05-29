@@ -2,8 +2,8 @@ import nock from 'nock';
 import { getNativeAddress } from './getNativeAddress';
 import { APIError } from '../../utils';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 
 describe('getNativeAddress', () => {
   afterEach(() => {
@@ -16,23 +16,30 @@ describe('getNativeAddress', () => {
       native: '0x123abc'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(200, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(200, expectedResponse);
 
-    const result = await getNativeAddress({ url: API_URL, apiKey: API_KEY });
+    const result = await getNativeAddress({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN
+    });
     expect(result).toEqual(expectedResponse.native);
   });
 
   test('should return 401 if authentication failed', async function () {
-    const invalidApiKey = 'Not valid';
+    const invalidApiToken = 'Not valid';
     const expectedResponse = {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(401, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(401, expectedResponse);
 
     await expect(
-      getNativeAddress({ url: API_URL, apiKey: invalidApiKey })
+      getNativeAddress({ apiEndpoint: API_ENDPOINT, apiToken: invalidApiToken })
     ).rejects.toThrow(APIError);
   });
 
@@ -42,10 +49,12 @@ describe('getNativeAddress', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(403, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(403, expectedResponse);
 
     await expect(
-      getNativeAddress({ url: API_URL, apiKey: API_KEY })
+      getNativeAddress({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
   });
 
@@ -55,10 +64,12 @@ describe('getNativeAddress', () => {
       error: 'Full error message.'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(422, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(422, expectedResponse);
 
     await expect(
-      getNativeAddress({ url: API_URL, apiKey: API_KEY })
+      getNativeAddress({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
   });
 });

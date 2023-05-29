@@ -9,8 +9,8 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 /**
  * Get all aliases you set previously and their corresponding peer IDs.
  *
- * @param url - The base URL of the server.
- * @param apiKey - The API key to use for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to use for authentication.
  * @returns An object with alias names as keys and the peerId associated with the alias.
  * @throws An error that occurred while processing the request.
  */
@@ -18,10 +18,10 @@ export const getAliases = async (
   payload: BasePayloadType
 ): Promise<GetAliasesResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/aliases`,
+    `${payload.apiEndpoint}/api/v2/aliases`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

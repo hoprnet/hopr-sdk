@@ -8,8 +8,8 @@ import {
 /**
  * Send a message to another peer using a given path (list of node addresses that should relay our message through network). If no path is given, HOPR will attempt to find a path.
  *
- * @param url - The URL to send the message to.
- * @param apiKey - The API key to use for authentication.
+ * @param apiEndpoint - The API endpoint to send the message to.
+ * @param apiToken - The API token to use for authentication.
  * @param body - The message body to send.
  * @param recipient - The recipient of the message.
  * @param path - The path to take for the message, if any.
@@ -31,10 +31,10 @@ export const sendMessage = async (
   };
 
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/messages`,
+    `${payload.apiEndpoint}/api/v2/messages`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiKey),
+      headers: getHeaders(payload.apiToken),
       body: JSON.stringify(body)
     },
     payload.timeout

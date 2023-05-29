@@ -10,10 +10,10 @@ export const getInfo = async (
   payload: BasePayloadType
 ): Promise<GetInfoResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/node/info`,
+    `${payload.apiEndpoint}/api/v2/node/info`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

@@ -2,8 +2,8 @@ import { APIError } from '../../utils';
 import { getAddresses } from './getAddresses';
 import nock from 'nock';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 
 describe('getAddresses', () => {
   afterEach(() => {
@@ -16,23 +16,30 @@ describe('getAddresses', () => {
       native: '0x123abc'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(200, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(200, expectedResponse);
 
-    const result = await getAddresses({ url: API_URL, apiKey: API_KEY });
+    const result = await getAddresses({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN
+    });
     expect(result).toEqual(expectedResponse);
   });
 
   test('should return 401 if authentication failed', async function () {
-    const invalidApiKey = 'Not valid';
+    const invalidApiToken = 'Not valid';
     const expectedResponse = {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(401, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(401, expectedResponse);
 
     await expect(
-      getAddresses({ url: API_URL, apiKey: invalidApiKey })
+      getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: invalidApiToken })
     ).rejects.toThrow(APIError);
   });
 
@@ -42,10 +49,12 @@ describe('getAddresses', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(403, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(403, expectedResponse);
 
     await expect(
-      getAddresses({ url: API_URL, apiKey: API_KEY })
+      getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
   });
 
@@ -55,10 +64,12 @@ describe('getAddresses', () => {
       error: 'Full error message.'
     };
 
-    nock(API_URL).get('/api/v2/account/addresses').reply(422, expectedResponse);
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(422, expectedResponse);
 
     await expect(
-      getAddresses({ url: API_URL, apiKey: API_KEY })
+      getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
   });
 });
