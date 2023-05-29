@@ -26,7 +26,8 @@ export class AliasesAdapter {
    */
   constructor({
     apiEndpoint,
-    apiToken
+    apiToken,
+    timeout
   }: {
     apiEndpoint: string;
     apiToken: string;
@@ -34,7 +35,7 @@ export class AliasesAdapter {
   }) {
     this.apiEndpoint = apiEndpoint;
     this.apiToken = apiToken;
-    this.timeout = this.timeout;
+    this.timeout = timeout;
   }
 
   /**

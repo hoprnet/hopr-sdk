@@ -46,7 +46,7 @@ describe('setAlias function', () => {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
-    const invalidApiToken = 'my-invalid-api-key';
+    const invalidApiToken = 'my-invalid-api-token';
     nock(API_ENDPOINT)
       .post('/api/v2/aliases', { peerId: PEER_ID, alias: ALIAS })
       .reply(401, expectedResponse);

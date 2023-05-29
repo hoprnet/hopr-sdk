@@ -68,7 +68,7 @@ describe('sendMessage', () => {
   it('should return 401 if authentication failed', async () => {
     const errorResponse = {
       status: 'authentication failed',
-      error: 'invalid api key'
+      error: 'invalid api token'
     };
     nock(API_ENDPOINT)
       .post('/api/v2/messages', PAYLOAD)
@@ -76,7 +76,7 @@ describe('sendMessage', () => {
 
     await expect(
       sendMessage({
-        apiToken: 'invalid-key',
+        apiToken: 'api-token',
         apiEndpoint: API_ENDPOINT,
         body: BODY,
         recipient: RECIPIENT,

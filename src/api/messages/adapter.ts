@@ -23,7 +23,8 @@ export class MessagesAdapter {
    */
   constructor({
     apiEndpoint,
-    apiToken
+    apiToken,
+    timeout
   }: {
     apiEndpoint: string;
     apiToken: string;
@@ -31,7 +32,7 @@ export class MessagesAdapter {
   }) {
     this.apiEndpoint = apiEndpoint;
     this.apiToken = apiToken;
-    this.timeout = this.timeout;
+    this.timeout = timeout;
   }
 
   public async sendMessage(

@@ -25,7 +25,7 @@ describe('removeAlias', () => {
   });
 
   test('should return 401 if authentication failed', async function () {
-    const invalidApiToken = 'my-invalid-api-key';
+    const invalidApiToken = 'my-invalid-api-token';
     const expectedResponse = {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'

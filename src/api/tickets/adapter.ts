@@ -18,7 +18,8 @@ export class TicketsAdapter {
    */
   constructor({
     apiEndpoint,
-    apiToken
+    apiToken,
+    timeout
   }: {
     apiEndpoint: string;
     apiToken: string;
@@ -26,7 +27,7 @@ export class TicketsAdapter {
   }) {
     this.apiEndpoint = apiEndpoint;
     this.apiToken = apiToken;
-    this.timeout = this.timeout;
+    this.timeout = timeout;
   }
 
   public async getStatistics() {

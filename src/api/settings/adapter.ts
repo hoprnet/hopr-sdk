@@ -21,7 +21,8 @@ export class SettingsAdapter {
    */
   constructor({
     apiEndpoint,
-    apiToken
+    apiToken,
+    timeout
   }: {
     apiEndpoint: string;
     apiToken: string;
@@ -29,7 +30,7 @@ export class SettingsAdapter {
   }) {
     this.apiEndpoint = apiEndpoint;
     this.apiToken = apiToken;
-    this.timeout = this.timeout;
+    this.timeout = timeout;
   }
 
   public async getSettings() {
