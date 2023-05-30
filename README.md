@@ -86,8 +86,6 @@ console.log(addresses);
 
 ## Documentation
 
----
-
 - [HoprSDK Class](/docs/classes/HoprSDK.md)
 - [API functions](/docs/modules/api.md)
 - [Utils](/docs/modules/utils.md)
