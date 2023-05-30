@@ -18,6 +18,9 @@ export const getChannelTickets = async (
     payload.timeout
   );
 
+  console.log(await rawResponse.text());
+  console.log(await rawResponse.json());
+  console.log('============= getChannelTickets =========');
   const jsonResponse = await rawResponse.json();
 
   const parsedRes = GetChannelTicketsResponse.safeParse(jsonResponse);

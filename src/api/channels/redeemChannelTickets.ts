@@ -23,10 +23,15 @@ export const redeemChannelTickets = async (
     }
   );
 
+  console.log(rawResponse.status);
+  console.log('============= redeemChannelTickets =========');
+
   if (rawResponse.status === 204) {
     return true;
   } else if (rawResponse.status > 499) {
     // server error that was unexpected
+    console.log(rawResponse);
+    console.log(rawResponse.statusText);
     throw new APIError({
       status: rawResponse.status.toString(),
       error: rawResponse.statusText
@@ -34,6 +39,7 @@ export const redeemChannelTickets = async (
   } else {
     // response is neither successful nor unexpected
     const jsonResponse = await rawResponse.json();
+    console.log(jsonResponse);
     throw new APIError(Error.parse(jsonResponse));
   }
 };
