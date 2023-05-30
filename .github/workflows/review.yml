@@ -46,6 +46,9 @@ jobs:
       - name: Run tests and coverage
         run: yarn test --ci
 
+      - name: Create docs
+        run: yarn docs  
+
   # Run publish if pr title includes [RELEASE]
   publish:
     needs: review
