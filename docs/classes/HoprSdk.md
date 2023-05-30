@@ -1,20 +1,20 @@
-# Class: HoprSdk
+# Class: HoprSDK
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](HoprSdk.md#constructor)
+- [constructor](HoprSDK.md#constructor)
 
 ### Properties
 
-- [api](HoprSdk.md#api)
+- [api](HoprSDK.md#api)
 
 ## Constructors
 
 ### constructor
 
-• **new HoprSdk**(`«destructured»`)
+• **new HoprSDK**(`«destructured»`)
 
 #### Parameters
 
@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[src/sdk.ts:4](https://github.com/hoprnet/hopr-sdk/blob/main/src/sdk.ts#L4)
+[src/sdk.ts:4](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/sdk.ts#L4)
 
 ## Properties
 
@@ -37,4 +37,4 @@
 
 #### Defined in
 
-[src/sdk.ts:3](https://github.com/hoprnet/hopr-sdk/blob/main/src/sdk.ts#L3)
+[src/sdk.ts:3](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/sdk.ts#L3)

@@ -9,7 +9,7 @@
 
 ### Classes
 
-- [HoprSdk](classes/HoprSdk.md)
+- [HoprSDK](classes/HoprSDK.md)
 
 ### Type Aliases
 
@@ -113,7 +113,7 @@
 
 #### Defined in
 
-[src/types/account.ts:13](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/account.ts#L13)
+[src/types/account.ts:13](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/account.ts#L13)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Defined in
 
-[src/types/aliases.ts:12](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L12)
+[src/types/aliases.ts:12](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L12)
 
 ___
 
@@ -152,7 +152,7 @@ Represents the inferred TypeScript type from BasicAuthenticationPayload.
 
 #### Defined in
 
-[src/types/general.ts:26](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/general.ts#L26)
+[src/types/general.ts:26](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/general.ts#L26)
 
 ___
 
@@ -172,7 +172,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:91](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L91)
+[src/types/channels.ts:91](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L91)
 
 ___
 
@@ -189,7 +189,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:98](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L98)
+[src/types/channels.ts:98](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L98)
 
 ___
 
@@ -210,7 +210,7 @@ ___
 
 #### Defined in
 
-[src/types/tokens.ts:75](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L75)
+[src/types/tokens.ts:75](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L75)
 
 ___
 
@@ -226,7 +226,7 @@ ___
 
 #### Defined in
 
-[src/types/tokens.ts:81](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L81)
+[src/types/tokens.ts:81](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L81)
 
 ___
 
@@ -245,7 +245,7 @@ ___
 
 #### Defined in
 
-[src/types/tokens.ts:104](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L104)
+[src/types/tokens.ts:104](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L104)
 
 ___
 
@@ -262,7 +262,7 @@ ___
 
 #### Defined in
 
-[src/types/error.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/error.ts#L8)
+[src/types/error.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/error.ts#L8)
 
 ___
 
@@ -283,7 +283,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:24](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L24)
+[src/types/channels.ts:24](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L24)
 
 ___
 
@@ -299,7 +299,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:30](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L30)
+[src/types/channels.ts:30](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L30)
 
 ___
 
@@ -315,7 +315,7 @@ ___
 
 #### Defined in
 
-[src/types/aliases.ts:39](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L39)
+[src/types/aliases.ts:39](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L39)
 
 ___
 
@@ -325,7 +325,7 @@ ___
 
 #### Defined in
 
-[src/types/aliases.ts:20](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L20)
+[src/types/aliases.ts:20](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L20)
 
 ___
 
@@ -345,7 +345,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:107](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L107)
+[src/types/channels.ts:107](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L107)
 
 ___
 
@@ -365,7 +365,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:111](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L111)
+[src/types/channels.ts:111](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L111)
 
 ___
 
@@ -375,7 +375,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:80](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L80)
+[src/types/channels.ts:80](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L80)
 
 ___
 
@@ -392,7 +392,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:63](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L63)
+[src/types/channels.ts:63](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L63)
 
 ___
 
@@ -402,7 +402,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:63](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L63)
+[src/types/node.ts:63](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L63)
 
 ___
 
@@ -427,7 +427,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:50](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L50)
+[src/types/node.ts:50](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L50)
 
 ___
 
@@ -446,7 +446,7 @@ ___
 
 #### Defined in
 
-[src/types/peerInfo.ts:12](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/peerInfo.ts#L12)
+[src/types/peerInfo.ts:12](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/peerInfo.ts#L12)
 
 ___
 
@@ -463,7 +463,7 @@ ___
 
 #### Defined in
 
-[src/types/peerInfo.ts:19](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/peerInfo.ts#L19)
+[src/types/peerInfo.ts:19](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/peerInfo.ts#L19)
 
 ___
 
@@ -482,7 +482,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:12](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L12)
+[src/types/node.ts:12](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L12)
 
 ___
 
@@ -499,7 +499,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:31](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L31)
+[src/types/node.ts:31](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L31)
 
 ___
 
@@ -516,7 +516,7 @@ ___
 
 #### Defined in
 
-[src/types/settings.ts:13](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/settings.ts#L13)
+[src/types/settings.ts:13](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/settings.ts#L13)
 
 ___
 
@@ -541,7 +541,7 @@ ___
 
 #### Defined in
 
-[src/types/tickets.ts:20](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tickets.ts#L20)
+[src/types/tickets.ts:20](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tickets.ts#L20)
 
 ___
 
@@ -551,7 +551,7 @@ ___
 
 #### Defined in
 
-[src/types/tickets.ts:39](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tickets.ts#L39)
+[src/types/tickets.ts:39](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tickets.ts#L39)
 
 ___
 
@@ -570,7 +570,7 @@ ___
 
 #### Defined in
 
-[src/types/tokens.ts:94](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L94)
+[src/types/tokens.ts:94](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L94)
 
 ___
 
@@ -590,7 +590,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:39](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L39)
+[src/types/channels.ts:39](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L39)
 
 ___
 
@@ -607,7 +607,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:46](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L46)
+[src/types/channels.ts:46](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L46)
 
 ___
 
@@ -626,7 +626,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:12](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L12)
+[src/types/channels.ts:12](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L12)
 
 ___
 
@@ -645,7 +645,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:73](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L73)
+[src/types/node.ts:73](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L73)
 
 ___
 
@@ -661,7 +661,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:79](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L79)
+[src/types/node.ts:79](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L79)
 
 ___
 
@@ -683,7 +683,7 @@ T - The payload type from which to remove the properties.
 
 #### Defined in
 
-[src/types/general.ts:32](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/general.ts#L32)
+[src/types/general.ts:32](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/general.ts#L32)
 
 ___
 
@@ -705,7 +705,7 @@ ___
 
 #### Defined in
 
-[src/types/messages.ts:29](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/messages.ts#L29)
+[src/types/messages.ts:29](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/messages.ts#L29)
 
 ___
 
@@ -725,7 +725,7 @@ ___
 
 #### Defined in
 
-[src/types/aliases.ts:31](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L31)
+[src/types/aliases.ts:31](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L31)
 
 ___
 
@@ -745,7 +745,7 @@ ___
 
 #### Defined in
 
-[src/types/settings.ts:24](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/settings.ts#L24)
+[src/types/settings.ts:24](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/settings.ts#L24)
 
 ___
 
@@ -764,7 +764,7 @@ ___
 
 #### Defined in
 
-[src/types/messages.ts:12](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/messages.ts#L12)
+[src/types/messages.ts:12](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/messages.ts#L12)
 
 ___
 
@@ -785,7 +785,7 @@ ___
 
 #### Defined in
 
-[src/types/account.ts:25](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/account.ts#L25)
+[src/types/account.ts:25](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/account.ts#L25)
 
 ## Variables
 
@@ -797,7 +797,7 @@ General
 
 #### Defined in
 
-[src/types/account.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/account.ts#L8)
+[src/types/account.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/account.ts#L8)
 
 ___
 
@@ -809,7 +809,7 @@ General
 
 #### Defined in
 
-[src/types/aliases.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L8)
+[src/types/aliases.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L8)
 
 ___
 
@@ -821,7 +821,7 @@ Represents the minimum payload needed to interact with hoprd node.
 
 #### Defined in
 
-[src/types/general.ts:6](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/general.ts#L6)
+[src/types/general.ts:6](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/general.ts#L6)
 
 ___
 
@@ -833,7 +833,7 @@ Get channels
 
 #### Defined in
 
-[src/types/channels.ts:50](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L50)
+[src/types/channels.ts:50](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L50)
 
 ___
 
@@ -845,7 +845,7 @@ Close channel
 
 #### Defined in
 
-[src/types/channels.ts:86](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L86)
+[src/types/channels.ts:86](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L86)
 
 ___
 
@@ -855,7 +855,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:93](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L93)
+[src/types/channels.ts:93](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L93)
 
 ___
 
@@ -867,7 +867,7 @@ createToken
 
 #### Defined in
 
-[src/types/tokens.ts:69](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L69)
+[src/types/tokens.ts:69](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L69)
 
 ___
 
@@ -877,7 +877,7 @@ ___
 
 #### Defined in
 
-[src/types/tokens.ts:77](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L77)
+[src/types/tokens.ts:77](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L77)
 
 ___
 
@@ -889,7 +889,7 @@ deleteToken
 
 #### Defined in
 
-[src/types/tokens.ts:100](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L100)
+[src/types/tokens.ts:100](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L100)
 
 ___
 
@@ -899,7 +899,7 @@ ___
 
 #### Defined in
 
-[src/types/error.ts:3](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/error.ts#L3)
+[src/types/error.ts:3](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/error.ts#L3)
 
 ___
 
@@ -911,7 +911,7 @@ Fund channel
 
 #### Defined in
 
-[src/types/channels.ts:18](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L18)
+[src/types/channels.ts:18](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L18)
 
 ___
 
@@ -921,7 +921,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:26](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L26)
+[src/types/channels.ts:26](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L26)
 
 ___
 
@@ -933,7 +933,7 @@ getAlias
 
 #### Defined in
 
-[src/types/aliases.ts:37](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L37)
+[src/types/aliases.ts:37](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L37)
 
 ___
 
@@ -945,7 +945,7 @@ getAliases
 
 #### Defined in
 
-[src/types/aliases.ts:18](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L18)
+[src/types/aliases.ts:18](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L18)
 
 ___
 
@@ -957,7 +957,7 @@ Get channel
 
 #### Defined in
 
-[src/types/channels.ts:102](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L102)
+[src/types/channels.ts:102](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L102)
 
 ___
 
@@ -967,7 +967,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:109](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L109)
+[src/types/channels.ts:109](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L109)
 
 ___
 
@@ -977,7 +977,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:78](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L78)
+[src/types/channels.ts:78](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L78)
 
 ___
 
@@ -987,7 +987,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:58](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L58)
+[src/types/channels.ts:58](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L58)
 
 ___
 
@@ -997,7 +997,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:61](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L61)
+[src/types/node.ts:61](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L61)
 
 ___
 
@@ -1009,7 +1009,7 @@ Get Info
 
 #### Defined in
 
-[src/types/node.ts:37](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L37)
+[src/types/node.ts:37](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L37)
 
 ___
 
@@ -1021,7 +1021,7 @@ Get peer info
 
 #### Defined in
 
-[src/types/peerInfo.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/peerInfo.ts#L8)
+[src/types/peerInfo.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/peerInfo.ts#L8)
 
 ___
 
@@ -1031,7 +1031,7 @@ ___
 
 #### Defined in
 
-[src/types/peerInfo.ts:14](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/peerInfo.ts#L14)
+[src/types/peerInfo.ts:14](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/peerInfo.ts#L14)
 
 ___
 
@@ -1043,7 +1043,7 @@ Get peers
 
 #### Defined in
 
-[src/types/node.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L8)
+[src/types/node.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L8)
 
 ___
 
@@ -1053,7 +1053,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:26](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L26)
+[src/types/node.ts:26](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L26)
 
 ___
 
@@ -1065,7 +1065,7 @@ Get settings
 
 #### Defined in
 
-[src/types/settings.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/settings.ts#L8)
+[src/types/settings.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/settings.ts#L8)
 
 ___
 
@@ -1077,7 +1077,7 @@ Get statistics
 
 #### Defined in
 
-[src/types/tickets.ts:7](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tickets.ts#L7)
+[src/types/tickets.ts:7](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tickets.ts#L7)
 
 ___
 
@@ -1089,7 +1089,7 @@ Get tickets
 
 #### Defined in
 
-[src/types/tickets.ts:26](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tickets.ts#L26)
+[src/types/tickets.ts:26](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tickets.ts#L26)
 
 ___
 
@@ -1101,7 +1101,7 @@ getToken
 
 #### Defined in
 
-[src/types/tokens.ts:87](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L87)
+[src/types/tokens.ts:87](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L87)
 
 ___
 
@@ -1113,7 +1113,7 @@ Open channel
 
 #### Defined in
 
-[src/types/channels.ts:34](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L34)
+[src/types/channels.ts:34](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L34)
 
 ___
 
@@ -1123,7 +1123,7 @@ ___
 
 #### Defined in
 
-[src/types/channels.ts:41](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L41)
+[src/types/channels.ts:41](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L41)
 
 ___
 
@@ -1133,7 +1133,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:14](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L14)
+[src/types/node.ts:14](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L14)
 
 ___
 
@@ -1145,7 +1145,7 @@ General types
 
 #### Defined in
 
-[src/types/channels.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L8)
+[src/types/channels.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L8)
 
 ___
 
@@ -1157,7 +1157,7 @@ Ping node
 
 #### Defined in
 
-[src/types/node.ts:69](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L69)
+[src/types/node.ts:69](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L69)
 
 ___
 
@@ -1167,7 +1167,7 @@ ___
 
 #### Defined in
 
-[src/types/node.ts:75](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/node.ts#L75)
+[src/types/node.ts:75](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/node.ts#L75)
 
 ___
 
@@ -1179,7 +1179,7 @@ sendMessage
 
 #### Defined in
 
-[src/types/messages.ts:22](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/messages.ts#L22)
+[src/types/messages.ts:22](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/messages.ts#L22)
 
 ___
 
@@ -1191,7 +1191,7 @@ setAlias
 
 #### Defined in
 
-[src/types/aliases.ts:26](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/aliases.ts#L26)
+[src/types/aliases.ts:26](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/aliases.ts#L26)
 
 ___
 
@@ -1203,7 +1203,7 @@ Set Setting
 
 #### Defined in
 
-[src/types/settings.ts:19](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/settings.ts#L19)
+[src/types/settings.ts:19](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/settings.ts#L19)
 
 ___
 
@@ -1215,7 +1215,7 @@ sign
 
 #### Defined in
 
-[src/types/messages.ts:8](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/messages.ts#L8)
+[src/types/messages.ts:8](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/messages.ts#L8)
 
 ___
 
@@ -1225,7 +1225,7 @@ ___
 
 #### Defined in
 
-[src/types/messages.ts:14](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/messages.ts#L14)
+[src/types/messages.ts:14](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/messages.ts#L14)
 
 ___
 
@@ -1237,7 +1237,7 @@ Get tickets
 
 #### Defined in
 
-[src/types/channels.ts:67](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/channels.ts#L67)
+[src/types/channels.ts:67](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/channels.ts#L67)
 
 ___
 
@@ -1247,7 +1247,7 @@ ___
 
 #### Defined in
 
-[src/types/tokens.ts:54](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/tokens.ts#L54)
+[src/types/tokens.ts:54](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/tokens.ts#L54)
 
 ___
 
@@ -1259,7 +1259,7 @@ withdraw
 
 #### Defined in
 
-[src/types/account.ts:19](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/account.ts#L19)
+[src/types/account.ts:19](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/account.ts#L19)
 
 ___
 
@@ -1269,4 +1269,4 @@ ___
 
 #### Defined in
 
-[src/types/account.ts:27](https://github.com/hoprnet/hopr-sdk/blob/main/src/types/account.ts#L27)
+[src/types/account.ts:27](https://github.com/hoprnet/hopr-sdk/blob/4a3297e/src/types/account.ts#L27)
