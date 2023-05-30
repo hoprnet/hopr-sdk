@@ -3,3 +3,4 @@ export * from './error';
 export * from './headers';
 export * from './fetchWithTimeout';
 export * from './functions';
+export * from './deferredPromise';
