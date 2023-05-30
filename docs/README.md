@@ -2,33 +2,29 @@
 
 ## Description
 
----
-
-The `hopr-sdk` package is a software development kit for interacting with [HOPRd's Rest API functions](https://docs.hoprnet.org/developers/rest-api).
-It provides a set of functions that allow developers to interact with the HOPR protocol and perform various actions such as account management, address retrieval, balance retrieval, and withdrawal operations.
+The `hopr-sdk` packagshelle is a software development kit for interacting with [HOPRd's Rest API functions](https://docs.hoprnet.org/developers/rest-api).
+It provides a set of functions that allow developers to interact with the HOPR protocol and perform various actions such as node and account management, messaging, address retrieval, balance retrieval, and withdrawal and other operations.
 
 ## Installation
-
----
 
 To install the HOPR-SDK package, follow these steps:
 
 1. Make sure you have [node.js](https://nodejs.org) >=16 installed on your machine.
 2. Open your terminal or command prompt.
 3. Navigate to your project directory.
-4. Run the following command to install the package using npm or yarn:
+4. Run the following command to install the package using:
 
 ```shell
 npm install @hoprnet/hopr-sdk
 ```
+
+or
 
 ```shell
 yarn add @hoprnet/hopr-sdk
 ```
 
 ## Usage
-
----
 
 You can use the HOPR-SDK in two different ways:
 
@@ -60,11 +56,11 @@ const addresses = await sdk.api.account.getAddresses();
 console.log(addresses);
 ```
 
-#### HOPR api functions
+#### HOPR API functions
 
-By calling directly the rest api functions.
+By calling directly the rest API functions.
 
-1. Import the api object from the package:
+1. Import the API object from the package:
 
 ```ts
 import { api } from '@hoprnet/hopr-sdk';
