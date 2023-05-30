@@ -28,20 +28,20 @@ yarn add @hoprnet/hopr-sdk
 
 You can use the HOPR-SDK in two different ways:
 
-#### HoprSdk class
+#### HoprSDK class
 
-By creating a new instance of the HoprSdk class.
+By creating a new instance of the HoprSDK class.
 
-1. Import the HoprSdk class from the package:
+1. Import the HoprSDK class from the package:
 
 ```ts
-import { HoprSdk } from '@hoprnet/hopr-sdk';
+import { HoprSDK } from '@hoprnet/hopr-sdk';
 ```
 
-2. Create an instance of the HoprSdk class by providing the required parameters:
+2. Create an instance of the HoprSDK class by providing the required parameters:
 
 ```ts
-const sdk = new HoprSdk({
+const sdk = new HoprSDK({
   apiEndpoint: 'http://localhost:3001', // Replace with your HOPR API endopoint.
   apiToken: 'your-api-token', // Replace with your API token
   timeout: 5000 // Optional timeout in milliseconds (defaults to 30000)
