@@ -1,13 +1,13 @@
-# hopr-sdk
+# @hoprnet/hopr-sdk
 
 ## Description
 
-The `hopr-sdk` packagshelle is a software development kit for interacting with [HOPRd's Rest API functions](https://docs.hoprnet.org/developers/rest-api).
+The `@hoprnet/hopr-sdk` package is a software development kit for interacting with [HOPRd's Rest API functions](https://docs.hoprnet.org/developers/rest-api).
 It provides a set of functions that allow developers to interact with the HOPR protocol and perform various actions such as node and account management, messaging, address retrieval, balance retrieval, and withdrawal and other operations.
 
 ## Installation
 
-To install the HOPR-SDK package, follow these steps:
+To install the `@hoprnet/hopr-sdk` package, follow these steps:
 
 1. Make sure you have [node.js](https://nodejs.org) >=16 installed on your machine.
 2. Open your terminal or command prompt.
@@ -26,29 +26,29 @@ yarn add @hoprnet/hopr-sdk
 
 ## Usage
 
-You can use the HOPR-SDK in two different ways:
+You can use the `@hoprnet/hopr-sdk` in two different ways:
 
-#### HoprSdk class
+#### HoprSDK class
 
-By creating a new instance of the HoprSdk class.
+By creating a new instance of the HoprSDK class.
 
-1. Import the HoprSdk class from the package:
+1. Import the HoprSDK class from the package:
 
 ```ts
-import { HoprSdk } from '@hoprnet/hopr-sdk';
+import { HoprSDK } from '@hoprnet/hopr-sdk';
 ```
 
-2. Create an instance of the HoprSdk class by providing the required parameters:
+2. Create an instance of the HoprSDK class by providing the required parameters:
 
 ```ts
-const sdk = new HoprSdk({
+const sdk = new HoprSDK({
   apiEndpoint: 'http://localhost:3001', // Replace with your HOPR API endopoint.
   apiToken: 'your-api-token', // Replace with your API token
   timeout: 5000 // Optional timeout in milliseconds (defaults to 30000)
 });
 ```
 
-3. You can now use the SDK instance to access the available functions. For example, to get the HOPR and native addresses associated with the node:
+3. You can now use the `sdk` instance to access the available functions. For example, to get the HOPR and native addresses associated with the node:
 
 ```ts
 const addresses = await sdk.api.account.getAddresses();
@@ -85,8 +85,10 @@ console.log(addresses);
 ```
 
 ## Documentation
+
 ---
-- [HoprSdk Class](/docs/classes/HoprSdk.md)
+
+- [HoprSDK Class](/docs/classes/HoprSDK.md)
 - [API functions](/docs/modules/api.md)
 - [Utils](/docs/modules/utils.md)
 - [Type Aliases and Variables](/docs/modules.md)

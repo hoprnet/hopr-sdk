@@ -1,5 +1,5 @@
 import { ApiAdapter } from './api/adapter';
-export class HoprSdk {
+export class HoprSDK {
   public api: ApiAdapter;
   constructor({
     apiEndpoint,
