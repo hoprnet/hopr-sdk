@@ -1,14 +1,17 @@
-import { HoprSdk as SDK } from '../sdk';
+import { HoprSDK as SDK } from '../sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
   process.env;
 
-const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiKey: HOPRD_API_TOKEN! });
+const sdk = new SDK({
+  apiEndpoint: HOPRD_API_ENDPOINT_1!,
+  apiToken: HOPRD_API_TOKEN!
+});
 const { peerInfo } = sdk.api;
 
 const sdk2 = new SDK({
-  url: HOPRD_API_ENDPOINT_2!,
-  apiKey: HOPRD_API_TOKEN!
+  apiEndpoint: HOPRD_API_ENDPOINT_2!,
+  apiToken: HOPRD_API_TOKEN!
 });
 
 describe('peerInfo E2E Tests', function () {

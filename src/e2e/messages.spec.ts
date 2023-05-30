@@ -1,10 +1,13 @@
-import { HoprSdk as SDK } from '../sdk';
+import { HoprSDK as SDK } from '../sdk';
 import { decode } from 'rlp';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
   process.env;
 
-const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiKey: HOPRD_API_TOKEN! });
+const sdk = new SDK({
+  apiEndpoint: HOPRD_API_ENDPOINT_1!,
+  apiToken: HOPRD_API_TOKEN!
+});
 const { messages } = sdk.api;
 
 const decodeMessage = (msg: string) => {
@@ -25,8 +28,8 @@ describe('Messages E2E Tests', function () {
   // Before starting each tests, we need to instantiate the ws on another node
   beforeEach(async () => {
     const sdk2 = new SDK({
-      url: HOPRD_API_ENDPOINT_2!,
-      apiKey: HOPRD_API_TOKEN!
+      apiEndpoint: HOPRD_API_ENDPOINT_2!,
+      apiToken: HOPRD_API_TOKEN!
     });
     node2Address = (await sdk2.api.account.getHoprAddress()) as string;
     wsSdk = (await sdk2.api.messages.websocket()) as unknown as WebSocket;

@@ -1,9 +1,12 @@
-import { HoprSdk as SDK } from '../sdk';
+import { HoprSDK as SDK } from '../sdk';
 import { api } from '..';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1 } = process.env;
 
-const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiKey: HOPRD_API_TOKEN! });
+const sdk = new SDK({
+  apiEndpoint: HOPRD_API_ENDPOINT_1!,
+  apiToken: HOPRD_API_TOKEN!
+});
 const { tokens } = sdk.api;
 
 describe('Tokens E2E Tests', function () {
@@ -37,7 +40,7 @@ describe('Tokens E2E Tests', function () {
 
   test('should get the full token information', async function () {
     const tokenInfo = await api.getToken({
-      url: HOPRD_API_ENDPOINT_1!,
+      apiEndpoint: HOPRD_API_ENDPOINT_1!,
       apiKey: newToken
     });
 

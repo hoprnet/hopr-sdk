@@ -1,9 +1,12 @@
-import { HoprSdk as SDK } from '../sdk';
+import { HoprSDK as SDK } from '../sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1 } = process.env;
 let nativeAddress: string;
 
-const sdk = new SDK({ url: HOPRD_API_ENDPOINT_1!, apiKey: HOPRD_API_TOKEN! });
+const sdk = new SDK({
+  apiEndpoint: HOPRD_API_ENDPOINT_1!,
+  apiToken: HOPRD_API_TOKEN!
+});
 const { account } = sdk.api;
 describe('Account E2E tests', function () {
   it('receives the hopr and native node address', async function () {
