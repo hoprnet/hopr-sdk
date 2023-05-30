@@ -41,7 +41,7 @@ describe('Tokens E2E Tests', function () {
   test('should get the full token information', async function () {
     const tokenInfo = await api.getToken({
       apiEndpoint: HOPRD_API_ENDPOINT_1!,
-      apiKey: newToken
+      apiToken: newToken
     });
 
     expect(tokenInfo).toStrictEqual({

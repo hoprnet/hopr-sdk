@@ -1,6 +1,5 @@
 import { HoprSDK as SDK } from '../sdk';
-import { decode } from 'rlp';
-
+import { decodeMessage } from '../utils';
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
   process.env;
 
@@ -9,16 +8,6 @@ const sdk = new SDK({
   apiToken: HOPRD_API_TOKEN!
 });
 const { messages } = sdk.api;
-
-const decodeMessage = (msg: string) => {
-  console.log('WB: decodeMessage');
-  let uint8Array = new Uint8Array(JSON.parse(`[${msg}]`));
-  let decodedArray = decode(uint8Array);
-  if (decodedArray[0] instanceof Uint8Array) {
-    return new TextDecoder().decode(decodedArray[0]);
-  }
-  throw Error(`Could not decode received message: ${msg}`);
-};
 
 const MESSAGE = 'Some message.';
 
