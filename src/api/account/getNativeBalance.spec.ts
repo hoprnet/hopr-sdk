@@ -2,8 +2,8 @@ import nock from 'nock';
 import { getNativeBalance } from './getNativeBalance';
 import { APIError } from '../../utils';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 
 describe('getNativeBalance', () => {
   afterEach(() => {
@@ -16,9 +16,12 @@ describe('getNativeBalance', () => {
       hopr: '1000000000'
     };
 
-    nock(API_URL).get('/api/v2/account/balances').reply(200, response);
+    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, response);
 
-    const result = await getNativeBalance({ url: API_URL, apiKey: API_KEY });
+    const result = await getNativeBalance({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN
+    });
     expect(result).toEqual(response.native);
   });
 
@@ -28,10 +31,10 @@ describe('getNativeBalance', () => {
       error: 'authentication failed'
     };
 
-    nock(API_URL).get('/api/v2/account/balances').reply(401, response);
+    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(401, response);
 
     await expect(
-      getNativeBalance({ url: API_URL, apiKey: API_KEY })
+      getNativeBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
   });
 
@@ -41,10 +44,10 @@ describe('getNativeBalance', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_URL).get('/api/v2/account/balances').reply(403, response);
+    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(403, response);
 
     await expect(
-      getNativeBalance({ url: API_URL, apiKey: API_KEY })
+      getNativeBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
   });
 
@@ -54,10 +57,10 @@ describe('getNativeBalance', () => {
       error: 'Full error message.'
     };
 
-    nock(API_URL).get('/api/v2/account/balances').reply(422, response);
+    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(422, response);
 
     await expect(
-      getNativeBalance({ url: API_URL, apiKey: API_KEY })
+      getNativeBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
   });
 });

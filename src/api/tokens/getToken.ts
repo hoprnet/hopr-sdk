@@ -9,8 +9,8 @@ import {
 /**
  * Get the full token information for the token used in authentication.
  *
- * @param url - The URL of the API endpoint.
- * @param apiKey - The API key to be used for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to be used for authentication.
  * @returns A Promise that resolves to an object with the token info.
  * @throws An error that occurred while processing the request.
  */
@@ -18,10 +18,10 @@ export const getToken = async (
   payload: BasePayloadType
 ): Promise<GetTokenResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/token`,
+    `${payload.apiEndpoint}/api/v2/token`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

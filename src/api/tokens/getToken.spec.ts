@@ -2,9 +2,9 @@ import nock from 'nock';
 import { getToken } from './getToken';
 import { APIError } from '../../utils';
 
-// Set up global constants for URL and API key
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+// Set up global constants for apiEndpoint and apiToken
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 
 describe('getToken', () => {
   afterEach(() => {
@@ -30,11 +30,11 @@ describe('getToken', () => {
       ]
     };
 
-    nock(API_URL).get('/api/v2/token').reply(200, expectedResponse);
+    nock(API_ENDPOINT).get('/api/v2/token').reply(200, expectedResponse);
 
-    expect(await getToken({ apiKey: API_KEY, url: API_URL })).toEqual(
-      expectedResponse
-    );
+    expect(
+      await getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).toEqual(expectedResponse);
   });
 
   it('should return 401 if authentication failed', async function () {
@@ -43,10 +43,10 @@ describe('getToken', () => {
       error: 'authentication failed'
     };
 
-    nock(API_URL).get('/api/v2/token').reply(401, mockResponse);
+    nock(API_ENDPOINT).get('/api/v2/token').reply(401, mockResponse);
 
     await expect(
-      getToken({ url: API_URL, apiKey: 'invalid token' })
+      getToken({ apiEndpoint: API_ENDPOINT, apiToken: 'invalid token' })
     ).rejects.toThrow(APIError);
   });
 
@@ -56,18 +56,18 @@ describe('getToken', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_URL).get('/api/v2/token').reply(403, mockResponse);
+    nock(API_ENDPOINT).get('/api/v2/token').reply(403, mockResponse);
 
-    await expect(getToken({ apiKey: API_KEY, url: API_URL })).rejects.toThrow(
-      APIError
-    );
+    await expect(
+      getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(APIError);
   });
 
   it('should return 404 if resource not found', async function () {
-    nock(API_URL).get('/api/v2/token').reply(404);
+    nock(API_ENDPOINT).get('/api/v2/token').reply(404);
 
-    await expect(getToken({ apiKey: API_KEY, url: API_URL })).rejects.toThrow(
-      APIError
-    );
+    await expect(
+      getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(APIError);
   });
 });

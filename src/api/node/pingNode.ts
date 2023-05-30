@@ -15,10 +15,10 @@ export const pingNode = async (
   };
 
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/node/ping`,
+    `${payload.apiEndpoint}/api/v2/node/ping`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiKey),
+      headers: getHeaders(payload.apiToken),
       body: JSON.stringify(body)
     },
     payload.timeout

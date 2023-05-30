@@ -4,8 +4,8 @@ import { getAddresses } from './getAddresses';
 /**
  * Get the native address of the node.
  *
- * @param url - The URL of the API endpoint.
- * @param apiKey - The API key to be used for authentication.
+ * @param apiEndpoint - The API endpoint
+ * @param apiToken - The API token to be used for authentication.
  * @returns A Promise that resolves to the native address.
  * @throws An error that occurred while processing the request.
  */
@@ -14,8 +14,8 @@ export const getNativeAddress = async (
 ): Promise<string> => {
   try {
     const addresses = await getAddresses({
-      url: payload.url,
-      apiKey: payload.apiKey,
+      apiEndpoint: payload.apiEndpoint,
+      apiToken: payload.apiToken,
       timeout: payload.timeout
     });
     return addresses.native;

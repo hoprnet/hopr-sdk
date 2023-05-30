@@ -10,10 +10,10 @@ export const getChannel = async (
   payload: GetChannelPayloadType
 ): Promise<GetChannelResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/channels/${payload.peerId}/${payload.direction}`,
+    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/${payload.direction}`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

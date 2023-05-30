@@ -6,34 +6,35 @@ import { redeemTickets } from './redeemTickets';
 const log = createLogger('tickets');
 
 export class TicketsAdapter {
-  private url: string;
-  private apiKey: string;
+  private apiEndpoint: string;
+  private apiToken: string;
   private timeout: number | undefined;
 
   /**
    * Creates a new instance of the `TicketsAdapter` class.
-   * @param url - The URL of the API server.
-   * @param apiKey - The API key to use for authentication.
+   * @param apiEndpoint - The API endpoint of the API server.
+   * @param apiToken - The API token to use for authentication.
    * @param timeout - optional timeout for all functions
    */
   constructor({
-    url,
-    apiKey
+    apiEndpoint,
+    apiToken,
+    timeout
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.url = url;
-    this.apiKey = apiKey;
-    this.timeout = this.timeout;
+    this.apiEndpoint = apiEndpoint;
+    this.apiToken = apiToken;
+    this.timeout = timeout;
   }
 
   public async getStatistics() {
     try {
       return await getStatistics({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -49,8 +50,8 @@ export class TicketsAdapter {
   public async getTickets() {
     try {
       return await getTickets({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -70,8 +71,8 @@ export class TicketsAdapter {
   public async redeemTickets() {
     try {
       return await redeemTickets({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {

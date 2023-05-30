@@ -22,11 +22,14 @@ export const withdraw = async (
     currency: payload.currency,
     recipient: payload.recipient
   };
-  const rawResponse = await fetch(`${payload.url}/api/v2/account/withdraw`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiKey),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetch(
+    `${payload.apiEndpoint}/api/v2/account/withdraw`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken),
+      body: JSON.stringify(body)
+    }
+  );
 
   const jsonResponse = await rawResponse.json();
   const parsedRes = WithdrawResponse.safeParse(jsonResponse);

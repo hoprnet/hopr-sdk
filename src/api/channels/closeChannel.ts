@@ -8,7 +8,7 @@ import {
 import { APIError, getHeaders } from '../../utils';
 
 /**
- * Closes a HOPR channel given a payload that specifies the URL of the HOPR node, the peerId and the direction of the channel.
+ * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId and the direction of the channel.
  *
  * This operation may take more than 5 minutes to complete as it involves on-chain operations.
  *
@@ -19,10 +19,10 @@ export const closeChannel = async (
   payload: CloseChannelPayloadType
 ): Promise<CloseChannelResponseType> => {
   const rawResponse = await fetch(
-    `${payload.url}/api/v2/channels/${payload.peerId}/${payload.direction}`,
+    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/${payload.direction}`,
     {
       method: 'DELETE',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     }
   );
 

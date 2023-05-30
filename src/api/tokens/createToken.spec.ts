@@ -6,12 +6,12 @@ import type {
 } from '../../types';
 import nock from 'nock';
 
-// Set up global constants for URL and API key
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+// Set up global constants for apiEndpoint and apiToken
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 const body: CreateTokenPayloadType = {
-  url: API_URL,
-  apiKey: API_KEY,
+  apiEndpoint: API_ENDPOINT,
+  apiToken: API_TOKEN,
   description: 'my test token',
   lifetime: 360,
   capabilities: [
@@ -39,7 +39,7 @@ describe('createToken function', () => {
       token: 'my-test-token'
     };
 
-    nock(API_URL).post('/api/v2/tokens').reply(201, expectedResponse);
+    nock(API_ENDPOINT).post('/api/v2/tokens').reply(201, expectedResponse);
 
     const response = await createToken({ ...body });
     expect(response).toEqual(expectedResponse);
@@ -52,8 +52,8 @@ describe('createToken function', () => {
     const mockResponse = { status: expectedStatus };
     const invalidBody: CreateTokenPayloadType = {
       description: 'my test token',
-      apiKey: API_KEY,
-      url: API_URL,
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
       lifetime: -500,
       capabilities: [
         {
@@ -70,7 +70,7 @@ describe('createToken function', () => {
       ]
     };
 
-    nock(API_URL).post('/api/v2/tokens').reply(400, mockResponse);
+    nock(API_ENDPOINT).post('/api/v2/tokens').reply(400, mockResponse);
 
     await expect(createToken({ ...invalidBody })).rejects.toThrow(APIError);
   });
@@ -79,7 +79,7 @@ describe('createToken function', () => {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
     const mockResponse = { status: expectedStatus };
 
-    nock(API_URL).post('/api/v2/tokens').reply(422, mockResponse);
+    nock(API_ENDPOINT).post('/api/v2/tokens').reply(422, mockResponse);
 
     await expect(createToken({ ...body })).rejects.toThrow(APIError);
   });
