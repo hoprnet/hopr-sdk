@@ -5,6 +5,8 @@
 ### Classes
 
 - [APIError](../classes/utils.APIError.md)
+- [DeferredPromise](../classes/utils.DeferredPromise.md)
+- [WebsocketHelper](../classes/utils.WebsocketHelper.md)
 
 ### Functions
 
@@ -39,7 +41,7 @@ Creates a a custom logger
 
 #### Defined in
 
-[src/utils/log.ts:15](https://github.com/hoprnet/hopr-sdk/blob/main/src/utils/log.ts#L15)
+[src/utils/log.ts:15](https://github.com/hoprnet/hopr-sdk/blob/80a74a6/src/utils/log.ts#L15)
 
 ___
 
@@ -63,7 +65,7 @@ a string representing the decoded message
 
 #### Defined in
 
-[src/utils/functions.ts:9](https://github.com/hoprnet/hopr-sdk/blob/main/src/utils/functions.ts#L9)
+[src/utils/functions.ts:9](https://github.com/hoprnet/hopr-sdk/blob/80a74a6/src/utils/functions.ts#L9)
 
 ___
 
@@ -85,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/utils/fetchWithTimeout.ts:4](https://github.com/hoprnet/hopr-sdk/blob/main/src/utils/fetchWithTimeout.ts#L4)
+[src/utils/fetchWithTimeout.ts:4](https://github.com/hoprnet/hopr-sdk/blob/80a74a6/src/utils/fetchWithTimeout.ts#L4)
 
 ___
 
@@ -109,4 +111,4 @@ The headers for making API requests.
 
 #### Defined in
 
-[src/utils/headers.ts:9](https://github.com/hoprnet/hopr-sdk/blob/main/src/utils/headers.ts#L9)
+[src/utils/headers.ts:9](https://github.com/hoprnet/hopr-sdk/blob/80a74a6/src/utils/headers.ts#L9)

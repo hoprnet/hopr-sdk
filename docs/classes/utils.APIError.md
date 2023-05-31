@@ -48,7 +48,7 @@ Error.constructor
 
 #### Defined in
 
-[src/utils/error.ts:7](https://github.com/hoprnet/hopr-sdk/blob/main/src/utils/error.ts#L7)
+[src/utils/error.ts:7](https://github.com/hoprnet/hopr-sdk/blob/80a74a6/src/utils/error.ts#L7)
 
 ## Properties
 
@@ -58,7 +58,7 @@ Error.constructor
 
 #### Defined in
 
-[src/utils/error.ts:5](https://github.com/hoprnet/hopr-sdk/blob/main/src/utils/error.ts#L5)
+[src/utils/error.ts:5](https://github.com/hoprnet/hopr-sdk/blob/80a74a6/src/utils/error.ts#L5)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/utils/error.ts:4](https://github.com/hoprnet/hopr-sdk/blob/main/src/utils/error.ts#L4)
+[src/utils/error.ts:4](https://github.com/hoprnet/hopr-sdk/blob/80a74a6/src/utils/error.ts#L4)
 
 ___
 
