@@ -1,5 +1,5 @@
 import { WebSocket, ErrorEvent, MessageEvent } from 'isomorphic-ws';
-import { DeferredPromise, createLogger, decodeMessage } from './utils';
+import { DeferredPromise, createLogger, decodeMessage } from './';
 
 const log = createLogger('websocket');
 const HEARTBEAT_ERROR_MSG = 'heartbeat was not received';
