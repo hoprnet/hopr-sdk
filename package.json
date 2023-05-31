@@ -33,7 +33,7 @@
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
     "test": "jest",
-    "docs": "typedoc --plugin typedoc-plugin-markdown --hideBreadcrumbs true --plugin typedoc-plugin-zod",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-zod --hideBreadcrumbs --gitRevision main",
     "publish": "tsup & npm publish"
   },
   "devDependencies": {
