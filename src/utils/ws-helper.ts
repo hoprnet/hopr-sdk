@@ -93,6 +93,11 @@ class WebsocketHelper {
     this.waitUntilSocketOpenP.reject(errorMessage);
   }
 
+  private isRunningOnBrowser() {
+    // browser does not have `.on` function
+    return !this.socket['on'];
+  }
+
   /**
    * Updates the heartbeat timeout.
    */
@@ -101,7 +106,9 @@ class WebsocketHelper {
     this.pingTimeout = setTimeout(() => {
       log.error('did not receive heartbeat');
       // can be undefined in browsers
-      this.socket?.emit?.('error', new Error(HEARTBEAT_ERROR_MSG));
+      if (!this.isRunningOnBrowser()) {
+        this.socket.emit('error', new Error(HEARTBEAT_ERROR_MSG));
+      }
     }, this.maxTimeWithoutPing);
   }
 
@@ -118,6 +125,9 @@ class WebsocketHelper {
     };
 
     this.socket.onopen = () => {
+      if (!this.isRunningOnBrowser()) {
+        this.heartbeat();
+      }
       this.reconnectAttempts = 0;
       this.waitUntilSocketOpenP.resolve(this.socket);
       this.options?.onOpen?.();
@@ -128,9 +138,12 @@ class WebsocketHelper {
     };
 
     // can be undefined in browsers
-    this.socket?.on?.('ping', () => {
-      this.heartbeat();
-    });
+    if (!this.isRunningOnBrowser()) {
+      this.socket.on('ping', () => {
+        // restart heartbeat
+        this.heartbeat();
+      });
+    }
   }
 
   /**
