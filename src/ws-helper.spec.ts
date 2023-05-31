@@ -176,4 +176,16 @@ describe('test ws class', function () {
 
     connection = new WebsocketHelper({ url, onOpen: onOpenSpy });
   });
+  it('should trigger onClose event', (done) => {
+    let connection: WebsocketHelper;
+    const onCloseSpy = jest.fn(() => {
+      // on close listener works
+      done();
+    });
+
+    connection = new WebsocketHelper({ url, onClose: onCloseSpy });
+    connection.waitUntilSocketOpen().then(() => {
+      connection.close();
+    });
+  });
 });

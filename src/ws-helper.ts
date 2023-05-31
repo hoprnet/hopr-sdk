@@ -33,7 +33,7 @@ class WebsocketHelper {
   private reconnectDelay: number; // how many ms to wait before attempting to reconnect
   private maxReconnectAttempts: number; // maximum number of reconnect attempts
   // resolved when a connection is open
-  // rejects once it has failed connecting (including reconnect attemps)
+  // rejects once it has failed connecting (including reconnect attempts)
   private waitUntilSocketOpenP: DeferredPromise<WebSocket>;
 
   constructor(private options: WebSocketHelperOptions) {
@@ -70,6 +70,7 @@ class WebsocketHelper {
     clearTimeout(this.pingTimeout);
     clearTimeout(this.reconnectTimeout);
     this.socket.close();
+    this.options?.onClose?.();
   }
 
   /**
