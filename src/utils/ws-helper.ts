@@ -1,4 +1,4 @@
-import { WebSocket, ErrorEvent, MessageEvent } from 'isomorphic-ws';
+import WebSocket from 'isomorphic-ws';
 import { DeferredPromise, createLogger, decodeMessage } from './';
 
 const log = createLogger('websocket');
@@ -100,7 +100,8 @@ class WebsocketHelper {
     clearTimeout(this.pingTimeout);
     this.pingTimeout = setTimeout(() => {
       log.error('did not receive heartbeat');
-      this.socket.emit('error', new Error(HEARTBEAT_ERROR_MSG));
+      // can be undefined in browsers
+      this.socket?.emit?.('error', new Error(HEARTBEAT_ERROR_MSG));
     }, this.maxTimeWithoutPing);
   }
 
@@ -117,7 +118,6 @@ class WebsocketHelper {
     };
 
     this.socket.onopen = () => {
-      this.heartbeat();
       this.reconnectAttempts = 0;
       this.waitUntilSocketOpenP.resolve(this.socket);
       this.options?.onOpen?.();
@@ -127,7 +127,8 @@ class WebsocketHelper {
       this.connectionIsClosing = false;
     };
 
-    this.socket.on('ping', () => {
+    // can be undefined in browsers
+    this.socket?.on?.('ping', () => {
       this.heartbeat();
     });
   }
@@ -136,7 +137,7 @@ class WebsocketHelper {
    * Handles an incoming message from the WebSocket server.
    * @param event - The message event.
    */
-  private handleMessage(event: MessageEvent): void {
+  private handleMessage(event: WebSocket.MessageEvent): void {
     const body = event.data.toString();
 
     // message received is an acknowledgement of a
@@ -161,7 +162,7 @@ class WebsocketHelper {
    * @param error - The error that occurred.
    * @returns True if a reconnection attempt should be made; false otherwise.
    */
-  private shouldAttemptReconnect(error: ErrorEvent): boolean {
+  private shouldAttemptReconnect(error: WebSocket.ErrorEvent): boolean {
     return (
       error.message === HEARTBEAT_ERROR_MSG ||
       (this.attemptToReconnect &&
@@ -169,7 +170,7 @@ class WebsocketHelper {
     );
   }
 
-  private async handleError(error: ErrorEvent): Promise<void> {
+  private async handleError(error: WebSocket.ErrorEvent): Promise<void> {
     log.error('WebSocket error:', error.message);
 
     // Close existing WebSocket
