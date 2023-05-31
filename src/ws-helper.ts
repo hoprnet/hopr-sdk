@@ -1,7 +1,5 @@
-import { createLogger } from './log';
-import { decodeMessage } from './functions';
 import { WebSocket, ErrorEvent, MessageEvent } from 'isomorphic-ws';
-import { DeferredPromise } from './deferredPromise';
+import { DeferredPromise, createLogger, decodeMessage } from './utils';
 
 const log = createLogger('websocket');
 const HEARTBEAT_ERROR_MSG = 'heartbeat was not received';
@@ -17,14 +15,13 @@ type WebSocketHelperOptions = {
   maxReconnectAttempts?: number;
   onOpen?: () => void;
   onClose?: () => void;
-  onError?: (error: Error) => void;
   onMessage?: (data: string) => void;
 };
 
 /**
  * Helper class for managing a WebSocket connection.
  */
-class WebSocketHelper {
+class WebsocketHelper {
   private url: string;
   private connectionIsClosing: boolean = false; // whether the connection is in the process of closing
   private reconnectAttempts: number = 0; // current reconnect attempts, gets reset
@@ -55,23 +52,14 @@ class WebSocketHelper {
    * Reject if we didn't.
    * @returns the websocket instance
    */
-  public async waitUntilSocketOpen(): Promise<WebSocket> {
-    return new Promise<WebSocket>((resolve, reject) => {
-      // if its already open
-      if (this.socket.readyState === this.socket.OPEN) {
-        this.waitUntilSocketOpenP.resolve(this.socket);
-      }
-      // wait for it to open
-      else {
-        this.socket.onopen = () => {
-          log.debug('Listening for incoming messages from HOPRd', this.url);
-          this.reconnectAttempts = 0;
-          this.waitUntilSocketOpenP.resolve(this.socket);
-        };
-      }
 
-      return this.waitUntilSocketOpenP.promise.then(resolve).catch(reject);
-    });
+  public async waitUntilSocketOpen(): Promise<WebSocket> {
+    // if its already open
+    if (this.socket.readyState === this.socket.OPEN) {
+      this.waitUntilSocketOpenP.resolve(this.socket);
+    }
+
+    return this.waitUntilSocketOpenP.promise;
   }
 
   /**
@@ -100,7 +88,6 @@ class WebSocketHelper {
    */
   private closeWithError(errorMessage: string): void {
     log.error(errorMessage);
-    this.options?.onError?.(new Error(errorMessage));
     this.closeInternal();
     this.waitUntilSocketOpenP.reject(errorMessage);
   }
@@ -130,6 +117,9 @@ class WebSocketHelper {
 
     this.socket.onopen = () => {
       this.heartbeat();
+      this.reconnectAttempts = 0;
+      this.waitUntilSocketOpenP.resolve(this.socket);
+      this.options?.onOpen?.();
     };
 
     this.socket.onclose = () => {
@@ -223,4 +213,4 @@ class WebSocketHelper {
   }
 }
 
-export default WebSocketHelper;
+export default WebsocketHelper;
