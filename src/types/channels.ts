@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BasePayload, ZodToType } from './general';
+import { BasePayload } from './general';
 
 /**
  * General types
@@ -9,7 +9,7 @@ export const PeerIdPayload = BasePayload.extend({
   peerId: z.string()
 });
 
-export type PeerIdPayloadType = ZodToType<typeof PeerIdPayload>;
+export type PeerIdPayloadType = z.infer<typeof PeerIdPayload>;
 
 /**
  * Fund channel
@@ -21,13 +21,13 @@ export const FundChannelsPayload = BasePayload.extend({
   incomingAmount: z.string()
 });
 
-export type FundChannelsPayloadType = ZodToType<typeof FundChannelsPayload>;
+export type FundChannelsPayloadType = z.infer<typeof FundChannelsPayload>;
 
 export const FundChannelsResponse = z.object({
   receipt: z.string()
 });
 
-export type FundChannelsResponseType = ZodToType<typeof FundChannelsResponse>;
+export type FundChannelsResponseType = z.infer<typeof FundChannelsResponse>;
 
 /** Open channel */
 
@@ -36,14 +36,14 @@ export const OpenChannelPayload = BasePayload.extend({
   amount: z.string()
 });
 
-export type OpenChannelPayloadType = ZodToType<typeof OpenChannelPayload>;
+export type OpenChannelPayloadType = z.infer<typeof OpenChannelPayload>;
 
 export const OpenChannelResponse = z.object({
   channelId: z.string(),
   receipt: z.string()
 });
 
-export type OpenChannelResponseType = ZodToType<typeof OpenChannelResponse>;
+export type OpenChannelResponseType = z.infer<typeof OpenChannelResponse>;
 
 /** Get channels */
 
@@ -60,7 +60,7 @@ export const GetChannelsResponse = z.object({
   outgoing: z.array(Channel)
 });
 
-export type GetChannelsResponseType = ZodToType<typeof GetChannelsResponse>;
+export type GetChannelsResponseType = z.infer<typeof GetChannelsResponse>;
 
 /** Get tickets */
 
@@ -77,7 +77,7 @@ export const Ticket = z.object({
 
 export const GetChannelTicketsResponse = z.array(Ticket);
 
-export type GetChannelTicketsResponseType = ZodToType<
+export type GetChannelTicketsResponseType = z.infer<
   typeof GetChannelTicketsResponse
 >;
 
@@ -88,14 +88,14 @@ export const CloseChannelPayload = BasePayload.extend({
   direction: z.enum(['incoming', 'outgoing'])
 });
 
-export type CloseChannelPayloadType = ZodToType<typeof CloseChannelPayload>;
+export type CloseChannelPayloadType = z.infer<typeof CloseChannelPayload>;
 
 export const CloseChannelResponse = z.object({
   receipt: z.string().optional(),
   channelStatus: z.string()
 });
 
-export type CloseChannelResponseType = ZodToType<typeof CloseChannelResponse>;
+export type CloseChannelResponseType = z.infer<typeof CloseChannelResponse>;
 
 /** Get channel */
 
@@ -104,8 +104,8 @@ export const GetChannelPayload = BasePayload.extend({
   direction: z.enum(['incoming', 'outgoing'])
 });
 
-export type GetChannelPayloadType = ZodToType<typeof GetChannelPayload>;
+export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;
 
 export const GetChannelResponse = Channel;
 
-export type GetChannelResponseType = ZodToType<typeof GetChannelResponse>;
+export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
