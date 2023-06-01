@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths-ignore:
       - "docs/**"
+  # This should be deleted after testing on PR is done.
   pull_request:
     types: [opened, synchronize]
 
