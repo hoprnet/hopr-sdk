@@ -46,9 +46,9 @@ jobs:
       - name: Run tests and coverage
         run: yarn test --ci
 
-      - name: Create docs
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        run: yarn docs  
+  #    - name: Create docs
+  #      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+  #      run: yarn docs  
 
   # Run publish if pr title includes [RELEASE]
   publish:
