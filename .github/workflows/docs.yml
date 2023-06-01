@@ -1,0 +1,48 @@
+name: Generate Docs
+env:
+  HOPR_GITHUB_REF: ${{ github.ref }}
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  # find the branch name for 'pull_request' or on 'push' events
+  group: ${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  docs:
+    name: Check linting
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: "yarn"
+          cache-dependency-path: ./yarn.lock
+          registry-url: "https://registry.npmjs.org/"
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Configure Git info
+        run: ./.github/scripts/config-git-info.sh
+
+      - name: Create docs
+        run: yarn docs
+
+      - name: Commit docs changes
+        # only commit changes when not running via act and when on final branches
+        if: ${{ !env.ACT }}
+        run: ./.github/scripts/commit-and-push-all-changes.sh
+        env:
+          HOPR_GIT_MSG: "Re-generate API docs for packages"
