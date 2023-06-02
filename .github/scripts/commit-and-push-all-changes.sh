@@ -13,13 +13,15 @@ test -z "${HOPR_GITHUB_REF:-}" && (
     exit 1
 )
 
-# only do work when there are actual changes
-if [ -n "$(git status --porcelain)" ]; then
-    git add .
+# Check if there are changes in the docs/ directory from docs generated steps before
+if [ -n "$(git diff --name-only -- docs/)" ]; then
+    git add docs/*
     git commit -m "${HOPR_GIT_MSG}"
+
+    # must get the latest version of the branch from origin before pushing
+    git pull origin docs --rebase --strategy-option recursive -X ours # NB! when pull rebasing, ours is the incoming change (see https://stackoverflow.com/a/3443225)
+
+    git push origin docs # Push changes to the 'docs' branch
+else
+    echo "No changes found in the docs/ directory. Skipping commit and push."
 fi
-
-# must get the latest version of the branch from origin before pushing
-git pull origin docs --rebase --strategy-option recursive -X ours # NB! when pull rebasing, ours is the incoming change (see https://stackoverflow.com/a/3443225)
-
-git push origin HEAD:"refs/heads/docs" # Push changes to the 'docs' branch
