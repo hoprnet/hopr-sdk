@@ -10,8 +10,8 @@ on:
     types: [opened, synchronize]
 
 concurrency:
-  # group runs by <name of job>-<branch name>
-  group: ${{ github.job }}-${{ github.ref }}
+  # group runs by <name of the workflow>-<name of job>-<branch name>
+  group: ${{ github.workflow }}-${{ github.job }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
