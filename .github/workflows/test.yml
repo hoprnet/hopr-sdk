@@ -9,8 +9,8 @@ on:
     types: [opened, synchronize]
 
 concurrency:
-  # find the branch name for 'pull_request' or on 'push' events
-  group: ${{ github.head_ref || github.ref_name }}
+  # group runs by <name of job>-<branch name>
+  group: ${{ github.job }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
