@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   docs:
-    name: Check linting
+    name: Generate Docs & Push
     timeout-minutes: 2
     runs-on: ubuntu-latest
 
