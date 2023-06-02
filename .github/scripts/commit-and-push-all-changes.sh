@@ -22,4 +22,4 @@ fi
 # must get the latest version of the branch from origin before pushing
 git pull origin "${HOPR_GITHUB_REF}" --rebase --strategy-option recursive -X ours # NB! when pull rebasing, ours is the incoming change (see https://stackoverflow.com/a/3443225)
 
-git push origin "${HOPR_GITHUB_REF}"
+git push origin docs
