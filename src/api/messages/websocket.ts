@@ -20,7 +20,6 @@ export const websocket = (payload: BasePayloadType): WebSocket => {
   return new WebSocket(endpointUrl);
 };
 
-
 /**
  *
  * @param apiEndpoint - The API endpoint to extract the ip and port

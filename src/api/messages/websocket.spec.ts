@@ -34,7 +34,11 @@ describe('websocket', function () {
 
   it('builds the apiEndpoint to create the websocket', function () {
     expect(
-      getWsUrl({apiEndpoint: API_ENDPOINT, path: '/api/v2/messages/websocket/', apiToken: API_TOKEN})
+      getWsUrl({
+        apiEndpoint: API_ENDPOINT,
+        path: '/api/v2/messages/websocket/',
+        apiToken: API_TOKEN
+      })
     ).toBe(
       'ws://localhost:1234/api/v2/messages/websocket/?apiToken=S3CR3T-T0K3N'
     );

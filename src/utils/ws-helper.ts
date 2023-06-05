@@ -47,7 +47,9 @@ class WebsocketHelper {
     this.maxReconnectAttempts = options?.maxReconnectAttempts ?? 3;
     this.apiEndpoint = this.options.apiEndpoint;
     this.apiToken = this.options.apiToken;
-    this.socket = new WebSocket(getWsUrl({apiEndpoint: this.apiEndpoint, apiToken: this.apiToken}));
+    this.socket = new WebSocket(
+      getWsUrl({ apiEndpoint: this.apiEndpoint, apiToken: this.apiToken })
+    );
     this.setUpEventHandlers();
   }
 
@@ -217,7 +219,9 @@ class WebsocketHelper {
     await this.wait(this.reconnectDelay);
 
     // Reconnect: open new WebSocket
-    this.socket = new WebSocket(getWsUrl({apiEndpoint: this.apiEndpoint, apiToken: this.apiToken}));
+    this.socket = new WebSocket(
+      getWsUrl({ apiEndpoint: this.apiEndpoint, apiToken: this.apiToken })
+    );
 
     // Set up event handlers again
     this.setUpEventHandlers();
