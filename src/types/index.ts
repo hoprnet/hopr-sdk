@@ -8,4 +8,5 @@ export * from './messages';
 export * from './tokens';
 export * from './account';
 export * from './peerInfo';
+export * from './websocket';
 export * from './settings';

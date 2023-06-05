@@ -1,5 +1,6 @@
 import WebSocket from 'isomorphic-ws';
 import { DeferredPromise, createLogger, decodeMessage } from './';
+import { getWsUrl } from '../api';
 
 const log = createLogger('websocket');
 const HEARTBEAT_ERROR_MSG = 'heartbeat was not received';
@@ -8,7 +9,8 @@ const HEARTBEAT_ERROR_MSG = 'heartbeat was not received';
  * Options that can be provided when creating a WebSocketHelper.
  */
 type WebSocketHelperOptions = {
-  url: string;
+  apiEndpoint: string;
+  apiToken: string;
   maxTimeWithoutPing?: number;
   attemptToReconnect?: boolean;
   reconnectDelay?: number;
@@ -22,7 +24,8 @@ type WebSocketHelperOptions = {
  * Helper class for managing a WebSocket connection.
  */
 class WebsocketHelper {
-  private url: string;
+  private apiEndpoint: string;
+  private apiToken: string;
   private connectionIsClosing: boolean = false; // whether the connection is in the process of closing
   private reconnectAttempts: number = 0; // current reconnect attempts, gets reset
   private socket: WebSocket; // the socket, gets re-initialized on reconnection
@@ -42,8 +45,9 @@ class WebsocketHelper {
     this.attemptToReconnect = options?.attemptToReconnect ?? true;
     this.reconnectDelay = options?.reconnectDelay ?? 100;
     this.maxReconnectAttempts = options?.maxReconnectAttempts ?? 3;
-    this.url = this.options.url;
-    this.socket = new WebSocket(this.url);
+    this.apiEndpoint = this.options.apiEndpoint;
+    this.apiToken = this.options.apiToken;
+    this.socket = new WebSocket(getWsUrl({apiEndpoint: this.apiEndpoint, apiToken: this.apiToken}));
     this.setUpEventHandlers();
   }
 
