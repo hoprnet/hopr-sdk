@@ -13,9 +13,9 @@ export const pingNode = async (
   const body: RemoveBasicAuthenticationPayloadType<PingNodePayloadType> = {
     peerId: payload.peerId
   };
-
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/node/ping`,
+    `${apiEndpointParsed}api/v2/node/ping`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
