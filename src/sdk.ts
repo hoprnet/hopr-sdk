@@ -150,9 +150,9 @@ export class HoprSDK {
       BigInt(amount) * BigInt(peerIds.length);
 
     const nodeHasEnoughHoprBalance =
-      BigInt(balance?.hopr ?? 0) > sumOfHoprBalanceExpectedInFunds;
+      BigInt(balance?.hopr ?? 0) >= sumOfHoprBalanceExpectedInFunds;
     const nodeHasEnoughNativeBalance =
-      BigInt(balance?.native ?? 0) >
+      BigInt(balance?.native ?? 0) >=
       MINIMUM_GNOSIS_GAS * BigInt(peerIds.length);
 
     if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
