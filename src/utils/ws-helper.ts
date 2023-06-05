@@ -217,7 +217,7 @@ class WebsocketHelper {
     await this.wait(this.reconnectDelay);
 
     // Reconnect: open new WebSocket
-    this.socket = new WebSocket(this.url);
+    this.socket = new WebSocket(getWsUrl({apiEndpoint: this.apiEndpoint, apiToken: this.apiToken}));
 
     // Set up event handlers again
     this.setUpEventHandlers();
