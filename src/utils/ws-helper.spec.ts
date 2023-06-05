@@ -36,7 +36,11 @@ describe('test ws class', function () {
       });
     });
 
-    connection = new WebsocketHelper({ apiEndpoint, apiToken, onMessage: onMessageSpy });
+    connection = new WebsocketHelper({
+      apiEndpoint,
+      apiToken,
+      onMessage: onMessageSpy
+    });
     connection.waitUntilSocketOpen().then((conn) => {
       conn.send('i am connected');
     });
@@ -167,7 +171,11 @@ describe('test ws class', function () {
       });
     });
 
-    connection = new WebsocketHelper({ apiEndpoint, apiToken, onMessage: onMessageSpy });
+    connection = new WebsocketHelper({
+      apiEndpoint,
+      apiToken,
+      onMessage: onMessageSpy
+    });
     connection.waitUntilSocketOpen().then((conn) => {
       conn.send('i am connected');
     });
@@ -180,7 +188,11 @@ describe('test ws class', function () {
       done();
     });
 
-    connection = new WebsocketHelper({ apiEndpoint, apiToken, onOpen: onOpenSpy });
+    connection = new WebsocketHelper({
+      apiEndpoint,
+      apiToken,
+      onOpen: onOpenSpy
+    });
   });
   it('should trigger onClose event', (done) => {
     let connection: WebsocketHelper;
@@ -189,7 +201,11 @@ describe('test ws class', function () {
       done();
     });
 
-    connection = new WebsocketHelper({ apiEndpoint, apiToken, onClose: onCloseSpy });
+    connection = new WebsocketHelper({
+      apiEndpoint,
+      apiToken,
+      onClose: onCloseSpy
+    });
     connection.waitUntilSocketOpen().then(() => {
       connection.close();
     });
