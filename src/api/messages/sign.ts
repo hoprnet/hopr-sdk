@@ -19,8 +19,9 @@ export const sign = async (payload: SignPayloadType): Promise<string> => {
   const body: RemoveBasicAuthenticationPayloadType<SignPayloadType> = {
     message: payload.message
   };
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/messages/sign`,
+    `${apiEndpointParsed}api/v2/messages/sign`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

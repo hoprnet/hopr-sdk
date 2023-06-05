@@ -16,8 +16,9 @@ export const fundChannels = async (
     peerId: payload.peerId
   };
 
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/fundmulti`,
+    `${apiEndpointParsed}api/v2/fundmulti`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

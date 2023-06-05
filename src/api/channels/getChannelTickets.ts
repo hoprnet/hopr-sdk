@@ -9,8 +9,9 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getChannelTickets = async (
   payload: PeerIdPayloadType
 ): Promise<GetChannelTicketsResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/tickets`,
+    `${apiEndpointParsed}api/v2/channels/${payload.peerId}/tickets`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

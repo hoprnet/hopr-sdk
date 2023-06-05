@@ -17,8 +17,9 @@ import {
 export const getToken = async (
   payload: BasePayloadType
 ): Promise<GetTokenResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/token`,
+    `${apiEndpointParsed}api/v2/token`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

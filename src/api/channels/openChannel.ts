@@ -24,7 +24,8 @@ export const openChannel = async (
     peerId: payload.peerId
   };
 
-  const rawResponse = await fetch(`${payload.apiEndpoint}/api/v2/channels`, {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const rawResponse = await fetch(`${apiEndpointParsed}api/v2/channels`, {
     method: 'POST',
     headers: getHeaders(payload.apiToken),
     body: JSON.stringify(body)

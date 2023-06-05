@@ -15,8 +15,9 @@ import { APIError, getHeaders } from '../../utils';
 export const redeemChannelTickets = async (
   payload: PeerIdPayloadType
 ): Promise<boolean> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetch(
-    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/tickets/redeem`,
+    `${apiEndpointParsed}api/v2/channels/${payload.peerId}/tickets/redeem`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken)
