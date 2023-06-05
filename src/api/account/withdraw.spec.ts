@@ -2,8 +2,8 @@ import nock from 'nock';
 import { withdraw } from './withdraw';
 import { APIError } from '../../utils';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'S3CR3T-T0K3N';
+const API_ENDPOINT = 'http://localhost:3001';
+const API_TOKEN = 'S3CR3T-T0K3N';
 const CURRENCY = 'NATIVE';
 const AMOUNT = '1337';
 const RECIPIENT = '1.339446426793328e+48';
@@ -16,11 +16,13 @@ describe('withdraw function', () => {
   test('should return receipt when withdraw is successful', async function () {
     const expectedReceipt = '0x123456789abcdef';
     const mockResponse = { receipt: expectedReceipt };
-    nock(API_URL).post('/api/v2/account/withdraw').reply(200, mockResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/account/withdraw')
+      .reply(200, mockResponse);
 
     const actualResult = await withdraw({
-      apiKey: API_KEY,
-      url: API_URL,
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
       currency: CURRENCY,
       amount: AMOUNT,
       recipient: RECIPIENT
@@ -32,12 +34,14 @@ describe('withdraw function', () => {
   test('should return 400 when withdraw fails with incorrect data', async function () {
     const expectedStatus = 'INVALID_CURRENCY | INVALID_AMOUNT';
     const mockResponse = { status: expectedStatus };
-    nock(API_URL).post('/api/v2/account/withdraw').reply(400, mockResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/account/withdraw')
+      .reply(400, mockResponse);
 
     await expect(
       withdraw({
-        apiKey: API_KEY,
-        url: API_URL,
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT
@@ -50,12 +54,14 @@ describe('withdraw function', () => {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
-    nock(API_URL).post('/api/v2/account/withdraw').reply(401, mockResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/account/withdraw')
+      .reply(401, mockResponse);
 
     await expect(
       withdraw({
-        apiKey: API_KEY,
-        url: API_URL,
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT
@@ -68,12 +74,14 @@ describe('withdraw function', () => {
       status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
-    nock(API_URL).post('/api/v2/account/withdraw').reply(403, mockResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/account/withdraw')
+      .reply(403, mockResponse);
 
     await expect(
       withdraw({
-        apiKey: API_KEY,
-        url: API_URL,
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT
@@ -84,12 +92,14 @@ describe('withdraw function', () => {
   test('should return 422 when withdraw amount exceeds current balance', async function () {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
     const mockResponse = { status: expectedStatus };
-    nock(API_URL).post('/api/v2/account/withdraw').reply(422, mockResponse);
+    nock(API_ENDPOINT)
+      .post('/api/v2/account/withdraw')
+      .reply(422, mockResponse);
 
     await expect(
       withdraw({
-        apiKey: API_KEY,
-        url: API_URL,
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
         recipient: RECIPIENT

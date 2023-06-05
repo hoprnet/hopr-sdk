@@ -1,16 +1,40 @@
 {
-  "name": "hopr-sdk",
-  "version": "0.0.1",
+  "name": "@hoprnet/hopr-sdk",
+  "version": "0.0.1-alpha.5",
+  "description": "A SDK for HOPRd's Rest API functions",
+  "author": "HOPR Association",
   "license": "GPL-3.0",
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./types": "./dist/types/index.js",
+    "./api": "./dist/api/index.js",
+    "./utils": "./dist/utils/index.js"
+  },
   "repository": "git@github.com:hoprnet/hopr-sdk.git",
+  "keywords": [
+    "hopr-sdk",
+    "hopr",
+    "hoprd",
+    "adapter",
+    "apiAdapter"
+  ],
+  "bugs": {
+    "url": "https://github.com/hoprnet/hopr-sdk/issues"
+  },
   "scripts": {
     "build": "tsup",
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
-    "test": "jest"
+    "test": "jest",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-zod --hideBreadcrumbs",
+    "publish": "tsup & npm publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.1",
@@ -23,6 +47,9 @@
     "prettier": "^2.8.8",
     "ts-jest": "^29.1.0",
     "tsup": "^6.7.0",
+    "typedoc": "^0.24.7",
+    "typedoc-plugin-markdown": "^3.15.3",
+    "typedoc-plugin-zod": "^1.0.2",
     "typescript": "^5.0.4"
   },
   "engines": {
@@ -32,7 +59,11 @@
   "dependencies": {
     "cross-fetch": "^3.1.5",
     "isomorphic-ws": "^5.0.0",
+    "rlp": "^3.0.0",
     "ws": "^8.13.0",
     "zod": "^3.21.4"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

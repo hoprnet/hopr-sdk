@@ -1,26 +1,26 @@
 import {
   Error,
-  GetTicketsResponse,
-  GetTicketsResponseType,
+  GetChannelTicketsResponse,
+  GetChannelTicketsResponseType,
   type PeerIdPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getChannelTickets = async (
   payload: PeerIdPayloadType
-): Promise<GetTicketsResponseType> => {
+): Promise<GetChannelTicketsResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/channels/${payload.peerId}/tickets`,
+    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/tickets`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
 
   const jsonResponse = await rawResponse.json();
 
-  const parsedRes = GetTicketsResponse.safeParse(jsonResponse);
+  const parsedRes = GetChannelTicketsResponse.safeParse(jsonResponse);
 
   if (parsedRes.success) {
     return parsedRes.data;

@@ -3,10 +3,10 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getVersion = async (payload: BasePayloadType): Promise<string> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/node/version`,
+    `${payload.apiEndpoint}/api/v2/node/version`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

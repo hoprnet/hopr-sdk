@@ -2,11 +2,11 @@ import { BasePayloadType, Error } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
-  const headersForMetrics = getHeaders(payload.apiKey);
+  const headersForMetrics = getHeaders(payload.apiToken);
   headersForMetrics.set('Accept-Content', 'text/plain');
 
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/node/metrics`,
+    `${payload.apiEndpoint}/api/v2/node/metrics`,
     {
       method: 'GET',
       headers: headersForMetrics

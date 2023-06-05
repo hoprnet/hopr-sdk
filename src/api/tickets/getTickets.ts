@@ -10,10 +10,10 @@ export const getTickets = async (
   payload: BasePayloadType
 ): Promise<GetTicketsResponseType> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.url}/api/v2/tickets`,
+    `${payload.apiEndpoint}/api/v2/tickets`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiKey)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

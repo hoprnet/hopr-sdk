@@ -12,7 +12,7 @@ const MINIMUM_GNOSIS_GAS = BigInt(0.01 * ETH_TO_WEI);
 /**
  * Main SDK class that exposes all functionality of the HOPR SDK.
  */
-export class HoprSdk {
+export class HoprSDK {
   public api: ApiAdapter;
 
   /**
@@ -21,15 +21,15 @@ export class HoprSdk {
    * @param apiToken - The API token for the HOPR node.
    */
   constructor({
-    url,
-    apiKey,
+    apiEndpoint,
+    apiToken,
     timeout
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.api = new ApiAdapter({ url, apiKey, timeout });
+    this.api = new ApiAdapter({ apiEndpoint, apiToken, timeout });
   }
 
   /**

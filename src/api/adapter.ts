@@ -1,12 +1,12 @@
 import { AccountAdapter } from './account/adapter';
 import { AliasesAdapter } from './aliases/adapter';
 import { ChannelsAdapter } from './channels/adapter';
-import { MessagesAdapter } from './messages/adapter';
 import { NodeAdapter } from './node/adapter';
 import { PeerInfoAdapter } from './peerInfo/adapter';
 import { SettingsAdapter } from './settings/adapter';
 import { TicketsAdapter } from './tickets/adapter';
 import { TokensAdapter } from './tokens/adapter';
+import { MessagesAdapter } from './messages/adapter';
 export class ApiAdapter {
   public account: AccountAdapter;
   public aliases: AliasesAdapter;
@@ -19,22 +19,22 @@ export class ApiAdapter {
   public messages: MessagesAdapter;
 
   constructor({
-    url,
-    apiKey,
+    apiEndpoint,
+    apiToken,
     timeout
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.account = new AccountAdapter({ url, apiKey, timeout });
-    this.aliases = new AliasesAdapter({ url, apiKey, timeout });
-    this.channels = new ChannelsAdapter({ url, apiKey, timeout });
-    this.node = new NodeAdapter({ url, apiKey, timeout });
-    this.peerInfo = new PeerInfoAdapter({ url, apiKey, timeout });
-    this.settings = new SettingsAdapter({ url, apiKey, timeout });
-    this.tickets = new TicketsAdapter({ url, apiKey, timeout });
-    this.tokens = new TokensAdapter({ url, apiKey, timeout });
-    this.messages = new MessagesAdapter({ url, apiKey, timeout });
+    this.account = new AccountAdapter({ apiEndpoint, apiToken, timeout });
+    this.aliases = new AliasesAdapter({ apiEndpoint, apiToken, timeout });
+    this.channels = new ChannelsAdapter({ apiEndpoint, apiToken, timeout });
+    this.node = new NodeAdapter({ apiEndpoint, apiToken, timeout });
+    this.peerInfo = new PeerInfoAdapter({ apiEndpoint, apiToken, timeout });
+    this.settings = new SettingsAdapter({ apiEndpoint, apiToken, timeout });
+    this.tickets = new TicketsAdapter({ apiEndpoint, apiToken, timeout });
+    this.tokens = new TokensAdapter({ apiEndpoint, apiToken, timeout });
+    this.messages = new MessagesAdapter({ apiEndpoint, apiToken, timeout });
   }
 }

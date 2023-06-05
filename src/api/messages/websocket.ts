@@ -4,22 +4,22 @@ import { BasePayloadType } from '../../types';
 /**
  * Creates a WebSocket instance with the specified IP and API token.
  *
- * @param url - The base URL to connect to.
- * @param apiKey - The API token to use for authentication.
+ * @param apiEndpoint - The base URL to connect to.
+ * @param apiToken - The API token to use for authentication.
  * @returns A WebSocket instance.
  */
 export const websocket = (payload: BasePayloadType): WebSocket => {
   const endpointUrl = getWsUrl(
-    payload.url,
+    payload.apiEndpoint,
     '/api/v2/messages/websocket/',
-    payload.apiKey
+    payload.apiToken
   );
   return new WebSocket(endpointUrl);
 };
 
 /**
  *
- * @param apiEndpoint - The url to extract the ip and port
+ * @param apiEndpoint - The API endpoint to extract the ip and port
  * @returns A string of the complete API endpoint.
  */
 export const getWsUrl = (

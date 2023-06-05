@@ -15,26 +15,27 @@ const log = createLogger('aliases');
  * A class that provides a wrapper around aliases-related API endpoints.
  */
 export class AliasesAdapter {
-  private url: string;
-  private apiKey: string;
+  private apiEndpoint: string;
+  private apiToken: string;
   private timeout: number | undefined;
 
   /**
    * Creates a new instance of the `AliasesAdapter` class.
-   * @param url - The URL of the API server.
-   * @param apiKey - The API key to use for authentication.
+   * @param apiEndpoint - The API endpoint of the API server.
+   * @param apiToken - The API token to use for authentication.
    */
   constructor({
-    url,
-    apiKey
+    apiEndpoint,
+    apiToken,
+    timeout
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.url = url;
-    this.apiKey = apiKey;
-    this.timeout = this.timeout;
+    this.apiEndpoint = apiEndpoint;
+    this.apiToken = apiToken;
+    this.timeout = timeout;
   }
 
   /**
@@ -45,8 +46,8 @@ export class AliasesAdapter {
   public async getAliases(): Promise<Record<string, string> | undefined> {
     try {
       return await getAliases({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -72,8 +73,8 @@ export class AliasesAdapter {
   ): Promise<boolean | undefined> {
     try {
       return await setAlias({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout,
         alias: payload.alias,
         peerId: payload.peerId
@@ -99,8 +100,8 @@ export class AliasesAdapter {
   ): Promise<string | undefined> {
     try {
       return await getAlias({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout,
         alias: payload.alias
       });
@@ -125,8 +126,8 @@ export class AliasesAdapter {
   ): Promise<boolean | undefined> {
     try {
       return await removeAlias({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout,
         alias: payload.alias
       });

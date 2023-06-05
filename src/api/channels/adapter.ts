@@ -18,31 +18,32 @@ import { redeemChannelTickets } from './redeemChannelTickets';
 const log = createLogger('channels');
 
 export class ChannelsAdapter {
-  private url: string;
-  private apiKey: string;
+  private apiEndpoint: string;
+  private apiToken: string;
   private timeout: number | undefined;
 
   /**
    * Creates a new instance of the `ChannelsAdapter` class.
-   * @param url - The URL of the API server.
-   * @param apiKey - The API key to use for authentication.
+   * @param apiEndpoint - The API endpoint of the API server.
+   * @param apiToken - The API token to use for authentication.
    * @param timeout - optional timeout for all functions
    */
   constructor({
-    url,
-    apiKey
+    apiEndpoint,
+    apiToken,
+    timeout
   }: {
-    url: string;
-    apiKey: string;
+    apiEndpoint: string;
+    apiToken: string;
     timeout?: number;
   }) {
-    this.url = url;
-    this.apiKey = apiKey;
-    this.timeout = this.timeout;
+    this.apiEndpoint = apiEndpoint;
+    this.apiToken = apiToken;
+    this.timeout = timeout;
   }
 
   /**
-   * Closes a HOPR channel given a payload that specifies the URL of the HOPR node, the peerId and the direction of the channel.
+   * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId and the direction of the channel.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
   public async closeChannel(
@@ -50,8 +51,8 @@ export class ChannelsAdapter {
   ) {
     try {
       return await closeChannel({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         direction: payload.direction,
         peerId: payload.peerId
@@ -71,8 +72,8 @@ export class ChannelsAdapter {
   ) {
     try {
       return await fundChannels({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         incomingAmount: payload.incomingAmount,
         outgoingAmount: payload.outgoingAmount,
@@ -91,8 +92,8 @@ export class ChannelsAdapter {
   public async getChannels() {
     try {
       return await getChannels({
-        url: this.url,
-        apiKey: this.apiKey,
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
         timeout: this.timeout
       });
     } catch (e) {
@@ -110,8 +111,8 @@ export class ChannelsAdapter {
   ) {
     try {
       return await getChannel({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         direction: payload.direction,
         peerId: payload.peerId
@@ -127,7 +128,7 @@ export class ChannelsAdapter {
   }
 
   /**
-   * Opens a HOPR channel given a payload that specifies the URL of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
+   * Opens a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
   public async openChannel(
@@ -135,8 +136,8 @@ export class ChannelsAdapter {
   ) {
     try {
       return await openChannel({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         amount: payload.amount,
         peerId: payload.peerId
@@ -156,8 +157,8 @@ export class ChannelsAdapter {
   ) {
     try {
       return await getChannelTickets({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         peerId: payload.peerId
       });
@@ -180,8 +181,8 @@ export class ChannelsAdapter {
   ) {
     try {
       return await redeemChannelTickets({
-        apiKey: this.apiKey,
-        url: this.url,
+        apiToken: this.apiToken,
+        apiEndpoint: this.apiEndpoint,
         timeout: this.timeout,
         peerId: payload.peerId
       });
