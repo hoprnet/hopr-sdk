@@ -1,7 +1,7 @@
 import http from 'http';
 import WS from 'isomorphic-ws';
 import { websocket } from './websocket';
-import { createApiUrl } from '../../utils';
+import { createWsUrl } from '../../utils';
 
 describe('websocket', function () {
   const API_ENDPOINT = 'http://localhost:1234';
@@ -35,7 +35,7 @@ describe('websocket', function () {
 
   it('builds the apiEndpoint to create the websocket', function () {
     expect(
-      createApiUrl({
+      createWsUrl({
         apiEndpoint: API_ENDPOINT,
         path: '/api/v2/messages/websocket/',
         apiToken: API_TOKEN

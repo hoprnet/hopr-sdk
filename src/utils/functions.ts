@@ -1,5 +1,5 @@
 import { decode } from 'rlp';
-import { CreateApiUrlType } from '../types';
+import { createWsUrlType } from '../types';
 
 const WS_PATH = '/api/v2/messages/websocket/';
 
@@ -25,7 +25,7 @@ export const decodeMessage = (msg: string): string => {
  * @param path - The API path for websocket endpoing. By default: '/api/v2/messages/websocket/'
  * @returns A string of the complete API endpoint.
  */
-export const createApiUrl = (payload: CreateApiUrlType): string => {
+export const createWsUrl = (payload: createWsUrlType): string => {
   const path = payload.path ? payload.path : WS_PATH;
   const url = new URL(path, payload.apiEndpoint);
   url.protocol = url.protocol === 'https:' ? 'wss' : 'ws';
