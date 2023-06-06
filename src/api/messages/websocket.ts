@@ -1,6 +1,6 @@
 import WebSocket from 'isomorphic-ws';
 import { BasePayloadType } from '../../types';
-import { generateWsUrl } from '../../utils';
+import { createApiUrl } from '../../utils';
 
 /**
  * Creates a WebSocket instance with the specified IP and API token.
@@ -11,7 +11,7 @@ import { generateWsUrl } from '../../utils';
  * @returns A WebSocket instance.
  */
 export const websocket = (payload: BasePayloadType): WebSocket => {
-  const endpointUrl = generateWsUrl({
+  const endpointUrl = createApiUrl({
     apiEndpoint: payload.apiEndpoint,
     apiToken: payload.apiToken
   });
