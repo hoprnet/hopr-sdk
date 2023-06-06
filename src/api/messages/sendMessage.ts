@@ -30,8 +30,9 @@ export const sendMessage = async (
     path: payload.path
   };
 
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/messages`,
+    `${apiEndpointParsed}api/v2/messages`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

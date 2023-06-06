@@ -9,8 +9,9 @@ import {
 export const getPeerInfo = async (
   payload: GetPeerInfoPayloadType
 ): Promise<GetPeerInfoResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/peerInfo/${payload.peerId}`,
+    `${apiEndpointParsed}api/v2/peerInfo/${payload.peerId}`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

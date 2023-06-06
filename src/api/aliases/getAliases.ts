@@ -17,8 +17,9 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getAliases = async (
   payload: BasePayloadType
 ): Promise<GetAliasesResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/aliases`,
+    `${apiEndpointParsed}api/v2/aliases`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

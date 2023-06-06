@@ -11,8 +11,9 @@ import { AliasPayloadType, Error, GetAliasResponse } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/aliases/${payload.alias}`,
+    `${apiEndpointParsed}api/v2/aliases/${payload.alias}`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

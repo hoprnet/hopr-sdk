@@ -14,8 +14,9 @@ import { DeleteTokenPayloadType, Error } from '../../types';
 export const deleteToken = async (
   payload: DeleteTokenPayloadType
 ): Promise<boolean> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/tokens/${payload.id}`,
+    `${apiEndpointParsed}api/v2/tokens/${payload.id}`,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiToken)
