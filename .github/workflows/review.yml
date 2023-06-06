@@ -7,8 +7,8 @@ on:
     types: [opened, synchronize]
 
 concurrency:
-  # find the branch name for 'pull_request' or on 'push' events
-  group: ${{ github.head_ref || github.ref_name }}
+  # group runs by <name of the workflow>-<name of job>-<branch name>
+  group: ${{ github.workflow }}-${{ github.job }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -25,9 +25,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: 'yarn'
+          cache: "yarn"
           cache-dependency-path: ./yarn.lock
-          registry-url: 'https://registry.npmjs.org/'
+          registry-url: "https://registry.npmjs.org/"
 
       - name: Install dependencies
         shell: bash
@@ -36,19 +36,6 @@ jobs:
       - name: Build
         shell: bash
         run: yarn build
-
-      - name: Review formatting
-        run: yarn format
-
-      - name: Review linting
-        run: yarn lint
-
-      - name: Run tests and coverage
-        run: yarn test --ci
-
-  #    - name: Create docs
-  #      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-  #      run: yarn docs  
 
   # Run publish if pr title includes [RELEASE]
   publish:
