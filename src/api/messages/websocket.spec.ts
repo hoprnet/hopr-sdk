@@ -1,7 +1,7 @@
 import http from 'http';
 import WS from 'isomorphic-ws';
 import { websocket } from './websocket';
-import { createApiUrl } from '../../utils'
+import { createApiUrl } from '../../utils';
 
 describe('websocket', function () {
   const API_ENDPOINT = 'http://localhost:1234';
