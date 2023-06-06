@@ -1,10 +1,10 @@
 import z from 'zod';
 
 /**
- * getWsUrl
+ * generateWsUrl
  */
 
-export const GetWsUrlPayload = z.object({
+export const GenerateWsUrlPayload = z.object({
   /**
    * The API endpoint for authentication.
    */
@@ -21,4 +21,4 @@ export const GetWsUrlPayload = z.object({
   path: z.string().optional()
 });
 
-export type GetWsUrlType = z.infer<typeof GetWsUrlPayload>;
+export type GenerateWsUrlType = z.infer<typeof GenerateWsUrlPayload>;
