@@ -11,10 +11,12 @@ const HEARTBEAT_ERROR_MSG = 'heartbeat was not received';
 type WebSocketHelperOptions = {
   apiEndpoint: string;
   apiToken: string;
+  path?: string;
   maxTimeWithoutPing?: number;
   attemptToReconnect?: boolean;
   reconnectDelay?: number;
   maxReconnectAttempts?: number;
+  decodeMessage?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
   onMessage?: (data: string) => void;
@@ -26,6 +28,7 @@ type WebSocketHelperOptions = {
 class WebsocketHelper {
   private apiEndpoint: string;
   private apiToken: string;
+  private path: string | undefined; // the optional path for the WebSocket connection.
   private connectionIsClosing: boolean = false; // whether the connection is in the process of closing
   private reconnectAttempts: number = 0; // current reconnect attempts, gets reset
   private socket: WebSocket; // the socket, gets re-initialized on reconnection
@@ -35,6 +38,7 @@ class WebsocketHelper {
   private attemptToReconnect: boolean; // whether we should attempt to reconnect
   private reconnectDelay: number; // how many ms to wait before attempting to reconnect
   private maxReconnectAttempts: number; // maximum number of reconnect attempts
+  private decodeMessage: boolean; // Whether to decode the received message.
   // resolved when a connection is open
   // rejects once it has failed connecting (including reconnect attempts)
   private waitUntilSocketOpenP: DeferredPromise<WebSocket>;
@@ -45,10 +49,16 @@ class WebsocketHelper {
     this.attemptToReconnect = options?.attemptToReconnect ?? true;
     this.reconnectDelay = options?.reconnectDelay ?? 100;
     this.maxReconnectAttempts = options?.maxReconnectAttempts ?? 3;
-    this.apiEndpoint = this.options.apiEndpoint;
-    this.apiToken = this.options.apiToken;
+    this.apiEndpoint = options.apiEndpoint;
+    this.apiToken = options.apiToken;
+    this.path = options?.path;
+    this.decodeMessage = options?.decodeMessage ?? true;
     this.socket = new WebSocket(
-      createWsUrl({ apiEndpoint: this.apiEndpoint, apiToken: this.apiToken })
+      createWsUrl({
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
+        path: this.path
+      })
     );
     this.setUpEventHandlers();
   }
@@ -158,6 +168,10 @@ class WebsocketHelper {
    */
   private handleMessage(event: WebSocket.MessageEvent): void {
     const body = event.data.toString();
+    if (!this.decodeMessage) {
+      this.options?.onMessage?.(body);
+      return;
+    }
 
     // message received is an acknowledgement of a
     // message we have sent, we can safely ignore this
