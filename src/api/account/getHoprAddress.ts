@@ -1,6 +1,5 @@
-import { getAddresses } from './getAddresses';
-import { APIError } from '../../utils';
 import { BasePayloadType } from '../../types';
+import { getAddresses } from './getAddresses';
 
 /**
  * Get the HOPR address of the node.
@@ -13,14 +12,10 @@ import { BasePayloadType } from '../../types';
 export const getHoprAddress = async (
   payload: BasePayloadType
 ): Promise<string> => {
-  try {
-    const addresses = await getAddresses({
-      apiEndpoint: payload.apiEndpoint,
-      apiToken: payload.apiToken,
-      timeout: payload.timeout
-    });
-    return addresses.hopr;
-  } catch (APIError) {
-    throw APIError;
-  }
+  const addresses = await getAddresses({
+    apiEndpoint: payload.apiEndpoint,
+    apiToken: payload.apiToken,
+    timeout: payload.timeout
+  });
+  return addresses.hopr;
 };
