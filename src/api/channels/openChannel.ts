@@ -1,12 +1,13 @@
 import fetch from 'cross-fetch';
 import {
-  Error,
   OpenChannelResponse,
   OpenChannelResponseType,
   type OpenChannelPayloadType,
-  RemoveBasicAuthenticationPayloadType
+  RemoveBasicAuthenticationPayloadType,
+  APIErrorResponse
 } from '../../types';
 import { APIError, getHeaders } from '../../utils';
+import { ZodError } from 'zod';
 
 /**
  * Opens a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
@@ -35,16 +36,23 @@ export const openChannel = async (
 
   const parsedRes = OpenChannelResponse.safeParse(jsonResponse);
 
+  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  } else if (rawResponse.status > 499) {
-    // server error that was unexpected
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };
