@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch';
-import { BasePayloadType } from '../../../dist';
 import {
   Error,
+  BasePayloadType,
   GetChannelsWithFullTopologyResponse,
   GetChannelsWithFullTopologyResponseType
 } from '../../types';
