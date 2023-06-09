@@ -1,7 +1,8 @@
+import { ZodError } from 'zod';
 import {
-  Error,
-  RemoveBasicAuthenticationPayloadType,
-  SignPayloadType,
+  APIErrorResponse,
+  type RemoveBasicAuthenticationPayloadType,
+  type SignPayloadType,
   SignResponse
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
@@ -32,15 +33,23 @@ export const sign = async (payload: SignPayloadType): Promise<string> => {
   const jsonResponse = await rawResponse.json();
   const parsedRes = SignResponse.safeParse(jsonResponse);
 
-  if (rawResponse.status === 200 && parsedRes.success) {
+  // received expected response
+  if (parsedRes.success) {
     return parsedRes.data.signature;
-  } else if (rawResponse.status > 499) {
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };
