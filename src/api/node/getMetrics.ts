@@ -17,7 +17,7 @@ export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   );
 
   // received expected response
-  if (rawResponse.status === 204) {
+  if (rawResponse.status === 200) {
     return rawResponse.text();
   }
 
