@@ -1,6 +1,7 @@
+import { ZodError } from 'zod';
 import {
+  APIErrorResponse,
   BasePayloadType,
-  Error,
   GetAliasesResponse,
   GetAliasesResponseType
 } from '../../types';
@@ -31,15 +32,23 @@ export const getAliases = async (
 
   const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
 
-  if (parsedRes.success && rawResponse.status === 200) {
-    return parsedRes.data;
-  } else if (rawResponse.status > 499) {
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
+  // we could not parse the response
+  if (!parsedRes.success) {
+    throw new ZodError(parsedRes.error.issues);
   }
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // received expected response
+  return parsedRes.data;
 };
