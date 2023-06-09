@@ -3,8 +3,9 @@ import {
   GetPeerInfoPayloadType,
   GetPeerInfoResponse,
   GetPeerInfoResponseType,
-  Error
+  APIErrorResponse
 } from '../../types';
+import { ZodError } from 'zod';
 
 export const getPeerInfo = async (
   payload: GetPeerInfoPayloadType
@@ -23,16 +24,23 @@ export const getPeerInfo = async (
 
   const parsedRes = GetPeerInfoResponse.safeParse(jsonResponse);
 
+  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  } else if (rawResponse.status > 499) {
-    // server error that was unexpected
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };
