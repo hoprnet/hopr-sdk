@@ -30,17 +30,18 @@ export const sign = async (payload: SignPayloadType): Promise<string> => {
     },
     payload.timeout
   );
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = SignResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
     return parsedRes.data.signature;
-  }
-
-  // received unexpected error from server
-  if (rawResponse.status > 499) {
-    throw new Error(rawResponse.statusText);
   }
 
   // check if response has the structure of an expected api error

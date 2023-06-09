@@ -20,18 +20,17 @@ export const getTickets = async (
     payload.timeout
   );
 
-  const jsonResponse = await rawResponse.json();
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
 
+  const jsonResponse = await rawResponse.json();
   const parsedRes = GetTicketsResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  }
-
-  // received unexpected error from server
-  if (rawResponse.status > 499) {
-    throw new Error(rawResponse.statusText);
   }
 
   // check if response has the structure of an expected api error

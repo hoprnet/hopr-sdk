@@ -42,17 +42,17 @@ export const createToken = async (
     payload.timeout
   );
 
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = CreateTokenResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  }
-
-  // received unexpected error from server
-  if (rawResponse.status > 499) {
-    throw new Error(rawResponse.statusText);
   }
 
   // check if response has the structure of an expected api error

@@ -26,17 +26,17 @@ export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
     payload.timeout
   );
 
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAliasResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
     return parsedRes.data.peerId;
-  }
-
-  // received unexpected error from server
-  if (rawResponse.status > 499) {
-    throw new Error(rawResponse.statusText);
   }
 
   // check if response has the structure of an expected api error
