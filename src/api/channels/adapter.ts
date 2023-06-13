@@ -11,6 +11,7 @@ import { closeChannel } from './closeChannel';
 import { fundChannels } from './fundChannels';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
+import { getChannelsWithFullTopology } from './getChannelsWithFullTopology';
 import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
@@ -92,6 +93,23 @@ export class ChannelsAdapter {
   public async getChannels() {
     try {
       return await getChannels({
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
+        timeout: this.timeout
+      });
+    } catch (e) {
+      if (e instanceof APIError) {
+        const { message, error, status } = e;
+        log.error({ status, error, message });
+      } else {
+        log.error(e);
+      }
+    }
+  }
+
+  public async getChannelsWithFullTopology() {
+    try {
+      return await getChannelsWithFullTopology({
         apiEndpoint: this.apiEndpoint,
         apiToken: this.apiToken,
         timeout: this.timeout
