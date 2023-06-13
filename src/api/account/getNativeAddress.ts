@@ -12,14 +12,10 @@ import { getAddresses } from './getAddresses';
 export const getNativeAddress = async (
   payload: BasePayloadType
 ): Promise<string> => {
-  try {
-    const addresses = await getAddresses({
-      apiEndpoint: payload.apiEndpoint,
-      apiToken: payload.apiToken,
-      timeout: payload.timeout
-    });
-    return addresses.native;
-  } catch (APIError) {
-    throw APIError;
-  }
+  const addresses = await getAddresses({
+    apiEndpoint: payload.apiEndpoint,
+    apiToken: payload.apiToken,
+    timeout: payload.timeout
+  });
+  return addresses.native;
 };

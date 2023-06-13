@@ -1,9 +1,10 @@
+import { ZodError } from 'zod';
 import {
-  CreateTokenPayloadType,
+  type CreateTokenPayloadType,
   CreateTokenResponse,
-  CreateTokenResponseType,
-  Error,
-  RemoveBasicAuthenticationPayloadType
+  type CreateTokenResponseType,
+  type RemoveBasicAuthenticationPayloadType,
+  APIErrorResponse
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
@@ -41,18 +42,26 @@ export const createToken = async (
     payload.timeout
   );
 
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = CreateTokenResponse.safeParse(jsonResponse);
+
+  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  } else if (rawResponse.status > 499) {
-    // server error that was unexpected
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };

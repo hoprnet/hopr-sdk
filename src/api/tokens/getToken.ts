@@ -1,10 +1,11 @@
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import {
+  APIErrorResponse,
   BasePayloadType,
-  Error,
   GetTokenResponse,
   GetTokenResponseType
 } from '../../types';
+import { ZodError } from 'zod';
 
 /**
  * Get the full token information for the token used in authentication.
@@ -31,18 +32,27 @@ export const getToken = async (
     // 404 The specified resource was not found
     throw new APIError({ status: 'RESOURCE WAS NOT FOUND' });
   }
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetTokenResponse.safeParse(jsonResponse);
+
+  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  } else if (rawResponse.status > 499) {
-    // server error that was unexpected
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };

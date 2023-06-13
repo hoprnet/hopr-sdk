@@ -1,3 +1,4 @@
+import { ZodError } from 'zod';
 import { APIError } from '../../utils';
 import { getAddresses } from './getAddresses';
 import nock from 'nock';
@@ -71,5 +72,22 @@ describe('getAddresses', () => {
     await expect(
       getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(APIError);
+  });
+
+  test('should return ZodError if there is a parsing error', async function () {
+    const expectedResponse = {
+      native: '0x123abc'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v2/account/addresses')
+      .reply(200, expectedResponse);
+
+    await expect(
+      getAddresses({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN
+      })
+    ).rejects.toThrow(ZodError);
   });
 });
