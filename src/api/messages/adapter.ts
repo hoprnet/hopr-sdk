@@ -3,7 +3,7 @@ import {
   SendMessagePayloadType,
   SignPayloadType
 } from '../../types';
-import { APIError, createLogger } from '../../utils';
+import { createLogger } from '../../utils';
 import { sendMessage } from './sendMessage';
 import { sign } from './sign';
 import { websocket } from './websocket';
@@ -38,59 +38,32 @@ export class MessagesAdapter {
   public async sendMessage(
     payload: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType>
   ) {
-    try {
-      return await sendMessage({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        body: payload.body,
-        recipient: payload.recipient,
-        hops: payload.hops,
-        path: payload.path
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return sendMessage({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      body: payload.body,
+      recipient: payload.recipient,
+      hops: payload.hops,
+      path: payload.path
+    });
   }
 
   public async sign(
     payload: RemoveBasicAuthenticationPayloadType<SignPayloadType>
   ) {
-    try {
-      return await sign({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        message: payload.message
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return sign({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      message: payload.message
+    });
   }
 
   public async websocket() {
-    try {
-      return await websocket({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return websocket({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint
+    });
   }
 }
