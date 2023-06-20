@@ -21,7 +21,6 @@ import { ZodError } from 'zod';
 export const sendMessage = async (
   payload: SendMessagePayloadType
 ): Promise<string> => {
-
   const body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
     body: payload.body,
     recipient: payload.recipient,
