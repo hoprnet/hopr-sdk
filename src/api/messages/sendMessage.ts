@@ -21,9 +21,6 @@ import { ZodError } from 'zod';
 export const sendMessage = async (
   payload: SendMessagePayloadType
 ): Promise<string> => {
-  if (!payload.path && !payload.hops)
-    throw new Error('No path or number of hops provided.');
-
   const body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
     body: payload.body,
     recipient: payload.recipient,
