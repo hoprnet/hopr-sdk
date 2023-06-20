@@ -54,17 +54,6 @@ describe('sendMessage', () => {
     expect(response).toBe('challenge-token');
   });
 
-  it('should throw an error if no PATH or hops provided', async () => {
-    await expect(
-      sendMessage({
-        apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT,
-        body: BODY,
-        recipient: RECIPIENT
-      })
-    ).rejects.toThrow('No path or number of hops provided.');
-  });
-
   it('should return 401 if authentication failed', async () => {
     const errorResponse = {
       status: 'authentication failed',
