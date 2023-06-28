@@ -1,71 +1,27 @@
 {
-  "name": "@hoprnet/hopr-sdk",
-  "version": "0.0.1-alpha.10",
-  "description": "A SDK for HOPRd's Rest API functions",
-  "author": "HOPR Association",
-  "license": "GPL-3.0",
-  "main": "./dist/index.js",
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    },
-    "./types": "./dist/types/index.js",
-    "./api": "./dist/api/index.js",
-    "./utils": "./dist/utils/index.js"
-  },
-  "repository": "git@github.com:hoprnet/hopr-sdk.git",
+  "name": "",
+  "version": "",
+  "description": "OpenAPI client for ",
+  "author": "OpenAPI-Generator Contributors",
   "keywords": [
-    "hopr-sdk",
-    "hopr",
-    "hoprd",
-    "adapter",
-    "apiAdapter"
+    "axios",
+    "typescript",
+    "openapi-client",
+    "openapi-generator",
+    ""
   ],
-  "bugs": {
-    "url": "https://github.com/hoprnet/hopr-sdk/issues"
-  },
+  "license": "Unlicense",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup",
-    "pack": "tsup && yarn pack",
-    "lint": "tsc",
-    "format": "prettier --check \"src/**/*.{ts,md}\"",
-    "test": "jest",
-    "docs": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-zod --hideBreadcrumbs",
-    "publish": "tsup & npm publish"
+    "build": "tsc --outDir dist/",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "axios": "^0.21.1"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.1",
-    "@types/debug": "^4.1.7",
-    "@types/jest": "^29.5.1",
-    "@types/ws": "^8.5.4",
-    "jest": "^29.5.0",
-    "nock": "^13.3.1",
-    "prettier": "^2.8.8",
-    "ts-jest": "^29.1.0",
-    "tsup": "^6.7.0",
-    "typedoc": "^0.24.7",
-    "typedoc-plugin-markdown": "^3.15.3",
-    "typedoc-plugin-zod": "^1.0.2",
-    "typescript": "^5.0.4"
-  },
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "packageManager": "yarn@1.22.19",
-  "dependencies": {
-    "cross-fetch": "^3.1.5",
-    "isomorphic-ws": "^5.0.0",
-    "rlp": "^3.0.0",
-    "ws": "^8.13.0",
-    "zod": "^3.21.4",
-    "debug": "^4.3.4"
-  },
-  "publishConfig": {
-    "access": "public"
+    "@types/node": "^12.11.5",
+    "typescript": "^3.6.4"
   }
 }
