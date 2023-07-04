@@ -1,15 +1,15 @@
-import { createLogger } from '../../utils';
+import { createLogger } from '../utils';
 import {
   CashOutPayloadType,
   GetOutgoingChannelsPayloadType,
   OpenMultipleChannelsPayloadType
-} from '../../types/flows';
-import { closeChannel, getChannels, openChannel } from '../channels';
-import { SendMessagePayloadType } from '../../types/messages';
-import { sendMessage } from '../messages';
-import { BasePayloadType } from '../../../dist';
-import { getStatistics, redeemTickets } from '../tickets';
-import { getBalances, withdraw } from '../account';
+} from '../types/flows';
+import { closeChannel, getChannels, openChannel } from '../api/channels';
+import { SendMessagePayloadType } from '../types/messages';
+import { sendMessage } from '../api/messages';
+import { BasePayloadType } from '../../dist';
+import { getStatistics, redeemTickets } from '../api/tickets';
+import { getBalances, withdraw } from '../api/account';
 
 const log = createLogger('flows');
 

@@ -5,13 +5,11 @@ import {
   openMultipleChannels,
   safeSendMessage
 } from '.';
-import { sendMessage } from '../messages/sendMessage';
-import { closeChannel } from '../channels/closeChannel';
-import { redeemTickets } from '../tickets/redeemTickets';
-import { withdraw } from '../account/withdraw';
-import { openChannel } from '../channels/openChannel';
-
-import { MessagesAdapter } from '../messages/adapter';
+import { sendMessage } from '../api/messages/sendMessage';
+import { closeChannel } from '../api/channels/closeChannel';
+import { redeemTickets } from '../api/tickets/redeemTickets';
+import { withdraw } from '../api/account/withdraw';
+import { openChannel } from '../api/channels/openChannel';
 // Set up global constants for URL and API key
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -47,11 +45,8 @@ describe('test HoprdSdk class', function () {
       expect(sendMessageSpy.mock.calls.length).toEqual(0);
     });
     it('should send message', async function () {
-      const sendMessageSpy = jest.spyOn(
-        MessagesAdapter.prototype,
-        'sendMessage'
-      );
-      // const sendMessageSpy = jest.spyOn(sendMessageWrapper, 'sendMessage');
+      const sendMessageWrapper = { sendMessage };
+      const sendMessageSpy = jest.spyOn(sendMessageWrapper, 'sendMessage');
       // mock hoprd node channels
       nock(API_ENDPOINT)
         .get('/api/v2/channels')
