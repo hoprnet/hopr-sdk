@@ -165,13 +165,14 @@ export class HoprSDK {
 
     if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
       log.debug(
-          `Node does not have enough HOPR balance to fund channels it needs: ${ethers.utils.formatEther(
-            sumOfHoprBalanceExpectedInFunds
-          )}, and has: ${ethers.utils.formatEther(hoprBalanceBN
-          )} or does not have enough NATIVE balance, to open Channels it needs: ${ethers.utils.formatEther(
-            sumOfNativeBalanceExpectedInFunds
-          )}, and has: ${ethers.utils.formatEther(nativeBalanceBN)}`
-        );
+        `Node does not have enough HOPR balance to fund channels it needs: ${ethers.utils.formatEther(
+          sumOfHoprBalanceExpectedInFunds
+        )}, and has: ${ethers.utils.formatEther(
+          hoprBalanceBN
+        )} or does not have enough NATIVE balance, to open Channels it needs: ${ethers.utils.formatEther(
+          sumOfNativeBalanceExpectedInFunds
+        )}, and has: ${ethers.utils.formatEther(nativeBalanceBN)}`
+      );
 
       return;
     }
@@ -179,7 +180,10 @@ export class HoprSDK {
     // Open channels for each peerId and gather the promises
     const openChannelPromises = peerIds.map(async (peerId) => {
       try {
-        const {receipt, channelId} = await this.api.channels.openChannel({ peerId, amount });
+        const { receipt, channelId } = await this.api.channels.openChannel({
+          peerId,
+          amount
+        });
         return { peerId, receipt: receipt, channelId };
       } catch (error) {
         return { peerId, receipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
