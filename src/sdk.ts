@@ -5,12 +5,6 @@ import { createLogger } from './utils';
 
 const log = createLogger('HoprSdk');
 
-// const ETH_TO_WEI = 10e18;
-
-// minimum amount of balance needed to do a transaction on gnosis chain
-// const MINIMUM_GNOSIS_GAS = BigInt(0.01 * ETH_TO_WEI);
-// const MINIMUM_GNOSIS_GAS = ethers.utils.parseUnits('1', 'wei').mul(0.01);
-// console.log(MINIMUM_GNOSIS_GAS.toString())
 const MINIMUM_GNOSIS_GAS = ethers.utils.parseUnits('0.01', 18);
 
 /**
@@ -148,55 +142,37 @@ export class HoprSDK {
     peerIds: string[];
     amount: string;
   }) {
+    const amountBN = ethers.BigNumber.from(amount);
     // check if node has enough funds
     const balance = await this.api.account.getBalances();
-    console.log(
-      `Balance: HOPR: ${ethers.utils.formatEther(
-        balance.hopr
-      )} | NATIVE: ${ethers.utils.formatEther(balance.native)}`
-    );
-    const sumOfHoprBalanceExpectedInFunds = ethers.utils
-      .parseEther(amount)
-      .mul(peerIds.length);
-    console.log(
-      'hopr balance needed:',
-      ethers.utils.formatEther(sumOfHoprBalanceExpectedInFunds)
-    );
+    // Convert the balance.hopr and balance.native to BigNumber
+    const hoprBalanceBN = ethers.BigNumber.from(balance.hopr);
+    const nativeBalanceBN = ethers.BigNumber.from(balance.native);
 
-    const nodeHasEnoughHoprBalance = ethers.utils
-      .parseEther(balance.hopr)
-      .gte(sumOfHoprBalanceExpectedInFunds);
-    console.log('node has enough hopr balance:', nodeHasEnoughHoprBalance);
+    const sumOfHoprBalanceExpectedInFunds = amountBN.mul(peerIds.length);
+
+    const nodeHasEnoughHoprBalance = hoprBalanceBN.gte(
+      sumOfHoprBalanceExpectedInFunds
+    );
 
     const sumOfNativeBalanceExpectedInFunds = MINIMUM_GNOSIS_GAS.mul(
       peerIds.length
     );
-    console.log(
-      'native balance needed:',
-      ethers.utils.formatEther(sumOfNativeBalanceExpectedInFunds)
-    );
 
-    const nodeHasEnoughNativeBalance = ethers.utils
-      .parseEther(balance.native)
-      .gte(MINIMUM_GNOSIS_GAS.mul(peerIds.length));
-    console.log('node has enough native balance:', nodeHasEnoughNativeBalance);
+    const nodeHasEnoughNativeBalance = nativeBalanceBN.gte(
+      sumOfNativeBalanceExpectedInFunds
+    );
 
     if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
       log.debug(
-        `node does not have enough balance to fund channels it needs: ${ethers.utils.formatEther(
-          sumOfHoprBalanceExpectedInFunds.toString()
-        )}, and has:${ethers.utils.formatEther(balance.native)}`
-      );
+          `Node does not have enough HOPR balance to fund channels it needs: ${ethers.utils.formatEther(
+            sumOfHoprBalanceExpectedInFunds
+          )}, and has: ${ethers.utils.formatEther(hoprBalanceBN
+          )} or does not have enough NATIVE balance, to open Channels it needs: ${ethers.utils.formatEther(
+            sumOfNativeBalanceExpectedInFunds
+          )}, and has: ${ethers.utils.formatEther(nativeBalanceBN)}`
+        );
 
-      console.log(
-        `Node does not have enough HOPR balance to fund channels it needs: ${ethers.utils.formatEther(
-          sumOfHoprBalanceExpectedInFunds.toString()
-        )}, and has:${ethers.utils.formatEther(
-          balance.hopr
-        )} or does not have enough NATIVE balance, to open Channels it needs: ${ethers.utils.formatEther(
-          sumOfNativeBalanceExpectedInFunds.toString()
-        )}, and has:${ethers.utils.formatEther(balance.native)}`
-      );
       return;
     }
 
@@ -227,20 +203,3 @@ export class HoprSDK {
     return receipts;
   }
 }
-
-const sdk = new HoprSDK({
-  apiEndpoint: 'http://5.75.152.180:3001',
-  apiToken: 'Lu1s-3dm4nu3l!',
-  timeout: 60e3 * 7
-});
-const peersIds = [
-  '16Uiu2HAmDr5LAGejtLAQuikF9RRkxVr8JWMCMUsZPXHGjt95179y',
-  '16Uiu2HAmHFt6LU7f2V5UFU2F4dLdxiKdoePyftVKnRVFb7gBWeJL'
-];
-const amount = '0.01';
-const parsedOutgoing = parseFloat(amount ?? '0') >= 0 ? amount ?? '0' : '0';
-const weiValue = ethers.utils.parseEther(parsedOutgoing).toString();
-sdk
-  .openMultipleChannels({ peerIds: peersIds, amount: weiValue })
-  .then(console.log)
-  .catch((e) => console.log(e));
