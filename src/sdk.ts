@@ -1,13 +1,17 @@
+import { ethers } from 'ethers';
 import { ApiAdapter } from './api/adapter';
 import { GetChannelResponseType } from './types';
 import { createLogger } from './utils';
 
 const log = createLogger('HoprSdk');
 
-const ETH_TO_WEI = 10e18;
+// const ETH_TO_WEI = 10e18;
 
 // minimum amount of balance needed to do a transaction on gnosis chain
-const MINIMUM_GNOSIS_GAS = BigInt(0.01 * ETH_TO_WEI);
+// const MINIMUM_GNOSIS_GAS = BigInt(0.01 * ETH_TO_WEI);
+// const MINIMUM_GNOSIS_GAS = ethers.utils.parseUnits('1', 'wei').mul(0.01);
+// console.log(MINIMUM_GNOSIS_GAS.toString())
+const MINIMUM_GNOSIS_GAS = ethers.utils.parseUnits('0.01', 18);
 
 /**
  * Main SDK class that exposes all functionality of the HOPR SDK.
@@ -146,40 +150,97 @@ export class HoprSDK {
   }) {
     // check if node has enough funds
     const balance = await this.api.account.getBalances();
-    const sumOfHoprBalanceExpectedInFunds =
-      BigInt(amount) * BigInt(peerIds.length);
+    console.log(
+      `Balance: HOPR: ${ethers.utils.formatEther(
+        balance.hopr
+      )} | NATIVE: ${ethers.utils.formatEther(balance.native)}`
+    );
+    const sumOfHoprBalanceExpectedInFunds = ethers.utils
+      .parseEther(amount)
+      .mul(peerIds.length);
+    console.log(
+      'hopr balance needed:',
+      ethers.utils.formatEther(sumOfHoprBalanceExpectedInFunds)
+    );
 
-    const nodeHasEnoughHoprBalance =
-      BigInt(balance?.hopr ?? 0) >= sumOfHoprBalanceExpectedInFunds;
-    const nodeHasEnoughNativeBalance =
-      BigInt(balance?.native ?? 0) >=
-      MINIMUM_GNOSIS_GAS * BigInt(peerIds.length);
+    const nodeHasEnoughHoprBalance = ethers.utils
+      .parseEther(balance.hopr)
+      .gte(sumOfHoprBalanceExpectedInFunds);
+    console.log('node has enough hopr balance:', nodeHasEnoughHoprBalance);
+
+    const sumOfNativeBalanceExpectedInFunds = MINIMUM_GNOSIS_GAS.mul(
+      peerIds.length
+    );
+    console.log(
+      'native balance needed:',
+      ethers.utils.formatEther(sumOfNativeBalanceExpectedInFunds)
+    );
+
+    const nodeHasEnoughNativeBalance = ethers.utils
+      .parseEther(balance.native)
+      .gte(MINIMUM_GNOSIS_GAS.mul(peerIds.length));
+    console.log('node has enough native balance:', nodeHasEnoughNativeBalance);
 
     if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
       log.debug(
-        `node does not have enough balance to fund channels it needs: ${
-          balance?.native
-        }, and has:${sumOfHoprBalanceExpectedInFunds.toString()}`
+        `node does not have enough balance to fund channels it needs: ${ethers.utils.formatEther(
+          sumOfHoprBalanceExpectedInFunds.toString()
+        )}, and has:${ethers.utils.formatEther(balance.native)}`
+      );
+
+      console.log(
+        `Node does not have enough HOPR balance to fund channels it needs: ${ethers.utils.formatEther(
+          sumOfHoprBalanceExpectedInFunds.toString()
+        )}, and has:${ethers.utils.formatEther(
+          balance.hopr
+        )} or does not have enough NATIVE balance, to open Channels it needs: ${ethers.utils.formatEther(
+          sumOfNativeBalanceExpectedInFunds.toString()
+        )}, and has:${ethers.utils.formatEther(balance.native)}`
       );
       return;
     }
 
-    // receipts of open channels keyed by peerId
-    const receipts: {
-      [peerId: string]: {
-        channelId: string;
-        receipt: string;
-      };
-    } = {};
-
-    // open channels for each peerId
-    for (const peerId of peerIds) {
-      const receipt = await this.api.channels.openChannel({ peerId, amount });
-      if (receipt) {
-        receipts[peerId] = receipt;
+    // Open channels for each peerId and gather the promises
+    const openChannelPromises = peerIds.map(async (peerId) => {
+      try {
+        const {receipt, channelId} = await this.api.channels.openChannel({ peerId, amount });
+        return { peerId, receipt: receipt, channelId };
+      } catch (error) {
+        return { peerId, receipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
       }
-    }
+    });
+
+    // Use Promise.allSettled to wait for all the promises to settle
+    const results = await Promise.allSettled(openChannelPromises);
+
+    // Filter out the fulfilled results and return an object with receipts and channelId keyed by peerId
+    const receipts: {
+      [peerId: string]: { channelId: string; receipt: string };
+    } = {};
+    results.forEach((result) => {
+      if (result.status === 'fulfilled' && result.value.receipt) {
+        const { peerId, receipt, channelId } = result.value;
+        receipts[peerId] = { channelId, receipt };
+      }
+    });
 
     return receipts;
   }
 }
+
+const sdk = new HoprSDK({
+  apiEndpoint: 'http://5.75.152.180:3001',
+  apiToken: 'Lu1s-3dm4nu3l!',
+  timeout: 60e3 * 7
+});
+const peersIds = [
+  '16Uiu2HAmDr5LAGejtLAQuikF9RRkxVr8JWMCMUsZPXHGjt95179y',
+  '16Uiu2HAmHFt6LU7f2V5UFU2F4dLdxiKdoePyftVKnRVFb7gBWeJL'
+];
+const amount = '0.01';
+const parsedOutgoing = parseFloat(amount ?? '0') >= 0 ? amount ?? '0' : '0';
+const weiValue = ethers.utils.parseEther(parsedOutgoing).toString();
+sdk
+  .openMultipleChannels({ peerIds: peersIds, amount: weiValue })
+  .then(console.log)
+  .catch((e) => console.log(e));
