@@ -11,7 +11,7 @@ import {
 } from '../types/flows';
 import { SendMessagePayloadType } from '../types/messages';
 
-export class FlowsAdaptor {
+export class FlowsAdapter {
   private apiEndpoint: string;
   private apiToken: string;
   private timeout: number | undefined;

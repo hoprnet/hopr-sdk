@@ -1,6 +1,10 @@
 import { SendMessagePayloadType } from '../types/messages';
 import { sendMessage } from '../api/messages';
 import { getOutgoingChannels } from './getOutgoingChannels';
+import { createLogger } from '../utils';
+
+const log = createLogger('flows', 'safeSendMessage');
+
 /**
  * Safely send a message through the network. Checks if node has at least
  * one open outgoing channel
@@ -19,7 +23,7 @@ export const safeSendMessage = async (
 
   // has at least one outgoing channel
   if (!outgoingChannels?.length) {
-    // log.debug('could not find one outgoing channel that is open');
+    log.debug('could not find one outgoing channel that is open');
     return;
   }
 

@@ -49,15 +49,6 @@ describe('openMultipleChannels', function () {
       receipt:
         '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
     }));
-    // nock(API_ENDPOINT)
-    //   .post('/api/v2/channels')
-    //   .times(peerIds.length)
-    //   .reply(201, {
-    //     channelId:
-    //       '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
-    //     receipt:
-    //       '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
-    //   });
 
     const res = await openMultipleChannels({
       apiEndpoint: API_ENDPOINT,

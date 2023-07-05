@@ -1,6 +1,9 @@
 import { OpenMultipleChannelsPayloadType } from '../types/flows';
 import { openChannel } from '../api/channels';
 import { getBalances, withdraw } from '../api/account';
+import { createLogger } from '../utils';
+
+const log = createLogger('flows', 'openMultipleChannels');
 
 const ETH_TO_WEI = 1e18;
 
@@ -37,17 +40,7 @@ export const openMultipleChannels = async (
     nativeBalanceBN >= sumOfNativeBalanceExpectedInFunds;
 
   if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
-    // log.debug(
-    //   `Node does not have enough HOPR balance to fund channels it needs: ${String(
-    //     sumOfHoprBalanceExpectedInFunds
-    //   )}, and has: ${String(
-    //     hoprBalanceBN
-    //   )} or does not have enough NATIVE balance, to open Channels it needs: ${String(
-    //     sumOfNativeBalanceExpectedInFunds
-    //   )}, and has: ${String(nativeBalanceBN)}`
-    // );
-
-    console.log(
+    log.debug(
       `Node does not have enough HOPR balance to fund channels it needs: ${String(
         sumOfHoprBalanceExpectedInFunds
       )}, and has: ${String(

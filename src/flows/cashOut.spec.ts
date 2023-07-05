@@ -39,10 +39,6 @@ describe('cashOut', function () {
     });
     // mock hoprd node withdraw response
     const expectedReceipt = '0x123456789abcdef';
-    // nock(API_ENDPOINT)
-    //   .post('/api/v2/account/withdraw')
-    //   .times(2)
-    //   .reply(200, { receipt: expectedReceipt });
     (account.withdraw as jest.Mock).mockImplementation(() => expectedReceipt);
 
     const res = await cashOut({
