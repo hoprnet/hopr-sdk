@@ -1,9 +1,11 @@
 import { ApiAdapter } from './api/adapter';
+import { FlowsAdaptor } from './flows/adapter';
 /**
  * Main SDK class that exposes all functionality of the HOPR SDK.
  */
 export class HoprSDK {
   public api: ApiAdapter;
+  public flows: FlowsAdaptor;
 
   /**
    * Creates a new instance of the HOPR SDK.
@@ -20,5 +22,6 @@ export class HoprSDK {
     timeout?: number;
   }) {
     this.api = new ApiAdapter({ apiEndpoint, apiToken, timeout });
+    this.flows = new FlowsAdaptor({ apiEndpoint, apiToken, timeout });
   }
 }
