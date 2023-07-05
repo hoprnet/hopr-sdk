@@ -9,7 +9,7 @@ import {
   GetOutgoingChannelsPayloadType,
   OpenMultipleChannelsPayloadType
 } from '../types/flows';
-import { SendMessagePayloadType } from '../../dist';
+import { SendMessagePayloadType } from '../types/messages';
 
 export class FlowsAdaptor {
   private apiEndpoint: string;

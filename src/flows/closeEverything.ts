@@ -1,5 +1,5 @@
 import { closeChannel } from '../api/channels';
-import { BasePayloadType } from '../../dist';
+import { BasePayloadType } from '../types/general';
 import { getStatistics, redeemTickets } from '../api/tickets';
 import { getOutgoingChannels } from './getOutgoingChannels';
 
