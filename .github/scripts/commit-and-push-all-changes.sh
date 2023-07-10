@@ -17,7 +17,7 @@ test -z "${HOPR_GITHUB_REF:-}" && (
 if [ -n "$(git diff --name-only origin/docs -- docs/)" ]; then
     git add --all docs/
     git commit -m "${HOPR_GIT_MSG}"
-    git status
+    git log --name-status HEAD^..HEAD
 
     # # must get the latest version of the branch from origin before pushing
     # git pull origin docs --rebase --strategy-option recursive -X ours # NB! when pull rebasing, ours is the incoming change (see https://stackoverflow.com/a/3443225)
