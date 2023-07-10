@@ -19,7 +19,7 @@ git diff --name-only origin/docs -- docs/
 if [ -n "$(git diff --name-only origin/docs -- docs/)" ]; then
     git add --all docs/
     git status
-    git diff
+    git diff origin/docs
     # git commit -m "${HOPR_GIT_MSG}"
 
     # # must get the latest version of the branch from origin before pushing
