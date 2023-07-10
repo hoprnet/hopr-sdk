@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { closeEverything, openMultipleChannels } from './index';
+import { openMultipleChannels } from './index';
 import * as channels from '../api/channels';
 
 jest.mock('../api/channels', () => ({
