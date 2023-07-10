@@ -15,7 +15,8 @@ test -z "${HOPR_GITHUB_REF:-}" && (
 
 # Check if there are changes in the docs/ directory from docs generated steps before
 if [ -n "$(git diff --name-only origin/docs -- docs/)" ]; then
-    git add .
+    git add --all docs/
+    git add README.md
     git commit -m "${HOPR_GIT_MSG}"
 
     # must get the latest version of the branch from origin before pushing

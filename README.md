@@ -111,7 +111,7 @@ const res = await flows.openMultipleChannels({
 
 console.log(res);
 ```
-
+test
 ## Documentation
 
 - [HoprSDK Class](https://github.com/hoprnet/hopr-sdk/blob/docs/docs/classes/HoprSDK.md)
