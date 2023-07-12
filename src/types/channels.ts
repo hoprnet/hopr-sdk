@@ -69,13 +69,12 @@ export const Channel = z.object({
   balance: z.string()
 });
 
-
 export const GetChannelsPayload = BasePayload.extend({
   includingClosed: z.boolean().optional(),
-  fullTopology: z.boolean().optional(),
-})
+  fullTopology: z.boolean().optional()
+});
 
-export type GetChannelsPayloadType = z.infer<typeof GetChannelsPayload>
+export type GetChannelsPayloadType = z.infer<typeof GetChannelsPayload>;
 
 export const GetChannelsResponse = z.object({
   incoming: z.array(Channel),
