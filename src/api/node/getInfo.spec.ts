@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
 import { getInfo } from './getInfo';
+import { GetInfoResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -13,7 +14,6 @@ describe('test getInfo', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/node/info`)
       .reply(200, {
-        environment: 'anvil-localhost',
         announcedAddress: [
           '/ip4/128.0.215.32/tcp/9080/p2p/16Uiu2HAm91QFjPepnwjuZWzK5pb5ZS8z8qxQRfKZJNXjkgGNUAit',
           '/p2p/16Uiu2HAmLpqczAGfgmJchVgVk233rmB2T3DSn2gPG6JMa5brEHZ1/p2p-circuit/p2p/16Uiu2HAm91QFjPepnwjuZWzK5pb5ZS8z8qxQRfKZJNXjkgGNUAit',
@@ -24,6 +24,7 @@ describe('test getInfo', function () {
           '/ip4/0.0.0.0/tcp/9080/p2p/16Uiu2HAm91QFjPepnwjuZWzK5pb5ZS8z8qxQRfKZJNXjkgGNUAit'
         ],
         network: 'anvil',
+        chain: '100',
         hoprToken: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
         hoprChannels: '0x2a54194c8fe0e3CdeAa39c49B95495aA3b44Db63',
         hoprNetworkRegistryAddress:
@@ -31,7 +32,7 @@ describe('test getInfo', function () {
         connectivityStatus: 'GREEN',
         isEligible: true,
         channelClosurePeriod: 1
-      });
+      } as GetInfoResponseType);
 
     const response = await getInfo({
       apiToken: API_TOKEN,

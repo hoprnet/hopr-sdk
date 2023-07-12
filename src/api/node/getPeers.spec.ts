@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
 import { getPeers } from './getPeers';
+import { GetPeersResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -25,7 +26,8 @@ describe('test getPeers', function () {
             lastSeen: 1646410980793,
             quality: 0.8,
             backoff: 0,
-            isNew: true
+            isNew: true,
+            reportedVersion: '1.92.12'
           }
         ],
         announced: [
@@ -40,10 +42,11 @@ describe('test getPeers', function () {
             lastSeen: 1646410980793,
             quality: 0.8,
             backoff: 0,
-            isNew: true
+            isNew: true,
+            reportedVersion: '1.92.12'
           }
         ]
-      });
+      } as GetPeersResponseType);
 
     const response = await getPeers({
       apiToken: API_TOKEN,
