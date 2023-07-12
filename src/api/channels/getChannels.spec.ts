@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
 import { getChannels } from './getChannels';
+import { GetChannelsResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -16,7 +17,7 @@ describe('test getChannels', function () {
         incoming: [
           {
             type: 'outgoing',
-            channelId:
+            id:
               '0x00e846e435ec570cda9dcfd0c8fa8fbade524228f9521de954ee919fee3322b8',
             peerId: '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX',
             status: 'Open',
@@ -26,7 +27,7 @@ describe('test getChannels', function () {
         outgoing: [
           {
             type: 'incoming',
-            channelId:
+            id:
               '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
             peerId: '16Uiu2HAmMKtUteDFiC8k7FZPeTVvwteM1WNtNCQ91X5875CMQEHS',
             status: 'Open',
@@ -53,7 +54,7 @@ describe('test getChannels', function () {
             closureTime: '0'
           }
         ]
-      });
+      } as GetChannelsResponseType);
 
     const response = await getChannels({
       apiToken: API_TOKEN,

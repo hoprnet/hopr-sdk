@@ -1,17 +1,16 @@
 import {
   CloseChannelPayloadType,
-  FundChannelsPayloadType,
   GetChannelPayloadType,
+  GetChannelsPayloadType,
+  GetChannelTicketsPayloadType,
   OpenChannelPayloadType,
-  PeerIdPayloadType,
+  RedeemChannelTicketsPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { closeChannel } from './closeChannel';
-import { fundChannels } from './fundChannels';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
-import { getChannelsWithFullTopology } from './getChannelsWithFullTopology';
 import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
@@ -54,37 +53,17 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: this.timeout,
-      direction: payload.direction,
-      peerId: payload.peerId
+      channelId: payload.channelId
     });
   }
 
-  public async fundChannels(
-    payload: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType>
-  ) {
-    return fundChannels({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
-      incomingAmount: payload.incomingAmount,
-      outgoingAmount: payload.outgoingAmount,
-      peerId: payload.peerId
-    });
-  }
-
-  public async getChannels() {
+  public async getChannels(payload: RemoveBasicAuthenticationPayloadType<GetChannelsPayloadType>) {
     return getChannels({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
-    });
-  }
-
-  public async getChannelsWithFullTopology() {
-    return getChannelsWithFullTopology({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: this.timeout,
+      fullTopology: payload.fullTopology,
+      includingClosed: payload.includingClosed
     });
   }
 
@@ -95,8 +74,7 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: this.timeout,
-      direction: payload.direction,
-      peerId: payload.peerId
+      channelId: payload.channelId
     });
   }
 
@@ -117,13 +95,13 @@ export class ChannelsAdapter {
   }
 
   public async getChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>
+    payload: RemoveBasicAuthenticationPayloadType<GetChannelTicketsPayloadType>
   ) {
     return getChannelTickets({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: this.timeout,
-      peerId: payload.peerId
+      channelId: payload.channelId
     });
   }
 
@@ -132,13 +110,13 @@ export class ChannelsAdapter {
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
   public async redeemChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>
+    payload: RemoveBasicAuthenticationPayloadType<RedeemChannelTicketsPayloadType>
   ) {
     return redeemChannelTickets({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: this.timeout,
-      peerId: payload.peerId
+      channelId: payload.channelId
     });
   }
 }

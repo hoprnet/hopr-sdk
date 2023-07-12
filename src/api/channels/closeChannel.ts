@@ -21,7 +21,7 @@ export const closeChannel = async (
 ): Promise<CloseChannelResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetch(
-    `${apiEndpointParsed}api/v3/channels/${payload.peerId}/${payload.direction}`,
+    `${apiEndpointParsed}api/v3/channels/${payload.channelId}`,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiToken)
