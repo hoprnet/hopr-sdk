@@ -31,6 +31,7 @@ const VALUES = [
   'messagesSendMessage',
   // Node
   'nodeGetVersion',
+  'nodeStreamWebsocket',
   'nodePing',
   'nodeGetPeers',
   'nodeGetMetrics',
@@ -56,8 +57,7 @@ export const TokenCapability = z.object({
   limits: z.array(
     z.object({
       type: z.string(),
-      conditions: z.object({ max: z.number().optional() }).optional(),
-      used: z.number().optional()
+      conditions: z.object({ max: z.number().optional() }).optional()
     })
   )
 });
@@ -87,8 +87,7 @@ export type CreateTokenResponseType = z.infer<typeof CreateTokenResponse>;
 export const GetTokenResponse = z.object({
   id: z.string(),
   description: z.string().optional(),
-  capabilities: z.array(TokenCapability),
-  valid_until: z.number().optional()
+  capabilities: z.array(TokenCapability)
 });
 
 export type GetTokenResponseType = z.infer<typeof GetTokenResponse>;
