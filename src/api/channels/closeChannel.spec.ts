@@ -13,7 +13,7 @@ describe('test redeemTickets', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .delete(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(200, {
         receipt:
           '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
@@ -34,7 +34,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .delete(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(400, {
         status: 'INVALID_PEERID'
       });
@@ -50,7 +50,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .delete(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(401, {
         status: 'string',
         error: 'string'
@@ -67,7 +67,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .delete(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(403, {
         status: 'string',
         error: 'string'
@@ -84,7 +84,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .delete(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'

@@ -14,7 +14,7 @@ describe('removeAlias', () => {
   test('should return 204 if alias is removed successfully', async function () {
     const API_TOKEN = 'my-api-key';
 
-    nock(API_ENDPOINT).delete(`/api/v2/aliases/${ALIAS}`).reply(204);
+    nock(API_ENDPOINT).delete(`/api/v3/aliases/${ALIAS}`).reply(204);
 
     const response = await removeAlias({
       apiEndpoint: API_ENDPOINT,
@@ -32,7 +32,7 @@ describe('removeAlias', () => {
     };
 
     nock(API_ENDPOINT)
-      .delete(`/api/v2/aliases/${ALIAS}`)
+      .delete(`/api/v3/aliases/${ALIAS}`)
       .reply(401, expectedResponse);
 
     await expect(
@@ -51,7 +51,7 @@ describe('removeAlias', () => {
     };
 
     nock(API_ENDPOINT)
-      .delete(`/api/v2/aliases/${ALIAS}`)
+      .delete(`/api/v3/aliases/${ALIAS}`)
       .reply(403, expectedResponse);
     await expect(
       removeAlias({
@@ -69,7 +69,7 @@ describe('removeAlias', () => {
     };
 
     nock(API_ENDPOINT)
-      .delete(`/api/v2/aliases/${ALIAS}`)
+      .delete(`/api/v3/aliases/${ALIAS}`)
       .reply(422, expectedResponse);
 
     await expect(

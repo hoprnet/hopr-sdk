@@ -18,7 +18,7 @@ describe('sign', () => {
 
     // Mock the sign endpoint with a successful response
     nock(API_ENDPOINT)
-      .post('/api/v2/messages/sign', { message: MESSAGE })
+      .post('/api/v3/messages/sign', { message: MESSAGE })
       .reply(200, { signature: expectedSignature });
 
     const signature = await sign({
@@ -37,7 +37,7 @@ describe('sign', () => {
     };
 
     nock(API_ENDPOINT)
-      .post('/api/v2/messages/sign', { message: MESSAGE })
+      .post('/api/v3/messages/sign', { message: MESSAGE })
       .reply(401, expectedResponse);
 
     await expect(
@@ -51,7 +51,7 @@ describe('sign', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .post('/api/v2/messages/sign', { message: MESSAGE })
+      .post('/api/v3/messages/sign', { message: MESSAGE })
       .reply(403, expectedResponse);
 
     await expect(
@@ -65,7 +65,7 @@ describe('sign', () => {
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
-      .post('/api/v2/messages/sign', { message: MESSAGE })
+      .post('/api/v3/messages/sign', { message: MESSAGE })
       .reply(422, expectedResponse);
 
     await expect(

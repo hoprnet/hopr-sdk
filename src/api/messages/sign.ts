@@ -22,7 +22,7 @@ export const sign = async (payload: SignPayloadType): Promise<string> => {
   };
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/messages/sign`,
+    `${apiEndpointParsed}api/v3/messages/sign`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

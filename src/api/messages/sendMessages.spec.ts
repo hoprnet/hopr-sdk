@@ -18,7 +18,7 @@ describe('sendMessage', () => {
 
   it('should send a message successfully with path', async () => {
     nock(API_ENDPOINT)
-      .post('/api/v2/messages', {
+      .post('/api/v3/messages', {
         body: BODY,
         recipient: RECIPIENT,
         path: PATH
@@ -37,7 +37,7 @@ describe('sendMessage', () => {
 
   it('should send a message successfully with hops', async () => {
     nock(API_ENDPOINT)
-      .post('/api/v2/messages', {
+      .post('/api/v3/messages', {
         body: BODY,
         recipient: RECIPIENT,
         hops: HOPS
@@ -60,7 +60,7 @@ describe('sendMessage', () => {
       error: 'invalid api token'
     };
     nock(API_ENDPOINT)
-      .post('/api/v2/messages', PAYLOAD)
+      .post('/api/v3/messages', PAYLOAD)
       .reply(401, errorResponse);
 
     await expect(
@@ -81,7 +81,7 @@ describe('sendMessage', () => {
       error: 'permission denied'
     };
     nock(API_ENDPOINT)
-      .post('/api/v2/messages', PAYLOAD)
+      .post('/api/v3/messages', PAYLOAD)
       .reply(403, errorResponse);
 
     await expect(
@@ -99,7 +99,7 @@ describe('sendMessage', () => {
   it('should return 422 if unknown failure occurred', async () => {
     const errorResponse = { status: 'unknown failure', error: 'server error' };
     nock(API_ENDPOINT)
-      .post('/api/v2/messages', PAYLOAD)
+      .post('/api/v3/messages', PAYLOAD)
       .reply(422, errorResponse);
 
     await expect(

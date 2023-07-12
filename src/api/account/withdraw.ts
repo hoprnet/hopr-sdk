@@ -25,7 +25,7 @@ export const withdraw = async (
   };
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetch(
-    `${apiEndpointParsed}api/v2/account/withdraw`,
+    `${apiEndpointParsed}api/v3/account/withdraw`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

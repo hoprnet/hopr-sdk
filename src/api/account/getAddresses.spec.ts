@@ -18,7 +18,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(200, expectedResponse);
 
     const result = await getAddresses({
@@ -36,7 +36,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(401, expectedResponse);
 
     await expect(
@@ -51,7 +51,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(403, expectedResponse);
 
     await expect(
@@ -66,7 +66,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(422, expectedResponse);
 
     await expect(
@@ -80,7 +80,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(200, expectedResponse);
 
     await expect(

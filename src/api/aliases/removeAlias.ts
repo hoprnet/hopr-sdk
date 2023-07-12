@@ -16,7 +16,7 @@ export const removeAlias = async (
 ): Promise<boolean> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/aliases/${payload.alias}`,
+    `${apiEndpointParsed}api/v3/aliases/${payload.alias}`,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiToken)

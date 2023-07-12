@@ -20,7 +20,7 @@ export const getAddresses = async (
 ): Promise<AccountResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/account/addresses`,
+    `${apiEndpointParsed}api/v3/account/addresses`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

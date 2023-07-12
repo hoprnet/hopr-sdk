@@ -12,7 +12,7 @@ export const getChannels = async (
 ): Promise<GetChannelsResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/channels`,
+    `${apiEndpointParsed}api/v3/channels`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

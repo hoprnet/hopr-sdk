@@ -22,7 +22,7 @@ export const getChannelsWithFullTopology = async (
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
 
   const rawResponse = await fetch(
-    `${apiEndpointParsed}api/v2/channels?fullTopology=true`,
+    `${apiEndpointParsed}api/v3/channels?fullTopology=true`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

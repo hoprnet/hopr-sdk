@@ -39,7 +39,7 @@ describe('createToken function', () => {
       token: 'my-test-token'
     };
 
-    nock(API_ENDPOINT).post('/api/v2/tokens').reply(201, expectedResponse);
+    nock(API_ENDPOINT).post('/api/v3/tokens').reply(201, expectedResponse);
 
     const response = await createToken({ ...body });
     expect(response).toEqual(expectedResponse);
@@ -70,7 +70,7 @@ describe('createToken function', () => {
       ]
     };
 
-    nock(API_ENDPOINT).post('/api/v2/tokens').reply(400, mockResponse);
+    nock(API_ENDPOINT).post('/api/v3/tokens').reply(400, mockResponse);
 
     await expect(createToken({ ...invalidBody })).rejects.toThrow(APIError);
   });
@@ -79,7 +79,7 @@ describe('createToken function', () => {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
     const mockResponse = { status: expectedStatus };
 
-    nock(API_ENDPOINT).post('/api/v2/tokens').reply(422, mockResponse);
+    nock(API_ENDPOINT).post('/api/v3/tokens').reply(422, mockResponse);
 
     await expect(createToken({ ...body })).rejects.toThrow(APIError);
   });

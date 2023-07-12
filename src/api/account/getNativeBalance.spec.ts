@@ -16,7 +16,7 @@ describe('getNativeBalance', () => {
       hopr: '1000000000'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, response);
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, response);
 
     const result = await getNativeBalance({
       apiEndpoint: API_ENDPOINT,
@@ -31,7 +31,7 @@ describe('getNativeBalance', () => {
       error: 'authentication failed'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(401, response);
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(401, response);
 
     await expect(
       getNativeBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
@@ -44,7 +44,7 @@ describe('getNativeBalance', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(403, response);
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(403, response);
 
     await expect(
       getNativeBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
@@ -57,7 +57,7 @@ describe('getNativeBalance', () => {
       error: 'Full error message.'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(422, response);
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(422, response);
 
     await expect(
       getNativeBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })

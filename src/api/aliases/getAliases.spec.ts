@@ -16,7 +16,7 @@ describe('getAliases', () => {
       bob: '0x0987654321098765432109876543210987654321'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/aliases').reply(200, expectedResponse);
+    nock(API_ENDPOINT).get('/api/v3/aliases').reply(200, expectedResponse);
 
     const result = await getAliases({
       apiEndpoint: API_ENDPOINT,
@@ -32,7 +32,7 @@ describe('getAliases', () => {
       error: 'Full error message.'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/aliases').reply(422, expectedResponse);
+    nock(API_ENDPOINT).get('/api/v3/aliases').reply(422, expectedResponse);
 
     await expect(
       getAliases({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })

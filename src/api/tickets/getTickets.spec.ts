@@ -11,7 +11,7 @@ describe('test getTickets', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/tickets`)
+      .get(`/api/v3/tickets`)
       .reply(200, [
         {
           counterparty: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
@@ -35,7 +35,7 @@ describe('test getTickets', function () {
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/tickets`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -44,7 +44,7 @@ describe('test getTickets', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/tickets`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -54,7 +54,7 @@ describe('test getTickets', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/tickets`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -64,7 +64,7 @@ describe('test getTickets', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/tickets`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

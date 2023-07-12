@@ -37,11 +37,11 @@ describe('websocket', function () {
     expect(
       createWsUrl({
         apiEndpoint: API_ENDPOINT,
-        path: '/api/v2/messages/websocket/',
+        path: '/api/v3/messages/websocket/',
         apiToken: API_TOKEN
       })
     ).toBe(
-      'ws://localhost:1234/api/v2/messages/websocket/?apiToken=S3CR3T-T0K3N'
+      'ws://localhost:1234/api/v3/messages/websocket/?apiToken=S3CR3T-T0K3N'
     );
   });
 });

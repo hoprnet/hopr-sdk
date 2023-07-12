@@ -12,7 +12,7 @@ describe('test redeemTickets', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/tickets`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/tickets`)
       .reply(200, [
         {
           counterparty: '0xBb6f3A07a6EF6d4Aa6Aa244949AA59cBE735549f',
@@ -41,7 +41,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/tickets`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/tickets`)
       .reply(400, {
         status: 'INVALID_PEERID'
       });
@@ -56,7 +56,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/tickets`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/tickets`)
       .reply(401, {
         status: 'string',
         error: 'string'
@@ -72,7 +72,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/tickets`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/tickets`)
       .reply(403, {
         status: 'string',
         error: 'string'
@@ -88,7 +88,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 404 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/tickets`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/tickets`)
       .reply(404, {
         status: 'TICKETS_NOT_FOUND'
       });
@@ -103,7 +103,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/tickets`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/tickets`)
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'

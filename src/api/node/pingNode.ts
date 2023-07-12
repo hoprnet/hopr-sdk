@@ -16,7 +16,7 @@ export const pingNode = async (
   };
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/node/ping`,
+    `${apiEndpointParsed}api/v3/node/ping`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

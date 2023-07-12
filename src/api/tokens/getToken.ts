@@ -20,7 +20,7 @@ export const getToken = async (
 ): Promise<GetTokenResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/token`,
+    `${apiEndpointParsed}api/v3/token`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

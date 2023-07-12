@@ -10,7 +10,7 @@ describe('test fundChannels', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).post('/api/v2/fundmulti').reply(201, {
+    nock(API_ENDPOINT).post('/api/v3/fundmulti').reply(201, {
       receipt:
         '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
     });
@@ -28,7 +28,7 @@ describe('test fundChannels', function () {
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).post('/api/v2/fundmulti').reply(400, {
+    nock(API_ENDPOINT).post('/api/v3/fundmulti').reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -43,7 +43,7 @@ describe('test fundChannels', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).post('/api/v2/fundmulti').reply(403, {
+    nock(API_ENDPOINT).post('/api/v3/fundmulti').reply(403, {
       status: 'NOT_ENOUGH_BALANCE'
     });
 
@@ -58,7 +58,7 @@ describe('test fundChannels', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).post('/api/v2/fundmulti').reply(422, {
+    nock(API_ENDPOINT).post('/api/v3/fundmulti').reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

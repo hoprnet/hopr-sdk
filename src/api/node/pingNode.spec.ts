@@ -11,7 +11,7 @@ describe('test pingNode', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).post(`/api/v2/node/ping`).reply(200, {
+    nock(API_ENDPOINT).post(`/api/v3/node/ping`).reply(200, {
       latency: 10
     });
 
@@ -24,7 +24,7 @@ describe('test pingNode', function () {
     expect(response.latency).toEqual(10);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v2/node/ping`).reply(400, {
+    nock(API_ENDPOINT).post(`/api/v3/node/ping`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -37,7 +37,7 @@ describe('test pingNode', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v2/node/ping`).reply(401, {
+    nock(API_ENDPOINT).post(`/api/v3/node/ping`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -51,7 +51,7 @@ describe('test pingNode', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v2/node/ping`).reply(403, {
+    nock(API_ENDPOINT).post(`/api/v3/node/ping`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -65,7 +65,7 @@ describe('test pingNode', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v2/node/ping`).reply(422, {
+    nock(API_ENDPOINT).post(`/api/v3/node/ping`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

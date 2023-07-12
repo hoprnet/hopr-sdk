@@ -13,7 +13,7 @@ describe('test redeemTickets', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(200, {
         type: 'incoming',
         channelId:
@@ -37,7 +37,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(400, {
         status: 'INVALID_PEERID'
       });
@@ -53,7 +53,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(401, {
         status: 'string',
         error: 'string'
@@ -70,7 +70,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(403, {
         status: 'string',
         error: 'string'
@@ -87,7 +87,7 @@ describe('test redeemTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
+      .get(`/api/v3/channels/${BUDDY_PEER_ID}/${DIRECTION}`)
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'

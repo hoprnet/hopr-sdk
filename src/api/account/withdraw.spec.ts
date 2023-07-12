@@ -17,7 +17,7 @@ describe('withdraw function', () => {
     const expectedReceipt = '0x123456789abcdef';
     const mockResponse = { receipt: expectedReceipt };
     nock(API_ENDPOINT)
-      .post('/api/v2/account/withdraw')
+      .post('/api/v3/account/withdraw')
       .reply(200, mockResponse);
 
     const actualResult = await withdraw({
@@ -35,7 +35,7 @@ describe('withdraw function', () => {
     const expectedStatus = 'INVALID_CURRENCY | INVALID_AMOUNT';
     const mockResponse = { status: expectedStatus };
     nock(API_ENDPOINT)
-      .post('/api/v2/account/withdraw')
+      .post('/api/v3/account/withdraw')
       .reply(400, mockResponse);
 
     await expect(
@@ -55,7 +55,7 @@ describe('withdraw function', () => {
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
-      .post('/api/v2/account/withdraw')
+      .post('/api/v3/account/withdraw')
       .reply(401, mockResponse);
 
     await expect(
@@ -75,7 +75,7 @@ describe('withdraw function', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .post('/api/v2/account/withdraw')
+      .post('/api/v3/account/withdraw')
       .reply(403, mockResponse);
 
     await expect(
@@ -93,7 +93,7 @@ describe('withdraw function', () => {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
     const mockResponse = { status: expectedStatus };
     nock(API_ENDPOINT)
-      .post('/api/v2/account/withdraw')
+      .post('/api/v3/account/withdraw')
       .reply(422, mockResponse);
 
     await expect(

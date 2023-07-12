@@ -25,7 +25,7 @@ describe('closeEverything', function () {
     const openOutgoingChannels = ['1', '2', '3'];
     // mock hoprd node get channels
     nock(API_ENDPOINT)
-      .get('/api/v2/channels')
+      .get('/api/v3/channels')
       .reply(200, {
         incoming: [],
         outgoing: openOutgoingChannels.map((id) => ({
@@ -39,7 +39,7 @@ describe('closeEverything', function () {
       });
 
     // mock hoprd node tickets statistics
-    nock(API_ENDPOINT).get(`/api/v2/tickets/statistics`).reply(200, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(200, {
       pending: 0,
       unredeemed: 0,
       unredeemedValue: 'string',
@@ -76,7 +76,7 @@ describe('closeEverything', function () {
     const openOutgoingChannels = ['1', '2', '3'];
     // mock hoprd node get channels
     nock(API_ENDPOINT)
-      .get('/api/v2/channels')
+      .get('/api/v3/channels')
       .reply(200, {
         incoming: [],
         outgoing: openOutgoingChannels.map((id) => ({
@@ -90,7 +90,7 @@ describe('closeEverything', function () {
       });
 
     // mock hoprd node tickets statistics
-    nock(API_ENDPOINT).get(`/api/v2/tickets/statistics`).reply(200, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(200, {
       pending: 0,
       unredeemed: 0,
       unredeemedValue: 'string',
@@ -105,7 +105,7 @@ describe('closeEverything', function () {
 
     // mock hoprd node close channels
     openOutgoingChannels.map((id) => {
-      nock(API_ENDPOINT).delete(`/api/v2/channels/${id}/outgoing`).reply(200, {
+      nock(API_ENDPOINT).delete(`/api/v3/channels/${id}/outgoing`).reply(200, {
         receipt:
           '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
         channelStatus: 'Closed'
@@ -123,13 +123,13 @@ describe('closeEverything', function () {
 
   it('redeems pending tickets', async function () {
     // mock hoprd node get channels
-    nock(API_ENDPOINT).get('/api/v2/channels').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/channels').reply(200, {
       incoming: [],
       outgoing: []
     });
 
     // mock hoprd node tickets statistics
-    nock(API_ENDPOINT).get(`/api/v2/tickets/statistics`).reply(200, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(200, {
       pending: 1,
       unredeemed: 0,
       unredeemedValue: 'string',
@@ -143,7 +143,7 @@ describe('closeEverything', function () {
     });
 
     // mock hoprd redeem tickets
-    // nock(API_ENDPOINT).post(`/api/v2/tickets/redeem`).reply(204);
+    // nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(204);
     (tickets.redeemTickets as jest.Mock).mockImplementation(() => true);
 
     const res = await closeEverything({
@@ -156,13 +156,13 @@ describe('closeEverything', function () {
   });
   it('does not try to redeem tickets if no tickets are pending', async function () {
     // mock hoprd node get channels
-    nock(API_ENDPOINT).get('/api/v2/channels').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/channels').reply(200, {
       incoming: [],
       outgoing: []
     });
 
     // mock hoprd node tickets statistics
-    nock(API_ENDPOINT).get(`/api/v2/tickets/statistics`).reply(200, {
+    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(200, {
       pending: 0,
       unredeemed: 0,
       unredeemedValue: 'string',

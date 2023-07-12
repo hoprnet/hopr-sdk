@@ -23,7 +23,7 @@ describe('safeSendMessage', function () {
   it('should not send if node has no outgoing channel', async function () {
     // mock hoprd node channels
     nock(API_ENDPOINT)
-      .get('/api/v2/channels')
+      .get('/api/v3/channels')
       .reply(200, {
         incoming: [],
         outgoing: [
@@ -48,7 +48,7 @@ describe('safeSendMessage', function () {
   });
   it('should send message', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v2/channels')
+      .get('/api/v3/channels')
       .reply(200, {
         incoming: [],
         outgoing: [

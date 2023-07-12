@@ -20,7 +20,7 @@ export const getBalances = async (
 ): Promise<AccountResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/account/balances`,
+    `${apiEndpointParsed}api/v3/account/balances`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

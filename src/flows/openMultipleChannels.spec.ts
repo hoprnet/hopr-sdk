@@ -17,7 +17,7 @@ describe('openMultipleChannels', function () {
   });
   it('should not attempt to open channels if node does not have enough balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
       native: '10',
       hopr: '0'
     });
@@ -36,7 +36,7 @@ describe('openMultipleChannels', function () {
     const peerIds = ['id1', 'id2'];
     // mock hoprd node get balances
     nock(API_ENDPOINT)
-      .get('/api/v2/account/balances')
+      .get('/api/v3/account/balances')
       .reply(200, {
         native: BigInt(0.03 * 10e18).toString(),
         hopr: '10'

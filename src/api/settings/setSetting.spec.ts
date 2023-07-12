@@ -11,7 +11,7 @@ describe('test getSettings', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).put(`/api/v2/settings/${SETTING}`).reply(204);
+    nock(API_ENDPOINT).put(`/api/v3/settings/${SETTING}`).reply(204);
 
     const response = await setSetting({
       apiToken: API_TOKEN,
@@ -23,7 +23,7 @@ describe('test getSettings', function () {
     expect(response).toEqual(true);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).put(`/api/v2/settings/${SETTING}`).reply(400, {
+    nock(API_ENDPOINT).put(`/api/v3/settings/${SETTING}`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -37,7 +37,7 @@ describe('test getSettings', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).put(`/api/v2/settings/${SETTING}`).reply(401, {
+    nock(API_ENDPOINT).put(`/api/v3/settings/${SETTING}`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -52,7 +52,7 @@ describe('test getSettings', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).put(`/api/v2/settings/${SETTING}`).reply(403, {
+    nock(API_ENDPOINT).put(`/api/v3/settings/${SETTING}`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -67,7 +67,7 @@ describe('test getSettings', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).put(`/api/v2/settings/${SETTING}`).reply(422, {
+    nock(API_ENDPOINT).put(`/api/v3/settings/${SETTING}`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

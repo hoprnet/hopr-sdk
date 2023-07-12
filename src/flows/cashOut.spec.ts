@@ -17,7 +17,7 @@ describe('cashOut', function () {
   });
   it('does not call withdraw without balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
       native: '0',
       hopr: '0'
     });
@@ -33,7 +33,7 @@ describe('cashOut', function () {
   });
   it('sends tx to recipient', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
       native: '10',
       hopr: '10'
     });

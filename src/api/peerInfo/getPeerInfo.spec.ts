@@ -12,7 +12,7 @@ describe('test pingNode', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/peerInfo/${BUDDY_PEER_ID}`)
+      .get(`/api/v3/peerInfo/${BUDDY_PEER_ID}`)
       .reply(200, {
         announced: [
           '/ip4/',
@@ -36,7 +36,7 @@ describe('test pingNode', function () {
     expect(response.observed.at(0)).toEqual('/ip4/');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/peerInfo/${BUDDY_PEER_ID}`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v3/peerInfo/${BUDDY_PEER_ID}`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -49,7 +49,7 @@ describe('test pingNode', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/peerInfo/${BUDDY_PEER_ID}`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v3/peerInfo/${BUDDY_PEER_ID}`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -63,7 +63,7 @@ describe('test pingNode', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/peerInfo/${BUDDY_PEER_ID}`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v3/peerInfo/${BUDDY_PEER_ID}`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -77,7 +77,7 @@ describe('test pingNode', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/peerInfo/${BUDDY_PEER_ID}`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v3/peerInfo/${BUDDY_PEER_ID}`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

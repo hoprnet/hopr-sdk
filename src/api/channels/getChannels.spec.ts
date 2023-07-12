@@ -11,7 +11,7 @@ describe('test getChannels', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v2/channels')
+      .get('/api/v3/channels')
       .reply(200, {
         incoming: [
           {
@@ -46,7 +46,7 @@ describe('test getChannels', function () {
     expect(response.outgoing.at(0)?.balance).toEqual('500000000000000000');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get('/api/v2/channels').reply(400, {
+    nock(API_ENDPOINT).get('/api/v3/channels').reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -55,7 +55,7 @@ describe('test getChannels', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get('/api/v2/channels').reply(403, {
+    nock(API_ENDPOINT).get('/api/v3/channels').reply(403, {
       status: 'NOT_ENOUGH_BALANCE'
     });
 
@@ -64,7 +64,7 @@ describe('test getChannels', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get('/api/v2/channels').reply(422, {
+    nock(API_ENDPOINT).get('/api/v3/channels').reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
