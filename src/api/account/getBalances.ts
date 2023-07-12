@@ -1,7 +1,7 @@
 import { ZodError } from 'zod';
 import {
-  AccountResponse,
-  AccountResponseType,
+  GetBalancesResponseType,
+  GetBalancesResponse,
   BasePayloadType,
   APIErrorResponse
 } from '../../types';
@@ -17,7 +17,7 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
  */
 export const getBalances = async (
   payload: BasePayloadType
-): Promise<AccountResponseType> => {
+): Promise<GetBalancesResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
     `${apiEndpointParsed}api/v3/account/balances`,
@@ -34,7 +34,7 @@ export const getBalances = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = AccountResponse.safeParse(jsonResponse);
+  const parsedRes = GetBalancesResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
