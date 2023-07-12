@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { getNativeBalance } from './getNativeBalance';
 import { APIError } from '../../utils';
+import { GetBalancesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -11,7 +12,7 @@ describe('getNativeBalance', () => {
   });
 
   it('should return balances if successful', async () => {
-    const response = {
+    const response: GetBalancesResponseType = {
       native: '100000000000000000',
       hopr: '1000000000'
     };

@@ -1,6 +1,7 @@
 import { getAlias } from './getAlias';
 import nock from 'nock';
 import { APIError } from '../../utils';
+import { GetAliasResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -15,7 +16,7 @@ describe('getAlias', () => {
     const expectedPeerId = '0x1234567890123456789012345678901234567890';
     nock(API_ENDPOINT)
       .get(`/api/v3/aliases/${ALIAS}`)
-      .reply(200, { peerId: expectedPeerId });
+      .reply(200, { peerId: expectedPeerId } as GetAliasResponseType);
 
     const result = await getAlias({
       alias: ALIAS,

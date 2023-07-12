@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { getNativeAddress } from './getNativeAddress';
 import { APIError } from '../../utils';
+import { GetAddressesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -11,7 +12,7 @@ describe('getNativeAddress', () => {
   });
 
   test('should return the HOPR addresses if 200', async function () {
-    const expectedResponse = {
+    const expectedResponse: GetAddressesResponseType = {
       hopr: 'peer123',
       native: '0x123abc'
     };

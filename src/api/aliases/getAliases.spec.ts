@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { getAliases } from './getAliases';
 import { APIError } from '../../utils';
+import { GetAliasesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -11,7 +12,7 @@ describe('getAliases', () => {
   });
 
   it('should return a list of aliases with their corresponding peerIds if 200', async function () {
-    const expectedResponse = {
+    const expectedResponse: GetAliasesResponseType = {
       alice: '0x1234567890123456789012345678901234567890',
       bob: '0x0987654321098765432109876543210987654321'
     };

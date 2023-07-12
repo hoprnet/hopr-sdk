@@ -2,6 +2,7 @@ import { ZodError } from 'zod';
 import { APIError } from '../../utils';
 import { getAddresses } from './getAddresses';
 import nock from 'nock';
+import { GetAddressesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -12,7 +13,7 @@ describe('getAddresses', () => {
   });
 
   test('should return the HOPR and native addresses if 200', async function () {
-    const expectedResponse = {
+    const expectedResponse: GetAddressesResponseType = {
       hopr: 'peer123',
       native: '0x123abc'
     };
