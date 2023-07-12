@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
 import { getTickets } from './getTickets';
+import { GetTicketsResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -14,23 +15,22 @@ describe('test getTickets', function () {
       .get(`/api/v3/tickets`)
       .reply(200, [
         {
-          counterparty: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
+          channelId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
           challenge: 'string',
-          epoch: 'string',
           index: 'string',
           amount: 'string',
           winProb: 'string',
           channelEpoch: 'string',
           signature: '115342872866815e167'
         }
-      ]);
+      ] as GetTicketsResponseType);
 
     const response = await getTickets({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.at(0)?.counterparty).toEqual(
+    expect(response.at(0)?.channelId).toEqual(
       '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar'
     );
   });
