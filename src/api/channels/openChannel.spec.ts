@@ -11,12 +11,14 @@ describe('test openChannel', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).post('/api/v3/channels').reply(201, {
-      channelId:
-        '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
-      transactionReceipt:
-        '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
-    } as OpenChannelResponseType);
+    nock(API_ENDPOINT)
+      .post('/api/v3/channels')
+      .reply(201, {
+        channelId:
+          '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
+        transactionReceipt:
+          '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
+      } as OpenChannelResponseType);
 
     const response = await openChannel({
       apiToken: API_TOKEN,

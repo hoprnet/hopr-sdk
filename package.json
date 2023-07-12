@@ -34,6 +34,7 @@
     "pack": "tsup && yarn pack",
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
+    "format:fix": "prettier --write \"src/**/*.{ts,md}\"",
     "test": "jest",
     "docs": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-zod --hideBreadcrumbs",
     "publish": "tsup & npm publish"

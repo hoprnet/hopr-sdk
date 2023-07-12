@@ -3,7 +3,7 @@ import {
   APIErrorResponse,
   GetChannelTicketsPayloadType,
   GetChannelTicketsResponse,
-  GetChannelTicketsResponseType,
+  GetChannelTicketsResponseType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 

@@ -4,7 +4,8 @@ import { redeemChannelTickets } from './redeemChannelTickets';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
-const BUDDY_CHANNEL_ID = '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12';
+const BUDDY_CHANNEL_ID =
+  '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12';
 
 describe('test redeemChannelTickets', function () {
   beforeEach(function () {

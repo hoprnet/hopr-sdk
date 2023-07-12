@@ -1,5 +1,8 @@
 import fetch from 'cross-fetch';
-import { APIErrorResponse, type RedeemChannelTicketsPayloadType } from '../../types';
+import {
+  APIErrorResponse,
+  type RedeemChannelTicketsPayloadType
+} from '../../types';
 import { APIError, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 

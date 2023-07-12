@@ -15,7 +15,10 @@ describe('setAlias function', () => {
 
   test('should return 201 and undefined if successful', async function () {
     nock(API_ENDPOINT)
-      .post('/api/v3/aliases', { peerId: PEER_ID, alias: ALIAS } as SetAliasPayloadType)
+      .post('/api/v3/aliases', {
+        peerId: PEER_ID,
+        alias: ALIAS
+      } as SetAliasPayloadType)
       .reply(201);
 
     const result = await setAlias({

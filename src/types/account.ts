@@ -14,7 +14,7 @@ export const HoprAndNativeResponse = z.object({
  * balances
  */
 
-export const GetBalancesResponse = HoprAndNativeResponse
+export const GetBalancesResponse = HoprAndNativeResponse;
 
 export type GetBalancesResponseType = z.infer<typeof GetBalancesResponse>;
 
@@ -22,7 +22,7 @@ export type GetBalancesResponseType = z.infer<typeof GetBalancesResponse>;
  * addresses
  */
 
-export const GetAddressesResponse = HoprAndNativeResponse
+export const GetAddressesResponse = HoprAndNativeResponse;
 
 export type GetAddressesResponseType = z.infer<typeof GetAddressesResponse>;
 

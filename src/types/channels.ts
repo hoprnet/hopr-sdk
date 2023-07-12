@@ -3,7 +3,7 @@ import { BasePayload } from './general';
 
 /** General types */
 
-const ChannelStatus = z.enum(['Open', 'PendingToClose', 'Closed'])
+const ChannelStatus = z.enum(['Open', 'PendingToClose', 'Closed']);
 
 const TopologyChannel = z.object({
   channelId: z.string(),
@@ -34,9 +34,11 @@ export const Channel = z.object({
 
 export const RedeemChannelTicketsPayload = BasePayload.extend({
   channelId: z.string()
-})
+});
 
-export type RedeemChannelTicketsPayloadType = z.infer<typeof RedeemChannelTicketsPayload>
+export type RedeemChannelTicketsPayloadType = z.infer<
+  typeof RedeemChannelTicketsPayload
+>;
 
 /** Open channel */
 
@@ -75,9 +77,11 @@ export type GetChannelsResponseType = z.infer<typeof GetChannelsResponse>;
 
 export const GetChannelTicketsPayload = BasePayload.extend({
   channelId: z.string()
-})
+});
 
-export type GetChannelTicketsPayloadType = z.infer<typeof GetChannelTicketsPayload>
+export type GetChannelTicketsPayloadType = z.infer<
+  typeof GetChannelTicketsPayload
+>;
 
 export const Ticket = z.object({
   counterparty: z.string(),
@@ -99,7 +103,7 @@ export type GetChannelTicketsResponseType = z.infer<
 /** Close channel */
 
 export const CloseChannelPayload = BasePayload.extend({
-  channelId: z.string(),
+  channelId: z.string()
 });
 
 export type CloseChannelPayloadType = z.infer<typeof CloseChannelPayload>;
@@ -114,7 +118,7 @@ export type CloseChannelResponseType = z.infer<typeof CloseChannelResponse>;
 /** Get channel */
 
 export const GetChannelPayload = BasePayload.extend({
-  channelId: z.string(),
+  channelId: z.string()
 });
 
 export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;

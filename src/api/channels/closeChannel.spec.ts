@@ -5,7 +5,8 @@ import { CloseChannelResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
-const BUDDY_CHANNEL_ID = '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12';
+const BUDDY_CHANNEL_ID =
+  '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12';
 
 describe('test redeemTickets', function () {
   beforeEach(function () {
@@ -23,7 +24,7 @@ describe('test redeemTickets', function () {
     const response = await closeChannel({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      channelId: BUDDY_CHANNEL_ID,
+      channelId: BUDDY_CHANNEL_ID
     });
 
     expect(response.transactionReceipt).toEqual(
@@ -42,7 +43,7 @@ describe('test redeemTickets', function () {
       closeChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        channelId: BUDDY_CHANNEL_ID,
+        channelId: BUDDY_CHANNEL_ID
       })
     ).rejects.toThrow(APIError);
   });
@@ -58,7 +59,7 @@ describe('test redeemTickets', function () {
       closeChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        channelId: BUDDY_CHANNEL_ID,
+        channelId: BUDDY_CHANNEL_ID
       })
     ).rejects.toThrow(APIError);
   });
@@ -74,7 +75,7 @@ describe('test redeemTickets', function () {
       closeChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        channelId: BUDDY_CHANNEL_ID,
+        channelId: BUDDY_CHANNEL_ID
       })
     ).rejects.toThrow(APIError);
   });
@@ -90,7 +91,7 @@ describe('test redeemTickets', function () {
       closeChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        channelId: BUDDY_CHANNEL_ID,
+        channelId: BUDDY_CHANNEL_ID
       })
     ).rejects.toThrow(APIError);
   });

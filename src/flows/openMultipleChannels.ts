@@ -56,14 +56,14 @@ export const openMultipleChannels = async (
   // Open channels for each peerId and gather the promises
   const openChannelPromises = payload.peerIds.map(async (peerId) => {
     try {
-      const { receipt, channelId } = await openChannel({
+      const { transactionReceipt, channelId } = await openChannel({
         apiEndpoint: payload.apiEndpoint,
         apiToken: payload.apiToken,
         timeout: payload.timeout,
         peerId,
         amount: payload.amount
       });
-      return { peerId, receipt: receipt, channelId };
+      return { peerId, transactionReceipt, channelId };
     } catch (error) {
       return { peerId, receipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
     }
