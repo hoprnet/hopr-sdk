@@ -1,18 +1,21 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  BasePayloadType,
+  GetChannelsPayloadType,
   GetChannelsResponse,
   GetChannelsResponseType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getChannels = async (
-  payload: BasePayloadType
+  payload: GetChannelsPayloadType
 ): Promise<GetChannelsResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/channels`,
+    `${apiEndpointParsed}api/v3/channels?` + new URLSearchParams({
+      includingClosed: String(!!payload.includingClosed),
+      fullTopology: String(!!payload.fullTopology)
+    }),
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

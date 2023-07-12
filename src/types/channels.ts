@@ -40,12 +40,26 @@ export type OpenChannelPayloadType = z.infer<typeof OpenChannelPayload>;
 
 export const OpenChannelResponse = z.object({
   channelId: z.string(),
-  receipt: z.string()
+  transactionReceipt: z.string()
 });
 
 export type OpenChannelResponseType = z.infer<typeof OpenChannelResponse>;
 
 /** Get channels */
+const TopologyChannel = z.object({
+  channelId: z.string(),
+  sourcePeerId: z.string(),
+  destinationPeerId: z.string(),
+  sourceAddress: z.string(),
+  destinationAddress: z.string(),
+  balance: z.string(),
+  status: z.enum(['WaitingForCommitment', 'Open', 'PendingToClose', 'Closed']),
+  commitment: z.string(),
+  ticketEpoch: z.string(),
+  ticketIndex: z.string(),
+  channelEpoch: z.string(),
+  closureTime: z.string()
+});
 
 export const Channel = z.object({
   type: z.enum(['incoming', 'outgoing']),
@@ -55,9 +69,18 @@ export const Channel = z.object({
   balance: z.string()
 });
 
+
+export const GetChannelsPayload = BasePayload.extend({
+  includingClosed: z.boolean().optional(),
+  fullTopology: z.boolean().optional(),
+})
+
+export type GetChannelsPayloadType = z.infer<typeof GetChannelsPayload>
+
 export const GetChannelsResponse = z.object({
   incoming: z.array(Channel),
-  outgoing: z.array(Channel)
+  outgoing: z.array(Channel),
+  all: z.array(TopologyChannel)
 });
 
 export type GetChannelsResponseType = z.infer<typeof GetChannelsResponse>;
@@ -109,28 +132,3 @@ export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;
 export const GetChannelResponse = Channel;
 
 export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
-
-/** Get channels with full topology */
-
-const TopologyChannel = z.object({
-  channelId: z.string(),
-  sourcePeerId: z.string(),
-  destinationPeerId: z.string(),
-  sourceAddress: z.string(),
-  destinationAddress: z.string(),
-  balance: z.string(),
-  status: z.enum(['WaitingForCommitment', 'Open', 'PendingToClose', 'Closed']),
-  commitment: z.string(),
-  ticketEpoch: z.string(),
-  ticketIndex: z.string(),
-  channelEpoch: z.string(),
-  closureTime: z.string()
-});
-
-export const GetChannelsWithFullTopologyResponse = z.object({
-  all: z.array(TopologyChannel)
-});
-
-export type GetChannelsWithFullTopologyResponseType = z.infer<
-  typeof GetChannelsWithFullTopologyResponse
->;

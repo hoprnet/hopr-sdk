@@ -32,12 +32,32 @@ describe('test getChannels', function () {
             status: 'Open',
             balance: '500000000000000000'
           }
+        ],
+        all: [
+          {
+            channelId:
+              '0x00023da9f252f16970ed0987153e5e64fdae0f41799b6a87306e12d17d060301',
+            sourcePeerId:
+              '16Uiu2HAm8RWC2ZwhMm1AX8FeJmS9FkWn82qigTYGH4vkrX6Z6AV8',
+            destinationPeerId:
+              '16Uiu2HAmJpsfNg1JBUFGoJx6gp58BPQwymhPGaJidqPKMm5cETW7',
+            sourceAddress: '0xbFdbE0e896C989b23D6cA83E12AD4df1739B6E28',
+            destinationAddress: '0xaB51F95ED1Fa8d4afE40A3a1B8f44A242307390c',
+            balance: '100000000000000000',
+            status: 'Open',
+            commitment:
+              '0x4830ab9b20341162a0970aa1c6a5286cf85d2daa1d8c982f8ec5f2d9010250f4',
+            ticketEpoch: '1',
+            ticketIndex: '0',
+            channelEpoch: '1',
+            closureTime: '0'
+          }
         ]
       });
 
     const response = await getChannels({
       apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT
+      apiEndpoint: API_ENDPOINT,
     });
 
     expect(response.incoming.at(0)?.peerId).toEqual(
