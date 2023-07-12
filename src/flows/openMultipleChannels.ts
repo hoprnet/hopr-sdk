@@ -65,7 +65,7 @@ export const openMultipleChannels = async (
       });
       return { peerId, transactionReceipt, channelId };
     } catch (error) {
-      return { peerId, receipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
+      return { peerId, transactionReceipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
     }
   });
 
@@ -73,15 +73,15 @@ export const openMultipleChannels = async (
   const results = await Promise.allSettled(openChannelPromises);
 
   // Filter out the fulfilled results and return an object with receipts and channelId keyed by peerId
-  const receipts: {
-    [peerId: string]: { channelId: string; receipt: string };
+  const transactionReceipts: {
+    [peerId: string]: { channelId: string; transactionReceipt: string };
   } = {};
   results.forEach((result) => {
-    if (result.status === 'fulfilled' && result.value.receipt) {
-      const { peerId, receipt, channelId } = result.value;
-      receipts[peerId] = { channelId, receipt };
+    if (result.status === 'fulfilled' && result.value.transactionReceipt) {
+      const { peerId, transactionReceipt, channelId } = result.value;
+      transactionReceipts[peerId] = { channelId, transactionReceipt };
     }
   });
 
-  return receipts;
+  return transactionReceipts;
 };

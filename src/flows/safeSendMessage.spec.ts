@@ -6,6 +6,7 @@ import {
   safeSendMessage
 } from './index';
 import * as messages from '../api/messages';
+import { GetChannelsResponseType } from '../types';
 
 jest.mock('../api/messages', () => ({
   ...jest.requireActual('../api/messages'),
@@ -23,20 +24,21 @@ describe('safeSendMessage', function () {
   it('should not send if node has no outgoing channel', async function () {
     // mock hoprd node channels
     nock(API_ENDPOINT)
-      .get('/api/v3/channels')
+      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
         outgoing: [
           {
             type: 'incoming',
-            channelId:
-              '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
+            id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
             peerId: '16Uiu2HAmMKtUteDFiC8k7FZPeTVvwteM1WNtNCQ91X5875CMQEHS',
             status: 'Closed',
             balance: '500000000000000000'
           }
-        ]
-      });
+        ],
+        all: []
+      } as GetChannelsResponseType);
+
     await safeSendMessage({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
@@ -48,20 +50,20 @@ describe('safeSendMessage', function () {
   });
   it('should send message', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels')
+      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
         outgoing: [
           {
             type: 'incoming',
-            channelId:
-              '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
+            id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
             peerId: '16Uiu2HAmMKtUteDFiC8k7FZPeTVvwteM1WNtNCQ91X5875CMQEHS',
             status: 'Open',
             balance: '500000000000000000'
           }
-        ]
-      });
+        ],
+        all: []
+      } as GetChannelsResponseType);
 
     // mock hoprd node messages
     (messages.sendMessage as jest.Mock).mockImplementation(

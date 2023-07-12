@@ -8,7 +8,7 @@ const API_TOKEN = 'S3CR3T-T0K3N';
 const BUDDY_CHANNEL_ID =
   '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12';
 
-describe('test redeemTickets', function () {
+describe('test getChannel', function () {
   beforeEach(function () {
     nock.cleanAll();
   });

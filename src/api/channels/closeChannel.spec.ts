@@ -8,7 +8,7 @@ const API_TOKEN = 'S3CR3T-T0K3N';
 const BUDDY_CHANNEL_ID =
   '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12';
 
-describe('test redeemTickets', function () {
+describe('test closeChannel', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
@@ -16,7 +16,7 @@ describe('test redeemTickets', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(200, {
-        receipt:
+        transactionReceipt:
           '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
         channelStatus: 'Closed'
       } as CloseChannelResponseType);
