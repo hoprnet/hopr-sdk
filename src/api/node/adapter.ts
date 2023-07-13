@@ -1,6 +1,5 @@
 import {
   GetPeersPayloadType,
-  PingNodePayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
@@ -9,7 +8,6 @@ import { getInfo } from './getInfo';
 import { getMetrics } from './getMetrics';
 import { getPeers } from './getPeers';
 import { getVersion } from './getVersion';
-import { pingNode } from './pingNode';
 
 const log = createLogger('node');
 
@@ -78,17 +76,6 @@ export class NodeAdapter {
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: this.timeout
-    });
-  }
-
-  public async pingNode(
-    payload: RemoveBasicAuthenticationPayloadType<PingNodePayloadType>
-  ) {
-    return pingNode({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: this.timeout,
-      peerId: payload.peerId
     });
   }
 }

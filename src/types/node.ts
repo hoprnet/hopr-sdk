@@ -62,19 +62,3 @@ const nodeSchema = z.object({
 export const GetEntryNodesResponse = z.record(nodeSchema);
 
 export type GetEntryNodesResponseType = z.infer<typeof GetEntryNodesResponse>;
-
-/**
- * Ping node
- */
-
-export const PingNodePayload = BasePayload.extend({
-  peerId: z.string()
-});
-
-export type PingNodePayloadType = z.infer<typeof PingNodePayload>;
-
-export const PingNodeResponse = z.object({
-  latency: z.number()
-});
-
-export type PingNodeResponseType = z.infer<typeof PingNodeResponse>;

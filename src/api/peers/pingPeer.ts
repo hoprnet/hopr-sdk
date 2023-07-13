@@ -1,26 +1,21 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  PingNodePayloadType,
-  PingNodeResponse,
-  PingNodeResponseType,
-  RemoveBasicAuthenticationPayloadType
+  PingPeerPayloadType,
+  PingPeerResponse,
+  PingPeerResponseType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const pingNode = async (
-  payload: PingNodePayloadType
-): Promise<PingNodeResponseType> => {
-  const body: RemoveBasicAuthenticationPayloadType<PingNodePayloadType> = {
-    peerId: payload.peerId
-  };
+export const pingPeer = async (
+  payload: PingPeerPayloadType
+): Promise<PingPeerResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/node/ping`,
+    `${apiEndpointParsed}api/v3/peers/${payload.peerId}/ping`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiToken),
-      body: JSON.stringify(body)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
@@ -31,7 +26,7 @@ export const pingNode = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = PingNodeResponse.safeParse(jsonResponse);
+  const parsedRes = PingPeerResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
