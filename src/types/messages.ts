@@ -12,20 +12,6 @@ export const ReceivedMessage = z.object({
 });
 
 /**
- * Sign
- */
-
-export const SignPayload = BasePayload.extend({
-  message: z.string()
-});
-
-export type SignPayloadType = z.infer<typeof SignPayload>;
-
-export const SignResponse = z.object({
-  signature: z.string()
-});
-
-/**
  * Send Message
  */
 

@@ -1,11 +1,18 @@
 import {
+  DeleteMessagesPayloadType,
+  GetMessagesPayloadType,
+  GetMessagesSizePayloadType,
+  PopAllMessagesPayloadType,
   RemoveBasicAuthenticationPayloadType,
-  SendMessagePayloadType,
-  SignPayloadType
+  SendMessagePayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
+import { deleteMessages } from './deleteMessages';
+import { getMessages } from './getMessages';
+import { getMessagesSize } from './getMessagesSize';
+import { popAllMessages } from './popAllMessages';
+import { popMessage } from './popMessage';
 import { sendMessage } from './sendMessage';
-import { sign } from './sign';
 import { websocket } from './websocket';
 
 const log = createLogger('messages');
@@ -45,18 +52,8 @@ export class MessagesAdapter {
       body: payload.body,
       recipient: payload.recipient,
       hops: payload.hops,
-      path: payload.path
-    });
-  }
-
-  public async sign(
-    payload: RemoveBasicAuthenticationPayloadType<SignPayloadType>
-  ) {
-    return sign({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
-      message: payload.message
+      path: payload.path,
+      tag: payload.tag
     });
   }
 
@@ -64,6 +61,58 @@ export class MessagesAdapter {
     return websocket({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint
+    });
+  }
+
+  public async deleteMessages(
+    payload: RemoveBasicAuthenticationPayloadType<DeleteMessagesPayloadType>
+  ) {
+    return deleteMessages({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      tag: payload.tag
+    });
+  }
+
+  public async getMessages(
+    payload: RemoveBasicAuthenticationPayloadType<GetMessagesPayloadType>
+  ) {
+    return getMessages({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      tag: payload.tag
+    });
+  }
+
+  public async getMessagesSize(
+    payload: RemoveBasicAuthenticationPayloadType<GetMessagesSizePayloadType>
+  ) {
+    return getMessagesSize({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      tag: payload.tag
+    });
+  }
+
+  public async popMessage() {
+    return popMessage({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout
+    });
+  }
+
+  public async popAllMessages(
+    payload: RemoveBasicAuthenticationPayloadType<PopAllMessagesPayloadType>
+  ) {
+    return popAllMessages({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      tag: payload.tag
     });
   }
 }
