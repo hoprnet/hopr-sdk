@@ -7,7 +7,7 @@ import { createWsUrl } from '../../utils';
  *
  * @param apiEndpoint - The base URL to connect to.
  * @param apiToken - The API token to use for authentication.
- * @param path - The API path for websocket endpoing. By default: '/api/v3/messages/websocket/'
+ * @param path - The API path for websocket endpoint. By default: '/api/v3/messages/websocket/'
  * @returns A WebSocket instance.
  */
 export const websocket = (payload: BasePayloadType): WebSocket => {

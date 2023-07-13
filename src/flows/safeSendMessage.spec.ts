@@ -16,6 +16,7 @@ jest.mock('../api/messages', () => ({
 // Set up global constants for URL and API key
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+const TAG = 7;
 
 describe('safeSendMessage', function () {
   afterEach(() => {
@@ -40,6 +41,7 @@ describe('safeSendMessage', function () {
       } as GetChannelsResponseType);
 
     await safeSendMessage({
+      tag: TAG,
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
       body: 'body',
@@ -71,6 +73,7 @@ describe('safeSendMessage', function () {
     );
 
     const challenge = await safeSendMessage({
+      tag: TAG,
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
       body: 'body',

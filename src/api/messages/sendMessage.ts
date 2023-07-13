@@ -22,6 +22,7 @@ export const sendMessage = async (
   payload: SendMessagePayloadType
 ): Promise<string> => {
   const body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
+    tag: payload.tag,
     body: payload.body,
     recipient: payload.recipient,
     hops: payload.hops,

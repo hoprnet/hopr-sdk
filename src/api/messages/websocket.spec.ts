@@ -3,8 +3,10 @@ import WS from 'isomorphic-ws';
 import { websocket } from './websocket';
 import { createWsUrl } from '../../utils';
 
+const PORT = 8888;
+
 describe('websocket', function () {
-  const API_ENDPOINT = 'http://localhost:1234';
+  const API_ENDPOINT = `http://localhost:${PORT}`;
   const API_TOKEN = 'S3CR3T-T0K3N';
   let server: WS.Server;
   let httpServer: http.Server;
@@ -12,7 +14,7 @@ describe('websocket', function () {
   beforeEach(function () {
     httpServer = http.createServer();
     server = new WS.Server({ server: httpServer });
-    httpServer.listen(1234);
+    httpServer.listen(PORT);
   });
 
   afterEach(() => {
@@ -41,7 +43,7 @@ describe('websocket', function () {
         apiToken: API_TOKEN
       })
     ).toBe(
-      'ws://localhost:1234/api/v3/messages/websocket/?apiToken=S3CR3T-T0K3N'
+      `ws://localhost:${PORT}/api/v3/messages/websocket/?apiToken=S3CR3T-T0K3N`
     );
   });
 });
