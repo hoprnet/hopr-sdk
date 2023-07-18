@@ -1,4 +1,5 @@
 import {
+  BasePayloadType,
   GetPeersPayloadType,
   PingNodePayloadType,
   RemoveBasicAuthenticationPayloadType
@@ -38,27 +39,33 @@ export class NodeAdapter {
     this.timeout = timeout;
   }
 
-  public async getEntryNodes() {
+  public async getEntryNodes(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getEntryNodes({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
-  public async getInfo() {
+  public async getInfo(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getInfo({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
-  public async getMetrics() {
+  public async getMetrics(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getMetrics({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -68,16 +75,18 @@ export class NodeAdapter {
     return getPeers({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       quality: payload.quality
     });
   }
 
-  public async getVersion() {
+  public async getVersion(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getVersion({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -87,7 +96,7 @@ export class NodeAdapter {
     return pingNode({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       peerId: payload.peerId
     });
   }
