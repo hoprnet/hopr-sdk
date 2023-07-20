@@ -3,7 +3,8 @@
 ## Description
 
 The `@hoprnet/hopr-sdk` package is a software development kit for interacting with [HOPRd's Rest API functions](https://docs.hoprnet.org/developers/rest-api).
-It provides a set of functions that allow developers to interact with the HOPR protocol and perform various actions such as node and account management, messaging, address retrieval, balance retrieval, and withdrawal and other operations.
+It provides a set of functions that allow developers to interact with the HOPR protocol and perform various actions such as
+node and account management, messaging, address retrieval, balance retrieval, and withdrawal and other operations.
 
 ## Installation
 
@@ -28,7 +29,7 @@ yarn add @hoprnet/hopr-sdk
 
 You can use the `@hoprnet/hopr-sdk` in two different ways:
 
-#### HoprSDK class
+### HoprSDK class
 
 By creating a new instance of the HoprSDK class.
 
@@ -48,7 +49,8 @@ const sdk = new HoprSDK({
 });
 ```
 
-3. You can now use the `sdk` instance to access the available functions. For example, to get the HOPR and native addresses associated with the node:
+3. You can now use the `sdk` instance to access the available functions.
+For example, to get the HOPR and native addresses associated with the node:
 
 ```ts
 const addresses = await sdk.api.account.getAddresses();
@@ -72,7 +74,8 @@ import { api } from '@hoprnet/hopr-sdk';
 import { getAddresses } from '@hoprnet/hopr-sdk/api';
 ```
 
-2. Access the desired function, keep in mind that you'll need to provide a **payload object** with the `apiEndpoint` and `apiToken` for each individual function:
+2. Access the desired function, keep in mind that you'll need to provide a **payload object**
+with the `apiEndpoint` and `apiToken` for each individual function:
 
 ```ts
 const addresses = await api.getAddresses({
@@ -100,7 +103,8 @@ import { flows } from '@hoprnet/hopr-sdk';
 import { openMultipleChannels } from '@hoprnet/hopr-sdk/flows';
 ```
 
-2. Access the desired function, keep in mind that you'll need to provide a **payload object** with the `apiEndpoint` and `apiToken` for each individual function:
+2. Access the desired function, keep in mind that you'll need to provide a **payload object**
+with the `apiEndpoint` and `apiToken` for each individual function:
 
 ```ts
 const res = await flows.openMultipleChannels({
