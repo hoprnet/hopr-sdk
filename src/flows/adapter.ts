@@ -1,4 +1,7 @@
-import { RemoveBasicAuthenticationPayloadType } from '../types';
+import {
+  BasePayloadType,
+  RemoveBasicAuthenticationPayloadType
+} from '../types';
 import { openMultipleChannels } from './openMultipleChannels';
 import { cashOut } from './cashOut';
 import { safeSendMessage } from './safeSendMessage';
@@ -134,11 +137,13 @@ export class FlowsAdapter {
    *          or `undefined` if no receipt is available.
    *   - `redeemedTickets`: A boolean value indicating whether the tickets were redeemed successfully.
    */
-  public async closeEverything() {
+  public async closeEverything(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return closeEverything({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 }

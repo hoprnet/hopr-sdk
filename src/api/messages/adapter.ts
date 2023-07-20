@@ -41,7 +41,7 @@ export class MessagesAdapter {
     return sendMessage({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       body: payload.body,
       recipient: payload.recipient,
       hops: payload.hops,
@@ -55,7 +55,7 @@ export class MessagesAdapter {
     return sign({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       message: payload.message
     });
   }

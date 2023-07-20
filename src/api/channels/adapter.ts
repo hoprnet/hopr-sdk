@@ -1,4 +1,5 @@
 import {
+  BasePayloadType,
   CloseChannelPayloadType,
   FundChannelsPayloadType,
   GetChannelPayloadType,
@@ -54,8 +55,7 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: this.timeout,
-      direction: payload.direction,
-      peerId: payload.peerId
+      ...payload
     });
   }
 
@@ -66,25 +66,27 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: this.timeout,
-      incomingAmount: payload.incomingAmount,
-      outgoingAmount: payload.outgoingAmount,
-      peerId: payload.peerId
+      ...payload
     });
   }
 
-  public async getChannels() {
+  public async getChannels(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getChannels({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
-  public async getChannelsWithFullTopology() {
+  public async getChannelsWithFullTopology(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getChannelsWithFullTopology({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -94,7 +96,7 @@ export class ChannelsAdapter {
     return getChannel({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       direction: payload.direction,
       peerId: payload.peerId
     });
@@ -110,7 +112,7 @@ export class ChannelsAdapter {
     return openChannel({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       amount: payload.amount,
       peerId: payload.peerId
     });
@@ -122,7 +124,7 @@ export class ChannelsAdapter {
     return getChannelTickets({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       peerId: payload.peerId
     });
   }
@@ -137,7 +139,7 @@ export class ChannelsAdapter {
     return redeemChannelTickets({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       peerId: payload.peerId
     });
   }

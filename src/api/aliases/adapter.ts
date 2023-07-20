@@ -1,5 +1,6 @@
 import {
   AliasPayloadType,
+  BasePayloadType,
   RemoveBasicAuthenticationPayloadType,
   SetAliasPayloadType
 } from '../../types';
@@ -43,11 +44,13 @@ export class AliasesAdapter {
    *
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
-  public async getAliases(): Promise<Record<string, string> | undefined> {
+  public async getAliases(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ): Promise<Record<string, string> | undefined> {
     return getAliases({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -65,7 +68,7 @@ export class AliasesAdapter {
     return setAlias({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       alias: payload.alias,
       peerId: payload.peerId
     });
@@ -83,7 +86,7 @@ export class AliasesAdapter {
     return getAlias({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       alias: payload.alias
     });
   }
@@ -100,7 +103,7 @@ export class AliasesAdapter {
     return removeAlias({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       alias: payload.alias
     });
   }
