@@ -16,7 +16,8 @@ export const fetchWithTimeout = (
     }
     throw error;
   });
-  // abort promise if it cas not been completed after ms
+  // abort promise if it has not been completed after ms
   const timeout = setTimeout(() => controller.abort(), ms);
+
   return promise.finally(() => clearTimeout(timeout));
 };
