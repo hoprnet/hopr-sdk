@@ -25,7 +25,7 @@ export const sendMessage = async (
     body: payload.body,
     recipient: payload.recipient,
     hops: payload.hops,
-    path: payload.path
+    path: payload.path ?? []
   };
 
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
