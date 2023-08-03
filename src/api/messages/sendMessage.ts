@@ -7,7 +7,9 @@ import {
 import { ZodError } from 'zod';
 
 /**
- * Send a message to another peer using a given path (list of node addresses that should relay our message through network). If no path is given, HOPR will attempt to find a path.
+ * Send a message to another peer.
+ * If a path is given, then hops parameter will have no effect.
+ * If neither hops nor path is given HOPR will send a direct message.
  *
  * @param apiEndpoint - The API endpoint to send the message to.
  * @param apiToken - The API token to use for authentication.
@@ -21,11 +23,15 @@ import { ZodError } from 'zod';
 export const sendMessage = async (
   payload: SendMessagePayloadType
 ): Promise<string> => {
+  // make it work when neither path nor hops is specified
+  if (!('path' in payload || 'hops' in payload)) {
+    payload.path = [];
+  }
   const body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
     body: payload.body,
     recipient: payload.recipient,
     hops: payload.hops,
-    path: payload.path ?? []
+    path: payload.path
   };
 
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
