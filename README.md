@@ -28,7 +28,7 @@ yarn add @hoprnet/hopr-sdk
 
 You can use the `@hoprnet/hopr-sdk` in two different ways:
 
-#### HoprSDK class
+### HoprSDK class
 
 By creating a new instance of the HoprSDK class.
 
