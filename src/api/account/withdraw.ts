@@ -29,7 +29,7 @@ export const withdraw = async (
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
-      body: JSON.stringify({ body })
+      body: JSON.stringify(body)
     }
   );
 
