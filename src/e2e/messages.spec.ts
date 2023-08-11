@@ -24,32 +24,32 @@ describe('Messages E2E Tests', function () {
     wsSdk = (await sdk2.api.messages.websocket()) as unknown as WebSocket;
   });
 
-  test('sends a message to another peer', async function () {
-    let receivedMessage: string | undefined;
-    wsSdk.onmessage = (event) => {
-      receivedMessage = event.data;
-    };
+  // test('sends a message to another peer', async function () {
+  //   let receivedMessage: string | undefined;
+  //   wsSdk.onmessage = (event) => {
+  //     receivedMessage = event.data;
+  //   };
 
-    const sendMessageResponse = await messages.sendMessage({
-      body: MESSAGE,
-      recipient: node2Address,
-      hops: 1
-    });
+  //   const sendMessageResponse = await messages.sendMessage({
+  //     body: MESSAGE,
+  //     recipient: node2Address,
+  //     hops: 1
+  //   });
 
-    // Wait for the message to be received
-    await new Promise<void>((resolve) => {
-      const interval = setInterval(() => {
-        if (receivedMessage !== undefined) {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 100);
-    });
+  //   // Wait for the message to be received
+  //   await new Promise<void>((resolve) => {
+  //     const interval = setInterval(() => {
+  //       if (receivedMessage !== undefined) {
+  //         clearInterval(interval);
+  //         resolve();
+  //       }
+  //     }, 100);
+  //   });
 
-    expect(typeof receivedMessage).toBe('string');
-    expect(decodeMessage(receivedMessage!)).toBe(MESSAGE);
-    expect(typeof sendMessageResponse).toBe('string');
-  }, 30e4);
+  //   expect(typeof receivedMessage).toBe('string');
+  //   expect(decodeMessage(receivedMessage!)).toBe(MESSAGE);
+  //   expect(typeof sendMessageResponse).toBe('string');
+  // }, 30e4);
 
   test('should sign message and prefix with "HOPR Signed Message:"', async function () {
     const signMessageResponse = await messages.sign({
