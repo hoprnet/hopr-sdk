@@ -12,17 +12,17 @@ const { messages } = sdk.api;
 const MESSAGE = 'Some message.';
 
 describe('Messages E2E Tests', function () {
-  let wsSdk: WebSocket;
-  let node2Address: string;
+  // let wsSdk: WebSocket;
+  // let node2Address: string;
   // Before starting each tests, we need to instantiate the ws on another node
-  beforeEach(async () => {
-    const sdk2 = new SDK({
-      apiEndpoint: HOPRD_API_ENDPOINT_2!,
-      apiToken: HOPRD_API_TOKEN!
-    });
-    node2Address = (await sdk2.api.account.getHoprAddress({})) as string;
-    wsSdk = (await sdk2.api.messages.websocket()) as unknown as WebSocket;
-  });
+  // beforeEach(async () => {
+  //   const sdk2 = new SDK({
+  //     apiEndpoint: HOPRD_API_ENDPOINT_2!,
+  //     apiToken: HOPRD_API_TOKEN!
+  //   });
+  //   node2Address = (await sdk2.api.account.getHoprAddress({})) as string;
+  //   wsSdk = (await sdk2.api.messages.websocket()) as unknown as WebSocket;
+  // });
 
   // test('sends a message to another peer', async function () {
   //   let receivedMessage: string | undefined;
@@ -59,7 +59,7 @@ describe('Messages E2E Tests', function () {
     expect(typeof signMessageResponse).toBe('string');
   });
 
-  afterEach(async () => {
-    wsSdk.close();
-  });
+  // afterEach(async () => {
+  //   wsSdk.close();
+  // });
 });

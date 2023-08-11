@@ -26,7 +26,7 @@ source "$DIR"/.env
 set +a
 
 # Run tests with env variables
-npx jest "$DIR"/channels.spec.ts --config jest.config.js --runInBand
+npx jest "$DIR" --config jest.config.js --runInBand
 # echo "Started"
 
 # After tests exit tear down setup
