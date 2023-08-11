@@ -1,5 +1,5 @@
-import { HoprSDK as SDK } from '../sdk';
-import { decodeMessage } from '../utils';
+import { HoprSDK as SDK } from '../src/sdk';
+import { decodeMessage } from '../src/utils';
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
   process.env;
 

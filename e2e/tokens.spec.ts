@@ -1,5 +1,5 @@
-import { HoprSDK as SDK } from '../sdk';
-import { api } from '..';
+import { HoprSDK as SDK } from '../src/sdk';
+import { api } from '../src';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1 } = process.env;
 
