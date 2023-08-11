@@ -16,7 +16,7 @@ const sdk2 = new SDK({
 
 describe('peerInfo E2E Tests', function () {
   test('should get information about this peer', async function () {
-    const peerId = (await sdk2.api.account.getHoprAddress()) as string;
+    const peerId = (await sdk2.api.account.getHoprAddress({})) as string;
     const response = await peerInfo.getPeerInfo({ peerId });
 
     expect(response).toStrictEqual({

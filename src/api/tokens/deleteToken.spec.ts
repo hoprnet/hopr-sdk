@@ -72,6 +72,6 @@ describe('deleteToken', () => {
         apiEndpoint: API_ENDPOINT,
         id: TOKEN_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(Error);
   });
 });

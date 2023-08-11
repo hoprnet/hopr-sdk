@@ -1,5 +1,10 @@
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
-import { AliasPayloadType, Error, GetAliasResponse } from '../../types';
+import {
+  AliasPayloadType,
+  APIErrorResponse,
+  GetAliasResponse
+} from '../../types';
+import { ZodError } from 'zod';
 
 /**
  * Get the PeerId (Hopr address) that have this alias assigned to it.
@@ -11,8 +16,9 @@ import { AliasPayloadType, Error, GetAliasResponse } from '../../types';
  * @throws An error that occurred while processing the request.
  */
 export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/aliases/${payload.alias}`,
+    `${apiEndpointParsed}api/v2/aliases/${payload.alias}`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -20,18 +26,26 @@ export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
     payload.timeout
   );
 
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAliasResponse.safeParse(jsonResponse);
 
-  if (rawResponse.status === 200 && parsedRes.success) {
+  // received expected response
+  if (parsedRes.success) {
     return parsedRes.data.peerId;
-  } else if (rawResponse.status > 499) {
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };

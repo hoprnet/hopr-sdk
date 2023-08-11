@@ -1,9 +1,8 @@
 import { z } from 'zod';
-import { ZodToType } from './general';
 
-export const Error = z.object({
-  status: z.string().optional(),
+export const APIErrorResponse = z.object({
+  status: z.string(),
   error: z.string().optional()
 });
 
-export type ErrorType = ZodToType<typeof Error>;
+export type APIErrorResponseType = z.infer<typeof APIErrorResponse>;

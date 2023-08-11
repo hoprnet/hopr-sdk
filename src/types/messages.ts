@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BasePayload, ZodToType } from './general';
+import { BasePayload } from './general';
 
 /**
  * sign
@@ -9,7 +9,7 @@ export const SignPayload = BasePayload.extend({
   message: z.string()
 });
 
-export type SignPayloadType = ZodToType<typeof SignPayload>;
+export type SignPayloadType = z.infer<typeof SignPayload>;
 
 export const SignResponse = z.object({
   signature: z.string()
@@ -26,4 +26,4 @@ export const SendMessagePayload = BasePayload.extend({
   hops: z.number().optional()
 });
 
-export type SendMessagePayloadType = ZodToType<typeof SendMessagePayload>;
+export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;

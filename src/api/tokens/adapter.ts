@@ -1,9 +1,10 @@
 import {
+  BasePayloadType,
   CreateTokenPayloadType,
   DeleteTokenPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, createLogger } from '../../utils';
+import { createLogger } from '../../utils';
 import { createToken } from './createToken';
 import { deleteToken } from './deleteToken';
 import { getToken } from './getToken';
@@ -52,23 +53,14 @@ export class TokensAdapter {
   public async createToken(
     payload: RemoveBasicAuthenticationPayloadType<CreateTokenPayloadType>
   ) {
-    try {
-      return await createToken({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        capabilities: payload.capabilities,
-        description: payload.description,
-        lifetime: payload.lifetime
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return createToken({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      capabilities: payload.capabilities,
+      description: payload.description,
+      lifetime: payload.lifetime
+    });
   }
 
   /**
@@ -81,21 +73,12 @@ export class TokensAdapter {
   public async deleteToken(
     payload: RemoveBasicAuthenticationPayloadType<DeleteTokenPayloadType>
   ) {
-    try {
-      return await deleteToken({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        id: payload.id
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return deleteToken({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      id: payload.id
+    });
   }
 
   /**
@@ -103,20 +86,13 @@ export class TokensAdapter {
    *
    * @returns A Promise that resolves to an object with the token info.
    */
-  public async getToken() {
-    try {
-      return await getToken({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getToken(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getToken({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 }

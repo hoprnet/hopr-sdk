@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BasePayload, ZodToType } from './general';
+import { BasePayload } from './general';
 
 /**
  * Get peers
@@ -9,7 +9,7 @@ export const GetPeersPayload = BasePayload.extend({
   quality: z.number().optional()
 });
 
-export type GetPeersPayloadType = ZodToType<typeof GetPeersPayload>;
+export type GetPeersPayloadType = z.infer<typeof GetPeersPayload>;
 
 export const Peer = z.object({
   peerId: z.string(),
@@ -28,7 +28,7 @@ export const GetPeersResponse = z.object({
   announced: z.array(Peer)
 });
 
-export type GetPeersResponseType = ZodToType<typeof GetPeersResponse>;
+export type GetPeersResponseType = z.infer<typeof GetPeersResponse>;
 
 /**
  * Get Info
@@ -47,7 +47,7 @@ export const GetInfoResponse = z.object({
   channelClosurePeriod: z.number()
 });
 
-export type GetInfoResponseType = ZodToType<typeof GetInfoResponse>;
+export type GetInfoResponseType = z.infer<typeof GetInfoResponse>;
 
 /**
  * Get entry nodes
@@ -60,7 +60,7 @@ const nodeSchema = z.object({
 
 export const GetEntryNodesResponse = z.record(nodeSchema);
 
-export type GetEntryNodesResponseType = ZodToType<typeof GetEntryNodesResponse>;
+export type GetEntryNodesResponseType = z.infer<typeof GetEntryNodesResponse>;
 
 /**
  * Ping node
@@ -70,10 +70,10 @@ export const PingNodePayload = BasePayload.extend({
   peerId: z.string()
 });
 
-export type PingNodePayloadType = ZodToType<typeof PingNodePayload>;
+export type PingNodePayloadType = z.infer<typeof PingNodePayload>;
 
 export const PingNodeResponse = z.object({
   latency: z.number()
 });
 
-export type PingNodeResponseType = ZodToType<typeof PingNodeResponse>;
+export type PingNodeResponseType = z.infer<typeof PingNodeResponse>;

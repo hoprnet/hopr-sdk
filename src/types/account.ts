@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BasePayload, ZodToType } from './general';
+import { BasePayload } from './general';
 
 /**
  * General
@@ -10,7 +10,7 @@ export const AccountResponse = z.object({
   native: z.string()
 });
 
-export type AccountResponseType = ZodToType<typeof AccountResponse>;
+export type AccountResponseType = z.infer<typeof AccountResponse>;
 
 /**
  * withdraw
@@ -22,7 +22,7 @@ export const WithdrawPayload = BasePayload.extend({
   recipient: z.string()
 });
 
-export type WithdrawPayloadType = ZodToType<typeof WithdrawPayload>;
+export type WithdrawPayloadType = z.infer<typeof WithdrawPayload>;
 
 export const WithdrawResponse = z.object({
   receipt: z.string()

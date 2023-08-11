@@ -1,5 +1,4 @@
 import fetch from 'cross-fetch';
-import { APIError } from './error';
 
 export const fetchWithTimeout = (
   apiEndpoint: URL | RequestInfo,
@@ -10,13 +9,15 @@ export const fetchWithTimeout = (
   const promise = fetch(apiEndpoint, {
     ...options,
     signal: controller.signal
-  }).catch(() => {
-    throw new APIError({
-      error: 'TIMEOUT',
-      status: '504'
-    });
+  }).catch((error) => {
+    if (error instanceof Error && error.name === 'AbortError') {
+      // Request was aborted due to the controller signal
+      throw new Error('TIMEOUT');
+    }
+    throw error;
   });
-  // abort promise if it cas not been completed after ms
+  // abort promise if it has not been completed after ms
   const timeout = setTimeout(() => controller.abort(), ms);
+
   return promise.finally(() => clearTimeout(timeout));
 };

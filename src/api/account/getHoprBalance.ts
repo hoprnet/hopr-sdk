@@ -12,14 +12,10 @@ import { getBalances } from './getBalances';
 export const getHoprBalance = async (
   payload: BasePayloadType
 ): Promise<string> => {
-  try {
-    const balances = await getBalances({
-      apiEndpoint: payload.apiEndpoint,
-      apiToken: payload.apiToken,
-      timeout: payload.timeout
-    });
-    return balances.hopr;
-  } catch (APIError) {
-    throw APIError;
-  }
+  const balances = await getBalances({
+    apiEndpoint: payload.apiEndpoint,
+    apiToken: payload.apiToken,
+    timeout: payload.timeout
+  });
+  return balances.hopr;
 };

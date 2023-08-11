@@ -1,9 +1,10 @@
 import {
+  BasePayloadType,
   GetPeersPayloadType,
   PingNodePayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, createLogger } from '../../utils';
+import { createLogger } from '../../utils';
 import { getEntryNodes } from './getEntryNodes';
 import { getInfo } from './getInfo';
 import { getMetrics } from './getMetrics';
@@ -38,111 +39,65 @@ export class NodeAdapter {
     this.timeout = timeout;
   }
 
-  public async getEntryNodes() {
-    try {
-      return await getEntryNodes({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getEntryNodes(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getEntryNodes({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
-  public async getInfo() {
-    try {
-      return await getInfo({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getInfo(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getInfo({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
-  public async getMetrics() {
-    try {
-      return await getMetrics({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getMetrics(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getMetrics({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   public async getPeers(
     payload: RemoveBasicAuthenticationPayloadType<GetPeersPayloadType>
   ) {
-    try {
-      return await getPeers({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        quality: payload.quality
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return getPeers({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      quality: payload.quality
+    });
   }
 
-  public async getVersion() {
-    try {
-      return await getVersion({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getVersion(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getVersion({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   public async pingNode(
     payload: RemoveBasicAuthenticationPayloadType<PingNodePayloadType>
   ) {
-    try {
-      return await pingNode({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return pingNode({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      peerId: payload.peerId
+    });
   }
 }

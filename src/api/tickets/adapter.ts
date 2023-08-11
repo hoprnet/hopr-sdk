@@ -1,4 +1,8 @@
-import { APIError, createLogger } from '../../utils';
+import {
+  BasePayloadType,
+  RemoveBasicAuthenticationPayloadType
+} from '../../types';
+import { createLogger } from '../../utils';
 import { getStatistics } from './getStatistics';
 import { getTickets } from './getTickets';
 import { redeemTickets } from './redeemTickets';
@@ -30,58 +34,37 @@ export class TicketsAdapter {
     this.timeout = timeout;
   }
 
-  public async getStatistics() {
-    try {
-      return await getStatistics({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getStatistics(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getStatistics({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
-  public async getTickets() {
-    try {
-      return await getTickets({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getTickets(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getTickets({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   /**
    * Redeems all the unredeemed HOPR tickets owned by the HOPR node.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
-  public async redeemTickets() {
-    try {
-      return await redeemTickets({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async redeemTickets(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return redeemTickets({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 }

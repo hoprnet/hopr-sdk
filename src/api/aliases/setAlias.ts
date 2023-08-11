@@ -1,5 +1,6 @@
+import { ZodError } from 'zod';
 import {
-  Error,
+  APIErrorResponse,
   RemoveBasicAuthenticationPayloadType,
   SetAliasPayloadType
 } from '../../types';
@@ -23,8 +24,9 @@ export const setAlias = async (
     alias: payload.alias,
     peerId: payload.peerId
   };
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/aliases`,
+    `${apiEndpointParsed}api/v2/aliases`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
@@ -33,16 +35,24 @@ export const setAlias = async (
     payload.timeout
   );
 
+  // received expected response
   if (rawResponse.status === 201) {
     return true;
-  } else if (rawResponse.status > 499) {
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    const jsonResponse = await rawResponse.json();
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
+  // check if response has the structure of an expected api error
+  const jsonResponse = await rawResponse.json();
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the error and it is not unexpected
+  throw new ZodError(isApiErrorResponse.error.issues);
 };

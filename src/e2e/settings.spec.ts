@@ -10,7 +10,7 @@ const { settings } = sdk.api;
 
 describe('settings E2E Tests', function () {
   test("should get all node' settings", async function () {
-    const response = await settings.getSettings();
+    const response = await settings.getSettings({});
 
     expect(response).toStrictEqual({
       includeRecipient: expect.any(Boolean),
@@ -19,14 +19,14 @@ describe('settings E2E Tests', function () {
   });
 
   test('should update the nodes setting values', async function () {
-    const oldSettings = await settings.getSettings();
+    const oldSettings = await settings.getSettings({});
 
     await settings.setSetting({
       setting: 'includeRecipient',
       settingValue: true
     });
 
-    const newSettings = await settings.getSettings();
+    const newSettings = await settings.getSettings({});
     expect(newSettings).toBeDefined();
     expect(newSettings).not.toEqual(oldSettings);
   });

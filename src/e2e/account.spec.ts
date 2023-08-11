@@ -10,7 +10,7 @@ const sdk = new SDK({
 const { account } = sdk.api;
 describe('Account E2E tests', function () {
   it('receives the hopr and native node address', async function () {
-    const response = await account.getAddresses();
+    const response = await account.getAddresses({});
 
     expect(response).toStrictEqual({
       hopr: expect.any(String),
@@ -19,19 +19,19 @@ describe('Account E2E tests', function () {
   });
 
   it('receives the hopr address', async function () {
-    const response = await account.getHoprAddress();
+    const response = await account.getHoprAddress({});
 
     expect(typeof response).toEqual('string');
   });
 
   it('receives the native address', async function () {
-    nativeAddress = (await account.getNativeAddress()) as string;
+    nativeAddress = (await account.getNativeAddress({})) as string;
 
     expect(typeof nativeAddress).toEqual('string');
   });
 
   it('receives the hopr and native balances', async function () {
-    const response = await account.getBalances();
+    const response = await account.getBalances({});
 
     expect(response).toStrictEqual({
       hopr: expect.any(String),
@@ -40,13 +40,13 @@ describe('Account E2E tests', function () {
   });
 
   it('receives the hopr balance', async function () {
-    const response = await account.getHoprBalance();
+    const response = await account.getHoprBalance({});
 
     expect(typeof response).toEqual('string');
   });
 
   it('receives the native balance', async function () {
-    const response = await account.getNativeBalance();
+    const response = await account.getNativeBalance({});
 
     expect(typeof response).toEqual('string');
   });

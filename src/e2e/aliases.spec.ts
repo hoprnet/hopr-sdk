@@ -18,7 +18,7 @@ describe('Alases E2E test', function () {
     peerId = (await new SDK({
       apiEndpoint: HOPRD_API_ENDPOINT_2!,
       apiToken: HOPRD_API_TOKEN!
-    }).api.account.getHoprAddress()) as string;
+    }).api.account.getHoprAddress({})) as string;
 
     const setAliasResponse = await aliases.setAlias({
       peerId: peerId,
@@ -31,7 +31,7 @@ describe('Alases E2E test', function () {
   });
 
   test('gets the aliases set', async function () {
-    const response = await aliases.getAliases();
+    const response = await aliases.getAliases({});
 
     expect(response).toStrictEqual(
       expect.objectContaining({

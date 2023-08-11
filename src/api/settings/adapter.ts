@@ -1,8 +1,9 @@
 import {
+  BasePayloadType,
   RemoveBasicAuthenticationPayloadType,
   SetSettingPayloadType
 } from '../../types';
-import { APIError, createLogger } from '../../utils';
+import { createLogger } from '../../utils';
 import { getSettings } from './getSettings';
 import { setSetting } from './setSetting';
 
@@ -33,41 +34,25 @@ export class SettingsAdapter {
     this.timeout = timeout;
   }
 
-  public async getSettings() {
-    try {
-      return await getSettings({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getSettings(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getSettings({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   public async setSetting(
     payload: RemoveBasicAuthenticationPayloadType<SetSettingPayloadType>
   ) {
-    try {
-      return await setSetting({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        setting: payload.setting,
-        settingValue: payload.settingValue
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return setSetting({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      setting: payload.setting,
+      settingValue: payload.settingValue
+    });
   }
 }

@@ -1,6 +1,7 @@
 import fetch from 'cross-fetch';
-import { Error, type PeerIdPayloadType } from '../../types';
+import { APIErrorResponse, type PeerIdPayloadType } from '../../types';
 import { APIError, getHeaders } from '../../utils';
+import { ZodError } from 'zod';
 
 /**
  * Redeems all the unredeemed HOPR tickets in a channel.
@@ -15,31 +16,33 @@ import { APIError, getHeaders } from '../../utils';
 export const redeemChannelTickets = async (
   payload: PeerIdPayloadType
 ): Promise<boolean> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetch(
-    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/tickets/redeem`,
+    `${apiEndpointParsed}api/v2/channels/${payload.peerId}/tickets/redeem`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken)
     }
   );
 
-  console.log(rawResponse.status);
-  console.log('============= redeemChannelTickets =========');
-
+  // received expected response
   if (rawResponse.status === 204) {
     return true;
-  } else if (rawResponse.status > 499) {
-    // server error that was unexpected
-    console.log(rawResponse);
-    console.log(rawResponse.statusText);
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    const jsonResponse = await rawResponse.json();
-    console.log(jsonResponse);
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
+  // check if response has the structure of an expected api error
+  const jsonResponse = await rawResponse.json();
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the error and it is not unexpected
+  throw new ZodError(isApiErrorResponse.error.issues);
 };

@@ -1,11 +1,12 @@
 import fetch from 'cross-fetch';
 import {
   CloseChannelResponse,
-  CloseChannelResponseType,
-  Error,
-  type CloseChannelPayloadType
+  type CloseChannelResponseType,
+  type CloseChannelPayloadType,
+  APIErrorResponse
 } from '../../types';
 import { APIError, getHeaders } from '../../utils';
+import { ZodError } from 'zod';
 
 /**
  * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId and the direction of the channel.
@@ -18,28 +19,35 @@ import { APIError, getHeaders } from '../../utils';
 export const closeChannel = async (
   payload: CloseChannelPayloadType
 ): Promise<CloseChannelResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetch(
-    `${payload.apiEndpoint}/api/v2/channels/${payload.peerId}/${payload.direction}`,
+    `${apiEndpointParsed}api/v2/channels/${payload.peerId}/${payload.direction}`,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiToken)
     }
   );
 
-  const jsonResponse = await rawResponse.json();
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
 
+  const jsonResponse = await rawResponse.json();
   const parsedRes = CloseChannelResponse.safeParse(jsonResponse);
 
+  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  } else if (rawResponse.status > 499) {
-    // server error that was unexpected
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };

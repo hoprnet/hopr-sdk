@@ -1,9 +1,10 @@
 import {
   AliasPayloadType,
+  BasePayloadType,
   RemoveBasicAuthenticationPayloadType,
   SetAliasPayloadType
 } from '../../types';
-import { APIError, createLogger } from '../../utils';
+import { createLogger } from '../../utils';
 import { getAlias } from './getAlias';
 import { getAliases } from './getAliases';
 import { removeAlias } from './removeAlias';
@@ -43,21 +44,14 @@ export class AliasesAdapter {
    *
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
-  public async getAliases(): Promise<Record<string, string> | undefined> {
-    try {
-      return await getAliases({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getAliases(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ): Promise<Record<string, string> | undefined> {
+    return getAliases({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   /**
@@ -71,22 +65,13 @@ export class AliasesAdapter {
   public async setAlias(
     payload: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType>
   ): Promise<boolean | undefined> {
-    try {
-      return await setAlias({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        alias: payload.alias,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return setAlias({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      alias: payload.alias,
+      peerId: payload.peerId
+    });
   }
 
   /**
@@ -98,21 +83,12 @@ export class AliasesAdapter {
   public async getAlias(
     payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
   ): Promise<string | undefined> {
-    try {
-      return await getAlias({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        alias: payload.alias
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return getAlias({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      alias: payload.alias
+    });
   }
 
   /**
@@ -124,20 +100,11 @@ export class AliasesAdapter {
   public async removeAlias(
     payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
   ): Promise<boolean | undefined> {
-    try {
-      return await removeAlias({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        alias: payload.alias
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return removeAlias({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      alias: payload.alias
+    });
   }
 }

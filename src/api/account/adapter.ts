@@ -1,8 +1,9 @@
 import {
+  BasePayloadType,
   RemoveBasicAuthenticationPayloadType,
   WithdrawPayloadType
 } from '../../types';
-import { APIError, createLogger } from '../../utils';
+import { createLogger } from '../../utils';
 import { getAddresses } from './getAddresses';
 import { getBalances } from './getBalances';
 import { getHoprAddress } from './getHoprAddress';
@@ -44,126 +45,84 @@ export class AccountAdapter {
    * Gets the HOPR and native addresses associated to the node.
    * @returns — A promise that resolves with an object containing the HOPR and native addresses.
    */
-  public async getAddresses() {
-    try {
-      return await getAddresses({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status, stack } = e;
-        log.error({ status, error, message, stack });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getAddresses(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getAddresses({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   /**
    * Fetches the HOPR and native balances of the node.
    * @returns — A Promise that resolves with an object containing the HOPR and native balances.
    */
-  public async getBalances() {
-    try {
-      return await getBalances({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status, stack } = e;
-        log.error({ status, error, message, stack });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getBalances(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getBalances({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   /**
    * Gets the HOPR address associated to the node.
    * @returns — A Promise that resolves to the HOPR address.
    */
-  public async getHoprAddress() {
-    try {
-      return await getHoprAddress({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status, stack } = e;
-        log.error({ status, error, message, stack });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getHoprAddress(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getHoprAddress({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   /**
    * Gets the HOPR balance associated to the node.
    * @returns — A Promise that resolves to a string representing the HOPR balance.
    */
-  public async getHoprBalance() {
-    try {
-      return await getHoprBalance({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status, stack } = e;
-        log.error({ status, error, message, stack });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getHoprBalance(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getHoprBalance({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   /**
    * Gets the native blockchain address associated to the node.
    * @returns — A Promise that resolves to the native address.
    */
-  public async getNativeAddress() {
-    try {
-      return await getNativeAddress({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status, stack } = e;
-        log.error({ status, error, message, stack });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getNativeAddress(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getNativeAddress({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   /**
    * Gets the native blockchain balance associated to the node.
    * @returns — A Promise that resolves with a string representing the native balance.
    */
-  public async getNativeBalance() {
-    try {
-      return await getNativeBalance({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status, stack } = e;
-        log.error({ status, error, message, stack });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getNativeBalance(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getNativeBalance({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
   /**
    * Withdraw the given currency amount to the specified recipient address.
@@ -174,20 +133,11 @@ export class AccountAdapter {
   public async withdraw(
     payload: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType>
   ) {
-    try {
-      return await withdraw({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout,
-        ...payload
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status, stack } = e;
-        log.error({ status, error, message, stack });
-      } else {
-        log.error(e);
-      }
-    }
+    return withdraw({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: this.timeout,
+      ...payload
+    });
   }
 }

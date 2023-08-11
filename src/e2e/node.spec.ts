@@ -15,7 +15,7 @@ const SDK2 = new SDK({
 });
 describe('Node E2E Tests', function () {
   test('should gets release version of the running node', async function () {
-    const version = await node.getVersion();
+    const version = await node.getVersion({});
 
     expect(typeof version).toBe('string');
   });
@@ -56,13 +56,13 @@ describe('Node E2E Tests', function () {
   });
 
   test('should get prometheus metrics from the node', async function () {
-    const metrics = await node.getMetrics();
+    const metrics = await node.getMetrics({});
 
     expect(typeof metrics).toBe('string');
   });
 
   test('should get the nodes info', async function () {
-    const info = await node.getInfo();
+    const info = await node.getInfo({});
 
     expect(info).toStrictEqual({
       environment: expect.any(String),
@@ -80,7 +80,7 @@ describe('Node E2E Tests', function () {
   });
 
   test('should get a list of known entry nodes', async function () {
-    const entryNodes = await node.getEntryNodes();
+    const entryNodes = await node.getEntryNodes({});
 
     // Since there are many objects with string keys, we will only compare the contents of the first one
     const firstKey = Object.keys(entryNodes!)[0] as string;
@@ -94,7 +94,7 @@ describe('Node E2E Tests', function () {
   });
 
   test('should get the latency of the node specified', async function () {
-    const peerId = (await SDK2.api.account.getHoprAddress()) as string;
+    const peerId = (await SDK2.api.account.getHoprAddress({})) as string;
     const response = await node.pingNode({ peerId: peerId });
 
     expect(response).toStrictEqual({

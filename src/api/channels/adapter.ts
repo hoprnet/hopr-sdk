@@ -1,4 +1,5 @@
 import {
+  BasePayloadType,
   CloseChannelPayloadType,
   FundChannelsPayloadType,
   GetChannelPayloadType,
@@ -6,11 +7,12 @@ import {
   PeerIdPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, createLogger } from '../../utils';
+import { createLogger } from '../../utils';
 import { closeChannel } from './closeChannel';
 import { fundChannels } from './fundChannels';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
+import { getChannelsWithFullTopology } from './getChannelsWithFullTopology';
 import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
@@ -49,82 +51,55 @@ export class ChannelsAdapter {
   public async closeChannel(
     payload: RemoveBasicAuthenticationPayloadType<CloseChannelPayloadType>
   ) {
-    try {
-      return await closeChannel({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        direction: payload.direction,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return closeChannel({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      ...payload
+    });
   }
 
   public async fundChannels(
     payload: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType>
   ) {
-    try {
-      return await fundChannels({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        incomingAmount: payload.incomingAmount,
-        outgoingAmount: payload.outgoingAmount,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return fundChannels({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: this.timeout,
+      ...payload
+    });
   }
 
-  public async getChannels() {
-    try {
-      return await getChannels({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: this.timeout
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+  public async getChannels(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getChannels({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
+  }
+
+  public async getChannelsWithFullTopology(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getChannelsWithFullTopology({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
   }
 
   public async getChannel(
     payload: RemoveBasicAuthenticationPayloadType<GetChannelPayloadType>
   ) {
-    try {
-      return await getChannel({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        direction: payload.direction,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return getChannel({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout,
+      direction: payload.direction,
+      peerId: payload.peerId
+    });
   }
 
   /**
@@ -134,42 +109,24 @@ export class ChannelsAdapter {
   public async openChannel(
     payload: RemoveBasicAuthenticationPayloadType<OpenChannelPayloadType>
   ) {
-    try {
-      return await openChannel({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        amount: payload.amount,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return openChannel({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout,
+      amount: payload.amount,
+      peerId: payload.peerId
+    });
   }
 
   public async getChannelTickets(
     payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>
   ) {
-    try {
-      return await getChannelTickets({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return getChannelTickets({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout,
+      peerId: payload.peerId
+    });
   }
 
   /**
@@ -179,20 +136,11 @@ export class ChannelsAdapter {
   public async redeemChannelTickets(
     payload: RemoveBasicAuthenticationPayloadType<PeerIdPayloadType>
   ) {
-    try {
-      return await redeemChannelTickets({
-        apiToken: this.apiToken,
-        apiEndpoint: this.apiEndpoint,
-        timeout: this.timeout,
-        peerId: payload.peerId
-      });
-    } catch (e) {
-      if (e instanceof APIError) {
-        const { message, error, status } = e;
-        log.error({ status, error, message });
-      } else {
-        log.error(e);
-      }
-    }
+    return redeemChannelTickets({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout,
+      peerId: payload.peerId
+    });
   }
 }

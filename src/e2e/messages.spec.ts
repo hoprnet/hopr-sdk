@@ -20,7 +20,7 @@ describe('Messages E2E Tests', function () {
       apiEndpoint: HOPRD_API_ENDPOINT_2!,
       apiToken: HOPRD_API_TOKEN!
     });
-    node2Address = (await sdk2.api.account.getHoprAddress()) as string;
+    node2Address = (await sdk2.api.account.getHoprAddress({})) as string;
     wsSdk = (await sdk2.api.messages.websocket()) as unknown as WebSocket;
   });
 

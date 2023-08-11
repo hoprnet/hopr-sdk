@@ -1,5 +1,6 @@
+import { ZodError } from 'zod';
 import {
-  Error,
+  APIErrorResponse,
   GetPeersPayloadType,
   GetPeersResponse,
   GetPeersResponseType
@@ -9,13 +10,14 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getPeers = async (
   payload: GetPeersPayloadType
 ): Promise<GetPeersResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
     payload?.quality
-      ? `${payload.apiEndpoint}/api/v2/node/peers?` +
+      ? `${apiEndpointParsed}api/v2/node/peers?` +
           new URLSearchParams({
             quality: (payload.quality ?? 0).toString()
           })
-      : `${payload.apiEndpoint}/api/v2/node/peers`,
+      : `${apiEndpointParsed}api/v2/node/peers`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -23,20 +25,26 @@ export const getPeers = async (
     payload.timeout
   );
 
-  const jsonResponse = await rawResponse.json();
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
 
+  const jsonResponse = await rawResponse.json();
   const parsedRes = GetPeersResponse.safeParse(jsonResponse);
 
+  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
-  } else if (rawResponse.status > 499) {
-    // server error that was unexpected
-    throw new APIError({
-      status: rawResponse.status.toString(),
-      error: rawResponse.statusText
-    });
-  } else {
-    // response is neither successful nor unexpected
-    throw new APIError(Error.parse(jsonResponse));
   }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };
