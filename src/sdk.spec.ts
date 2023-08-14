@@ -2,6 +2,11 @@ import nock from 'nock';
 import { HoprSDK } from './sdk';
 
 describe('test sdk class', function () {
+  afterEach(() => {
+    nock.abortPendingRequests();
+    nock.cleanAll();
+  });
+
   it('should be able to overwrite timeout', async function () {
     const apiEndpoint = new URL('https://example.com');
     const apiToken = 'token';
