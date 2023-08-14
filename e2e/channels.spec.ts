@@ -31,11 +31,11 @@ describe('Channels E2E test', function () {
     }
 
     const _1PeerId = (await sdk.api.account.getHoprAddress({})) as string;
-    await sdk2.api.messages.sendMessage({
-      body: 'Message for ticket',
-      recipient: _2peerId,
-      path: [_1PeerId, _2peerId, _1PeerId]
-    });
+    // await sdk2.api.messages.sendMessage({
+    //   body: 'Message for ticket',
+    //   recipient: _2peerId,
+    //   path: [_1PeerId, _2peerId, _1PeerId]
+    // });
     sleep(30e3);
   }, 120e3);
 

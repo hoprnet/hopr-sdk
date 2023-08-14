@@ -20,6 +20,7 @@ export const getChannels = async (
     payload.timeout
   );
 
+  console.log('GETCHANNELS', rawResponse);
   // received unexpected error from server
   if (rawResponse.status > 499) {
     throw new Error(rawResponse.statusText);
@@ -30,6 +31,7 @@ export const getChannels = async (
 
   // received expected response
   if (parsedRes.success) {
+    console.log('Success getChannels');
     return parsedRes.data;
   }
 
@@ -37,6 +39,7 @@ export const getChannels = async (
   const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
+    console.log(JSON.stringify(isApiErrorResponse.data));
     throw new APIError(isApiErrorResponse.data);
   }
 
