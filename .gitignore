@@ -50,4 +50,4 @@ dist
 .vscode
 
 # e2e env file
-!/src/e2e/.env
+!/e2e/.env
