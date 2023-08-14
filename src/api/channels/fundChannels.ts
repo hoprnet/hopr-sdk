@@ -28,8 +28,7 @@ export const fundChannels = async (
     payload.timeout
   );
 
-  console.log("fundChannel", rawResponse)
-
+  console.log('fundChannel', rawResponse);
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
@@ -41,7 +40,7 @@ export const fundChannels = async (
 
   // received expected response
   if (parsedRes.success) {
-    console.log("success fundChannel")
+    console.log('success fundChannel');
 
     return parsedRes.data;
   }
@@ -50,7 +49,7 @@ export const fundChannels = async (
   const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    console.log(JSON.stringify(isApiErrorResponse.data))
+    console.log(JSON.stringify(isApiErrorResponse.data));
     throw new APIError(isApiErrorResponse.data);
   }
 
