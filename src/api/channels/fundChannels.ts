@@ -28,7 +28,6 @@ export const fundChannels = async (
     payload.timeout
   );
 
-
   // received unexpected error from server
   if (rawResponse.status > 499) {
     throw new Error(rawResponse.statusText);
