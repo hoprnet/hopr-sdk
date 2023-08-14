@@ -25,8 +25,10 @@ set -a # automatically export all variables
 source "$DIR"/.env
 set +a
 
+sleep 10
+
 # Run tests with env variables
-npx jest "$DIR" --config jest.config.js --runInBand
+npx jest "$DIR" --config jest.config.js
 # echo "Started"
 
 # After tests exit tear down setup
