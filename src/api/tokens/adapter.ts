@@ -1,4 +1,5 @@
 import {
+  BasePayloadType,
   CreateTokenPayloadType,
   DeleteTokenPayloadType,
   RemoveBasicAuthenticationPayloadType
@@ -55,7 +56,7 @@ export class TokensAdapter {
     return createToken({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       capabilities: payload.capabilities,
       description: payload.description,
       lifetime: payload.lifetime
@@ -75,7 +76,7 @@ export class TokensAdapter {
     return deleteToken({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       id: payload.id
     });
   }
@@ -85,11 +86,13 @@ export class TokensAdapter {
    *
    * @returns A Promise that resolves to an object with the token info.
    */
-  public async getToken() {
+  public async getToken(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getToken({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 }

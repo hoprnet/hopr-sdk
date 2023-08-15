@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  pluto:
+    image: gcr.io/hoprassociation/hopr-pluto:${HOPR_PLUTO_VERSION}
+    restart: unless-stopped
+    volumes:
+      - pluto-data:/tmp
+    ports:
+      # mapping admin and api ports to localhost for app developers to access
+      # the admin UI more easily
+      - "13301-13305:13301-13305"
+      - "19501-19505:19501-19505"
+      # local RPC port
+      - "8545:8545"
+    environment:
+      - HOPRD_API_TOKEN=${HOPRD_API_TOKEN}
+
+volumes:
+  # hoprd node identity files
+  pluto-data: # exit node identity file

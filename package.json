@@ -1,6 +1,6 @@
 {
   "name": "@hoprnet/hopr-sdk",
-  "version": "0.0.1-alpha.11",
+  "version": "0.0.1-alpha.14",
   "description": "A SDK for HOPRd's Rest API functions",
   "author": "HOPR Association",
   "license": "GPL-3.0",
@@ -36,6 +36,7 @@
     "format": "prettier --check \"src/**/*.{ts,md}\"",
     "format:fix": "prettier --write \"src/**/*.{ts,md}\"",
     "test": "jest",
+    "test:e2e": "bash e2e/start.sh",
     "docs": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-zod --hideBreadcrumbs",
     "publish": "tsup & npm publish"
   },

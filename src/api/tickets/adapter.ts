@@ -1,3 +1,7 @@
+import {
+  BasePayloadType,
+  RemoveBasicAuthenticationPayloadType
+} from '../../types';
 import { createLogger } from '../../utils';
 import { getStatistics } from './getStatistics';
 import { getTickets } from './getTickets';
@@ -30,19 +34,23 @@ export class TicketsAdapter {
     this.timeout = timeout;
   }
 
-  public async getStatistics() {
+  public async getStatistics(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getStatistics({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
-  public async getTickets() {
+  public async getTickets(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getTickets({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -50,11 +58,13 @@ export class TicketsAdapter {
    * Redeems all the unredeemed HOPR tickets owned by the HOPR node.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
-  public async redeemTickets() {
+  public async redeemTickets(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return redeemTickets({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 }

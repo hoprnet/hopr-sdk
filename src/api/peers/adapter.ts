@@ -51,7 +51,7 @@ export class PeersAdapter {
     return pingPeer({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       peerId: payload.peerId
     });
   }

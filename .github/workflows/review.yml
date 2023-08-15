@@ -37,6 +37,45 @@ jobs:
         shell: bash
         run: yarn build
 
+      - name: Review formatting
+        run: yarn format
+
+      - name: Review linting
+        run: yarn lint
+
+      - name: Run tests and coverage
+        run: yarn test --ci
+
+  # Run E2E tests
+  E2E:
+    name: E2E tests
+    needs: review
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./yarn.lock
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install dependencies
+        shell: bash
+        run: yarn
+
+      - name: Build
+        shell: bash
+        run: yarn build
+
+      - name: Run E2E
+        shell: bash
+        run: yarn test:e2e
+
   # Run publish if pr title includes [RELEASE]
   publish:
     needs: review

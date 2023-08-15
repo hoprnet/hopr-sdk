@@ -1,4 +1,5 @@
 import {
+  BasePayloadType,
   RemoveBasicAuthenticationPayloadType,
   SetSettingPayloadType
 } from '../../types';
@@ -33,11 +34,13 @@ export class SettingsAdapter {
     this.timeout = timeout;
   }
 
-  public async getSettings() {
+  public async getSettings(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getSettings({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -47,7 +50,7 @@ export class SettingsAdapter {
     return setSetting({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       setting: payload.setting,
       settingValue: payload.settingValue
     });

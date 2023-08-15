@@ -1,4 +1,5 @@
 import {
+  BasePayloadType,
   RemoveBasicAuthenticationPayloadType,
   WithdrawPayloadType
 } from '../../types';
@@ -44,11 +45,13 @@ export class AccountAdapter {
    * Gets the HOPR and native addresses associated to the node.
    * @returns — A promise that resolves with an object containing the HOPR and native addresses.
    */
-  public async getAddresses() {
+  public async getAddresses(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getAddresses({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -56,11 +59,13 @@ export class AccountAdapter {
    * Fetches the HOPR and native balances of the node.
    * @returns — A Promise that resolves with an object containing the HOPR and native balances.
    */
-  public async getBalances() {
+  public async getBalances(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getBalances({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -68,11 +73,13 @@ export class AccountAdapter {
    * Gets the HOPR address associated to the node.
    * @returns — A Promise that resolves to the HOPR address.
    */
-  public async getHoprAddress() {
+  public async getHoprAddress(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getHoprAddress({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -80,11 +87,13 @@ export class AccountAdapter {
    * Gets the HOPR balance associated to the node.
    * @returns — A Promise that resolves to a string representing the HOPR balance.
    */
-  public async getHoprBalance() {
+  public async getHoprBalance(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getHoprBalance({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -92,11 +101,13 @@ export class AccountAdapter {
    * Gets the native blockchain address associated to the node.
    * @returns — A Promise that resolves to the native address.
    */
-  public async getNativeAddress() {
+  public async getNativeAddress(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getNativeAddress({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
@@ -104,11 +115,13 @@ export class AccountAdapter {
    * Gets the native blockchain balance associated to the node.
    * @returns — A Promise that resolves with a string representing the native balance.
    */
-  public async getNativeBalance() {
+  public async getNativeBalance(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
     return getNativeBalance({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout
+      timeout: payload.timeout ?? this.timeout
     });
   }
   /**

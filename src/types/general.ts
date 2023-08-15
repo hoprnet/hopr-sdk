@@ -30,4 +30,4 @@ export type BasePayloadType = z.infer<typeof BasePayload>;
  * @typeparam T - The payload type from which to remove the properties.
  */
 export type RemoveBasicAuthenticationPayloadType<T extends BasePayloadType> =
-  Pick<T, Exclude<keyof T, 'apiEndpoint' | 'apiToken' | 'timeout'>>;
+  Pick<T, Exclude<keyof T, 'apiEndpoint' | 'apiToken'>>;
