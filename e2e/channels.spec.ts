@@ -21,15 +21,8 @@ describe('Channels E2E test', function () {
     _2peerId = (await sdk2.api.account.getHoprAddress({})) as string;
 
     // Since `pluto` opens the channels already there's no need to "re-open" them
-    // const openChannelResponse = await channels.openChannel({
-    //   peerId: _2peerId,
-    //   amount: '10000000'
-    // });
 
-    // if (typeof openChannelResponse === undefined) {
-    //   throw new Error('Could not open a channel between 2 nodes');
-    // }
-
+    // In order to artfifitially create tickets we need to send a message through the desired node
     // const _1PeerId = (await sdk.api.account.getHoprAddress({})) as string;
     // await sdk2.api.messages.sendMessage({
     //   body: 'Message for ticket',

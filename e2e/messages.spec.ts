@@ -24,6 +24,7 @@ describe('Messages E2E Tests', function () {
   //   wsSdk = (await sdk2.api.messages.websocket()) as unknown as WebSocket;
   // });
 
+  // The message never arrives so it stalls all the tests from this file
   // test('sends a message to another peer', async function () {
   //   let receivedMessage: string | undefined;
   //   wsSdk.onmessage = (event) => {
