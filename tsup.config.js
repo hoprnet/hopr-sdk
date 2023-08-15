@@ -5,7 +5,7 @@ export default defineConfig({
   clean: true,
   dts: true,
   bundle: false,
-  entry: ['src', '!src/**/*.spec.*'],
+  entry: ['src', '!src/**/*.spec.*', "!src/**/*.sh", "!src/**/*.yml"],
   target: 'es2015',
   outDir: 'dist'
 });

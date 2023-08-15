@@ -34,7 +34,8 @@
     "pack": "tsup && yarn pack",
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
-    "test": "jest",
+    "test": "jest src/",
+    "test:e2e": "bash e2e/start.sh",
     "docs": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-zod --hideBreadcrumbs",
     "publish": "tsup & npm publish"
   },
