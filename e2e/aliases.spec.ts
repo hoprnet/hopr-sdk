@@ -9,7 +9,7 @@ const sdk = new SDK({
 });
 const { aliases } = sdk.api;
 
-describe('Alases E2E test', function () {
+describe('Aliases E2E test', function () {
   let peerId: string;
   const testAlias = 'NodeTest';
 
