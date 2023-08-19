@@ -7,7 +7,7 @@ const sdk = new SDK({
   apiEndpoint: HOPRD_API_ENDPOINT_1!,
   apiToken: HOPRD_API_TOKEN!
 });
-const { peerInfo } = sdk.api;
+const { peers } = sdk.api;
 
 const sdk2 = new SDK({
   apiEndpoint: HOPRD_API_ENDPOINT_2!,
@@ -17,11 +17,20 @@ const sdk2 = new SDK({
 describe('peerInfo E2E Tests', function () {
   test('should get information about this peer', async function () {
     const peerId = (await sdk2.api.account.getHoprAddress({})) as string;
-    const response = await peerInfo.getPeerInfo({ peerId });
+    const response = await peers.getPeer({ peerId });
 
     expect(response).toStrictEqual({
       announced: expect.any(Array<String>),
       observed: expect.any(Array<String>)
+    });
+  });
+
+  test('should get the latency of the node specified', async function () {
+    const peerId = (await sdk2.api.account.getHoprAddress({})) as string;
+    const response = await sdk.api.peers.pingPeer({ peerId: peerId });
+
+    expect(response).toStrictEqual({
+      latency: expect.any(Number)
     });
   });
 });

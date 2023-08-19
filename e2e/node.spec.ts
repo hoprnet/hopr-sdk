@@ -92,13 +92,4 @@ describe('Node E2E Tests', function () {
       })
     );
   });
-
-  test('should get the latency of the node specified', async function () {
-    const peerId = (await SDK2.api.account.getHoprAddress({})) as string;
-    const response = await node.pingNode({ peerId: peerId });
-
-    expect(response).toStrictEqual({
-      latency: expect.any(Number)
-    });
-  });
 });
