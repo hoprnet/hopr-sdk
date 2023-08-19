@@ -16,7 +16,8 @@
     },
     "./types": "./dist/types/index.js",
     "./api": "./dist/api/index.js",
-    "./utils": "./dist/utils/index.js"
+    "./utils": "./dist/utils/index.js",
+    "./web3": "./dist/web3/index.js"
   },
   "repository": "git@github.com:hoprnet/hopr-sdk.git",
   "keywords": [
