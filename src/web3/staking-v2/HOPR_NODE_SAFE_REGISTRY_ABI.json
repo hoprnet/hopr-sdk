@@ -16,7 +16,7 @@
     },
     {
         "inputs": [],
-        "name": "NotSafeOwnerNorNode",
+        "name": "NodeNotModuleMember",
         "type": "error"
     },
     {
