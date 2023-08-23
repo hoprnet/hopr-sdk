@@ -69,7 +69,7 @@ export class MessagesAdapter {
     return deleteMessages({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       tag: payload.tag
     });
   }
@@ -80,7 +80,7 @@ export class MessagesAdapter {
     return getMessagesSize({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       tag: payload.tag
     });
   }
@@ -91,7 +91,7 @@ export class MessagesAdapter {
     return popMessage({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       tag: payload.tag
     });
   }
@@ -102,7 +102,7 @@ export class MessagesAdapter {
     return popAllMessages({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       tag: payload.tag
     });
   }
