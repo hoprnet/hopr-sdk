@@ -6,7 +6,7 @@ const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const CURRENCY = 'NATIVE';
 const AMOUNT = '1337';
-const RECIPIENT = '1.339446426793328e+48';
+const ETHEREUM_ADDRESS = '1.339446426793328e+48';
 
 describe('withdraw function', () => {
   afterEach(() => {
@@ -25,7 +25,7 @@ describe('withdraw function', () => {
       apiEndpoint: API_ENDPOINT,
       currency: CURRENCY,
       amount: AMOUNT,
-      recipient: RECIPIENT
+      ethereumAddress: ETHEREUM_ADDRESS
     });
 
     expect(actualResult).toEqual(expectedReceipt);
@@ -44,7 +44,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        recipient: RECIPIENT
+        ethereumAddress: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(APIError);
   });
@@ -64,7 +64,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        recipient: RECIPIENT
+        ethereumAddress: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(APIError);
   });
@@ -84,7 +84,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        recipient: RECIPIENT
+        ethereumAddress: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(APIError);
   });
@@ -102,7 +102,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        recipient: RECIPIENT
+        ethereumAddress: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(APIError);
   });

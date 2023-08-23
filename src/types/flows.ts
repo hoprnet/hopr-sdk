@@ -19,7 +19,7 @@ export type GetOutgoingChannelsPayloadType = z.infer<
  * CashOut
  */
 export const CashOutPayload = BasePayload.extend({
-  recipient: z.string()
+  ethereumAddress: z.string()
 });
 
 export type CashOutPayloadType = z.infer<typeof CashOutPayload>;

@@ -1,6 +1,6 @@
 import { OpenMultipleChannelsPayloadType } from '../types/flows';
 import { openChannel } from '../api/channels';
-import { getBalances, withdraw } from '../api/account';
+import { getBalances } from '../api/account';
 import { createLogger } from '../utils';
 
 const log = createLogger('flows', 'openMultipleChannels');

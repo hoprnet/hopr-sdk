@@ -24,7 +24,7 @@ describe('cashOut', function () {
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      recipient: 'vitalik.eth'
+      ethereumAddress: 'vitalik.eth'
     });
 
     expect(res.hopr).toEqual(undefined);
@@ -44,13 +44,13 @@ describe('cashOut', function () {
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      recipient: 'vitalik.eth'
+      ethereumAddress: 'vitalik.eth'
     });
 
     expect(res.hopr).toEqual(expectedReceipt);
     expect(res.native).toEqual(expectedReceipt);
     expect(
-      (account.withdraw as jest.Mock).mock.calls.at(0)?.at(0)?.recipient
+      (account.withdraw as jest.Mock).mock.calls.at(0)?.at(0)?.ethereumAddress
     ).toEqual('vitalik.eth');
     expect((account.withdraw as jest.Mock).mock.calls.length).toEqual(2);
   });
