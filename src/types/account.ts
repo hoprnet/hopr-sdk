@@ -33,7 +33,7 @@ export type GetAddressesResponseType = z.infer<typeof GetAddressesResponse>;
 export const WithdrawPayload = BasePayload.extend({
   currency: z.enum(['NATIVE', 'HOPR']),
   amount: z.string(),
-  recipient: z.string()
+  ethereumAddress: z.string()
 });
 
 export type WithdrawPayloadType = z.infer<typeof WithdrawPayload>;

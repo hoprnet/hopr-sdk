@@ -21,7 +21,7 @@ export const withdraw = async (
   const body: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType> = {
     amount: payload.amount,
     currency: payload.currency,
-    recipient: payload.recipient
+    ethereumAddress: payload.ethereumAddress
   };
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetch(
