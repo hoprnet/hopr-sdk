@@ -92,7 +92,7 @@ export class ChannelsAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       amount: payload.amount,
-      peerId: payload.peerId
+      peerAddress: payload.peerAddress
     });
   }
 

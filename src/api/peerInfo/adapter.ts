@@ -2,9 +2,9 @@ import {
   PingPeerPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { pingPeer } from './pingPeer';
+import { getPeer } from './getPeer';
 
-export class PeersAdapter {
+export class PeerInfoAdapter {
   private apiEndpoint: string;
   private apiToken: string;
   private timeout: number | undefined;
@@ -29,10 +29,10 @@ export class PeersAdapter {
     this.timeout = timeout;
   }
 
-  public async pingPeer(
+  public async getPeer(
     payload: RemoveBasicAuthenticationPayloadType<PingPeerPayloadType>
   ) {
-    return pingPeer({
+    return getPeer({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout,

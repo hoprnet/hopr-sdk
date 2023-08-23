@@ -4,6 +4,7 @@ import { deleteMessages } from './deleteMessages';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+const TAG = 8080;
 
 describe('test deleteMessages', () => {
   afterEach(() => {
@@ -15,7 +16,8 @@ describe('test deleteMessages', () => {
 
     const response = await deleteMessages({
       apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT
+      apiEndpoint: API_ENDPOINT,
+      tag: TAG
     });
 
     expect(response).toBe(true);
@@ -43,7 +45,8 @@ describe('test deleteMessages', () => {
     await expect(
       deleteMessages({
         apiToken: 'api-token',
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -58,7 +61,8 @@ describe('test deleteMessages', () => {
     await expect(
       deleteMessages({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -70,7 +74,8 @@ describe('test deleteMessages', () => {
     await expect(
       deleteMessages({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });

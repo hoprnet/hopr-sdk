@@ -22,7 +22,7 @@ export const openChannel = async (
 ): Promise<OpenChannelResponseType> => {
   const body: RemoveBasicAuthenticationPayloadType<OpenChannelPayloadType> = {
     amount: payload.amount,
-    peerId: payload.peerId
+    peerAddress: payload.peerAddress
   };
 
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;

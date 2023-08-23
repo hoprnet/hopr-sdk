@@ -9,6 +9,7 @@ import { popAllMessages } from './popAllMessages';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+const TAG = 8080;
 
 describe('test popAllMessages', () => {
   afterEach(() => {
@@ -30,7 +31,8 @@ describe('test popAllMessages', () => {
 
     const response = await popAllMessages({
       apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT
+      apiEndpoint: API_ENDPOINT,
+      tag: TAG
     });
 
     expect(response.messages.at(0)?.tag).toBe(12);
@@ -71,7 +73,8 @@ describe('test popAllMessages', () => {
     await expect(
       popAllMessages({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -88,7 +91,8 @@ describe('test popAllMessages', () => {
     await expect(
       popAllMessages({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -102,7 +106,8 @@ describe('test popAllMessages', () => {
     await expect(
       popAllMessages({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });

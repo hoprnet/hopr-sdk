@@ -5,6 +5,7 @@ import { getMessagesSize } from './getMessagesSize';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+const TAG = 8080;
 
 describe('test getMessagesSize', () => {
   afterEach(() => {
@@ -20,7 +21,8 @@ describe('test getMessagesSize', () => {
 
     const response = await getMessagesSize({
       apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT
+      apiEndpoint: API_ENDPOINT,
+      tag: TAG
     });
 
     expect(response.size).toBe(1011);
@@ -53,7 +55,8 @@ describe('test getMessagesSize', () => {
     await expect(
       getMessagesSize({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -68,7 +71,8 @@ describe('test getMessagesSize', () => {
     await expect(
       getMessagesSize({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -80,7 +84,8 @@ describe('test getMessagesSize', () => {
     await expect(
       getMessagesSize({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });

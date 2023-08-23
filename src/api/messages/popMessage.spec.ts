@@ -5,6 +5,7 @@ import { popMessage } from './popMessage';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+const TAG = 8080;
 
 describe('test popMessage', () => {
   afterEach(() => {
@@ -22,7 +23,8 @@ describe('test popMessage', () => {
 
     const response = await popMessage({
       apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT
+      apiEndpoint: API_ENDPOINT,
+      tag: TAG
     });
 
     expect(response.tag).toBe(12);
@@ -39,7 +41,8 @@ describe('test popMessage', () => {
     await expect(
       popMessage({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -54,7 +57,8 @@ describe('test popMessage', () => {
     await expect(
       popMessage({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });
@@ -66,7 +70,8 @@ describe('test popMessage', () => {
     await expect(
       popMessage({
         apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
+        apiEndpoint: API_ENDPOINT,
+        tag: TAG
       })
     ).rejects.toThrow(APIError);
   });

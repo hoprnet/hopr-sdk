@@ -1,18 +1,18 @@
+import nock from 'nock';
 import { APIError } from '../../utils';
 import { sendMessage } from './sendMessage';
-import nock from 'nock';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const TAG = 8;
 const BODY = 'Hello';
-const RECIPIENT = '16Uiu2HAm2SF8EdwwUaaSoYTiZSddnG4hLVF7dizh32QFTNWMic2b';
+const PEER_ADDRESS = '16Uiu2HAm2SF8EdwwUaaSoYTiZSddnG4hLVF7dizh32QFTNWMic2b';
 const PATH = ['16Uiu2HAm1uV82HyD1iJ5DmwJr4LftmJUeMfj8zFypBRACmrJc16n'];
 const HOPS = 3;
 
 const PAYLOAD = {
   body: BODY,
-  recipient: RECIPIENT,
+  peerAddress: PEER_ADDRESS,
   path: PATH,
   hops: HOPS,
   tag: TAG
@@ -27,7 +27,7 @@ describe('sendMessage', () => {
     nock(API_ENDPOINT)
       .post('/api/v3/messages', {
         body: BODY,
-        recipient: RECIPIENT,
+        peerAddress: PEER_ADDRESS,
         path: PATH,
         tag: TAG
       })
@@ -37,7 +37,7 @@ describe('sendMessage', () => {
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
       body: BODY,
-      recipient: RECIPIENT,
+      peerAddress: PEER_ADDRESS,
       path: PATH,
       tag: TAG
     });
@@ -48,8 +48,8 @@ describe('sendMessage', () => {
     nock(API_ENDPOINT)
       .post('/api/v3/messages', {
         body: BODY,
-        recipient: RECIPIENT,
-        hops: HOPS,
+        peerAddress: PEER_ADDRESS,
+        path: PATH,
         tag: TAG
       })
       .reply(202, 'challenge-token');
@@ -58,7 +58,7 @@ describe('sendMessage', () => {
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
       body: BODY,
-      recipient: RECIPIENT,
+      peerAddress: PEER_ADDRESS,
       hops: HOPS,
       tag: TAG
     });
@@ -79,7 +79,7 @@ describe('sendMessage', () => {
         apiToken: 'api-token',
         apiEndpoint: API_ENDPOINT,
         body: BODY,
-        recipient: RECIPIENT,
+        peerAddress: PEER_ADDRESS,
         path: PATH,
         hops: HOPS,
         tag: TAG
@@ -101,7 +101,7 @@ describe('sendMessage', () => {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         body: BODY,
-        recipient: RECIPIENT,
+        peerAddress: PEER_ADDRESS,
         path: PATH,
         hops: HOPS,
         tag: TAG
@@ -120,7 +120,7 @@ describe('sendMessage', () => {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         body: BODY,
-        recipient: RECIPIENT,
+        peerAddress: PEER_ADDRESS,
         path: PATH,
         hops: HOPS,
         tag: TAG

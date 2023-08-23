@@ -18,31 +18,17 @@ export const ReceivedMessage = z.object({
 export const SendMessagePayload = BasePayload.extend({
   tag: z.number().nonnegative(),
   body: z.string(),
-  recipient: z.string(),
-  path: z.array(z.string()).optional(),
+  peerAddress: z.string(),
+  path: z.array(z.string()).min(1).max(3).optional(),
   hops: z.number().min(1).max(3).optional()
 });
 
 export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;
 
-/** Get Messages */
-
-export const GetMessagesPayload = BasePayload.extend({
-  tag: z.number().optional()
-});
-
-export type GetMessagesPayloadType = z.infer<typeof GetMessagesPayload>;
-
-export const GetMessagesResponse = z.object({
-  messages: z.array(ReceivedMessage)
-});
-
-export type GetMessagesResponseType = z.infer<typeof GetMessagesResponse>;
-
 /** Delete Messages */
 
 export const DeleteMessagesPayload = BasePayload.extend({
-  tag: z.number().optional()
+  tag: z.number()
 });
 
 export type DeleteMessagesPayloadType = z.infer<typeof DeleteMessagesPayload>;
@@ -50,7 +36,7 @@ export type DeleteMessagesPayloadType = z.infer<typeof DeleteMessagesPayload>;
 /** Get Messages Size */
 
 export const GetMessagesSizePayload = BasePayload.extend({
-  tag: z.number().optional()
+  tag: z.number()
 });
 
 export type GetMessagesSizePayloadType = z.infer<typeof GetMessagesSizePayload>;
@@ -65,6 +51,12 @@ export type GetMessagesSizeResponseType = z.infer<
 
 /** Pop message */
 
+export const PopMessagePayload = BasePayload.extend({
+  tag: z.number()
+});
+
+export type PopMessagePayloadType = z.infer<typeof PopMessagePayload>;
+
 export const PopMessageResponse = ReceivedMessage;
 
 export type PopMessageResponseType = z.infer<typeof PopMessageResponse>;
@@ -72,7 +64,7 @@ export type PopMessageResponseType = z.infer<typeof PopMessageResponse>;
 /** Pop all messages */
 
 export const PopAllMessagesPayload = BasePayload.extend({
-  tag: z.number().optional()
+  tag: z.number()
 });
 
 export type PopAllMessagesPayloadType = z.infer<typeof PopAllMessagesPayload>;

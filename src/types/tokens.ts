@@ -54,12 +54,14 @@ const VALUES = [
 
 export const TokenCapability = z.object({
   endpoint: z.enum(VALUES),
-  limits: z.array(
-    z.object({
-      type: z.string(),
-      conditions: z.object({ max: z.number().optional() }).optional()
-    })
-  )
+  limits: z
+    .array(
+      z.object({
+        type: z.string(),
+        conditions: z.object({ max: z.number().optional() }).optional()
+      })
+    )
+    .min(1)
 });
 
 /**
@@ -87,6 +89,7 @@ export type CreateTokenResponseType = z.infer<typeof CreateTokenResponse>;
 export const GetTokenResponse = z.object({
   id: z.string(),
   description: z.string().optional(),
+  valid_until: z.number(),
   capabilities: z.array(TokenCapability)
 });
 

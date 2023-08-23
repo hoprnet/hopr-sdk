@@ -16,9 +16,6 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
  * Or it has a limited lifetime after which it expires.
  * The requested limited lifetime is requested by the client in seconds.
  *
- * @param apiEndpoint - The API endpoint
- * @param apiToken - The API token to be used for authentication.
- * @param body - The necessary data to create the token.
  * @returns A Promise that resolves to the generated token which must be used when authenticating for API calls.
  * @throws An error that occurred while processing the request.
  */

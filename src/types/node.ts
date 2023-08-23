@@ -42,7 +42,10 @@ export const GetInfoResponse = z.object({
   chain: z.string(),
   hoprToken: z.string(),
   hoprChannels: z.string(),
-  hoprNetworkRegistryAddress: z.string().optional(),
+  hoprNetworkRegistryAddress: z.string(),
+  hoprNodeSafeRegistryAddress: z.string(),
+  nodeManagementModule: z.string(),
+  nodeSafe: z.string(),
   connectivityStatus: z.string(),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()

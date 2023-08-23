@@ -1,7 +1,6 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  GetMessagesResponse,
   GetMessagesSizePayloadType,
   GetMessagesSizeResponse,
   GetMessagesSizeResponseType
@@ -13,13 +12,9 @@ export const getMessagesSize = async (
 ): Promise<GetMessagesSizeResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const urlWithApiPath = new URL('api/v3/messages/size', apiEndpointParsed);
-
   const params = new URLSearchParams();
-
-  // only add tag to search params if it is part of payload
-  if (payload.tag) {
-    params.append('tag', payload.tag.toString());
-  }
+  // add tag to url params
+  params.append('tag', payload.tag.toString());
 
   // join base url with search params
   urlWithApiPath.search = params.toString();

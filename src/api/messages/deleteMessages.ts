@@ -1,9 +1,5 @@
 import { ZodError } from 'zod';
-import {
-  APIErrorResponse,
-  DeleteMessagesPayloadType,
-  GetMessagesResponse
-} from '../../types';
+import { APIErrorResponse, DeleteMessagesPayloadType } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const deleteMessages = async (
@@ -11,13 +7,9 @@ export const deleteMessages = async (
 ): Promise<boolean> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const urlWithApiPath = new URL('api/v3/messages', apiEndpointParsed);
-
   const params = new URLSearchParams();
-
-  // only add tag to search params if it is part of payload
-  if (payload.tag) {
-    params.append('tag', payload.tag.toString());
-  }
+  // add tag to search params
+  params.append('tag', payload.tag.toString());
 
   // join base url with search params
   urlWithApiPath.search = params.toString();

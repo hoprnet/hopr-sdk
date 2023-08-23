@@ -13,8 +13,6 @@ const TopologyChannel = z.object({
   destinationAddress: z.string(),
   balance: z.string(),
   status: ChannelStatus,
-  commitment: z.string(),
-  ticketEpoch: z.string(),
   ticketIndex: z.string(),
   channelEpoch: z.string(),
   closureTime: z.string()
@@ -43,7 +41,7 @@ export type RedeemChannelTicketsPayloadType = z.infer<
 /** Open channel */
 
 export const OpenChannelPayload = BasePayload.extend({
-  peerId: z.string(),
+  peerAddress: z.string(),
   amount: z.string()
 });
 
@@ -84,9 +82,8 @@ export type GetChannelTicketsPayloadType = z.infer<
 >;
 
 export const Ticket = z.object({
-  counterparty: z.string(),
+  channelId: z.string(),
   challenge: z.string(),
-  epoch: z.string(),
   index: z.string(),
   amount: z.string(),
   winProb: z.string(),
@@ -109,7 +106,7 @@ export const CloseChannelPayload = BasePayload.extend({
 export type CloseChannelPayloadType = z.infer<typeof CloseChannelPayload>;
 
 export const CloseChannelResponse = z.object({
-  transactionReceipt: z.string(),
+  receipt: z.string(),
   channelStatus: ChannelStatus
 });
 
@@ -123,6 +120,6 @@ export const GetChannelPayload = BasePayload.extend({
 
 export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;
 
-export const GetChannelResponse = z.array(Channel);
+export const GetChannelResponse = z.array(TopologyChannel);
 
 export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;

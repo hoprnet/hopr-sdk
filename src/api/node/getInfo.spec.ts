@@ -14,6 +14,7 @@ describe('test getInfo', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/node/info`)
       .reply(200, {
+        network: 'anvil-localhost',
         announcedAddress: [
           '/ip4/128.0.215.32/tcp/9080/p2p/16Uiu2HAm91QFjPepnwjuZWzK5pb5ZS8z8qxQRfKZJNXjkgGNUAit',
           '/p2p/16Uiu2HAmLpqczAGfgmJchVgVk233rmB2T3DSn2gPG6JMa5brEHZ1/p2p-circuit/p2p/16Uiu2HAm91QFjPepnwjuZWzK5pb5ZS8z8qxQRfKZJNXjkgGNUAit',
@@ -23,12 +24,15 @@ describe('test getInfo', function () {
         listeningAddress: [
           '/ip4/0.0.0.0/tcp/9080/p2p/16Uiu2HAm91QFjPepnwjuZWzK5pb5ZS8z8qxQRfKZJNXjkgGNUAit'
         ],
-        network: 'anvil',
-        chain: '100',
+        chain: 'anvil',
         hoprToken: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
         hoprChannels: '0x2a54194c8fe0e3CdeAa39c49B95495aA3b44Db63',
         hoprNetworkRegistryAddress:
           '0xBEE1F5d64b562715E749771408d06D57EE0892A7',
+        hoprNodeSafeRegistryAddress:
+          '0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82',
+        nodeManagementModule: '0x0262496080c3916d9afd5904EA3DFd46DfFBfF3D',
+        nodeSafe: '0x8D56Ef78c9dfF0d1446A28476653D979336032f9',
         connectivityStatus: 'GREEN',
         isEligible: true,
         channelClosurePeriod: 1

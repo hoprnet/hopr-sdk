@@ -1,24 +1,29 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  BasePayloadType,
+  PopMessagePayloadType,
   PopMessageResponse,
-  PopMessageResponseType
+  PopMessageResponseType,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const popMessage = async (
-  payload: BasePayloadType
+  payload: PopMessagePayloadType
 ): Promise<PopMessageResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const urlWithApiPath = new URL('api/v3/messages/pop', apiEndpointParsed);
   const fullUrl = urlWithApiPath.toString();
+  const body: RemoveBasicAuthenticationPayloadType<PopMessagePayloadType> = {
+    tag: payload.tag
+  };
 
   const rawResponse = await fetchWithTimeout(
     fullUrl,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiToken)
+      headers: getHeaders(payload.apiToken),
+      body: JSON.stringify(body)
     },
     payload.timeout
   );

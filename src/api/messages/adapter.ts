@@ -1,14 +1,13 @@
 import {
   DeleteMessagesPayloadType,
-  GetMessagesPayloadType,
   GetMessagesSizePayloadType,
   PopAllMessagesPayloadType,
+  PopMessagePayloadType,
   RemoveBasicAuthenticationPayloadType,
   SendMessagePayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { deleteMessages } from './deleteMessages';
-import { getMessages } from './getMessages';
 import { getMessagesSize } from './getMessagesSize';
 import { popAllMessages } from './popAllMessages';
 import { popMessage } from './popMessage';
@@ -50,7 +49,7 @@ export class MessagesAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       body: payload.body,
-      recipient: payload.recipient,
+      peerAddress: payload.peerAddress,
       hops: payload.hops,
       path: payload.path,
       tag: payload.tag
@@ -75,17 +74,6 @@ export class MessagesAdapter {
     });
   }
 
-  public async getMessages(
-    payload: RemoveBasicAuthenticationPayloadType<GetMessagesPayloadType>
-  ) {
-    return getMessages({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout,
-      tag: payload.tag
-    });
-  }
-
   public async getMessagesSize(
     payload: RemoveBasicAuthenticationPayloadType<GetMessagesSizePayloadType>
   ) {
@@ -97,11 +85,14 @@ export class MessagesAdapter {
     });
   }
 
-  public async popMessage() {
+  public async popMessage(
+    payload: RemoveBasicAuthenticationPayloadType<PopMessagePayloadType>
+  ) {
     return popMessage({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: this.timeout
+      timeout: this.timeout,
+      tag: payload.tag
     });
   }
 
