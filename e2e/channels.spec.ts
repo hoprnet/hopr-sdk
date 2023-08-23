@@ -1,3 +1,4 @@
+import { GetChannelResponseType } from '../src';
 import { HoprSDK as SDK } from '../src/sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
@@ -60,13 +61,20 @@ describe('Channels E2E test', function () {
       channelId: firstOpenOutgoingChannel?.id
     });
 
-    expect(response.at(0)).toStrictEqual({
-      type: expect.any(String),
-      id: expect.any(String),
-      peerId: expect.any(String),
+    const expectedResponse: GetChannelResponseType[0] = {
+      channelId: expect.any(String),
       status: expect.any(String),
-      balance: expect.any(String)
-    });
+      balance: expect.any(String),
+      sourcePeerId: expect.any(String),
+      destinationPeerId: expect.any(String),
+      sourceAddress: expect.any(String),
+      destinationAddress: expect.any(String),
+      ticketIndex: expect.any(String),
+      channelEpoch: expect.any(String),
+      closureTime: expect.any(String)
+    };
+
+    expect(response.at(0)).toStrictEqual(expectedResponse);
   }, 15e3);
 
   // FIXME: This needs to be checked

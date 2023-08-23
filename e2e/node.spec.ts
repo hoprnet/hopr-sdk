@@ -1,3 +1,4 @@
+import { GetInfoResponseType, GetPeersResponseType } from '../src';
 import { HoprSDK as SDK } from '../src/sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
@@ -23,36 +24,28 @@ describe('Node E2E Tests', function () {
   test('should get the list of connected and announced peers', async function () {
     const response = await node.getPeers({ quality: 0.7 });
 
-    expect(response).toStrictEqual({
+    const expectedPeer: GetPeersResponseType['connected'][0] = {
+      quality: expect.any(Number),
+      peerId: expect.any(String),
+      multiAddr: expect.any(String),
+      heartbeats: expect.objectContaining({
+        sent: expect.any(Number),
+        success: expect.any(Number)
+      }),
+      lastSeen: expect.any(Number),
+      backoff: expect.any(Number),
+      reportedVersion: expect.any(String),
+      isNew: expect.any(Boolean)
+    };
+
+    const expectedResponse: GetPeersResponseType = {
       connected: expect.arrayContaining([
-        expect.objectContaining({
-          quality: expect.any(Number),
-          peerId: expect.any(String),
-          multiAddr: expect.any(String),
-          heartbeats: expect.objectContaining({
-            sent: expect.any(Number),
-            success: expect.any(Number)
-          }),
-          lastSeen: expect.any(Number),
-          backoff: expect.any(Number),
-          isNew: expect.any(Boolean)
-        })
+        expect.objectContaining(expectedPeer)
       ]),
-      announced: expect.arrayContaining([
-        expect.objectContaining({
-          quality: expect.any(Number),
-          peerId: expect.any(String),
-          multiAddr: expect.any(String),
-          heartbeats: expect.objectContaining({
-            sent: expect.any(Number),
-            success: expect.any(Number)
-          }),
-          lastSeen: expect.any(Number),
-          backoff: expect.any(Number),
-          isNew: expect.any(Boolean)
-        })
-      ])
-    });
+      announced: expect.arrayContaining([expect.objectContaining(expectedPeer)])
+    };
+
+    expect(response).toStrictEqual(expectedResponse);
   });
 
   test('should get prometheus metrics from the node', async function () {
@@ -64,19 +57,23 @@ describe('Node E2E Tests', function () {
   test('should get the nodes info', async function () {
     const info = await node.getInfo({});
 
-    expect(info).toStrictEqual({
-      environment: expect.any(String),
+    const expectedResponse: GetInfoResponseType = {
       announcedAddress: expect.any(Array),
       listeningAddress: expect.any(Array),
       network: expect.any(String),
       hoprToken: expect.any(String),
       hoprChannels: expect.any(String),
-      //   In pluto theres no network registry
-      //   hoprNetworkRegistryAddress: expect.any(String),
-      connectivityStatus: 'Green',
-      isEligible: true,
-      channelClosurePeriod: expect.any(Number)
-    });
+      connectivityStatus: expect.any(String),
+      isEligible: expect.any(Boolean),
+      channelClosurePeriod: expect.any(Number),
+      chain: expect.any(String),
+      hoprNetworkRegistryAddress: expect.any(String),
+      hoprNodeSafeRegistryAddress: expect.any(String),
+      nodeManagementModule: expect.any(String),
+      nodeSafe: expect.any(String)
+    };
+
+    expect(info).toStrictEqual(expectedResponse);
   });
 
   test('should get a list of known entry nodes', async function () {
