@@ -11,8 +11,8 @@ describe('test deleteMessages', () => {
     nock.cleanAll();
   });
 
-  it('should delete all messages', async () => {
-    nock(API_ENDPOINT).delete('/api/v3/messages').reply(204);
+  it('should delete messages with tag', async () => {
+    nock(API_ENDPOINT).delete(`/api/v3/messages?tag=${TAG}`).reply(204);
 
     const response = await deleteMessages({
       apiToken: API_TOKEN,
@@ -23,24 +23,14 @@ describe('test deleteMessages', () => {
     expect(response).toBe(true);
   });
 
-  it('should delete messages with tag', async () => {
-    nock(API_ENDPOINT).delete('/api/v3/messages?tag=1').reply(204);
-
-    const response = await deleteMessages({
-      apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT,
-      tag: 1
-    });
-
-    expect(response).toBe(true);
-  });
-
   it('should return 401 if authentication failed', async () => {
     const errorResponse = {
       status: 'authentication failed',
       error: 'invalid api token'
     };
-    nock(API_ENDPOINT).delete('/api/v3/messages').reply(401, errorResponse);
+    nock(API_ENDPOINT)
+      .delete(`/api/v3/messages?tag=${TAG}`)
+      .reply(401, errorResponse);
 
     await expect(
       deleteMessages({
@@ -56,7 +46,9 @@ describe('test deleteMessages', () => {
       status: 'authorization failed',
       error: 'permission denied'
     };
-    nock(API_ENDPOINT).delete('/api/v3/messages').reply(403, errorResponse);
+    nock(API_ENDPOINT)
+      .delete(`/api/v3/messages?tag=${TAG}`)
+      .reply(403, errorResponse);
 
     await expect(
       deleteMessages({
@@ -69,7 +61,9 @@ describe('test deleteMessages', () => {
 
   it('should return 422 if unknown failure occurred', async () => {
     const errorResponse = { status: 'unknown failure', error: 'server error' };
-    nock(API_ENDPOINT).delete('/api/v3/messages').reply(422, errorResponse);
+    nock(API_ENDPOINT)
+      .delete(`/api/v3/messages?tag=${TAG}`)
+      .reply(422, errorResponse);
 
     await expect(
       deleteMessages({

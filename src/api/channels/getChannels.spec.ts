@@ -44,9 +44,6 @@ describe('test getChannels', function () {
             destinationAddress: '0xaB51F95ED1Fa8d4afE40A3a1B8f44A242307390c',
             balance: '100000000000000000',
             status: 'Open',
-            commitment:
-              '0x4830ab9b20341162a0970aa1c6a5286cf85d2daa1d8c982f8ec5f2d9010250f4',
-            ticketEpoch: '1',
             ticketIndex: '0',
             channelEpoch: '1',
             closureTime: '0'

@@ -65,7 +65,7 @@ describe('closeEverything', function () {
       (channels.closeChannel as jest.Mock).mockImplementation(
         () =>
           ({
-            transactionReceipt:
+            receipt:
               '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
             channelStatus: 'Closed'
           } as CloseChannelResponseType)
@@ -121,7 +121,7 @@ describe('closeEverything', function () {
       nock(API_ENDPOINT)
         .delete(`/api/v3/channels/${id}`)
         .reply(200, {
-          transactionReceipt:
+          receipt:
             '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
           channelStatus: 'Closed'
         } as CloseChannelResponseType);

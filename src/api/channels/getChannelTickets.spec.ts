@@ -17,9 +17,8 @@ describe('test redeemTickets', function () {
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(200, [
         {
-          counterparty: '0xBb6f3A07a6EF6d4Aa6Aa244949AA59cBE735549f',
+          channelId: '0xBb6f3A07a6EF6d4Aa6Aa244949AA59cBE735549f',
           challenge: '0xfcc10d873ee4e19e06daa08d0d1dc216304b52c5',
-          epoch: '1',
           index: '6',
           amount: '10000000000000000',
           winProb:
@@ -37,7 +36,7 @@ describe('test redeemTickets', function () {
     });
 
     expect(response.length).toEqual(1);
-    expect(response.at(0)?.counterparty).toEqual(
+    expect(response.at(0)?.channelId).toEqual(
       '0xBb6f3A07a6EF6d4Aa6Aa244949AA59cBE735549f'
     );
   });

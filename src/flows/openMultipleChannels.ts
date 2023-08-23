@@ -27,14 +27,14 @@ export const openMultipleChannels = async (
 
   // The HOPR balance needed to open the channels is equivalent to the `<Amount to fund each channel> * <The number of channels to open>`
   const sumOfHoprBalanceExpectedInFunds =
-    amountBN * BigInt(payload.peerIds.length);
+    amountBN * BigInt(payload.peerAddresses.length);
 
   const nodeHasEnoughHoprBalance =
     hoprBalanceBN >= sumOfHoprBalanceExpectedInFunds;
 
   // The NATIVE balance needed to open the channels is equivalent to the `<Gnosis minimum gas> * <The number of channels to open>`
   const sumOfNativeBalanceExpectedInFunds =
-    MINIMUM_GNOSIS_GAS * BigInt(payload.peerIds.length);
+    MINIMUM_GNOSIS_GAS * BigInt(payload.peerAddresses.length);
 
   const nodeHasEnoughNativeBalance =
     nativeBalanceBN >= sumOfNativeBalanceExpectedInFunds;
@@ -54,18 +54,18 @@ export const openMultipleChannels = async (
   }
 
   // Open channels for each peerId and gather the promises
-  const openChannelPromises = payload.peerIds.map(async (peerId) => {
+  const openChannelPromises = payload.peerAddresses.map(async (peerAddress) => {
     try {
       const { transactionReceipt, channelId } = await openChannel({
         apiEndpoint: payload.apiEndpoint,
         apiToken: payload.apiToken,
         timeout: payload.timeout,
-        peerId,
+        peerAddress: peerAddress,
         amount: payload.amount
       });
-      return { peerId, transactionReceipt, channelId };
+      return { peerAddress, transactionReceipt, channelId };
     } catch (error) {
-      return { peerId, transactionReceipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
+      return { peerAddress, transactionReceipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
     }
   });
 
@@ -78,8 +78,8 @@ export const openMultipleChannels = async (
   } = {};
   results.forEach((result) => {
     if (result.status === 'fulfilled' && result.value.transactionReceipt) {
-      const { peerId, transactionReceipt, channelId } = result.value;
-      transactionReceipts[peerId] = { channelId, transactionReceipt };
+      const { peerAddress, transactionReceipt, channelId } = result.value;
+      transactionReceipts[peerAddress] = { channelId, transactionReceipt };
     }
   });
 

@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { getToken } from './getToken';
 import { APIError } from '../../utils';
+import { GetTokenResponseType } from '../../types';
 
 // Set up global constants for apiEndpoint and apiToken
 const API_ENDPOINT = 'http://localhost:3001';
@@ -12,9 +13,10 @@ describe('getToken', () => {
   });
 
   it('should return the token info if successful', async function () {
-    const expectedResponse = {
+    const expectedResponse: GetTokenResponseType = {
       id: 'someTOKENid1223',
       description: 'this is an interesting token',
+      valid_until: 100,
       capabilities: [
         {
           endpoint: 'tokensGetToken',

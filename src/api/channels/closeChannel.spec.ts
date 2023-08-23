@@ -16,7 +16,7 @@ describe('test closeChannel', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(200, {
-        transactionReceipt:
+        receipt:
           '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
         channelStatus: 'Closed'
       } as CloseChannelResponseType);
@@ -27,7 +27,7 @@ describe('test closeChannel', function () {
       channelId: BUDDY_CHANNEL_ID
     });
 
-    expect(response.transactionReceipt).toEqual(
+    expect(response.receipt).toEqual(
       '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
     );
     expect(response.channelStatus).toEqual('Closed');

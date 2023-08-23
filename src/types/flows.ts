@@ -28,7 +28,7 @@ export type CashOutPayloadType = z.infer<typeof CashOutPayload>;
  * OpenMultipleChannels
  */
 export const OpenMultipleChannelsPayload = BasePayload.extend({
-  peerIds: z.array(z.string()),
+  peerAddresses: z.array(z.string()),
   amount: z.string()
 });
 

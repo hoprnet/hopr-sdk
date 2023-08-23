@@ -23,7 +23,7 @@ describe('test openChannel', function () {
     const response = await openChannel({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+      peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
       amount: '1000000'
     });
 
@@ -43,7 +43,7 @@ describe('test openChannel', function () {
       openChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+        peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
     ).rejects.toThrow(APIError);
@@ -58,7 +58,7 @@ describe('test openChannel', function () {
       openChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+        peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
     ).rejects.toThrow(APIError);
@@ -72,7 +72,7 @@ describe('test openChannel', function () {
       openChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+        peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
     ).rejects.toThrow(APIError);
@@ -86,7 +86,7 @@ describe('test openChannel', function () {
       openChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+        peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
     ).rejects.toThrow(APIError);
@@ -100,7 +100,7 @@ describe('test openChannel', function () {
       openChannel({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+        peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
     ).rejects.toThrow(APIError);

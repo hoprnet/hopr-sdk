@@ -25,42 +25,26 @@ describe('sendMessage', () => {
 
   it('should send a message successfully with path', async () => {
     nock(API_ENDPOINT)
-      .post('/api/v3/messages', {
-        body: BODY,
-        peerAddress: PEER_ADDRESS,
-        path: PATH,
-        tag: TAG
-      })
+      .post('/api/v3/messages', PAYLOAD)
       .reply(202, 'challenge-token');
 
     const response = await sendMessage({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      body: BODY,
-      peerAddress: PEER_ADDRESS,
-      path: PATH,
-      tag: TAG
+      ...PAYLOAD
     });
     expect(response).toBe('challenge-token');
   });
 
   it('should send a message successfully with hops', async () => {
     nock(API_ENDPOINT)
-      .post('/api/v3/messages', {
-        body: BODY,
-        peerAddress: PEER_ADDRESS,
-        path: PATH,
-        tag: TAG
-      })
+      .post('/api/v3/messages', PAYLOAD)
       .reply(202, 'challenge-token');
 
     const response = await sendMessage({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      body: BODY,
-      peerAddress: PEER_ADDRESS,
-      hops: HOPS,
-      tag: TAG
+      ...PAYLOAD
     });
     expect(response).toBe('challenge-token');
   });
@@ -78,11 +62,7 @@ describe('sendMessage', () => {
       sendMessage({
         apiToken: 'api-token',
         apiEndpoint: API_ENDPOINT,
-        body: BODY,
-        peerAddress: PEER_ADDRESS,
-        path: PATH,
-        hops: HOPS,
-        tag: TAG
+        ...PAYLOAD
       })
     ).rejects.toThrow(APIError);
   });
@@ -100,11 +80,7 @@ describe('sendMessage', () => {
       sendMessage({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        body: BODY,
-        peerAddress: PEER_ADDRESS,
-        path: PATH,
-        hops: HOPS,
-        tag: TAG
+        ...PAYLOAD
       })
     ).rejects.toThrow(APIError);
   });
@@ -119,11 +95,7 @@ describe('sendMessage', () => {
       sendMessage({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        body: BODY,
-        peerAddress: PEER_ADDRESS,
-        path: PATH,
-        hops: HOPS,
-        tag: TAG
+        ...PAYLOAD
       })
     ).rejects.toThrow(APIError);
   });

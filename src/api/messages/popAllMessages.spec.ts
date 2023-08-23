@@ -40,7 +40,7 @@ describe('test popAllMessages', () => {
 
   it('should pop all messages with tag', async () => {
     nock(API_ENDPOINT)
-      .post('/api/v3/messages/pop-all?tag=12')
+      .post('/api/v3/messages/pop-all')
       .reply(200, {
         messages: [
           {
