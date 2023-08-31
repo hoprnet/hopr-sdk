@@ -1,28 +1,27 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  type RemoveBasicAuthenticationPayloadType,
-  type SignPayloadType,
-  SignResponse
+  PopAllMessagesPayloadType,
+  PopAllMessagesResponse,
+  PopAllMessagesResponseType,
+  PopMessageResponse,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-/**
- * Signs a message given using the node’s private key. Prefixes messsage with “HOPR Signed Message: ” before signing.
- *
- * @param apiEndpoint - The API endpoint.
- * @param apiToken - The API token to use for authentication.
- * @param message - The message to sign.
- * @returns A Promise that resolves to a string representing the signature.
- * @throws An error that occurred while processing the request.
- */
-export const sign = async (payload: SignPayloadType): Promise<string> => {
-  const body: RemoveBasicAuthenticationPayloadType<SignPayloadType> = {
-    message: payload.message
-  };
+export const popAllMessages = async (
+  payload: PopAllMessagesPayloadType
+): Promise<PopAllMessagesResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const urlWithApiPath = new URL('api/v3/messages/pop-all', apiEndpointParsed);
+  const fullUrl = urlWithApiPath.toString();
+  const body: RemoveBasicAuthenticationPayloadType<PopAllMessagesPayloadType> =
+    {
+      tag: payload.tag
+    };
+
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/messages/sign`,
+    fullUrl,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
@@ -37,11 +36,11 @@ export const sign = async (payload: SignPayloadType): Promise<string> => {
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = SignResponse.safeParse(jsonResponse);
+  const parsedRes = PopAllMessagesResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
-    return parsedRes.data.signature;
+    return parsedRes.data;
   }
 
   // check if response has the structure of an expected api error

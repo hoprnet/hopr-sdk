@@ -22,11 +22,11 @@ export const openChannel = async (
 ): Promise<OpenChannelResponseType> => {
   const body: RemoveBasicAuthenticationPayloadType<OpenChannelPayloadType> = {
     amount: payload.amount,
-    peerId: payload.peerId
+    peerAddress: payload.peerAddress
   };
 
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetch(`${apiEndpointParsed}api/v2/channels`, {
+  const rawResponse = await fetch(`${apiEndpointParsed}api/v3/channels`, {
     method: 'POST',
     headers: getHeaders(payload.apiToken),
     body: JSON.stringify(body)

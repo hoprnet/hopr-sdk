@@ -55,7 +55,7 @@ describe('Account E2E tests', function () {
     const response = await account.withdraw({
       currency: 'HOPR',
       amount: '10000',
-      recipient: nativeAddress
+      ethereumAddress: nativeAddress
     });
 
     expect(typeof response).toEqual('string');
@@ -65,7 +65,7 @@ describe('Account E2E tests', function () {
     const response = await account.withdraw({
       currency: 'NATIVE',
       amount: '10000',
-      recipient: nativeAddress
+      ethereumAddress: nativeAddress
     });
 
     expect(typeof response).toEqual('string');

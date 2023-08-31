@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { getToken } from './getToken';
 import { APIError } from '../../utils';
+import { GetTokenResponseType } from '../../types';
 
 // Set up global constants for apiEndpoint and apiToken
 const API_ENDPOINT = 'http://localhost:3001';
@@ -12,9 +13,10 @@ describe('getToken', () => {
   });
 
   it('should return the token info if successful', async function () {
-    const expectedResponse = {
+    const expectedResponse: GetTokenResponseType = {
       id: 'someTOKENid1223',
       description: 'this is an interesting token',
+      valid_until: 100,
       capabilities: [
         {
           endpoint: 'tokensGetToken',
@@ -30,7 +32,7 @@ describe('getToken', () => {
       ]
     };
 
-    nock(API_ENDPOINT).get('/api/v2/token').reply(200, expectedResponse);
+    nock(API_ENDPOINT).get('/api/v3/token').reply(200, expectedResponse);
 
     expect(
       await getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
@@ -43,7 +45,7 @@ describe('getToken', () => {
       error: 'authentication failed'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/token').reply(401, mockResponse);
+    nock(API_ENDPOINT).get('/api/v3/token').reply(401, mockResponse);
 
     await expect(
       getToken({ apiEndpoint: API_ENDPOINT, apiToken: 'invalid token' })
@@ -56,7 +58,7 @@ describe('getToken', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_ENDPOINT).get('/api/v2/token').reply(403, mockResponse);
+    nock(API_ENDPOINT).get('/api/v3/token').reply(403, mockResponse);
 
     await expect(
       getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
@@ -64,7 +66,7 @@ describe('getToken', () => {
   });
 
   it('should return 404 if resource not found', async function () {
-    nock(API_ENDPOINT).get('/api/v2/token').reply(404);
+    nock(API_ENDPOINT).get('/api/v3/token').reply(404);
 
     await expect(
       getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

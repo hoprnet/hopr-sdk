@@ -1,1 +1,1 @@
-export * from './getPeerInfo';
+export * from './getPeer';

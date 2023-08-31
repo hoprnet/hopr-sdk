@@ -20,7 +20,7 @@ export const getAliases = async (
 ): Promise<GetAliasesResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/aliases`,
+    `${apiEndpointParsed}api/v3/aliases`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

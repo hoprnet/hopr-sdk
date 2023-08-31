@@ -1,6 +1,7 @@
 import { getAlias } from './getAlias';
 import nock from 'nock';
 import { APIError } from '../../utils';
+import { GetAliasResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -14,8 +15,8 @@ describe('getAlias', () => {
   it('should return peerId when provided alias exists', async function () {
     const expectedPeerId = '0x1234567890123456789012345678901234567890';
     nock(API_ENDPOINT)
-      .get(`/api/v2/aliases/${ALIAS}`)
-      .reply(200, { peerId: expectedPeerId });
+      .get(`/api/v3/aliases/${ALIAS}`)
+      .reply(200, { peerId: expectedPeerId } as GetAliasResponseType);
 
     const result = await getAlias({
       alias: ALIAS,
@@ -32,7 +33,7 @@ describe('getAlias', () => {
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
-      .get(`/api/v2/aliases/${ALIAS}`)
+      .get(`/api/v3/aliases/${ALIAS}`)
       .reply(401, expectedResponse);
 
     await expect(
@@ -50,7 +51,7 @@ describe('getAlias', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .get(`/api/v2/aliases/${ALIAS}`)
+      .get(`/api/v3/aliases/${ALIAS}`)
       .reply(403, expectedResponse);
 
     await expect(
@@ -65,7 +66,7 @@ describe('getAlias', () => {
   it('should return 404 when alias is not found', async function () {
     const expectedStatus = 'PEERID_NOT_FOUND';
     nock(API_ENDPOINT)
-      .get(`/api/v2/aliases/${ALIAS}`)
+      .get(`/api/v3/aliases/${ALIAS}`)
       .reply(404, { status: expectedStatus });
 
     await expect(
@@ -83,7 +84,7 @@ describe('getAlias', () => {
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
-      .get(`/api/v2/aliases/${ALIAS}`)
+      .get(`/api/v3/aliases/${ALIAS}`)
       .reply(422, expectedResponse);
 
     await expect(

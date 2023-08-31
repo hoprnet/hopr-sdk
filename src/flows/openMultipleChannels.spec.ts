@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { openMultipleChannels } from './index';
 import * as channels from '../api/channels';
+import { OpenChannelResponseType } from '../types';
 
 jest.mock('../api/channels', () => ({
   ...jest.requireActual('../api/channels'),
@@ -17,7 +18,7 @@ describe('openMultipleChannels', function () {
   });
   it('should not attempt to open channels if node does not have enough balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
       native: '10',
       hopr: '0'
     });
@@ -25,7 +26,7 @@ describe('openMultipleChannels', function () {
     const res = await openMultipleChannels({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      peerIds: ['id1', 'id2'],
+      peerAddresses: ['id1', 'id2'],
       amount: '6'
     });
 
@@ -33,38 +34,41 @@ describe('openMultipleChannels', function () {
     expect(res).toEqual(undefined);
   });
   it('should open channels', async function () {
-    const peerIds = ['id1', 'id2'];
+    const peerAddresses = ['id1', 'id2'];
     // mock hoprd node get balances
     nock(API_ENDPOINT)
-      .get('/api/v2/account/balances')
+      .get('/api/v3/account/balances')
       .reply(200, {
         native: BigInt(0.03 * 10e18).toString(),
         hopr: '10'
       });
 
     // mock hoprd node open channel
-    (channels.openChannel as jest.Mock).mockImplementation(() => ({
-      channelId:
-        '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
-      receipt:
-        '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
-    }));
+    (channels.openChannel as jest.Mock).mockImplementation(
+      () =>
+        ({
+          channelId:
+            '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
+          transactionReceipt:
+            '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
+        } as OpenChannelResponseType)
+    );
 
     const res = await openMultipleChannels({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      peerIds,
+      peerAddresses,
       amount: '3'
     });
 
     expect((channels.openChannel as jest.Mock).mock.calls.length).toEqual(
-      peerIds.length
+      peerAddresses.length
     );
-    expect(res?.[peerIds.at(0) ?? '']).toEqual({
+    expect(res?.[peerAddresses.at(0) ?? '']).toEqual({
       channelId:
         '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
-      receipt:
+      transactionReceipt:
         '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
-    });
+    } as OpenChannelResponseType);
   });
 });

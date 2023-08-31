@@ -1,20 +1,20 @@
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
-import {
-  GetPeerInfoPayloadType,
-  GetPeerInfoResponse,
-  GetPeerInfoResponseType,
-  APIErrorResponse
-} from '../../types';
 import { ZodError } from 'zod';
+import {
+  APIErrorResponse,
+  PingPeerPayloadType,
+  PingPeerResponse,
+  PingPeerResponseType
+} from '../../types';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getPeerInfo = async (
-  payload: GetPeerInfoPayloadType
-): Promise<GetPeerInfoResponseType> => {
+export const pingPeer = async (
+  payload: PingPeerPayloadType
+): Promise<PingPeerResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/peerInfo/${payload.peerId}`,
+    `${apiEndpointParsed}api/v3/peers/${payload.peerId}/ping`,
     {
-      method: 'GET',
+      method: 'POST',
       headers: getHeaders(payload.apiToken)
     },
     payload.timeout
@@ -26,7 +26,7 @@ export const getPeerInfo = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetPeerInfoResponse.safeParse(jsonResponse);
+  const parsedRes = PingPeerResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

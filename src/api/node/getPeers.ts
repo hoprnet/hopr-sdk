@@ -13,11 +13,11 @@ export const getPeers = async (
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
     payload?.quality
-      ? `${apiEndpointParsed}api/v2/node/peers?` +
+      ? `${apiEndpointParsed}api/v3/node/peers?` +
           new URLSearchParams({
             quality: (payload.quality ?? 0).toString()
           })
-      : `${apiEndpointParsed}api/v2/node/peers`,
+      : `${apiEndpointParsed}api/v3/node/peers`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

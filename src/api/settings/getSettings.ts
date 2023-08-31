@@ -12,7 +12,7 @@ export const getSettings = async (
 ): Promise<GetSettingsResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/settings`,
+    `${apiEndpointParsed}api/v3/settings`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

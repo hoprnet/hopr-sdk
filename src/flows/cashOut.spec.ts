@@ -17,14 +17,14 @@ describe('cashOut', function () {
   });
   it('does not call withdraw without balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
       native: '0',
       hopr: '0'
     });
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      recipient: 'vitalik.eth'
+      ethereumAddress: 'vitalik.eth'
     });
 
     expect(res.hopr).toEqual(undefined);
@@ -33,7 +33,7 @@ describe('cashOut', function () {
   });
   it('sends tx to recipient', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
       native: '10',
       hopr: '10'
     });
@@ -44,13 +44,13 @@ describe('cashOut', function () {
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      recipient: 'vitalik.eth'
+      ethereumAddress: 'vitalik.eth'
     });
 
     expect(res.hopr).toEqual(expectedReceipt);
     expect(res.native).toEqual(expectedReceipt);
     expect(
-      (account.withdraw as jest.Mock).mock.calls.at(0)?.at(0)?.recipient
+      (account.withdraw as jest.Mock).mock.calls.at(0)?.at(0)?.ethereumAddress
     ).toEqual('vitalik.eth');
     expect((account.withdraw as jest.Mock).mock.calls.length).toEqual(2);
   });

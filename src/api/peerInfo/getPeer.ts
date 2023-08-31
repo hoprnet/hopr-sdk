@@ -1,18 +1,24 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  GetChannelTicketsPayloadType,
-  GetChannelTicketsResponse,
-  GetChannelTicketsResponseType
+  GetPeerPayloadType,
+  GetPeerResponseType,
+  GetPeerResponse
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getChannelTickets = async (
-  payload: GetChannelTicketsPayloadType
-): Promise<GetChannelTicketsResponseType> => {
+export const getPeer = async (
+  payload: GetPeerPayloadType
+): Promise<GetPeerResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const urlWithApiPath = new URL(
+    `api/v3/peers/${payload.peerId}`,
+    apiEndpointParsed
+  );
+  const fullUrl = urlWithApiPath.toString();
+
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/channels/${payload.channelId}/tickets`,
+    fullUrl,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -26,7 +32,7 @@ export const getChannelTickets = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetChannelTicketsResponse.safeParse(jsonResponse);
+  const parsedRes = GetPeerResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

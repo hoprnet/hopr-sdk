@@ -6,7 +6,7 @@ export const setSetting = async (
   payload: SetSettingPayloadType
 ): Promise<boolean> => {
   const rawResponse = await fetchWithTimeout(
-    `${payload.apiEndpoint}/api/v2/settings/${payload.setting}`,
+    `${payload.apiEndpoint}/api/v3/settings/${payload.setting}`,
     {
       method: 'PUT',
       headers: getHeaders(payload.apiToken),

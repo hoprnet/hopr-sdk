@@ -13,7 +13,7 @@ describe('deleteToken', () => {
   });
 
   it('returns true when token is successfully deleted', async function () {
-    nock(API_ENDPOINT).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(204);
+    nock(API_ENDPOINT).delete(`/api/v3/tokens/${TOKEN_ID}`).reply(204);
 
     // Call the function and expect it to return true
     const result = await deleteToken({
@@ -30,7 +30,7 @@ describe('deleteToken', () => {
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
-      .delete(`/api/v2/tokens/${TOKEN_ID}`)
+      .delete(`/api/v3/tokens/${TOKEN_ID}`)
       .reply(401, mockResponse);
 
     // Call the function and expect it to throw an APIError
@@ -49,7 +49,7 @@ describe('deleteToken', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .delete(`/api/v2/tokens/${TOKEN_ID}`)
+      .delete(`/api/v3/tokens/${TOKEN_ID}`)
       .reply(403, mockResponse);
 
     // Call the function and expect it to throw an APIError
@@ -63,7 +63,7 @@ describe('deleteToken', () => {
   });
 
   it('should throw APIError on internal server error', async function () {
-    nock(API_ENDPOINT).delete(`/api/v2/tokens/${TOKEN_ID}`).reply(500);
+    nock(API_ENDPOINT).delete(`/api/v3/tokens/${TOKEN_ID}`).reply(500);
 
     // Call the function and expect it to throw an APIError
     await expect(
