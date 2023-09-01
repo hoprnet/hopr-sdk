@@ -18,10 +18,16 @@ describe('openMultipleChannels', function () {
   });
   it('should not attempt to open channels if node does not have enough balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
+    const expectedResponse: GetBalancesResponseType = {
       native: '10',
-      hopr: '0'
-    });
+      hopr: '0',
+      safeHopr: '0',
+      safeNative: '0'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v3/account/balances')
+      .reply(200, expectedResponse);
 
     const res = await openMultipleChannels({
       apiEndpoint: API_ENDPOINT,
