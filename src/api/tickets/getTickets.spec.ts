@@ -16,7 +16,7 @@ describe('test getTickets', function () {
       .reply(200, [
         {
           channelId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          challenge: 'string',
+          indexOffset: '0',
           index: 'string',
           amount: 'string',
           winProb: 'string',

@@ -45,7 +45,7 @@ describe('safeSendMessage', function () {
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
       body: 'body',
-      peerAddress: '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX',
+      peerId: '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX',
       path: []
     });
     expect((messages.sendMessage as jest.Mock).mock.calls.length).toEqual(0);
@@ -77,7 +77,7 @@ describe('safeSendMessage', function () {
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
       body: 'body',
-      peerAddress: '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX',
+      peerId: '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX',
       path: []
     });
 
