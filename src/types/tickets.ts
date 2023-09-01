@@ -26,11 +26,11 @@ export type GetStatisticsResponseType = z.infer<typeof GetStatisticsResponse>;
 export const GetTicketsResponse = z
   .object({
     channelId: z.string(),
-    challenge: z.string(),
-    index: z.string(),
     amount: z.string(),
-    winProb: z.string(),
+    index: z.string(),
+    indexOffset: z.string(),
     channelEpoch: z.string(),
+    winProb: z.string(),
     signature: z.string()
   })
   .array();

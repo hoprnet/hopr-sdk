@@ -18,7 +18,7 @@ export const ReceivedMessage = z.object({
 export const SendMessagePayload = BasePayload.extend({
   tag: z.number().nonnegative(),
   body: z.string(),
-  peerAddress: z.string(),
+  peerId: z.string(),
   path: z.array(z.string()).min(1).max(3).optional(),
   hops: z.number().min(1).max(3).optional()
 });

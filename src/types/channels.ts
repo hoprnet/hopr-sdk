@@ -83,11 +83,11 @@ export type GetChannelTicketsPayloadType = z.infer<
 
 export const Ticket = z.object({
   channelId: z.string(),
-  challenge: z.string(),
-  index: z.string(),
   amount: z.string(),
-  winProb: z.string(),
+  index: z.string(),
+  indexOffset: z.string(),
   channelEpoch: z.string(),
+  winProb: z.string(),
   signature: z.string()
 });
 
