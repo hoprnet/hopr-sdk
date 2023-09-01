@@ -28,6 +28,7 @@ describe('cashOut', function () {
     nock(API_ENDPOINT)
       .get('/api/v3/account/balances')
       .reply(200, expectedResponse);
+
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
@@ -40,10 +41,17 @@ describe('cashOut', function () {
   });
   it('sends tx to recipient', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
+    const expectedResponse: GetBalancesResponseType = {
       native: '10',
-      hopr: '10'
-    });
+      hopr: '10',
+      safeHopr: '0',
+      safeNative: '0'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v3/account/balances')
+      .reply(200, expectedResponse);
+
     // mock hoprd node withdraw response
     const expectedReceipt = '0x123456789abcdef';
     (account.withdraw as jest.Mock).mockImplementation(() => expectedReceipt);
