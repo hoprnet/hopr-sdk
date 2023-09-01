@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { cashOut } from './';
 import * as account from '../api/account';
+import { GetBalancesResponseType } from '../types';
 
 jest.mock('../api/account', () => ({
   ...jest.requireActual('../api/account'),
@@ -17,10 +18,16 @@ describe('cashOut', function () {
   });
   it('does not call withdraw without balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
+    const expectedResponse: GetBalancesResponseType = {
       native: '0',
-      hopr: '0'
-    });
+      hopr: '0',
+      safeHopr: '0',
+      safeNative: '0'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v3/account/balances')
+      .reply(200, expectedResponse);
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
