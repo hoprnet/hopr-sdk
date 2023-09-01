@@ -7,7 +7,9 @@ import { BasePayload } from './general';
 
 export const HoprAndNativeResponse = z.object({
   hopr: z.string(),
-  native: z.string()
+  native: z.string(),
+  safeNative: z.string(),
+  safeHopr: z.string()
 });
 
 /**
