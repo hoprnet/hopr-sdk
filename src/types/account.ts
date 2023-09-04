@@ -2,19 +2,15 @@ import { z } from 'zod';
 import { BasePayload } from './general';
 
 /**
- * General
- */
-
-export const HoprAndNativeResponse = z.object({
-  hopr: z.string(),
-  native: z.string()
-});
-
-/**
  * balances
  */
 
-export const GetBalancesResponse = HoprAndNativeResponse;
+export const GetBalancesResponse = z.object({
+  hopr: z.string(),
+  native: z.string(),
+  safeNative: z.string(),
+  safeHopr: z.string()
+});
 
 export type GetBalancesResponseType = z.infer<typeof GetBalancesResponse>;
 
@@ -22,7 +18,10 @@ export type GetBalancesResponseType = z.infer<typeof GetBalancesResponse>;
  * addresses
  */
 
-export const GetAddressesResponse = HoprAndNativeResponse;
+export const GetAddressesResponse = z.object({
+  hopr: z.string(),
+  native: z.string()
+});
 
 export type GetAddressesResponseType = z.infer<typeof GetAddressesResponse>;
 

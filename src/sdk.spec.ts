@@ -24,7 +24,7 @@ describe('test sdk class', function () {
     await expect(
       sdk.api.messages.sendMessage({
         body: 'test',
-        peerAddress: 'peerAddress',
+        peerId: 'peerAddress',
         path: [],
         timeout: 500,
         tag: 0

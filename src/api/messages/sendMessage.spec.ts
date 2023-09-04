@@ -6,13 +6,13 @@ const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const TAG = 8;
 const BODY = 'Hello';
-const PEER_ADDRESS = '16Uiu2HAm2SF8EdwwUaaSoYTiZSddnG4hLVF7dizh32QFTNWMic2b';
+const PEER_ID = '16Uiu2HAm2SF8EdwwUaaSoYTiZSddnG4hLVF7dizh32QFTNWMic2b';
 const PATH = ['16Uiu2HAm1uV82HyD1iJ5DmwJr4LftmJUeMfj8zFypBRACmrJc16n'];
 const HOPS = 3;
 
 const PAYLOAD = {
   body: BODY,
-  peerAddress: PEER_ADDRESS,
+  peerId: PEER_ID,
   path: PATH,
   hops: HOPS,
   tag: TAG

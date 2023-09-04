@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { openMultipleChannels } from './index';
 import * as channels from '../api/channels';
-import { OpenChannelResponseType } from '../types';
+import { GetBalancesResponseType, OpenChannelResponseType } from '../types';
 
 jest.mock('../api/channels', () => ({
   ...jest.requireActual('../api/channels'),
@@ -18,10 +18,16 @@ describe('openMultipleChannels', function () {
   });
   it('should not attempt to open channels if node does not have enough balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, {
+    const expectedResponse: GetBalancesResponseType = {
       native: '10',
-      hopr: '0'
-    });
+      hopr: '0',
+      safeHopr: '0',
+      safeNative: '0'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v3/account/balances')
+      .reply(200, expectedResponse);
 
     const res = await openMultipleChannels({
       apiEndpoint: API_ENDPOINT,
@@ -36,12 +42,16 @@ describe('openMultipleChannels', function () {
   it('should open channels', async function () {
     const peerAddresses = ['id1', 'id2'];
     // mock hoprd node get balances
+    const expectedResponse: GetBalancesResponseType = {
+      native: BigInt(0.03 * 10e18).toString(),
+      hopr: '10',
+      safeHopr: '0',
+      safeNative: '0'
+    };
+
     nock(API_ENDPOINT)
       .get('/api/v3/account/balances')
-      .reply(200, {
-        native: BigInt(0.03 * 10e18).toString(),
-        hopr: '10'
-      });
+      .reply(200, expectedResponse);
 
     // mock hoprd node open channel
     (channels.openChannel as jest.Mock).mockImplementation(

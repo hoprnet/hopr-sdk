@@ -49,7 +49,7 @@ export class MessagesAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       body: payload.body,
-      peerAddress: payload.peerAddress,
+      peerId: payload.peerId,
       hops: payload.hops,
       path: payload.path,
       tag: payload.tag

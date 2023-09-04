@@ -16,7 +16,7 @@ export const sendMessage = async (
   const body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
     tag: payload.tag,
     body: payload.body,
-    peerAddress: payload.peerAddress,
+    peerId: payload.peerId,
     path: payload.path,
     hops: payload.hops
   };

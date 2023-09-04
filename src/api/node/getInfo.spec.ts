@@ -35,7 +35,7 @@ describe('test getInfo', function () {
     });
 
     expect(response.hoprToken).toEqual(
-      '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512'
+      '0xD4fdec44DB9D44B8f2b6d529620f9C0C7066A2c1'
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {

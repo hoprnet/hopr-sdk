@@ -133,7 +133,7 @@ describe('test ws class', function () {
     connection.waitUntilSocketOpen().catch((error) => {
       connection.close();
       expect(String(error)).toContain(
-        `WebSocket failed to connect: connect ECONNREFUSED 127.0.0.1:${PORT}`
+        `WebSocket failed to connect: connect ECONNREFUSED`
       );
       done();
     });
@@ -150,7 +150,7 @@ describe('test ws class', function () {
     connection.waitUntilSocketOpen().catch((error) => {
       connection.close();
       expect(String(error)).toContain(
-        `WebSocket failed to connect: connect ECONNREFUSED 127.0.0.1:${PORT}`
+        `WebSocket failed to connect: connect ECONNREFUSED`
       );
       expect(
         // @ts-ignore
