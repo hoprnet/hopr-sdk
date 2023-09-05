@@ -18,7 +18,7 @@ describe('test getChannels', function () {
           {
             type: 'outgoing',
             id: '0x00e846e435ec570cda9dcfd0c8fa8fbade524228f9521de954ee919fee3322b8',
-            peerId: '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX',
+            peerAddress: '0x0987654321098765432109876543210987654321',
             status: 'Open',
             balance: '500000000000000000'
           }
@@ -27,7 +27,7 @@ describe('test getChannels', function () {
           {
             type: 'incoming',
             id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
-            peerId: '16Uiu2HAmMKtUteDFiC8k7FZPeTVvwteM1WNtNCQ91X5875CMQEHS',
+            peerAddress: '0x0987654321098765432109876543210987654321',
             status: 'Open',
             balance: '500000000000000000'
           }
@@ -56,8 +56,8 @@ describe('test getChannels', function () {
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.incoming.at(0)?.peerId).toEqual(
-      '16Uiu2HAmEMVsLfMNFHmWZdHzLWYEQz4movezDH1qbs5BxFSYyisX'
+    expect(response.incoming.at(0)?.peerAddress).toEqual(
+      '0x0987654321098765432109876543210987654321'
     );
     expect(response.outgoing.at(0)?.balance).toEqual('500000000000000000');
   });

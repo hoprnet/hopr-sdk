@@ -34,10 +34,10 @@ describe('closeEverything', function () {
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
-        outgoing: openOutgoingChannels.map((id) => ({
+        outgoing: openOutgoingChannels.map((address) => ({
           type: 'outgoing',
           id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
-          peerId: id,
+          peerAddress: address,
           status: 'Open',
           balance: '500000000000000000'
         })),
@@ -90,10 +90,10 @@ describe('closeEverything', function () {
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
-        outgoing: openOutgoingChannels.map((id) => ({
+        outgoing: openOutgoingChannels.map((address) => ({
           type: 'outgoing',
           id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
-          peerId: id,
+          peerAddress: address,
           status: 'Closed',
           balance: '500000000000000000'
         })),
