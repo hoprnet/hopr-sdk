@@ -11,42 +11,44 @@ describe('test getPeers', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT)
-      .get(`/api/v3/node/peers`)
-      .reply(200, {
-        connected: [
-          {
-            peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-            multiAddr:
-              '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
-            heartbeats: {
-              sent: 10,
-              success: 8
-            },
-            lastSeen: 1646410980793,
-            quality: 0.8,
-            backoff: 0,
-            isNew: true,
-            reportedVersion: '1.92.12'
-          }
-        ],
-        announced: [
-          {
-            peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-            multiAddr:
-              '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
-            heartbeats: {
-              sent: 10,
-              success: 8
-            },
-            lastSeen: 1646410980793,
-            quality: 0.8,
-            backoff: 0,
-            isNew: true,
-            reportedVersion: '1.92.12'
-          }
-        ]
-      } as GetPeersResponseType);
+    const expectedResponse: GetPeersResponseType = {
+      connected: [
+        {
+          peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
+          peerAddress: '0x0987654321098765432109876543210987654321',
+          multiAddr:
+            '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
+          heartbeats: {
+            sent: 10,
+            success: 8
+          },
+          lastSeen: 1646410980793,
+          quality: 0.8,
+          backoff: 0,
+          isNew: true,
+          reportedVersion: '1.92.12'
+        }
+      ],
+      announced: [
+        {
+          peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
+          peerAddress: '0x0987654321098765432109876543210987654321',
+          multiAddr:
+            '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
+          heartbeats: {
+            sent: 10,
+            success: 8
+          },
+          lastSeen: 1646410980793,
+          quality: 0.8,
+          backoff: 0,
+          isNew: true,
+          reportedVersion: '1.92.12'
+        }
+      ]
+    };
+
+    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(200, expectedResponse);
 
     const response = await getPeers({
       apiToken: API_TOKEN,
