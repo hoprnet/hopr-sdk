@@ -4,7 +4,6 @@ import {
   PopMessageResponseType
 } from '../../types';
 import { APIError } from '../../utils';
-import { popMessage } from './popMessage';
 import { popAllMessages } from './popAllMessages';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -23,8 +22,7 @@ describe('test popAllMessages', () => {
         messages: [
           {
             tag: 12,
-            body: 'This is a HOPR message.',
-            receivedAt: 1324284684614
+            body: 'This is a HOPR message.'
           }
         ]
       } as PopAllMessagesResponseType);
@@ -45,8 +43,7 @@ describe('test popAllMessages', () => {
         messages: [
           {
             tag: 12,
-            body: 'This is a HOPR message.',
-            receivedAt: 1324284684614
+            body: 'This is a HOPR message.'
           }
         ]
       } as PopAllMessagesResponseType);

@@ -27,6 +27,7 @@ describe('Node E2E Tests', function () {
     const expectedPeer: GetPeersResponseType['connected'][0] = {
       quality: expect.any(Number),
       peerId: expect.any(String),
+      peerAddress: expect.any(String),
       multiAddr: expect.any(String),
       heartbeats: expect.objectContaining({
         sent: expect.any(Number),

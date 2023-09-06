@@ -7,8 +7,7 @@ import { BasePayload } from './general';
 
 export const ReceivedMessage = z.object({
   tag: z.number().nonnegative(),
-  body: z.string(),
-  receivedAt: z.number().nonnegative()
+  body: z.string()
 });
 
 /**
