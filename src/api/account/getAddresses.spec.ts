@@ -2,6 +2,7 @@ import { ZodError } from 'zod';
 import { APIError } from '../../utils';
 import { getAddresses } from './getAddresses';
 import nock from 'nock';
+import { GetAddressesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -12,13 +13,13 @@ describe('getAddresses', () => {
   });
 
   test('should return the HOPR and native addresses if 200', async function () {
-    const expectedResponse = {
+    const expectedResponse: GetAddressesResponseType = {
       hopr: 'peer123',
       native: '0x123abc'
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(200, expectedResponse);
 
     const result = await getAddresses({
@@ -36,7 +37,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(401, expectedResponse);
 
     await expect(
@@ -51,7 +52,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(403, expectedResponse);
 
     await expect(
@@ -66,7 +67,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(422, expectedResponse);
 
     await expect(
@@ -80,7 +81,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(200, expectedResponse);
 
     await expect(

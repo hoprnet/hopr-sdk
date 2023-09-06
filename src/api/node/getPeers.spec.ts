@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
 import { getPeers } from './getPeers';
+import { GetPeersResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -11,7 +12,7 @@ describe('test getPeers', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v2/node/peers`)
+      .get(`/api/v3/node/peers`)
       .reply(200, {
         connected: [
           {
@@ -25,7 +26,8 @@ describe('test getPeers', function () {
             lastSeen: 1646410980793,
             quality: 0.8,
             backoff: 0,
-            isNew: true
+            isNew: true,
+            reportedVersion: '1.92.12'
           }
         ],
         announced: [
@@ -40,10 +42,11 @@ describe('test getPeers', function () {
             lastSeen: 1646410980793,
             quality: 0.8,
             backoff: 0,
-            isNew: true
+            isNew: true,
+            reportedVersion: '1.92.12'
           }
         ]
-      });
+      } as GetPeersResponseType);
 
     const response = await getPeers({
       apiToken: API_TOKEN,
@@ -55,7 +58,7 @@ describe('test getPeers', function () {
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/node/peers`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -64,7 +67,7 @@ describe('test getPeers', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/node/peers`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -74,7 +77,7 @@ describe('test getPeers', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/node/peers`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -84,7 +87,7 @@ describe('test getPeers', function () {
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v2/node/peers`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

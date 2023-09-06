@@ -1,5 +1,8 @@
 import fetch from 'cross-fetch';
-import { APIErrorResponse, type PeerIdPayloadType } from '../../types';
+import {
+  APIErrorResponse,
+  type RedeemChannelTicketsPayloadType
+} from '../../types';
 import { APIError, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
@@ -14,11 +17,11 @@ import { ZodError } from 'zod';
  * @throws APIError - If the operation fails. The error object contains the status code and the error message.
  */
 export const redeemChannelTickets = async (
-  payload: PeerIdPayloadType
+  payload: RedeemChannelTicketsPayloadType
 ): Promise<boolean> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetch(
-    `${apiEndpointParsed}api/v2/channels/${payload.peerId}/tickets/redeem`,
+    `${apiEndpointParsed}api/v3/channels/${payload.channelId}/tickets/redeem`,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken)

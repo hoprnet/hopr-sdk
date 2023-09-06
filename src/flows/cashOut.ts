@@ -5,7 +5,7 @@ import { getBalances, withdraw } from '../api/account';
  * Withdraw all funds from the node.
  * Does not include funds locked in open channels and pending tickets.
  * This is a long running function and may take a more than 5 minutes to run
- * @param recipient - The address of the recipient.
+ * @param ethereumAddress - The address of the recipient.
  * @returns The transaction receipts for the cash out transactions.
  */
 export const cashOut = async (payload: CashOutPayloadType) => {
@@ -22,7 +22,7 @@ export const cashOut = async (payload: CashOutPayloadType) => {
       apiEndpoint: payload.apiEndpoint,
       apiToken: payload.apiToken,
       timeout: payload.timeout,
-      recipient: payload.recipient,
+      ethereumAddress: payload.ethereumAddress,
       amount: balance?.native,
       currency: 'NATIVE'
     });
@@ -34,7 +34,7 @@ export const cashOut = async (payload: CashOutPayloadType) => {
       apiEndpoint: payload.apiEndpoint,
       apiToken: payload.apiToken,
       timeout: payload.timeout,
-      recipient: payload.recipient,
+      ethereumAddress: payload.ethereumAddress,
       amount: balance?.hopr,
       currency: 'HOPR'
     });

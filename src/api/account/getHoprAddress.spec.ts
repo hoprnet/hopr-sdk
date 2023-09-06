@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { getHoprAddress } from './getHoprAddress';
 import { APIError } from '../../utils';
+import { GetAddressesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -11,13 +12,13 @@ describe('getHoprAddress', () => {
   });
 
   test('should return the HOPR addresses if 200', async function () {
-    const expectedResponse = {
+    const expectedResponse: GetAddressesResponseType = {
       hopr: 'peer123',
       native: '0x123abc'
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(200, expectedResponse);
 
     const result = await getHoprAddress({
@@ -35,7 +36,7 @@ describe('getHoprAddress', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(401, expectedResponse);
 
     await expect(
@@ -50,7 +51,7 @@ describe('getHoprAddress', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(403, expectedResponse);
 
     await expect(
@@ -65,7 +66,7 @@ describe('getHoprAddress', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v2/account/addresses')
+      .get('/api/v3/account/addresses')
       .reply(422, expectedResponse);
 
     await expect(

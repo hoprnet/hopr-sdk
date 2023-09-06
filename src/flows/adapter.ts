@@ -53,7 +53,7 @@ export class FlowsAdapter {
     return openMultipleChannels({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       ...payload
     });
   }
@@ -72,7 +72,7 @@ export class FlowsAdapter {
     return cashOut({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       ...payload
     });
   }
@@ -95,7 +95,7 @@ export class FlowsAdapter {
     return safeSendMessage({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       ...payload
     });
   }
@@ -120,7 +120,7 @@ export class FlowsAdapter {
     return getOutgoingChannels({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       ...payload
     });
   }

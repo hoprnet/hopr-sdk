@@ -136,7 +136,7 @@ export class AccountAdapter {
     return withdraw({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: this.timeout,
+      timeout: payload.timeout ?? this.timeout,
       ...payload
     });
   }

@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { cashOut } from './';
 import * as account from '../api/account';
+import { GetBalancesResponseType } from '../types';
 
 jest.mock('../api/account', () => ({
   ...jest.requireActual('../api/account'),
@@ -17,14 +18,21 @@ describe('cashOut', function () {
   });
   it('does not call withdraw without balance', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    const expectedResponse: GetBalancesResponseType = {
       native: '0',
-      hopr: '0'
-    });
+      hopr: '0',
+      safeHopr: '0',
+      safeNative: '0'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v3/account/balances')
+      .reply(200, expectedResponse);
+
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      recipient: 'vitalik.eth'
+      ethereumAddress: 'vitalik.eth'
     });
 
     expect(res.hopr).toEqual(undefined);
@@ -33,10 +41,17 @@ describe('cashOut', function () {
   });
   it('sends tx to recipient', async function () {
     // mock hoprd node get balances
-    nock(API_ENDPOINT).get('/api/v2/account/balances').reply(200, {
+    const expectedResponse: GetBalancesResponseType = {
       native: '10',
-      hopr: '10'
-    });
+      hopr: '10',
+      safeHopr: '0',
+      safeNative: '0'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v3/account/balances')
+      .reply(200, expectedResponse);
+
     // mock hoprd node withdraw response
     const expectedReceipt = '0x123456789abcdef';
     (account.withdraw as jest.Mock).mockImplementation(() => expectedReceipt);
@@ -44,13 +59,13 @@ describe('cashOut', function () {
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      recipient: 'vitalik.eth'
+      ethereumAddress: 'vitalik.eth'
     });
 
     expect(res.hopr).toEqual(expectedReceipt);
     expect(res.native).toEqual(expectedReceipt);
     expect(
-      (account.withdraw as jest.Mock).mock.calls.at(0)?.at(0)?.recipient
+      (account.withdraw as jest.Mock).mock.calls.at(0)?.at(0)?.ethereumAddress
     ).toEqual('vitalik.eth');
     expect((account.withdraw as jest.Mock).mock.calls.length).toEqual(2);
   });

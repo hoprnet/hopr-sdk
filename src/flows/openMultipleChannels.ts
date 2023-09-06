@@ -1,6 +1,6 @@
 import { OpenMultipleChannelsPayloadType } from '../types/flows';
 import { openChannel } from '../api/channels';
-import { getBalances, withdraw } from '../api/account';
+import { getBalances } from '../api/account';
 import { createLogger } from '../utils';
 
 const log = createLogger('flows', 'openMultipleChannels');
@@ -27,14 +27,14 @@ export const openMultipleChannels = async (
 
   // The HOPR balance needed to open the channels is equivalent to the `<Amount to fund each channel> * <The number of channels to open>`
   const sumOfHoprBalanceExpectedInFunds =
-    amountBN * BigInt(payload.peerIds.length);
+    amountBN * BigInt(payload.peerAddresses.length);
 
   const nodeHasEnoughHoprBalance =
     hoprBalanceBN >= sumOfHoprBalanceExpectedInFunds;
 
   // The NATIVE balance needed to open the channels is equivalent to the `<Gnosis minimum gas> * <The number of channels to open>`
   const sumOfNativeBalanceExpectedInFunds =
-    MINIMUM_GNOSIS_GAS * BigInt(payload.peerIds.length);
+    MINIMUM_GNOSIS_GAS * BigInt(payload.peerAddresses.length);
 
   const nodeHasEnoughNativeBalance =
     nativeBalanceBN >= sumOfNativeBalanceExpectedInFunds;
@@ -54,18 +54,18 @@ export const openMultipleChannels = async (
   }
 
   // Open channels for each peerId and gather the promises
-  const openChannelPromises = payload.peerIds.map(async (peerId) => {
+  const openChannelPromises = payload.peerAddresses.map(async (peerAddress) => {
     try {
-      const { receipt, channelId } = await openChannel({
+      const { transactionReceipt, channelId } = await openChannel({
         apiEndpoint: payload.apiEndpoint,
         apiToken: payload.apiToken,
         timeout: payload.timeout,
-        peerId,
+        peerAddress: peerAddress,
         amount: payload.amount
       });
-      return { peerId, receipt: receipt, channelId };
+      return { peerAddress, transactionReceipt, channelId };
     } catch (error) {
-      return { peerId, receipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
+      return { peerAddress, transactionReceipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
     }
   });
 
@@ -73,15 +73,15 @@ export const openMultipleChannels = async (
   const results = await Promise.allSettled(openChannelPromises);
 
   // Filter out the fulfilled results and return an object with receipts and channelId keyed by peerId
-  const receipts: {
-    [peerId: string]: { channelId: string; receipt: string };
+  const transactionReceipts: {
+    [peerId: string]: { channelId: string; transactionReceipt: string };
   } = {};
   results.forEach((result) => {
-    if (result.status === 'fulfilled' && result.value.receipt) {
-      const { peerId, receipt, channelId } = result.value;
-      receipts[peerId] = { channelId, receipt };
+    if (result.status === 'fulfilled' && result.value.transactionReceipt) {
+      const { peerAddress, transactionReceipt, channelId } = result.value;
+      transactionReceipts[peerAddress] = { channelId, transactionReceipt };
     }
   });
 
-  return receipts;
+  return transactionReceipts;
 };

@@ -1,5 +1,5 @@
 import { HoprSDK as SDK } from '../src/sdk';
-import { api } from '../src';
+import { GetTokenResponseType, api } from '../src';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1 } = process.env;
 
@@ -44,16 +44,16 @@ describe('Tokens E2E Tests', function () {
       apiToken: newToken
     });
 
-    expect(tokenInfo).toStrictEqual({
+    const expectedResponse: GetTokenResponseType = {
       description: expect.any(String),
       id: expect.any(String),
+      valid_until: expect.any(Number),
       capabilities: [
         {
           endpoint: expect.any(String),
           limits: [
             {
               type: expect.any(String),
-              used: expect.any(Number),
               conditions: {
                 max: expect.any(Number)
               }
@@ -61,7 +61,9 @@ describe('Tokens E2E Tests', function () {
           ]
         }
       ]
-    });
+    };
+
+    expect(tokenInfo).toStrictEqual(expectedResponse);
   });
 
   afterAll(async () => {

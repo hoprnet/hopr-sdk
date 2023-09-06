@@ -7,6 +7,6 @@ export * from './tickets';
 export * from './messages';
 export * from './tokens';
 export * from './account';
-export * from './peerInfo';
+export * from './peers';
 export * from './websocket';
 export * from './settings';

@@ -1,24 +1,33 @@
 import { ZodError } from 'zod';
-import { BasePayloadType, APIErrorResponse } from '../../types';
+import { APIErrorResponse, DeleteMessagesPayloadType } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
-  const headersForMetrics = getHeaders(payload.apiToken);
-  headersForMetrics.set('Accept-Content', 'text/plain');
-
+export const deleteMessages = async (
+  payload: DeleteMessagesPayloadType
+): Promise<boolean> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const urlWithApiPath = new URL('api/v3/messages', apiEndpointParsed);
+  const params = new URLSearchParams();
+  // add tag to search params
+  params.append('tag', payload.tag.toString());
+
+  // join base url with search params
+  urlWithApiPath.search = params.toString();
+
+  const fullUrl = urlWithApiPath.toString();
+
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/node/metrics`,
+    fullUrl,
     {
-      method: 'GET',
-      headers: headersForMetrics
+      method: 'DELETE',
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
 
   // received expected response
-  if (rawResponse.status === 200) {
-    return rawResponse.text();
+  if (rawResponse.status === 204) {
+    return true;
   }
 
   // received unexpected error from server

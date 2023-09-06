@@ -21,7 +21,8 @@ export const Peer = z.object({
   lastSeen: z.number(),
   quality: z.number(),
   backoff: z.number(),
-  isNew: z.boolean()
+  isNew: z.boolean(),
+  reportedVersion: z.string()
 });
 export const GetPeersResponse = z.object({
   connected: z.array(Peer),
@@ -35,13 +36,16 @@ export type GetPeersResponseType = z.infer<typeof GetPeersResponse>;
  */
 
 export const GetInfoResponse = z.object({
-  environment: z.string(),
+  network: z.string(),
   announcedAddress: z.string().array(),
   listeningAddress: z.string().array(),
-  network: z.string(),
+  chain: z.string(),
   hoprToken: z.string(),
   hoprChannels: z.string(),
   hoprNetworkRegistryAddress: z.string().optional(),
+  hoprNodeSafeRegistryAddress: z.string().optional(),
+  nodeManagementModule: z.string(),
+  nodeSafe: z.string(),
   connectivityStatus: z.string(),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()
@@ -61,19 +65,3 @@ const nodeSchema = z.object({
 export const GetEntryNodesResponse = z.record(nodeSchema);
 
 export type GetEntryNodesResponseType = z.infer<typeof GetEntryNodesResponse>;
-
-/**
- * Ping node
- */
-
-export const PingNodePayload = BasePayload.extend({
-  peerId: z.string()
-});
-
-export type PingNodePayloadType = z.infer<typeof PingNodePayload>;
-
-export const PingNodeResponse = z.object({
-  latency: z.number()
-});
-
-export type PingNodeResponseType = z.infer<typeof PingNodeResponse>;

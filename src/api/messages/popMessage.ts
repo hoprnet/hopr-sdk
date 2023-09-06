@@ -1,25 +1,25 @@
 import { ZodError } from 'zod';
 import {
-  FundChannelsResponse,
-  type FundChannelsPayloadType,
-  type FundChannelsResponseType,
-  type RemoveBasicAuthenticationPayloadType,
-  APIErrorResponse
+  APIErrorResponse,
+  PopMessagePayloadType,
+  PopMessageResponse,
+  PopMessageResponseType,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const fundChannels = async (
-  payload: FundChannelsPayloadType
-): Promise<FundChannelsResponseType> => {
-  const body: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType> = {
-    incomingAmount: payload.incomingAmount,
-    outgoingAmount: payload.outgoingAmount,
-    peerId: payload.peerId
+export const popMessage = async (
+  payload: PopMessagePayloadType
+): Promise<PopMessageResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const urlWithApiPath = new URL('api/v3/messages/pop', apiEndpointParsed);
+  const fullUrl = urlWithApiPath.toString();
+  const body: RemoveBasicAuthenticationPayloadType<PopMessagePayloadType> = {
+    tag: payload.tag
   };
 
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/fundmulti`,
+    fullUrl,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
@@ -34,7 +34,7 @@ export const fundChannels = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
+  const parsedRes = PopMessageResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

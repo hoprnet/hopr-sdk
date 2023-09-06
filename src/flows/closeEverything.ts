@@ -22,8 +22,7 @@ export const closeEverything = async (payload: BasePayloadType) => {
         apiEndpoint: payload.apiEndpoint,
         apiToken: payload.apiToken,
         timeout: payload.timeout,
-        direction: 'outgoing',
-        peerId: channel.peerId
+        channelId: channel.id
       });
       if (closedChannel) {
         closedChannels.push(closedChannel);

@@ -1,3 +1,4 @@
+import { GetChannelResponseType } from '../src';
 import { HoprSDK as SDK } from '../src/sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
@@ -46,18 +47,34 @@ describe('Channels E2E test', function () {
   });
 
   test('gets the specified channel details', async function () {
-    const response = await channels.getChannel({
-      peerId: _2peerId,
-      direction: 'outgoing'
+    const openChannels = await channels.getChannels({
+      includingClosed: false
     });
 
-    expect(response).toStrictEqual({
-      type: expect.any(String),
-      channelId: expect.any(String),
-      peerId: expect.any(String),
-      status: expect.any(String),
-      balance: expect.any(String)
+    const firstOpenOutgoingChannel = openChannels.outgoing.at(0);
+
+    if (!firstOpenOutgoingChannel) {
+      throw new Error('No open outgoing channel');
+    }
+
+    const response = await channels.getChannel({
+      channelId: firstOpenOutgoingChannel?.id
     });
+
+    const expectedResponse: GetChannelResponseType[0] = {
+      channelId: expect.any(String),
+      status: expect.any(String),
+      balance: expect.any(String),
+      sourcePeerId: expect.any(String),
+      destinationPeerId: expect.any(String),
+      sourceAddress: expect.any(String),
+      destinationAddress: expect.any(String),
+      ticketIndex: expect.any(String),
+      channelEpoch: expect.any(String),
+      closureTime: expect.any(String)
+    };
+
+    expect(response.at(0)).toStrictEqual(expectedResponse);
   }, 15e3);
 
   // FIXME: This needs to be checked
@@ -109,21 +126,20 @@ describe('Channels E2E test', function () {
   //   60e3 * 5
   // );
 
-  test('fund the specified channel', async function () {
-    const response = await channels.fundChannels({
-      peerId: _2peerId,
-      outgoingAmount: '1000000',
-      incomingAmount: '1000000'
-    });
-
-    expect(response).toStrictEqual({ receipt: expect.any(String) });
-  }, 30e3);
-
   // close channel after the tests are executed
   afterAll(async () => {
+    const openChannels = await channels.getChannels({
+      includingClosed: false
+    });
+
+    const firstOpenOutgoingChannel = openChannels.outgoing.at(0);
+
+    if (!firstOpenOutgoingChannel) {
+      throw new Error('No open outgoing channel');
+    }
+
     const closeChannelResponse = await channels.closeChannel({
-      peerId: _2peerId,
-      direction: 'outgoing'
+      channelId: firstOpenOutgoingChannel.id
     });
 
     expect(closeChannelResponse).toStrictEqual({
@@ -133,10 +149,9 @@ describe('Channels E2E test', function () {
 
     await sleep(5e3);
     const channel = await channels.getChannel({
-      direction: 'outgoing',
-      peerId: _2peerId
+      channelId: firstOpenOutgoingChannel.id
     });
 
-    expect(channel?.status).toBe('PendingToClose');
+    expect(channel.at(0)?.status).toBe('PendingToClose');
   }, 42e4);
 });

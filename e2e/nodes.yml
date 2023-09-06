@@ -2,7 +2,7 @@ version: "3"
 
 services:
   pluto:
-    image: gcr.io/hoprassociation/hopr-pluto:${HOPR_PLUTO_VERSION}
+    image: europe-west3-docker.pkg.dev/hoprassociation/docker-images/hopr-pluto:latest
     restart: unless-stopped
     volumes:
       - pluto-data:/tmp

@@ -11,7 +11,7 @@ export const getStatistics = async (
 ): Promise<GetStatisticsResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/tickets/statistics`,
+    `${apiEndpointParsed}api/v3/tickets/statistics`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

@@ -12,7 +12,7 @@ export const getEntryNodes = async (
 ): Promise<GetEntryNodesResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v2/node/entryNodes`,
+    `${apiEndpointParsed}api/v3/node/entryNodes`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

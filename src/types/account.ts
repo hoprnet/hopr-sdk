@@ -2,15 +2,28 @@ import { z } from 'zod';
 import { BasePayload } from './general';
 
 /**
- * General
+ * balances
  */
 
-export const AccountResponse = z.object({
+export const GetBalancesResponse = z.object({
+  hopr: z.string(),
+  native: z.string(),
+  safeNative: z.string(),
+  safeHopr: z.string()
+});
+
+export type GetBalancesResponseType = z.infer<typeof GetBalancesResponse>;
+
+/**
+ * addresses
+ */
+
+export const GetAddressesResponse = z.object({
   hopr: z.string(),
   native: z.string()
 });
 
-export type AccountResponseType = z.infer<typeof AccountResponse>;
+export type GetAddressesResponseType = z.infer<typeof GetAddressesResponse>;
 
 /**
  * withdraw
@@ -19,7 +32,7 @@ export type AccountResponseType = z.infer<typeof AccountResponse>;
 export const WithdrawPayload = BasePayload.extend({
   currency: z.enum(['NATIVE', 'HOPR']),
   amount: z.string(),
-  recipient: z.string()
+  ethereumAddress: z.string()
 });
 
 export type WithdrawPayloadType = z.infer<typeof WithdrawPayload>;
