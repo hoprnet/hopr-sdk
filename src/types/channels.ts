@@ -21,7 +21,7 @@ const TopologyChannel = z.object({
 export const Channel = z.object({
   type: z.enum(['incoming', 'outgoing']),
   id: z.string(),
-  peerId: z.string(),
+  peerAddress: z.string(),
   status: ChannelStatus,
   balance: z.string()
 });

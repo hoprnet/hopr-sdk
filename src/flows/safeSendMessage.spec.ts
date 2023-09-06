@@ -32,7 +32,7 @@ describe('safeSendMessage', function () {
           {
             type: 'incoming',
             id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
-            peerId: '16Uiu2HAmMKtUteDFiC8k7FZPeTVvwteM1WNtNCQ91X5875CMQEHS',
+            peerAddress: '0x0987654321098765432109876543210987654321',
             status: 'Closed',
             balance: '500000000000000000'
           }
@@ -59,7 +59,8 @@ describe('safeSendMessage', function () {
           {
             type: 'incoming',
             id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
-            peerId: '16Uiu2HAmMKtUteDFiC8k7FZPeTVvwteM1WNtNCQ91X5875CMQEHS',
+            peerAddress:
+              '16Uiu2HAmMKtUteDFiC8k7FZPeTVvwteM1WNtNCQ91X5875CMQEHS',
             status: 'Open',
             balance: '500000000000000000'
           }

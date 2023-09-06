@@ -12,14 +12,14 @@ const { channels } = sdk.api;
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Channels E2E test', function () {
-  let _2peerId: string;
+  let _2peerAddress: string;
   const sdk2 = new SDK({
     apiEndpoint: HOPRD_API_ENDPOINT_2!,
     apiToken: HOPRD_API_TOKEN!
   });
   // Open a channel before all the other tests are executed
   beforeAll(async () => {
-    _2peerId = (await sdk2.api.account.getHoprAddress({})) as string;
+    _2peerAddress = (await sdk2.api.account.getAddresses({})).native;
 
     // Since `pluto` opens the channels already there's no need to "re-open" them
 
@@ -41,7 +41,7 @@ describe('Channels E2E test', function () {
 
     // Assert that the 'outgoing' array contains a specific channel
     const outgoingChannel = response!.outgoing.find(
-      (channel) => channel.peerId === _2peerId
+      (channel) => channel.peerAddress === _2peerAddress
     );
     expect(outgoingChannel).toBeDefined();
   });
