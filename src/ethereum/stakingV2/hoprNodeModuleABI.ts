@@ -158,6 +158,18 @@ export const hoprNodModuleABI = [
   },
   {
     anonymous: false,
+    inputs: [],
+    name: 'ExecutionFailure',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [],
+    name: 'ExecutionSuccess',
+    type: 'event'
+  },
+  {
+    anonymous: false,
     inputs: [
       {
         indexed: false,
@@ -395,6 +407,43 @@ export const hoprNodModuleABI = [
       }
     ],
     stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'capabilityKey',
+        type: 'bytes32'
+      },
+      {
+        internalType: 'bytes32',
+        name: 'pairId',
+        type: 'bytes32'
+      }
+    ],
+    name: 'getGranularPermissions',
+    outputs: [
+      {
+        internalType: 'enum GranularPermission',
+        name: '',
+        type: 'uint8'
+      }
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [],
+    name: 'getTargets',
+    outputs: [
+      {
+        internalType: 'Target[]',
+        name: '',
+        type: 'uint256[]'
+      }
+    ],
+    stateMutability: 'view',
     type: 'function'
   },
   {
@@ -664,6 +713,30 @@ export const hoprNodModuleABI = [
     name: 'transferOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'targetAddress',
+        type: 'address'
+      }
+    ],
+    name: 'tryGetTarget',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool'
+      },
+      {
+        internalType: 'Target',
+        name: '',
+        type: 'uint256'
+      }
+    ],
+    stateMutability: 'view',
     type: 'function'
   },
   {
