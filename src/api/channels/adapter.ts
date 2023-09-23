@@ -1,5 +1,6 @@
 import {
   CloseChannelPayloadType,
+  FundChannelPayloadType,
   GetChannelPayloadType,
   GetChannelsPayloadType,
   GetChannelTicketsPayloadType,
@@ -14,6 +15,7 @@ import { getChannels } from './getChannels';
 import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
+import { fundChannel } from './fundChannel';
 
 const log = createLogger('channels');
 
@@ -119,6 +121,18 @@ export class ChannelsAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       channelId: payload.channelId
+    });
+  }
+
+  public async fundChannel(
+    payload: RemoveBasicAuthenticationPayloadType<FundChannelPayloadType>
+  ) {
+    return fundChannel({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout,
+      channelId: payload.channelId,
+      amount: payload.amount
     });
   }
 }

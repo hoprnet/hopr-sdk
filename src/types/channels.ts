@@ -123,3 +123,18 @@ export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;
 export const GetChannelResponse = z.array(TopologyChannel);
 
 export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
+
+/** Fund Channel */
+
+export const FundChannelPayload = BasePayload.extend({
+  channelId: z.string(),
+  amount: z.string()
+});
+
+export type FundChannelPayloadType = z.infer<typeof FundChannelPayload>;
+
+export const FundChannelResponse = z.object({
+  receipt: z.string()
+});
+
+export type FundChannelResponseType = z.infer<typeof FundChannelResponse>;
