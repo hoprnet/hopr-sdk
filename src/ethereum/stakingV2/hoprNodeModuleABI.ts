@@ -1,4 +1,4 @@
-export const hoprNodModuleABI = [
+export const hoprNodeManagementModuleABI = [
   {
     inputs: [],
     stateMutability: 'nonpayable',
