@@ -35,12 +35,12 @@ export class SettingsAdapter {
   }
 
   public async getSettings(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getSettings({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 

@@ -87,12 +87,12 @@ export class TokensAdapter {
    * @returns A Promise that resolves to an object with the token info.
    */
   public async getToken(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getToken({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 }

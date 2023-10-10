@@ -35,22 +35,22 @@ export class TicketsAdapter {
   }
 
   public async getStatistics(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getStatistics({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
   public async getTickets(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getTickets({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
@@ -59,12 +59,12 @@ export class TicketsAdapter {
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
   public async redeemTickets(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return redeemTickets({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 }
