@@ -138,12 +138,12 @@ export class FlowsAdapter {
    *   - `redeemedTickets`: A boolean value indicating whether the tickets were redeemed successfully.
    */
   public async closeEverything(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return closeEverything({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 }

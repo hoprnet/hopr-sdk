@@ -46,12 +46,12 @@ export class AccountAdapter {
    * @returns — A promise that resolves with an object containing the HOPR and native addresses.
    */
   public async getAddresses(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getAddresses({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
@@ -60,12 +60,12 @@ export class AccountAdapter {
    * @returns — A Promise that resolves with an object containing the HOPR and native balances.
    */
   public async getBalances(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getBalances({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
@@ -74,12 +74,12 @@ export class AccountAdapter {
    * @returns — A Promise that resolves to the HOPR address.
    */
   public async getHoprAddress(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getHoprAddress({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
@@ -88,12 +88,12 @@ export class AccountAdapter {
    * @returns — A Promise that resolves to a string representing the HOPR balance.
    */
   public async getHoprBalance(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getHoprBalance({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
@@ -102,12 +102,12 @@ export class AccountAdapter {
    * @returns — A Promise that resolves to the native address.
    */
   public async getNativeAddress(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getNativeAddress({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
@@ -116,12 +116,12 @@ export class AccountAdapter {
    * @returns — A Promise that resolves with a string representing the native balance.
    */
   public async getNativeBalance(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getNativeBalance({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
   /**

@@ -45,12 +45,12 @@ export class AliasesAdapter {
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
   public async getAliases(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ): Promise<Record<string, string> | undefined> {
     return getAliases({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 
