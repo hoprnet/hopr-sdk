@@ -3,3 +3,7 @@ export * from './hoprNodeSafeRegistryABI';
 export * from './hoprNetworkRegistryABI';
 export * from './hoprNodeModuleABI';
 export * from './hoprNodeStakeFactoryABI';
+export * from './hoprMultiSendABI';
+export * from './hoprSafeABI';
+export * from './hoprWrapperABI';
+export * from './hoprBoostNFTABI';
