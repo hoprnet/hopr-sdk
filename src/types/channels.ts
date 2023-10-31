@@ -38,6 +38,35 @@ export type RedeemChannelTicketsPayloadType = z.infer<
   typeof RedeemChannelTicketsPayload
 >;
 
+/**
+ * Aggregate channel tickets
+ */
+
+export const AggregateChannelTicketsPayload = BasePayload.extend({
+  channelId: z.string()
+});
+
+export type AggregateChannelTicketsPayloadType = z.infer<
+  typeof RedeemChannelTicketsPayload
+>;
+
+/**
+ * Fund channel
+ */
+
+export const FundChannelsPayload = BasePayload.extend({
+  channelId: z.string(),
+  amount: z.string()
+});
+
+export type FundChannelsPayloadType = z.infer<typeof FundChannelsPayload>;
+
+export const FundChannelsResponse = z.object({
+  receipt: z.string()
+});
+
+export type FundChannelsResponseType = z.infer<typeof FundChannelsResponse>;
+
 /** Open channel */
 
 export const OpenChannelPayload = BasePayload.extend({
