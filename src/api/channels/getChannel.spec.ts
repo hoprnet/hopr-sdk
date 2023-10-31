@@ -15,21 +15,19 @@ describe('test getChannel', function () {
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
-      .reply(200, [
-        {
-          channelId:
-            '0x624d7f7a76d60b6e4546ec9429f2266620aa010d47bf05998c3f73e2256b1f7e',
-          sourcePeerId: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
-          destinationPeerId: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
-          sourceAddress: '1.339446426793328e+48',
-          destinationAddress: '1.339446426793328e+48',
-          balance: '10000000000000000000',
-          status: 'Open',
-          ticketIndex: 'string',
-          channelEpoch: 'string',
-          closureTime: 'string'
-        }
-      ] as GetChannelResponseType);
+      .reply(200, {
+        channelId:
+          '0x624d7f7a76d60b6e4546ec9429f2266620aa010d47bf05998c3f73e2256b1f7e',
+        sourcePeerId: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
+        destinationPeerId: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
+        sourceAddress: '1.339446426793328e+48',
+        destinationAddress: '1.339446426793328e+48',
+        balance: '10000000000000000000',
+        status: 'Open',
+        ticketIndex: 'string',
+        channelEpoch: 'string',
+        closureTime: 'string'
+      } as GetChannelResponseType);
 
     const response = await getChannel({
       apiToken: API_TOKEN,
@@ -37,10 +35,10 @@ describe('test getChannel', function () {
       channelId: BUDDY_CHANNEL_ID
     });
 
-    expect(response.at(0)?.channelId).toEqual(
+    expect(response.channelId).toEqual(
       '0x624d7f7a76d60b6e4546ec9429f2266620aa010d47bf05998c3f73e2256b1f7e'
     );
-    expect(response.at(0)?.status).toEqual('Open');
+    expect(response.status).toEqual('Open');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/channels/${BUDDY_CHANNEL_ID}`).reply(400, {
