@@ -61,7 +61,7 @@ describe('Channels E2E test', function () {
       channelId: firstOpenOutgoingChannel?.id
     });
 
-    const expectedResponse: GetChannelResponseType[0] = {
+    const expectedResponse: GetChannelResponseType = {
       channelId: expect.any(String),
       status: expect.any(String),
       balance: expect.any(String),
@@ -74,7 +74,7 @@ describe('Channels E2E test', function () {
       closureTime: expect.any(String)
     };
 
-    expect(response.at(0)).toStrictEqual(expectedResponse);
+    expect(response).toStrictEqual(expectedResponse);
   }, 15e3);
 
   // FIXME: This needs to be checked
@@ -152,6 +152,6 @@ describe('Channels E2E test', function () {
       channelId: firstOpenOutgoingChannel.id
     });
 
-    expect(channel.at(0)?.status).toBe('PendingToClose');
+    expect(channel.status).toBe('PendingToClose');
   }, 42e4);
 });
