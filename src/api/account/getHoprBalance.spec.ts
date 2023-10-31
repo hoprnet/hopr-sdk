@@ -16,7 +16,8 @@ describe('getHoprBalance', () => {
       native: '100000000000000000',
       hopr: '1000000000',
       safeHopr: '1000000000',
-      safeNative: '1000000000'
+      safeNative: '1000000000',
+      safeHoprAllowance: '1000000000'
     };
 
     nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, response);

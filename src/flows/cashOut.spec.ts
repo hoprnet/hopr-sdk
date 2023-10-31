@@ -22,7 +22,8 @@ describe('cashOut', function () {
       native: '0',
       hopr: '0',
       safeHopr: '0',
-      safeNative: '0'
+      safeNative: '0',
+      safeHoprAllowance: '0'
     };
 
     nock(API_ENDPOINT)
@@ -45,7 +46,8 @@ describe('cashOut', function () {
       native: '10',
       hopr: '10',
       safeHopr: '0',
-      safeNative: '0'
+      safeNative: '0',
+      safeHoprAllowance: '0'
     };
 
     nock(API_ENDPOINT)

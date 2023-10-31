@@ -22,7 +22,8 @@ describe('openMultipleChannels', function () {
       native: '10',
       hopr: '0',
       safeHopr: '0',
-      safeNative: '0'
+      safeNative: '0',
+      safeHoprAllowance: '0'
     };
 
     nock(API_ENDPOINT)
@@ -46,7 +47,8 @@ describe('openMultipleChannels', function () {
       native: BigInt(0.03 * 10e18).toString(),
       hopr: '10',
       safeHopr: '0',
-      safeNative: '0'
+      safeNative: '0',
+      safeHoprAllowance: '0'
     };
 
     nock(API_ENDPOINT)

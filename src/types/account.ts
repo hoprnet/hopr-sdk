@@ -9,7 +9,8 @@ export const GetBalancesResponse = z.object({
   hopr: z.string(),
   native: z.string(),
   safeNative: z.string(),
-  safeHopr: z.string()
+  safeHopr: z.string(),
+  safeHoprAllowance: z.string()
 });
 
 export type GetBalancesResponseType = z.infer<typeof GetBalancesResponse>;

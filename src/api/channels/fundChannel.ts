@@ -1,0 +1,54 @@
+import { ZodError } from 'zod';
+import {
+  FundChannelsResponse,
+  type FundChannelsPayloadType,
+  type FundChannelsResponseType,
+  type RemoveBasicAuthenticationPayloadType,
+  APIErrorResponse
+} from '../../types';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+
+/**
+ * Funds an existing channel with the given amount. The channel must be in state OPEN
+ */
+export const fundChannel = async (
+  payload: FundChannelsPayloadType
+): Promise<FundChannelsResponseType> => {
+  const body = {
+    amount: payload.amount
+  };
+
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const rawResponse = await fetchWithTimeout(
+    `${apiEndpointParsed}api/v3/channels/${payload.channelId}/fund`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
+
+  // received unexpected error from server
+  if (rawResponse.status > 499) {
+    throw new Error(rawResponse.statusText);
+  }
+
+  const jsonResponse = await rawResponse.json();
+  const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
+
+  // received expected response
+  if (parsedRes.success) {
+    return parsedRes.data;
+  }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new APIError(isApiErrorResponse.data);
+  }
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
+};
