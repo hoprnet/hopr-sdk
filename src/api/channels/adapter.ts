@@ -1,5 +1,7 @@
 import {
+  AggregateChannelTicketsPayloadType,
   CloseChannelPayloadType,
+  FundChannelsPayloadType,
   GetChannelPayloadType,
   GetChannelsPayloadType,
   GetChannelTicketsPayloadType,
@@ -8,7 +10,9 @@ import {
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
+import { aggregateChannelTickets } from './aggregateChannelTickets';
 import { closeChannel } from './closeChannel';
+import { fundChannel } from './fundChannel';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
 import { getChannelTickets } from './getChannelTickets';
@@ -115,6 +119,29 @@ export class ChannelsAdapter {
     payload: RemoveBasicAuthenticationPayloadType<RedeemChannelTicketsPayloadType>
   ) {
     return redeemChannelTickets({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout,
+      channelId: payload.channelId
+    });
+  }
+
+  public async fundChannel(
+    payload: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType>
+  ) {
+    return fundChannel({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout,
+      amount: payload.amount,
+      channelId: payload.channelId
+    });
+  }
+
+  public async aggregateChannelTickets(
+    payload: RemoveBasicAuthenticationPayloadType<AggregateChannelTicketsPayloadType>
+  ) {
+    return aggregateChannelTickets({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,

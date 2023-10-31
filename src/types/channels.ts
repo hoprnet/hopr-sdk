@@ -149,6 +149,6 @@ export const GetChannelPayload = BasePayload.extend({
 
 export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;
 
-export const GetChannelResponse = z.array(TopologyChannel);
+export const GetChannelResponse = TopologyChannel;
 
 export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
