@@ -34,7 +34,7 @@ start() {
     sleep 10
 
     until [[ $pluto == true ]]; do
-        docker logs sandbox-nodes-pluto-1 &>"$DIR/logs"
+        docker logs pluto &>"$DIR/logs"
 
         logs_pluto=$(grep "Terminating this script will clean up the running local cluster" "$DIR/logs" | head -1)
         logs_error=$(grep "Cleaning up processes" "$DIR/logs" | head -1)
