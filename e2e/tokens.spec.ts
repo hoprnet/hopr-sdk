@@ -47,7 +47,6 @@ describe('Tokens E2E Tests', function () {
     const expectedResponse: GetTokenResponseType = {
       description: expect.any(String),
       id: expect.any(String),
-      valid_until: expect.any(Number),
       capabilities: [
         {
           endpoint: expect.any(String),

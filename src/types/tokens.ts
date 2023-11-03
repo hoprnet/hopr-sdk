@@ -89,7 +89,7 @@ export type CreateTokenResponseType = z.infer<typeof CreateTokenResponse>;
 export const GetTokenResponse = z.object({
   id: z.string(),
   description: z.string().optional(),
-  valid_until: z.number(),
+  valid_until: z.number().optional(),
   capabilities: z.array(TokenCapability)
 });
 
