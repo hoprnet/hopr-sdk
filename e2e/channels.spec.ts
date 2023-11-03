@@ -12,25 +12,18 @@ const { channels } = sdk.api;
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Channels E2E test', function () {
-  let _2peerAddress: string;
+  let secondPeerAddress: string;
   const sdk2 = new SDK({
     apiEndpoint: HOPRD_API_ENDPOINT_2!,
     apiToken: HOPRD_API_TOKEN!
   });
   // Open a channel before all the other tests are executed
   beforeAll(async () => {
-    _2peerAddress = (await sdk2.api.account.getAddresses({})).native;
+    secondPeerAddress = (await sdk2.api.account.getAddresses({})).native;
 
     // Since `pluto` opens the channels already there's no need to "re-open" them
 
-    // In order to artfifitially create tickets we need to send a message through the desired node
-    // const _1PeerId = (await sdk.api.account.getHoprAddress({})) as string;
-    // await sdk2.api.messages.sendMessage({
-    //   body: 'Message for ticket',
-    //   recipient: _2peerId,
-    //   path: [_1PeerId, _2peerId, _1PeerId]
-    // });
-    sleep(30e3);
+    await sleep(30e3);
   }, 120e3);
 
   test('gets the open channels', async function () {
@@ -41,7 +34,7 @@ describe('Channels E2E test', function () {
 
     // Assert that the 'outgoing' array contains a specific channel
     const outgoingChannel = response!.outgoing.find(
-      (channel) => channel.peerAddress === _2peerAddress
+      (channel) => channel.peerAddress === secondPeerAddress
     );
     expect(outgoingChannel).toBeDefined();
   });
@@ -152,6 +145,6 @@ describe('Channels E2E test', function () {
       channelId: firstOpenOutgoingChannel.id
     });
 
-    expect(channel.status).toBe('PendingToClose');
+    expect(['Closed', 'PendingToClose']).toContain(channel.status);
   }, 42e4);
 });

@@ -1,3 +1,4 @@
+import { GetBalancesResponseType } from '../src';
 import { HoprSDK as SDK } from '../src/sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1 } = process.env;
@@ -33,10 +34,15 @@ describe('Account E2E tests', function () {
   it('receives the hopr and native balances', async function () {
     const response = await account.getBalances({});
 
-    expect(response).toStrictEqual({
+    const expectedResponse: GetBalancesResponseType = {
       hopr: expect.any(String),
-      native: expect.any(String)
-    });
+      native: expect.any(String),
+      safeHopr: expect.any(String),
+      safeHoprAllowance: expect.any(String),
+      safeNative: expect.any(String)
+    };
+
+    expect(response).toStrictEqual(expectedResponse);
   });
 
   it('receives the hopr balance', async function () {

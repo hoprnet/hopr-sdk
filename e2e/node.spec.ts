@@ -68,8 +68,6 @@ describe('Node E2E Tests', function () {
       isEligible: expect.any(Boolean),
       channelClosurePeriod: expect.any(Number),
       chain: expect.any(String),
-      hoprNetworkRegistryAddress: expect.any(String),
-      hoprNodeSafeRegistryAddress: expect.any(String),
       nodeManagementModule: expect.any(String),
       nodeSafe: expect.any(String)
     };

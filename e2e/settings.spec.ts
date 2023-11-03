@@ -13,8 +13,7 @@ describe('settings E2E Tests', function () {
     const response = await settings.getSettings({});
 
     expect(response).toStrictEqual({
-      includeRecipient: expect.any(Boolean),
-      strategy: expect.any(String)
+      includeRecipient: expect.any(Boolean)
     });
   });
 
@@ -23,7 +22,7 @@ describe('settings E2E Tests', function () {
 
     await settings.setSetting({
       setting: 'includeRecipient',
-      settingValue: true
+      settingValue: !oldSettings.includeRecipient
     });
 
     const newSettings = await settings.getSettings({});
