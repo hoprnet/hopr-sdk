@@ -78,13 +78,17 @@ describe('Channels E2E test', function () {
     }
 
     const fundChannelResponse = await channels.fundChannel({
-      amount: '10',
+      amount: '100',
       channelId: outgoingChannel?.id
     });
+
+    // wait for funding to get indexed
+    await sleep(1_000);
 
     const newOutgoingChannel = await channels.getChannel({
       channelId: outgoingChannel.id
     });
+
     expect(fundChannelResponse.receipt).toBeDefined();
     expect(BigInt(newOutgoingChannel.balance)).toBeGreaterThan(
       BigInt(outgoingChannel.balance)
