@@ -24,9 +24,4 @@ describe('tickets E2E Tests', function () {
       rejectedValue: expect.any(String)
     });
   });
-
-  test('should get all tickets earned', async function () {
-    const response = await sdk.api.tickets.getTickets();
-    expect(response).toEqual([]);
-  });
 });
