@@ -6,11 +6,10 @@ const sdk = new SDK({
   apiEndpoint: HOPRD_API_ENDPOINT_1!,
   apiToken: HOPRD_API_TOKEN!
 });
-const { settings } = sdk.api;
 
 describe('settings E2E Tests', function () {
   test("should get all node' settings", async function () {
-    const response = await settings.getSettings({});
+    const response = await sdk.api.settings.getSettings();
 
     expect(response).toStrictEqual({
       includeRecipient: expect.any(Boolean)
@@ -18,14 +17,14 @@ describe('settings E2E Tests', function () {
   });
 
   test('should update the nodes setting values', async function () {
-    const oldSettings = await settings.getSettings({});
+    const oldSettings = await sdk.api.settings.getSettings();
 
-    await settings.setSetting({
+    await sdk.api.settings.setSetting({
       setting: 'includeRecipient',
       settingValue: !oldSettings.includeRecipient
     });
 
-    const newSettings = await settings.getSettings({});
+    const newSettings = await sdk.api.settings.getSettings();
     expect(newSettings).toBeDefined();
     expect(newSettings).not.toEqual(oldSettings);
   });

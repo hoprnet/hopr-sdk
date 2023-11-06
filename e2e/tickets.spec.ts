@@ -6,11 +6,10 @@ const sdk = new SDK({
   apiEndpoint: HOPRD_API_ENDPOINT_1!,
   apiToken: HOPRD_API_TOKEN!
 });
-const { tickets } = sdk.api;
 
 describe('tickets E2E Tests', function () {
   test('should get the statistics regarding all your tickets', async function () {
-    const response = await tickets.getStatistics({});
+    const response = await sdk.api.tickets.getStatistics();
 
     expect(response).toStrictEqual({
       pending: expect.any(Number),
@@ -27,8 +26,7 @@ describe('tickets E2E Tests', function () {
   });
 
   test('should get all tickets earned', async function () {
-    const response = await tickets.getTickets({});
-
+    const response = await sdk.api.tickets.getTickets();
     expect(response).toEqual([]);
   });
 });

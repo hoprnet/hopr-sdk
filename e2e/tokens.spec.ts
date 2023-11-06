@@ -7,13 +7,12 @@ const sdk = new SDK({
   apiEndpoint: HOPRD_API_ENDPOINT_1!,
   apiToken: HOPRD_API_TOKEN!
 });
-const { tokens } = sdk.api;
 
 describe('Tokens E2E Tests', function () {
   let newToken: string;
   // Should create a token before anything else
   beforeAll(async () => {
-    const newTokenResponse = await tokens.createToken({
+    const newTokenResponse = await sdk.api.tokens.createToken({
       description: 'my test token',
       lifetime: 360,
       capabilities: [
@@ -66,7 +65,9 @@ describe('Tokens E2E Tests', function () {
   });
 
   afterAll(async () => {
-    const deleteTokenResponse = await tokens.deleteToken({ id: newToken });
+    const deleteTokenResponse = await sdk.api.tokens.deleteToken({
+      id: newToken
+    });
 
     expect(deleteTokenResponse).toBe(true);
   });
