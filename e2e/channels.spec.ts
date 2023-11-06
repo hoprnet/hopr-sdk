@@ -108,9 +108,10 @@ describe('Channels E2E test', function () {
       body: 'ticket',
       peerId: thirdPeerId,
       path: [firstPeerAddresses.hopr],
-
       tag: 0
     });
+    // wait for ticket to exist
+    await sleep(1_000);
 
     const secondNodeChannels = await sdk2.api.channels.getChannels();
     const firstAndSecondNodeChannel = secondNodeChannels.outgoing.find(
