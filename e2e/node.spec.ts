@@ -8,21 +8,16 @@ const sdk = new SDK({
   apiEndpoint: HOPRD_API_ENDPOINT_1!,
   apiToken: HOPRD_API_TOKEN!
 });
-const { node } = sdk.api;
 
-const SDK2 = new SDK({
-  apiEndpoint: HOPRD_API_ENDPOINT_2!,
-  apiToken: HOPRD_API_TOKEN!
-});
 describe('Node E2E Tests', function () {
   test('should gets release version of the running node', async function () {
-    const version = await node.getVersion({});
+    const version = await sdk.api.node.getVersion();
 
     expect(typeof version).toBe('string');
   });
 
   test('should get the list of connected and announced peers', async function () {
-    const response = await node.getPeers({ quality: 0.7 });
+    const response = await sdk.api.node.getPeers({ quality: 0.7 });
 
     const expectedPeer: GetPeersResponseType['connected'][0] = {
       quality: expect.any(Number),
@@ -50,13 +45,13 @@ describe('Node E2E Tests', function () {
   });
 
   test('should get prometheus metrics from the node', async function () {
-    const metrics = await node.getMetrics({});
+    const metrics = await sdk.api.node.getMetrics();
 
     expect(typeof metrics).toBe('string');
   });
 
   test('should get the nodes info', async function () {
-    const info = await node.getInfo({});
+    const info = await sdk.api.node.getInfo();
 
     const expectedResponse: GetInfoResponseType = {
       announcedAddress: expect.any(Array),
@@ -76,7 +71,7 @@ describe('Node E2E Tests', function () {
   });
 
   test('should get a list of known entry nodes', async function () {
-    const entryNodes = await node.getEntryNodes({});
+    const entryNodes = await sdk.api.node.getEntryNodes();
 
     // Since there are many objects with string keys, we will only compare the contents of the first one
     const firstKey = Object.keys(entryNodes!)[0] as string;
