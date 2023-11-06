@@ -3,27 +3,31 @@ import { HoprSDK as SDK } from '../src/sdk';
 
 const { HOPRD_API_TOKEN, HOPRD_API_ENDPOINT_1, HOPRD_API_ENDPOINT_2 } =
   process.env;
+
+// first user
 const sdk = new SDK({
   apiEndpoint: HOPRD_API_ENDPOINT_1!,
   apiToken: HOPRD_API_TOKEN!
 });
-const { channels } = sdk.api;
+
+// second user
+const sdk2 = new SDK({
+  apiEndpoint: HOPRD_API_ENDPOINT_2!,
+  apiToken: HOPRD_API_TOKEN!
+});
+
+// third user
+const sdk3 = new SDK({
+  apiEndpoint: HOPRD_API_ENDPOINT_2!,
+  apiToken: HOPRD_API_TOKEN!
+});
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Channels E2E test', function () {
-  let secondPeerAddress: string;
-  const sdk2 = new SDK({
-    apiEndpoint: HOPRD_API_ENDPOINT_2!,
-    apiToken: HOPRD_API_TOKEN!
-  });
-  // Open a channel before all the other tests are executed
-  beforeAll(async () => {
-    secondPeerAddress = (await sdk2.api.account.getAddresses()).native;
-  });
-
   test('gets the open channels', async function () {
-    const response = await channels.getChannels();
+    const secondPeerAddress = (await sdk2.api.account.getAddresses()).native;
+    const response = await sdk.api.channels.getChannels();
     // Assert that the response has the expected properties
     expect(response).toHaveProperty('incoming');
     expect(response).toHaveProperty('outgoing');
@@ -36,7 +40,7 @@ describe('Channels E2E test', function () {
   });
 
   test('gets the specified channel details', async function () {
-    const openChannels = await channels.getChannels({
+    const openChannels = await sdk.api.channels.getChannels({
       includingClosed: false
     });
 
@@ -46,7 +50,7 @@ describe('Channels E2E test', function () {
       throw new Error('No open outgoing channel');
     }
 
-    const response = await channels.getChannel({
+    const response = await sdk.api.channels.getChannel({
       channelId: firstOpenOutgoingChannel?.id
     });
 
@@ -67,8 +71,8 @@ describe('Channels E2E test', function () {
   }, 15e3);
 
   test('fund open channel', async function () {
-    const response = await channels.getChannels();
-
+    const response = await sdk.api.channels.getChannels();
+    const secondPeerAddress = (await sdk2.api.account.getAddresses()).native;
     const outgoingChannel = response!.outgoing.find(
       (channel) => channel.peerAddress === secondPeerAddress
     );
@@ -77,7 +81,7 @@ describe('Channels E2E test', function () {
       throw Error('Could not get outgoing channel id');
     }
 
-    const fundChannelResponse = await channels.fundChannel({
+    const fundChannelResponse = await sdk.api.channels.fundChannel({
       amount: '100',
       channelId: outgoingChannel?.id
     });
@@ -85,7 +89,7 @@ describe('Channels E2E test', function () {
     // wait for funding to get indexed
     await sleep(1_000);
 
-    const newOutgoingChannel = await channels.getChannel({
+    const newOutgoingChannel = await sdk.api.channels.getChannel({
       channelId: outgoingChannel.id
     });
 
@@ -95,58 +99,38 @@ describe('Channels E2E test', function () {
     );
   }, 120e3);
 
-  // FIXME: This needs to be checked
-  // test(
-  //   'redeem tickets from a particular channel',
-  //   async function () {
-  //     console.log(3);
-  //     sleep(60e3);
+  test('aggregate tickets from a particular channel', async function () {
+    // send msg 2 -> 1 -> 3
+    const firstPeerAddresses = await sdk.api.account.getAddresses();
+    const thirdPeerId = (await sdk3.api.account.getAddresses()).hopr;
 
-  //     const response = await channels.redeemChannelTickets({
-  //       peerId: _2peerId
-  //     });
-  //     console.log(response);
+    await sdk2.api.messages.sendMessage({
+      body: 'ticket',
+      peerId: thirdPeerId,
+      path: [firstPeerAddresses.hopr],
 
-  //     expect(response).toBe(true);
-  //   },
-  //   60e3 * 5
-  // );
+      tag: 0
+    });
 
-  // FIXME: If no tickets earned then we will get:
-  /**
-   APIError
-   at /Users/luismartinez/Documents/hopr-sdk/src/api/channels/getChannelTickets.ts:35:11
-   at Generator.next (<anonymous>)
-   at fulfilled (/Users/luismartinez/Documents/hopr-sdk/src/api/channels/getChannelTickets.ts:5:58)
-   at processTicksAndRejections (node:internal/process/task_queues:96:5) {
-     status: 'TICKETS_NOT_FOUND',
-     error: undefined
+    const secondNodeChannels = await sdk2.api.channels.getChannels();
+    const firstAndSecondNodeChannel = secondNodeChannels.outgoing.find(
+      (ch) => ch.peerAddress === firstPeerAddresses.native
+    );
+
+    if (!firstAndSecondNodeChannel?.id) {
+      throw new Error('Could not find channel between first and second node');
     }
-    */
-  // test(
-  //   'gets the tickets earned from a particular channel',
-  //   async function () {
-  //     console.log(4);
-  //     sleep(60e3);
-  //     const response = await channels.getChannelTickets({ peerId: _2peerId });
-  //     console.log(response);
-  //     expect(response).toStrictEqual({
-  //       counterparty: expect.any(String),
-  //       challenge: expect.any(String),
-  //       epoch: expect.any(String),
-  //       index: expect.any(String),
-  //       amount: expect.any(String),
-  //       winProb: expect.any(String),
-  //       channelEpoch: expect.any(String),
-  //       signature: expect.any(String)
-  //     });
-  //   },
-  //   60e3 * 5
-  // );
+
+    const firstNodeAggregate = await sdk.api.channels.aggregateChannelTickets({
+      channelId: firstAndSecondNodeChannel?.id
+    });
+
+    expect(firstNodeAggregate).toBeTruthy();
+  });
 
   // close channel after the tests are executed
   afterAll(async () => {
-    const openChannels = await channels.getChannels({
+    const openChannels = await sdk.api.channels.getChannels({
       includingClosed: false
     });
 
@@ -156,7 +140,7 @@ describe('Channels E2E test', function () {
       throw new Error('No open outgoing channel');
     }
 
-    const closeChannelResponse = await channels.closeChannel({
+    const closeChannelResponse = await sdk.api.channels.closeChannel({
       channelId: firstOpenOutgoingChannel.id
     });
 
@@ -166,7 +150,7 @@ describe('Channels E2E test', function () {
     });
 
     await sleep(5e3);
-    const channel = await channels.getChannel({
+    const channel = await sdk.api.channels.getChannel({
       channelId: firstOpenOutgoingChannel.id
     });
 
