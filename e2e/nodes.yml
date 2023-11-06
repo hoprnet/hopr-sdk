@@ -1,8 +1,8 @@
-version: "3"
+version: '3'
 
 services:
   pluto:
-    image: europe-west3-docker.pkg.dev/hoprassociation/docker-images/hopr-pluto:providence
+    image: europe-west3-docker.pkg.dev/hoprassociation/docker-images/hopr-pluto:2.0.0
     hostname: pluto
     platform: linux/amd64
     container_name: pluto
@@ -15,10 +15,10 @@ services:
     ports:
       # mapping admin and api ports to localhost for app developers to access
       # the admin UI more easily
-      - "13301-13305:13301-13305"
-      - "19501-19505:19501-19505"
+      - '13301-13305:13301-13305'
+      - '19501-19505:19501-19505'
       # local RPC port
-      - "8545:8545"
+      - '8545:8545'
     expose:
       - 13301-13305
     environment:
