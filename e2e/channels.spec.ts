@@ -19,15 +19,11 @@ describe('Channels E2E test', function () {
   });
   // Open a channel before all the other tests are executed
   beforeAll(async () => {
-    secondPeerAddress = (await sdk2.api.account.getAddresses({})).native;
-
-    // Since `pluto` opens the channels already there's no need to "re-open" them
-
-    await sleep(30e3);
-  }, 120e3);
+    secondPeerAddress = (await sdk2.api.account.getAddresses()).native;
+  });
 
   test('gets the open channels', async function () {
-    const response = await channels.getChannels({});
+    const response = await channels.getChannels();
     // Assert that the response has the expected properties
     expect(response).toHaveProperty('incoming');
     expect(response).toHaveProperty('outgoing');
@@ -69,6 +65,31 @@ describe('Channels E2E test', function () {
 
     expect(response).toStrictEqual(expectedResponse);
   }, 15e3);
+
+  test('fund open channel', async function () {
+    const response = await channels.getChannels();
+
+    const outgoingChannel = response!.outgoing.find(
+      (channel) => channel.peerAddress === secondPeerAddress
+    );
+
+    if (!outgoingChannel?.id) {
+      throw Error('Could not get outgoing channel id');
+    }
+
+    const fundChannelResponse = await channels.fundChannel({
+      amount: '10',
+      channelId: outgoingChannel?.id
+    });
+
+    const newOutgoingChannel = await channels.getChannel({
+      channelId: outgoingChannel.id
+    });
+    expect(fundChannelResponse.receipt).toBeDefined();
+    expect(BigInt(newOutgoingChannel.balance)).toBeGreaterThan(
+      BigInt(outgoingChannel.balance)
+    );
+  }, 120e3);
 
   // FIXME: This needs to be checked
   // test(

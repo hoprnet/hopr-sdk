@@ -62,14 +62,14 @@ export class ChannelsAdapter {
   }
 
   public async getChannels(
-    payload: RemoveBasicAuthenticationPayloadType<GetChannelsPayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<GetChannelsPayloadType>
   ) {
     return getChannels({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout,
-      fullTopology: payload.fullTopology,
-      includingClosed: payload.includingClosed
+      timeout: payload?.timeout ?? this.timeout,
+      fullTopology: payload?.fullTopology,
+      includingClosed: payload?.includingClosed
     });
   }
 
