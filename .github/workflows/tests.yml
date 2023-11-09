@@ -1,0 +1,77 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize]
+
+concurrency:
+  # group runs by <name of the workflow>-<name of job>-<branch name>
+  group: ${{ github.workflow }}-${{ github.job }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit_testing:
+    name: Review source code
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies
+        shell: bash
+        run: yarn
+
+      - name: Build
+        shell: bash
+        run: yarn build
+
+      - name: Review formatting
+        run: yarn format
+
+      - name: Review linting
+        run: yarn lint
+
+      - name: Run tests and coverage
+        run: yarn test --ci
+
+  # Run E2E tests
+  e2e_testing:
+    name: E2E tests
+    needs: review
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+          registry-url: 'https://registry.npmjs.org/'
+
+      - name: Install dependencies
+        shell: bash
+        run: yarn
+
+      - name: Build
+        shell: bash
+        run: yarn build
+
+      - name: Run E2E
+        shell: bash
+        run: yarn test:e2e
