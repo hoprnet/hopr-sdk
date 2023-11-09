@@ -30,6 +30,7 @@ Scan through our [existing issues](https://github.com/hoprnet/hopr-sdk/issues) t
 - [hopr-sdk project setup](./src/README.md)
 - [type system](./src/types/README.md)
 - [e2e setup](./e2e/README.md)
+- [workflows](./WORKFLOWS.md)
 
 ### Pull Request
 

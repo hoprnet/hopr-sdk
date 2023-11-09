@@ -1,4 +1,4 @@
-name: Review
+name: Test
 
 on:
   push:
@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  review:
+  unit_testing:
     name: Review source code
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -25,9 +25,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "yarn"
+          cache: 'yarn'
           cache-dependency-path: ./yarn.lock
-          registry-url: "https://registry.npmjs.org/"
+          registry-url: 'https://registry.npmjs.org/'
 
       - name: Install dependencies
         shell: bash
@@ -47,7 +47,7 @@ jobs:
         run: yarn test --ci
 
   # Run E2E tests
-  E2E:
+  e2e_testing:
     name: E2E tests
     needs: review
     timeout-minutes: 30
@@ -60,9 +60,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: "yarn"
+          cache: 'yarn'
           cache-dependency-path: ./yarn.lock
-          registry-url: "https://registry.npmjs.org/"
+          registry-url: 'https://registry.npmjs.org/'
 
       - name: Install dependencies
         shell: bash
@@ -75,16 +75,3 @@ jobs:
       - name: Run E2E
         shell: bash
         run: yarn test:e2e
-
-  # Run publish if pr title includes [RELEASE]
-  publish:
-    needs: review
-    if: github.event.pull_request.merged == true && contains(github.event.pull_request.title, '[RELEASE]')
-    name: Publish package
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Publish package
-        uses: ./.github/actions/publish
