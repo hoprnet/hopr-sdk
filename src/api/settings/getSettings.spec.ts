@@ -11,8 +11,7 @@ describe('test getSettings', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT).get(`/api/v3/settings`).reply(200, {
-      includeRecipient: true,
-      strategy: 'passive'
+      includeRecipient: true
     });
 
     const response = await getSettings({
@@ -20,7 +19,7 @@ describe('test getSettings', function () {
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.strategy).toEqual('passive');
+    expect(response.includeRecipient).toEqual(true);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/settings`).reply(400, {
