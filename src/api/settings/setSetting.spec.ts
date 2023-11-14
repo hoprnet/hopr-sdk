@@ -4,7 +4,7 @@ import { setSetting } from './setSetting';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
-const SETTING = 'strategy';
+const SETTING = 'includeRecipient';
 
 describe('test getSettings', function () {
   beforeEach(function () {
@@ -17,7 +17,7 @@ describe('test getSettings', function () {
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
       setting: SETTING,
-      settingValue: 'passive'
+      settingValue: true
     });
 
     expect(response).toEqual(true);
@@ -32,7 +32,7 @@ describe('test getSettings', function () {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         setting: SETTING,
-        settingValue: 'passive'
+        settingValue: false
       })
     ).rejects.toThrow(APIError);
   });
@@ -47,7 +47,7 @@ describe('test getSettings', function () {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         setting: SETTING,
-        settingValue: 'passive'
+        settingValue: false
       })
     ).rejects.toThrow(APIError);
   });
@@ -62,7 +62,7 @@ describe('test getSettings', function () {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         setting: SETTING,
-        settingValue: 'passive'
+        settingValue: false
       })
     ).rejects.toThrow(APIError);
   });
@@ -77,7 +77,7 @@ describe('test getSettings', function () {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         setting: SETTING,
-        settingValue: 'passive'
+        settingValue: false
       })
     ).rejects.toThrow(APIError);
   });

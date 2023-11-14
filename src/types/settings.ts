@@ -6,8 +6,7 @@ import { BasePayload } from './general';
  */
 
 export const GetSettingsResponse = z.object({
-  includeRecipient: z.boolean(),
-  strategy: z.string().optional()
+  includeRecipient: z.boolean()
 });
 
 export type GetSettingsResponseType = z.infer<typeof GetSettingsResponse>;
