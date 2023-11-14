@@ -42,7 +42,7 @@ Creates a a custom logger
 
 #### Defined in
 
-[src/utils/log.ts:15](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/utils/log.ts#L15)
+[src/utils/log.ts:15](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/log.ts#L15)
 
 ___
 
@@ -67,7 +67,7 @@ A string of the complete API endpoint.
 
 #### Defined in
 
-[src/utils/functions.ts:28](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/utils/functions.ts#L28)
+[src/utils/functions.ts:28](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/functions.ts#L28)
 
 ___
 
@@ -91,7 +91,7 @@ a string representing the decoded message
 
 #### Defined in
 
-[src/utils/functions.ts:12](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/utils/functions.ts#L12)
+[src/utils/functions.ts:12](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/functions.ts#L12)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[src/utils/fetchWithTimeout.ts:3](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/utils/fetchWithTimeout.ts#L3)
+[src/utils/fetchWithTimeout.ts:3](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/fetchWithTimeout.ts#L3)
 
 ___
 
@@ -137,4 +137,4 @@ The headers for making API requests.
 
 #### Defined in
 
-[src/utils/headers.ts:9](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/utils/headers.ts#L9)
+[src/utils/headers.ts:9](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/headers.ts#L9)

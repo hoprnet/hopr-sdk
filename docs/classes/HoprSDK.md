@@ -32,7 +32,7 @@ Creates a new instance of the HOPR SDK.
 
 #### Defined in
 
-[src/sdk.ts:15](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/sdk.ts#L15)
+[src/sdk.ts:15](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/sdk.ts#L15)
 
 ## Properties
 
@@ -42,7 +42,7 @@ Creates a new instance of the HOPR SDK.
 
 #### Defined in
 
-[src/sdk.ts:7](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/sdk.ts#L7)
+[src/sdk.ts:7](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/sdk.ts#L7)
 
 ___
 
@@ -52,4 +52,4 @@ ___
 
 #### Defined in
 
-[src/sdk.ts:8](https://github.com/hoprnet/hopr-sdk/blob/2bdebbc/src/sdk.ts#L8)
+[src/sdk.ts:8](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/sdk.ts#L8)
