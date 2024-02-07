@@ -2,7 +2,7 @@ version: '3'
 
 services:
   pluto:
-    image: europe-west3-docker.pkg.dev/hoprassociation/docker-images/hopr-pluto:2.0.0
+    image: europe-west3-docker.pkg.dev/hoprassociation/docker-images/hopr-pluto:2.1.0-rc.1-pr.5895
     hostname: pluto
     platform: linux/amd64
     container_name: pluto

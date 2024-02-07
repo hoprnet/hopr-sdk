@@ -29,6 +29,7 @@ describe('Node E2E Tests', function () {
         success: expect.any(Number)
       }),
       lastSeen: expect.any(Number),
+      lastSeenLatency: expect.any(Number),
       backoff: expect.any(Number),
       reportedVersion: expect.any(String),
       isNew: expect.any(Boolean)
@@ -63,8 +64,8 @@ describe('Node E2E Tests', function () {
       isEligible: expect.any(Boolean),
       channelClosurePeriod: expect.any(Number),
       chain: expect.any(String),
-      nodeManagementModule: expect.any(String),
-      nodeSafe: expect.any(String)
+      hoprManagementModule: expect.any(String),
+      hoprNodeSafe: expect.any(String)
     };
 
     expect(info).toStrictEqual(expectedResponse);

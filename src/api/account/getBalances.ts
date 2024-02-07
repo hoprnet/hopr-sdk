@@ -34,7 +34,16 @@ export const getBalances = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetBalancesResponse.safeParse(jsonResponse);
+
+  // remove currency names from strings
+  const currencies = Object.keys(jsonResponse);
+  let parsedResNoCurrency = {}
+  for (let i = 0; i < currencies.length; i++) {
+    //@ts-ignore
+    parsedResNoCurrency[`${currencies[i]}`] = jsonResponse[`${currencies[i]}`].includes(' ') ? jsonResponse[`${currencies[i]}`].split(' ')[0] : jsonResponse[`${currencies[i]}`];
+  }
+
+  const parsedRes = GetBalancesResponse.safeParse(parsedResNoCurrency);
 
   // received expected response
   if (parsedRes.success) {
