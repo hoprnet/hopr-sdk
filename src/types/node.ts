@@ -14,12 +14,13 @@ export type GetPeersPayloadType = z.infer<typeof GetPeersPayload>;
 export const Peer = z.object({
   peerId: z.string(),
   peerAddress: z.string(),
-  multiAddr: z.string(),
+  multiAddr: z.string() || null,
   heartbeats: z.object({
     sent: z.number(),
     success: z.number()
   }),
   lastSeen: z.number(),
+  lastSeenLatency: z.number(),
   quality: z.number(),
   backoff: z.number(),
   isNew: z.boolean(),
@@ -43,10 +44,10 @@ export const GetInfoResponse = z.object({
   chain: z.string(),
   hoprToken: z.string(),
   hoprChannels: z.string(),
-  hoprNetworkRegistryAddress: z.string().optional(),
-  hoprNodeSafeRegistryAddress: z.string().optional(),
-  nodeManagementModule: z.string(),
-  nodeSafe: z.string(),
+  hoprNetworkRegistry: z.string().optional(),
+  hoprNodeSageRegistry: z.string().optional(),
+  hoprManagementModule: z.string(),
+  hoprNodeSafe: z.string(),
   connectivityStatus: z.string(),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()
