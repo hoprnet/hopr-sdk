@@ -44,7 +44,7 @@ describe('test getChannels', function () {
             status: 'Open',
             ticketIndex: '0',
             channelEpoch: 1,
-            closureTime: '0'
+            closureTime: 0
           }
         ]
       } as GetChannelsResponseType);
