@@ -37,8 +37,8 @@ export const closeEverything = async (payload: BasePayloadType) => {
   });
   let ticketsHaveBeenRedeemed = false;
 
-  // check if we have pending tickets
-  if (statistics?.pending) {
+  // check if we have unredeemed tickets
+  if (statistics?.unredeemed) {
     // redeem tickets
     ticketsHaveBeenRedeemed =
       (await redeemTickets({

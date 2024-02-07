@@ -5,6 +5,5 @@ export * from './tokens';
 export * from './account';
 export * from './node';
 export * from './tickets';
-export * from './settings';
 export * from './peers';
 export * from './peerInfo';

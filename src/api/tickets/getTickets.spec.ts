@@ -16,8 +16,8 @@ describe('test getTickets', function () {
       .reply(200, [
         {
           channelId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          indexOffset: '0',
-          index: 'string',
+          indexOffset: 0,
+          index: 1,
           amount: 'string',
           winProb: 'string',
           channelEpoch: 1,

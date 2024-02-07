@@ -47,7 +47,6 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        pending: 0,
         unredeemed: 0,
         unredeemedValue: 'string',
         redeemed: 0,
@@ -55,6 +54,7 @@ describe('closeEverything', function () {
         losingTickets: 0,
         winProportion: 0,
         neglected: 0,
+        neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
       } as GetStatisticsResponseType);
@@ -102,7 +102,6 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        pending: 0,
         unredeemed: 0,
         unredeemedValue: 'string',
         redeemed: 0,
@@ -110,6 +109,7 @@ describe('closeEverything', function () {
         losingTickets: 0,
         winProportion: 0,
         neglected: 0,
+        neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
       } as GetStatisticsResponseType);
@@ -134,7 +134,7 @@ describe('closeEverything', function () {
     expect((channels.closeChannel as jest.Mock).mock.calls.length).toEqual(0);
   });
 
-  it('redeems pending tickets', async function () {
+  it('redeems unredeemed tickets', async function () {
     // mock hoprd node get channels
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
@@ -148,14 +148,14 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        pending: 1,
-        unredeemed: 0,
+        unredeemed: 2,
         unredeemedValue: 'string',
         redeemed: 0,
         redeemedValue: 'string',
         losingTickets: 0,
         winProportion: 0,
         neglected: 0,
+        neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
       } as GetStatisticsResponseType);
@@ -171,7 +171,7 @@ describe('closeEverything', function () {
     expect(res.redeemedTickets).toEqual(true);
     expect((tickets.redeemTickets as jest.Mock).mock.calls.length).toEqual(1);
   });
-  it('does not try to redeem tickets if no tickets are pending', async function () {
+  it('does not try to redeem tickets if no tickets are unredeemed', async function () {
     // mock hoprd node get channels
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
@@ -185,7 +185,6 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        pending: 0,
         unredeemed: 0,
         unredeemedValue: 'string',
         redeemed: 0,
@@ -193,6 +192,7 @@ describe('closeEverything', function () {
         losingTickets: 0,
         winProportion: 0,
         neglected: 0,
+        neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
       } as GetStatisticsResponseType);

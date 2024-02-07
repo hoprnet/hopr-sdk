@@ -5,7 +5,6 @@ import { z } from 'zod';
  */
 
 export const GetStatisticsResponse = z.object({
-  pending: z.number(),
   unredeemed: z.number(),
   unredeemedValue: z.string(),
   redeemed: z.number(),
@@ -13,6 +12,7 @@ export const GetStatisticsResponse = z.object({
   losingTickets: z.number(),
   winProportion: z.number(),
   neglected: z.number(),
+  neglectedValue: z.string(),
   rejected: z.number(),
   rejectedValue: z.string()
 });
@@ -27,8 +27,8 @@ export const GetTicketsResponse = z
   .object({
     channelId: z.string(),
     amount: z.string(),
-    index: z.string(),
-    indexOffset: z.string(),
+    index: z.number(),
+    indexOffset: z.number(),
     channelEpoch: z.number(),
     winProb: z.string(),
     signature: z.string()
