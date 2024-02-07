@@ -16,7 +16,6 @@ describe('test getChannels', function () {
       .reply(200, {
         incoming: [
           {
-            type: 'outgoing',
             id: '0x00e846e435ec570cda9dcfd0c8fa8fbade524228f9521de954ee919fee3322b8',
             peerAddress: '0x0987654321098765432109876543210987654321',
             status: 'Open',
@@ -25,7 +24,6 @@ describe('test getChannels', function () {
         ],
         outgoing: [
           {
-            type: 'incoming',
             id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
             peerAddress: '0x0987654321098765432109876543210987654321',
             status: 'Open',
@@ -45,7 +43,7 @@ describe('test getChannels', function () {
             balance: '100000000000000000',
             status: 'Open',
             ticketIndex: '0',
-            channelEpoch: '1',
+            channelEpoch: 1,
             closureTime: '0'
           }
         ]

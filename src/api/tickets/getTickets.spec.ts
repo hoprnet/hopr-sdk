@@ -20,7 +20,7 @@ describe('test getTickets', function () {
           index: 'string',
           amount: 'string',
           winProb: 'string',
-          channelEpoch: 'string',
+          channelEpoch: 1,
           signature: '115342872866815e167'
         }
       ] as GetTicketsResponseType);

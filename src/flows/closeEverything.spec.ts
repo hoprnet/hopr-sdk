@@ -35,7 +35,6 @@ describe('closeEverything', function () {
       .reply(200, {
         incoming: [],
         outgoing: openOutgoingChannels.map((address) => ({
-          type: 'outgoing',
           id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
           peerAddress: address,
           status: 'Open',
@@ -91,7 +90,6 @@ describe('closeEverything', function () {
       .reply(200, {
         incoming: [],
         outgoing: openOutgoingChannels.map((address) => ({
-          type: 'outgoing',
           id: '0xecc80ea0f680833f04b05adfeaed745be42bd130570adca3ad65f11a1650fac8',
           peerAddress: address,
           status: 'Closed',

@@ -23,7 +23,7 @@ describe('test redeemTickets', function () {
           amount: '10000000000000000',
           winProb:
             '115792089237316195423570985008687907853269984665640564039457584007913129639935',
-          channelEpoch: '1',
+          channelEpoch: 1,
           signature:
             '0xcce78f4488519afacc9674c2d7110a7cca8eae33a1bd0c8d836d40a3670b89f7e323c12f910554bd8d961a5b0b9e70abe70bfff60c22ba50e102e6454065dd46'
         }
