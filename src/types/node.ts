@@ -48,7 +48,7 @@ export const GetInfoResponse = z.object({
   hoprNodeSageRegistry: z.string().optional(),
   hoprManagementModule: z.string(),
   hoprNodeSafe: z.string(),
-  connectivityStatus: z.string(),
+  connectivityStatus: z.enum(['Unknown', 'Red', 'Orange', 'Yellow', 'Green']),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()
 });
