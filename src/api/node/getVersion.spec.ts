@@ -10,14 +10,16 @@ describe('test getVersion', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(200, '1.83.5');
+    nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(200, {
+      version: '2.1.0'
+    });
 
     const response = await getVersion({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response).toEqual('1.83.5');
+    expect(response).toEqual('2.1.0');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(400, {

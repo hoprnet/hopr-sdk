@@ -16,7 +16,7 @@ export const getVersion = async (payload: BasePayloadType): Promise<string> => {
   // received expected response
   if (rawResponse.status === 200) {
     const jsonResponse = await rawResponse.json();
-    return jsonResponse.version.text();
+    return jsonResponse.version as string;
   }
 
   // received unexpected error from server
