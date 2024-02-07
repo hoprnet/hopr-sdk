@@ -29,7 +29,7 @@ export const GetTicketsResponse = z
     amount: z.string(),
     index: z.string(),
     indexOffset: z.string(),
-    channelEpoch: z.string(),
+    channelEpoch: z.number(),
     winProb: z.string(),
     signature: z.string()
   })

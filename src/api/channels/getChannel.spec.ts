@@ -25,8 +25,8 @@ describe('test getChannel', function () {
         balance: '10000000000000000000',
         status: 'Open',
         ticketIndex: 'string',
-        channelEpoch: 'string',
-        closureTime: 'string'
+        channelEpoch: 1,
+        closureTime: 0
       } as GetChannelResponseType);
 
     const response = await getChannel({

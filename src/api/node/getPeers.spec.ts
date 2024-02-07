@@ -23,6 +23,7 @@ describe('test getPeers', function () {
             success: 8
           },
           lastSeen: 1646410980793,
+          lastSeenLatency: 17,
           quality: 0.8,
           backoff: 0,
           isNew: true,
@@ -40,6 +41,7 @@ describe('test getPeers', function () {
             success: 8
           },
           lastSeen: 1646410980793,
+          lastSeenLatency: 16,
           quality: 0.8,
           backoff: 0,
           isNew: true,
