@@ -3,7 +3,7 @@ import { getBalances, withdraw } from '../api/account';
 
 /**
  * Withdraw all funds from the node.
- * Does not include funds locked in open channels and pending tickets.
+ * Does not include funds locked in open channels.
  * This is a long running function and may take a more than 5 minutes to run
  * @param ethereumAddress - The address of the recipient.
  * @returns The transaction receipts for the cash out transactions.

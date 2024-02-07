@@ -9,4 +9,3 @@ export * from './tokens';
 export * from './account';
 export * from './peers';
 export * from './websocket';
-export * from './settings';

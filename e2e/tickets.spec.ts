@@ -12,7 +12,6 @@ describe('tickets E2E Tests', function () {
     const response = await sdk.api.tickets.getStatistics();
 
     expect(response).toStrictEqual({
-      pending: expect.any(Number),
       unredeemed: expect.any(Number),
       unredeemedValue: expect.any(String),
       redeemed: expect.any(Number),
