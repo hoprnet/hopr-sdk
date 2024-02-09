@@ -6,7 +6,7 @@ import { TicketsAdapter } from './tickets/adapter';
 import { TokensAdapter } from './tokens/adapter';
 import { MessagesAdapter } from './messages/adapter';
 import { PeersAdapter } from './peers/adapter';
-import { PeerInfoAdapter } from './peerInfo/adapter';
+
 export class ApiAdapter {
   public account: AccountAdapter;
   public aliases: AliasesAdapter;
@@ -16,7 +16,6 @@ export class ApiAdapter {
   public tokens: TokensAdapter;
   public messages: MessagesAdapter;
   public peers: PeersAdapter;
-  public peerInfo: PeerInfoAdapter;
 
   constructor({
     apiEndpoint,
@@ -35,6 +34,5 @@ export class ApiAdapter {
     this.tokens = new TokensAdapter({ apiEndpoint, apiToken, timeout });
     this.messages = new MessagesAdapter({ apiEndpoint, apiToken, timeout });
     this.peers = new PeersAdapter({ apiEndpoint, apiToken, timeout });
-    this.peerInfo = new PeerInfoAdapter({ apiEndpoint, apiToken, timeout });
   }
 }

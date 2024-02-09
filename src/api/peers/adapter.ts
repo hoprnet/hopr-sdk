@@ -1,8 +1,10 @@
 import {
   PingPeerPayloadType,
+  GetPeerPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { pingPeer } from './pingPeer';
+import { getPeer } from './getPeer';
 
 export class PeersAdapter {
   private apiEndpoint: string;
@@ -33,6 +35,17 @@ export class PeersAdapter {
     payload: RemoveBasicAuthenticationPayloadType<PingPeerPayloadType>
   ) {
     return pingPeer({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      peerId: payload.peerId
+    });
+  }
+
+  public async getPeer(
+    payload: RemoveBasicAuthenticationPayloadType<GetPeerPayloadType>
+  ) {
+    return getPeer({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout,
