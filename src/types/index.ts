@@ -1,3 +1,4 @@
+export * from './checks';
 export * from './aliases';
 export * from './general';
 export * from './channels';
