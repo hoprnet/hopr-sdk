@@ -1,3 +1,3 @@
-export * from './getStatistics';
 export * from './getTickets';
+export * from './getTicketStatistics';
 export * from './redeemTickets';

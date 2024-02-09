@@ -3,7 +3,7 @@ import {
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
-import { getStatistics } from './getStatistics';
+import { getStatistics } from './getTicketStatistics';
 import { getTickets } from './getTickets';
 import { redeemTickets } from './redeemTickets';
 
