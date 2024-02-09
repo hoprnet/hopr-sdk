@@ -25,11 +25,3 @@ export const websocket = (
     .replace(/=/g, '');
   return new WebSocket(endpointUrl, [apiTokenAsProtocol]);
 };
-
-function createWsUrl(payload: createWsUrlType): string {
-  const path = payload.path ? payload.path : WS_PATH;
-  const url = new URL(path, payload.apiEndpoint);
-  url.protocol = url.protocol === 'https:' ? 'wss' : 'ws';
-  url.search = `?apiToken=${payload.apiToken}`;
-  return url.toString();
-}
