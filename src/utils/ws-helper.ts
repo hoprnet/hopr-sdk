@@ -1,7 +1,6 @@
 import WebSocket from 'isomorphic-ws';
 import { DeferredPromise, createLogger, decodeMessage } from './';
 import { createWsUrl } from '../utils';
-import { websocket } from './../api/messages/websocket';
 
 const log = createLogger('websocket');
 const HEARTBEAT_ERROR_MSG = 'heartbeat was not received';
@@ -54,11 +53,12 @@ class WebsocketHelper {
     this.apiToken = options.apiToken;
     this.path = options?.path;
     this.decodeMessage = options?.decodeMessage ?? true;
-    this.socket = websocket({
+    this.socket = new WebSocket(
+      createWsUrl({
         apiEndpoint: this.apiEndpoint,
         apiToken: this.apiToken,
-      },
-      this.path
+        path: this.path
+      })
     );
     this.setUpEventHandlers();
   }
@@ -233,10 +233,8 @@ class WebsocketHelper {
     await this.wait(this.reconnectDelay);
 
     // Reconnect: open new WebSocket
-    this.socket = websocket({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      },
+    this.socket = new WebSocket(
+      createWsUrl({ apiEndpoint: this.apiEndpoint, apiToken: this.apiToken })
     );
 
     // Set up event handlers again
