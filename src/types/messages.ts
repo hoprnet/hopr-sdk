@@ -98,4 +98,6 @@ export const PeekAllMessagesResponse = z.object({
   messages: z.array(ReceivedMessage)
 });
 
-export type PeekAllMessagesResponseType = z.infer<typeof PeekAllMessagesResponse>;
+export type PeekAllMessagesResponseType = z.infer<
+  typeof PeekAllMessagesResponse
+>;

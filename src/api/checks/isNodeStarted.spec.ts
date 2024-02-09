@@ -10,9 +10,7 @@ describe('test pingPeer', function () {
     nock.cleanAll();
   });
   it('handles successful response (node started)', async function () {
-    nock(API_ENDPOINT)
-      .get(`/api/v3/startedz`)
-      .reply(200);
+    nock(API_ENDPOINT).get(`/api/v3/startedz`).reply(200);
 
     const response = await isNodeStarted({
       apiToken: API_TOKEN,
@@ -22,9 +20,7 @@ describe('test pingPeer', function () {
     expect(response).toEqual(true);
   });
   it('handles successful response (node not started)', async function () {
-    nock(API_ENDPOINT)
-      .get(`/api/v3/startedz`)
-      .reply(412);
+    nock(API_ENDPOINT).get(`/api/v3/startedz`).reply(412);
 
     const response = await isNodeStarted({
       apiToken: API_TOKEN,

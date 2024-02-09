@@ -13,4 +13,6 @@ export const GetNetworkPriceResponse = z.object({
   price: z.string()
 });
 
-export type GetNetworkPriceResponseType = z.infer<typeof GetNetworkPriceResponse>;
+export type GetNetworkPriceResponseType = z.infer<
+  typeof GetNetworkPriceResponse
+>;

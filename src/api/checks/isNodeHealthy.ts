@@ -7,7 +7,6 @@ import {
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-
 /**
  * Check whether the node is healthy.
  * @returns A Promise that resolves to a boolean stating that the node is healthy or not.
@@ -38,8 +37,6 @@ export const isNodeHealthy = async (
     return false;
   }
 
-
-
   // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
   const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
@@ -48,5 +45,5 @@ export const isNodeHealthy = async (
     throw new APIError(isApiErrorResponse.data);
   }
 
-  throw new APIError({status: 'Unexpected error'});
+  throw new APIError({ status: 'Unexpected error' });
 };

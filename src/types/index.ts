@@ -6,7 +6,7 @@ export * from './error';
 export * from './node';
 export * from './tickets';
 export * from './messages';
-export * from './network'
+export * from './network';
 export * from './tokens';
 export * from './account';
 export * from './peers';
