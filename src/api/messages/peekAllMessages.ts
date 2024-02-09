@@ -1,29 +1,32 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  PopMessagePayloadType,
-  PopMessageResponse,
-  PopMessageResponseType,
+  PeekAllMessagesPayloadType,
+  PeekAllMessagesResponse,
+  PeekAllMessagesResponseType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-
 /**
- * Get the oldest message currently present in the nodes message inbox.
- * The message is removed from the inbox.
- * @returns - A promise that resolves to the oldest message currently present in the nodes message inbox.
+ * Peek the list of messages currently present in the nodes message inbox,
+ * filtered by tag, and optionally by timestamp (epoch in milliseconds).
+ * The messages are not removed from the inbox.
+ * @returns - A promise that resolves to the list of messages currently present in the nodes message inbox.
  */
-export const popMessage = async (
-  payload: PopMessagePayloadType
-): Promise<PopMessageResponseType> => {
-  const url = new URL('api/v3/messages/pop', payload.apiEndpoint);
-  const body: RemoveBasicAuthenticationPayloadType<PopMessagePayloadType> = {
-    tag: payload.tag
-  };
+export const peekAllMessages = async (
+  payload: PeekAllMessagesPayloadType
+): Promise<PeekAllMessagesResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const urlWithApiPath = new URL('api/v3/messages/peek-all', apiEndpointParsed);
+  const fullUrl = urlWithApiPath.toString();
+  const body: RemoveBasicAuthenticationPayloadType<PeekAllMessagesPayloadType> =
+    {
+      tag: payload.tag
+    };
 
   const rawResponse = await fetchWithTimeout(
-    url,
+    fullUrl,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
@@ -38,7 +41,7 @@ export const popMessage = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = PopMessageResponse.safeParse(jsonResponse);
+  const parsedRes = PeekAllMessagesResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
