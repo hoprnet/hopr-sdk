@@ -8,7 +8,6 @@ import {
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-
 /**
  * Get the oldest message currently present in the nodes message inbox.
  * The message is removed from the inbox.

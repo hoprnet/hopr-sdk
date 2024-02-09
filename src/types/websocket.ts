@@ -11,8 +11,8 @@ export const createWsUrlPayload = z.object({
   apiEndpoint: z.string(),
 
   /**
-  * The API token for authentication.
-  */
+   * The API token for authentication.
+   */
   apiToken: z.string(),
 
   /**

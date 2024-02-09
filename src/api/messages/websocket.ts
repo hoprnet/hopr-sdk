@@ -10,12 +10,17 @@ import { createWsUrl } from '../../utils';
  * @param path - The API path for websocket endpoint. By default: '/api/v3/messages/websocket/'
  * @returns A WebSocket instance.
  */
-export const websocket = (payload: BasePayloadType, path?: string): WebSocket => {
+export const websocket = (
+  payload: BasePayloadType,
+  path?: string
+): WebSocket => {
   const endpointUrl = createWsUrl({
     apiEndpoint: payload.apiEndpoint,
     path: path
   });
-  const apiTokenAsProtocol = btoa(`Authorization:${payload.apiToken}`).replace(/\+/g,"-").replace(/\//g,"_").replace(/=/g,"") ;
+  const apiTokenAsProtocol = btoa(`Authorization:${payload.apiToken}`)
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=/g, '');
   return new WebSocket(endpointUrl, [apiTokenAsProtocol]);
 };
-

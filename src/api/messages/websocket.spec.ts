@@ -29,7 +29,7 @@ describe('websocket', function () {
       apiEndpoint: API_ENDPOINT
     });
 
-    connection.onopen = ( event ) => {
+    connection.onopen = (event) => {
       connection.close();
       expect(connection.protocol).toBe('QXV0aG9yaXphdGlvbjpTM0NSM1QtVDBLM04');
       done();
@@ -40,11 +40,8 @@ describe('websocket', function () {
     expect(
       createWsUrl({
         apiEndpoint: API_ENDPOINT,
-        path: '/api/v3/messages/websocket/',
+        path: '/api/v3/messages/websocket/'
       })
-    ).toBe(
-      `ws://localhost:${PORT}/api/v3/messages/websocket/`
-    );
+    ).toBe(`ws://localhost:${PORT}/api/v3/messages/websocket/`);
   });
-
 });

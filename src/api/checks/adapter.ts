@@ -62,5 +62,4 @@ export class PeersAdapter {
       timeout: payload.timeout ?? this.timeout
     });
   }
-
 }
