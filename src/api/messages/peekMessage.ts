@@ -1,29 +1,30 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  PopMessagePayloadType,
-  PopMessageResponse,
-  PopMessageResponseType,
+  PeekMessagePayloadType,
+  PeekMessageResponse,
+  PeekMessageResponseType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-
 /**
- * Get the oldest message currently present in the nodes message inbox.
- * The message is removed from the inbox.
+ * Peek the oldest message currently present in the nodes message inbox.
+ * The message is not removed from the inbox.
  * @returns - A promise that resolves to the oldest message currently present in the nodes message inbox.
  */
-export const popMessage = async (
-  payload: PopMessagePayloadType
-): Promise<PopMessageResponseType> => {
-  const url = new URL('api/v3/messages/pop', payload.apiEndpoint);
-  const body: RemoveBasicAuthenticationPayloadType<PopMessagePayloadType> = {
+export const peekMessage = async (
+  payload: PeekMessagePayloadType
+): Promise<PeekMessageResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const urlWithApiPath = new URL('api/v3/messages/peek', apiEndpointParsed);
+  const fullUrl = urlWithApiPath.toString();
+  const body: RemoveBasicAuthenticationPayloadType<PeekMessagePayloadType> = {
     tag: payload.tag
   };
 
   const rawResponse = await fetchWithTimeout(
-    url,
+    fullUrl,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
@@ -38,7 +39,7 @@ export const popMessage = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = PopMessageResponse.safeParse(jsonResponse);
+  const parsedRes = PeekMessageResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
