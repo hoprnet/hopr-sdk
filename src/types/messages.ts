@@ -73,3 +73,29 @@ export const PopAllMessagesResponse = z.object({
 });
 
 export type PopAllMessagesResponseType = z.infer<typeof PopAllMessagesResponse>;
+
+/** Peek message */
+
+export const PeekMessagePayload = BasePayload.extend({
+  tag: z.number()
+});
+
+export type PeekMessagePayloadType = z.infer<typeof PeekMessagePayload>;
+
+export const PeekMessageResponse = ReceivedMessage;
+
+export type PeekMessageResponseType = z.infer<typeof PeekMessageResponse>;
+
+/** Peek all messages */
+
+export const PeekAllMessagesPayload = BasePayload.extend({
+  tag: z.number()
+});
+
+export type PeekAllMessagesPayloadType = z.infer<typeof PeekAllMessagesPayload>;
+
+export const PeekAllMessagesResponse = z.object({
+  messages: z.array(ReceivedMessage)
+});
+
+export type PeekAllMessagesResponseType = z.infer<typeof PeekAllMessagesResponse>;
