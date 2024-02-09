@@ -94,7 +94,7 @@ By calling directly the flows functions.
 import { flows } from '@hoprnet/hopr-sdk';
 ```
 
-- If your ts config includes `"moduleResolution": "nodenext" or "node18"`, you can import the functions like this:
+- If your ts config includes `"moduleResolution": "nodenext" or "node16"`, you can import the functions like this:
 
 ```ts
 import { openMultipleChannels } from '@hoprnet/hopr-sdk/flows';
