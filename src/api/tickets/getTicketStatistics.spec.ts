@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
-import { getStatistics } from './getStatistics';
+import { getStatistics } from './getTicketStatistics';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';

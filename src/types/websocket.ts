@@ -11,11 +11,6 @@ export const createWsUrlPayload = z.object({
   apiEndpoint: z.string().url().or(z.custom<URL>()),
 
   /**
-   * The API token for authentication.
-   */
-  apiToken: z.string(),
-
-  /**
    * optional path for the websocker
    */
   path: z.string().optional()

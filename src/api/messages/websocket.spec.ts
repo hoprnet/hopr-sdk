@@ -28,8 +28,9 @@ describe('websocket', function () {
       apiEndpoint: API_ENDPOINT
     });
 
-    connection.onopen = () => {
+    connection.onopen = (event) => {
       connection.close();
+      expect(connection.protocol).toBe('QXV0aG9yaXphdGlvbjpTM0NSM1QtVDBLM04');
       done();
     };
   });
