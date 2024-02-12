@@ -1,11 +1,11 @@
 import nock from 'nock';
 import { APIError } from '../../utils';
-import { getStatistics } from './getTicketStatistics';
+import { getTicketStatistics } from './getTicketStatistics';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 
-describe('test getStatistics', function () {
+describe('test getTicketStatistics', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
@@ -23,7 +23,7 @@ describe('test getStatistics', function () {
       rejectedValue: 'string'
     });
 
-    const response = await getStatistics({
+    const response = await getTicketStatistics({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT
     });
@@ -36,7 +36,7 @@ describe('test getStatistics', function () {
     });
 
     await expect(
-      getStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
@@ -46,7 +46,7 @@ describe('test getStatistics', function () {
     });
 
     await expect(
-      getStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
@@ -56,7 +56,7 @@ describe('test getStatistics', function () {
     });
 
     await expect(
-      getStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(APIError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
@@ -66,7 +66,7 @@ describe('test getStatistics', function () {
     });
 
     await expect(
-      getStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(APIError);
   });
 });

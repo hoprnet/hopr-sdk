@@ -9,7 +9,7 @@ const sdk = new SDK({
 
 describe('tickets E2E Tests', function () {
   test('should get the statistics regarding all your tickets', async function () {
-    const response = await sdk.api.tickets.getStatistics();
+    const response = await sdk.api.tickets.getTicketStatistics();
 
     expect(response).toStrictEqual({
       unredeemed: expect.any(Number),

@@ -3,7 +3,7 @@ import {
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
-import { getStatistics } from './getTicketStatistics';
+import { getTicketStatistics } from './getTicketStatistics';
 import { getTickets } from './getTickets';
 import { redeemTickets } from './redeemTickets';
 
@@ -34,10 +34,10 @@ export class TicketsAdapter {
     this.timeout = timeout;
   }
 
-  public async getStatistics(
+  public async getTicketStatistics(
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
-    return getStatistics({
+    return getTicketStatistics({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout
