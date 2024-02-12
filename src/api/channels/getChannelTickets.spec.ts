@@ -18,7 +18,7 @@ describe('test redeemTickets', function () {
       .reply(200, [
         {
           channelId: '0xBb6f3A07a6EF6d4Aa6Aa244949AA59cBE735549f',
-          indexOffset: '0',
+          indexOffset: 0,
           index: 6,
           amount: '10000000000000000',
           winProb:
