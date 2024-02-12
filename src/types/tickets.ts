@@ -4,7 +4,7 @@ import { z } from 'zod';
  * Get statistics
  */
 
-export const GetStatisticsResponse = z.object({
+export const GetTicketStatisticsResponse = z.object({
   unredeemed: z.number(),
   unredeemedValue: z.string(),
   redeemed: z.number(),
@@ -17,7 +17,7 @@ export const GetStatisticsResponse = z.object({
   rejectedValue: z.string()
 });
 
-export type GetStatisticsResponseType = z.infer<typeof GetStatisticsResponse>;
+export type GetTicketStatisticsResponseType = z.infer<typeof GetTicketStatisticsResponse>;
 
 /**
  * Get tickets

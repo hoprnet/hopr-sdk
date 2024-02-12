@@ -5,8 +5,8 @@ import * as tickets from '../api/tickets';
 import {
   CloseChannelResponseType,
   GetChannelsResponseType,
-  GetStatisticsResponse,
-  GetStatisticsResponseType
+  GetTicketStatisticsResponse,
+  GetTicketStatisticsResponseType
 } from '../types';
 
 jest.mock('../api/channels', () => ({
@@ -57,7 +57,7 @@ describe('closeEverything', function () {
         neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
-      } as GetStatisticsResponseType);
+      } as GetTicketStatisticsResponseType);
 
     // mock hoprd node close channels
     openOutgoingChannels.map((id) => {
@@ -112,7 +112,7 @@ describe('closeEverything', function () {
         neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
-      } as GetStatisticsResponseType);
+      } as GetTicketStatisticsResponseType);
 
     // mock hoprd node close channels
     openOutgoingChannels.map((id) => {
@@ -158,7 +158,7 @@ describe('closeEverything', function () {
         neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
-      } as GetStatisticsResponseType);
+      } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets
     (tickets.redeemTickets as jest.Mock).mockImplementation(() => true);
@@ -195,7 +195,7 @@ describe('closeEverything', function () {
         neglectedValue: 'string',
         rejected: 0,
         rejectedValue: 'string'
-      } as GetStatisticsResponseType);
+      } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets
     (tickets.redeemTickets as jest.Mock).mockImplementation(() => false);
