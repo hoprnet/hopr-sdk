@@ -23,7 +23,7 @@ describe('Node E2E Tests', function () {
       quality: expect.any(Number),
       peerId: expect.any(String),
       peerAddress: expect.any(String),
-      multiAddr: expect.any(String),
+      multiaddr: expect.any(String),
       heartbeats: expect.objectContaining({
         sent: expect.any(Number),
         success: expect.any(Number)
