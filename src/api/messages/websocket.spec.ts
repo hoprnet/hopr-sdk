@@ -39,7 +39,7 @@ describe('websocket', function () {
     expect(
       createWsUrl({
         apiEndpoint: API_ENDPOINT,
-        path: '/api/v3/messages/websocket/',
+        path: '/api/v3/messages/websocket',
         apiToken: API_TOKEN
       })
     ).toBe(
