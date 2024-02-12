@@ -43,7 +43,7 @@ describe('websocket', function () {
         apiToken: API_TOKEN
       })
     ).toBe(
-      `ws://localhost:${PORT}/api/v3/messages/websocket/?apiToken=S3CR3T-T0K3N`
+      `ws://localhost:${PORT}/api/v3/messages/websocket?apiToken=S3CR3T-T0K3N`
     );
   });
 });
