@@ -113,7 +113,7 @@ export const Ticket = z.object({
   channelId: z.string(),
   amount: z.string(),
   index: z.number(),
-  indexOffset: z.string(),
+  indexOffset: z.number(),
   channelEpoch: z.number(),
   winProb: z.string(),
   signature: z.string()
