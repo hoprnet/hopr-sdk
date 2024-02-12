@@ -1,14 +1,14 @@
 import { ZodError } from 'zod';
 import { APIErrorResponse, type BasePayloadType } from '../../types';
 import {
-  GetStatisticsResponse,
-  GetStatisticsResponseType
+  GetTicketStatisticsResponse,
+  GetTicketStatisticsResponseType
 } from '../../types/tickets';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getStatistics = async (
+export const getTicketStatistics = async (
   payload: BasePayloadType
-): Promise<GetStatisticsResponseType> => {
+): Promise<GetTicketStatisticsResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
     `${apiEndpointParsed}api/v3/tickets/statistics`,
@@ -25,7 +25,7 @@ export const getStatistics = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetStatisticsResponse.safeParse(jsonResponse);
+  const parsedRes = GetTicketStatisticsResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
