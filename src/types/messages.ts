@@ -91,7 +91,6 @@ export type PeekMessageResponseType = z.infer<typeof PeekMessageResponse>;
 
 export const PeekAllMessagesPayload = BasePayload.extend({
   tag: z.number().nonnegative().optional().nullable(),
-  receivedAt: z.number().nonnegative(),
 });
 
 export type PeekAllMessagesPayloadType = z.infer<typeof PeekAllMessagesPayload>;
