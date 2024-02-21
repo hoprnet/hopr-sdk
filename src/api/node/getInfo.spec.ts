@@ -21,7 +21,7 @@ describe('test getInfo', function () {
         hoprToken: '0xD4fdec44DB9D44B8f2b6d529620f9C0C7066A2c1',
         hoprChannels: '0x4c3bb6470b72A749Db1bB394c024A92AB60a793e',
         hoprNetworkRegistry: '0x2f3243adC9805F6dd3E01C9E9ED31675A5B16902',
-        hoprNodeSageRegistry: '0x3E7c4720934ff6A9FE122Cb761f36a11E9b848D9',
+        hoprNodeSafeRegistry: '0x3E7c4720934ff6A9FE122Cb761f36a11E9b848D9',
         hoprManagementModule: '0x39b0445b32f5a544eb7917912f5f837bd061be4c',
         hoprNodeSafe: '0x0361a040acb376dd7e5a4643e5a4c7ae9d20c834',
         isEligible: false,
