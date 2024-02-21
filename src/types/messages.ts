@@ -7,7 +7,8 @@ import { BasePayload } from './general';
 
 export const ReceivedMessage = z.object({
   tag: z.number().nonnegative(),
-  body: z.string()
+  body: z.string(),
+  receivedAt: z.number().nonnegative(),
 });
 
 /**
@@ -90,6 +91,7 @@ export type PeekMessageResponseType = z.infer<typeof PeekMessageResponse>;
 
 export const PeekAllMessagesPayload = BasePayload.extend({
   tag: z.number().nonnegative().optional().nullable(),
+  receivedAt: z.number().nonnegative(),
 });
 
 export type PeekAllMessagesPayloadType = z.infer<typeof PeekAllMessagesPayload>;
