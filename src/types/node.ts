@@ -46,7 +46,7 @@ export const GetInfoResponse = z.object({
   hoprToken: z.string(),
   hoprChannels: z.string(),
   hoprNetworkRegistry: z.string().optional(),
-  hoprNodeSageRegistry: z.string().optional(),
+  hoprNodeSafeRegistry: z.string().optional(),
   hoprManagementModule: z.string(),
   hoprNodeSafe: z.string(),
   connectivityStatus: z.enum(['Unknown', 'Red', 'Orange', 'Yellow', 'Green']),
