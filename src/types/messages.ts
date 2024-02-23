@@ -28,7 +28,7 @@ export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;
 /** Delete Messages */
 
 export const DeleteMessagesPayload = BasePayload.extend({
-  tag: z.number().nonnegative(),
+  tag: z.number().nonnegative().optional(),
 });
 
 export type DeleteMessagesPayloadType = z.infer<typeof DeleteMessagesPayload>;
