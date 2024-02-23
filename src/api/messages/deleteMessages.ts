@@ -9,6 +9,7 @@ export const deleteMessages = async (
   if (payload.tag) {
     url.searchParams.set('tag', payload.tag.toString());
   }
+
   const rawResponse = await fetchWithTimeout(
     url,
     {
