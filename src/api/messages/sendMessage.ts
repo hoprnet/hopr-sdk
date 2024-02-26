@@ -21,6 +21,11 @@ export const sendMessage = async (
     hops: payload.hops
   };
 
+  // direct messages need an empty path
+  if (!body.hops && !body.path) {
+      body.path = [];
+  }
+
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
     `${apiEndpointParsed}api/v3/messages`,
