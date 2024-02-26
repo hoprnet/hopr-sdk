@@ -10,15 +10,10 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getPeer = async (
   payload: GetPeerPayloadType
 ): Promise<GetPeerResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const urlWithApiPath = new URL(
-    `api/v3/peers/${payload.peerId}`,
-    apiEndpointParsed
-  );
-  const fullUrl = urlWithApiPath.toString();
+  const url = new URL(`api/v3/peers/${payload.peerId}`, payload.apiEndpoint);
 
   const rawResponse = await fetchWithTimeout(
-    fullUrl,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

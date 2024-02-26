@@ -10,13 +10,11 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getChannels = async (
   payload: GetChannelsPayloadType
 ): Promise<GetChannelsResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL('api/v3/channels', payload.apiEndpoint);
+  url.searchParams.set('includingClosed', String(!!payload.includingClosed));
+  url.searchParams.set('fullTopology', String(!!payload.fullTopology));
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/channels?` +
-      new URLSearchParams({
-        includingClosed: String(!!payload.includingClosed),
-        fullTopology: String(!!payload.fullTopology)
-      }),
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

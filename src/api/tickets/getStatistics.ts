@@ -9,9 +9,9 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getStatistics = async (
   payload: BasePayloadType
 ): Promise<GetStatisticsResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/tickets/statistics`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/tickets/statistics`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

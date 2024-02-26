@@ -16,9 +16,9 @@ import { ZodError } from 'zod';
  * @throws An error that occurred while processing the request.
  */
 export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/aliases/${payload.alias}`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/aliases/${payload.alias}`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

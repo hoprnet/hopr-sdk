@@ -16,14 +16,14 @@ import { ZodError } from 'zod';
 export const aggregateChannelTickets = async (
   payload: AggregateChannelTicketsPayloadType
 ): Promise<boolean> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/channels/${payload.channelId}/tickets/aggregate`,
-    {
-      method: 'POST',
-      headers: getHeaders(payload.apiToken)
-    }
+  const url = new URL(
+    `api/v3/channels/${payload.channelId}/tickets/aggregate`,
+    payload.apiEndpoint
   );
+  const rawResponse = await fetchWithTimeout(url, {
+    method: 'POST',
+    headers: getHeaders(payload.apiToken)
+  });
 
   // received expected response
   if (rawResponse.status === 204) {

@@ -28,9 +28,9 @@ export const createToken = async (
     lifetime: payload.lifetime
   };
 
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/tokens`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/tokens`,
+    url,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

@@ -24,15 +24,12 @@ export const openChannel = async (
     peerAddress: payload.peerAddress
   };
 
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/channels`,
-    {
-      method: 'POST',
-      headers: getHeaders(payload.apiToken),
-      body: JSON.stringify(body)
-    }
-  );
+  const url = new URL(`api/v3/channels`, payload.apiEndpoint);
+  const rawResponse = await fetchWithTimeout(url, {
+    method: 'POST',
+    headers: getHeaders(payload.apiToken),
+    body: JSON.stringify(body)
+  });
 
   // received unexpected error from server
   if (rawResponse.status > 499) {

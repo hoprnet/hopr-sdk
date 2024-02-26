@@ -22,15 +22,12 @@ export const withdraw = async (
     currency: payload.currency,
     ethereumAddress: payload.ethereumAddress
   };
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/account/withdraw`,
-    {
-      method: 'POST',
-      headers: getHeaders(payload.apiToken),
-      body: JSON.stringify(body)
-    }
-  );
+  const url = new URL(`api/v3/account/withdraw`, payload.apiEndpoint);
+  const rawResponse = await fetchWithTimeout(url, {
+    method: 'POST',
+    headers: getHeaders(payload.apiToken),
+    body: JSON.stringify(body)
+  });
 
   // received unexpected error from server
   if (rawResponse.status > 499) {

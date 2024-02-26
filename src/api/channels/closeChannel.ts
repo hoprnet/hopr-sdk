@@ -18,14 +18,14 @@ import { ZodError } from 'zod';
 export const closeChannel = async (
   payload: CloseChannelPayloadType
 ): Promise<CloseChannelResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/channels/${payload.channelId}`,
-    {
-      method: 'DELETE',
-      headers: getHeaders(payload.apiToken)
-    }
+  const url = new URL(
+    `api/v3/channels/${payload.channelId}`,
+    payload.apiEndpoint
   );
+  const rawResponse = await fetchWithTimeout(url, {
+    method: 'DELETE',
+    headers: getHeaders(payload.apiToken)
+  });
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
