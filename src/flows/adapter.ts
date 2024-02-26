@@ -107,7 +107,6 @@ export class FlowsAdapter {
    *
    * @returns A Promise that resolves with an array of objects, where each object represents
    * an outgoing channel with properties:
-   *   - `type`: Either "incoming" or "outgoing" indicating the channel type.
    *   - `status`: The status of the channel, which can be one of "Open", "WaitingForCommitment",
    *      "PendingToClose", or "Closed".
    *   - `channelId`: A string representing the channel ID.

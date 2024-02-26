@@ -16,11 +16,11 @@ describe('test getTickets', function () {
       .reply(200, [
         {
           channelId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          indexOffset: '0',
-          index: 'string',
+          indexOffset: 0,
+          index: 1,
           amount: 'string',
           winProb: 'string',
-          channelEpoch: 'string',
+          channelEpoch: 1,
           signature: '115342872866815e167'
         }
       ] as GetTicketsResponseType);

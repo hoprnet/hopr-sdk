@@ -9,7 +9,7 @@ export const deleteMessages = async (
   const urlWithApiPath = new URL('api/v3/messages', apiEndpointParsed);
   const params = new URLSearchParams();
   // add tag to search params
-  params.append('tag', payload.tag.toString());
+  if(payload.tag) params.append('tag', payload.tag.toString());
 
   // join base url with search params
   urlWithApiPath.search = params.toString();

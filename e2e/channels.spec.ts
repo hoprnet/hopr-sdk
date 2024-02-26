@@ -63,8 +63,8 @@ describe('Channels E2E test', function () {
       sourceAddress: expect.any(String),
       destinationAddress: expect.any(String),
       ticketIndex: expect.any(String),
-      channelEpoch: expect.any(String),
-      closureTime: expect.any(String)
+      channelEpoch: expect.any(Number),
+      closureTime: expect.any(Number)
     };
 
     expect(response).toStrictEqual(expectedResponse);

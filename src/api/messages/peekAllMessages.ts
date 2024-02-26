@@ -1,25 +1,26 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  PopAllMessagesPayloadType,
-  PopAllMessagesResponse,
-  PopAllMessagesResponseType,
+  PeekAllMessagesPayloadType,
+  PeekAllMessagesResponse,
+  PeekAllMessagesResponseType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
- * Get the list of messages currently present in the nodes message inbox.
- * The messages are removed from the inbox.
+ * Peek the list of messages currently present in the nodes message inbox,
+ * filtered by tag, and optionally by timestamp (epoch in milliseconds).
+ * The messages are not removed from the inbox.
  * @returns - A promise that resolves to the list of messages currently present in the nodes message inbox.
  */
-export const popAllMessages = async (
-  payload: PopAllMessagesPayloadType
-): Promise<PopAllMessagesResponseType> => {
+export const peekAllMessages = async (
+  payload: PeekAllMessagesPayloadType
+): Promise<PeekAllMessagesResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const urlWithApiPath = new URL('api/v3/messages/pop-all', apiEndpointParsed);
+  const urlWithApiPath = new URL('api/v3/messages/peek-all', apiEndpointParsed);
   const fullUrl = urlWithApiPath.toString();
-  const body: RemoveBasicAuthenticationPayloadType<PopAllMessagesPayloadType> =
+  const body: RemoveBasicAuthenticationPayloadType<PeekAllMessagesPayloadType> =
     {
       tag: payload.tag
     };
@@ -40,7 +41,7 @@ export const popAllMessages = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = PopAllMessagesResponse.safeParse(jsonResponse);
+  const parsedRes = PeekAllMessagesResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

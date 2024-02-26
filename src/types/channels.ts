@@ -14,12 +14,11 @@ const TopologyChannel = z.object({
   balance: z.string(),
   status: ChannelStatus,
   ticketIndex: z.string(),
-  channelEpoch: z.string(),
-  closureTime: z.string()
+  channelEpoch: z.number(),
+  closureTime: z.number()
 });
 
 export const Channel = z.object({
-  type: z.enum(['incoming', 'outgoing']),
   id: z.string(),
   peerAddress: z.string(),
   status: ChannelStatus,
@@ -113,9 +112,9 @@ export type GetChannelTicketsPayloadType = z.infer<
 export const Ticket = z.object({
   channelId: z.string(),
   amount: z.string(),
-  index: z.string(),
-  indexOffset: z.string(),
-  channelEpoch: z.string(),
+  index: z.number(),
+  indexOffset: z.number(),
+  channelEpoch: z.number(),
   winProb: z.string(),
   signature: z.string()
 });

@@ -9,7 +9,7 @@ It provides a set of functions that allow developers to interact with the HOPR p
 
 To install the `@hoprnet/hopr-sdk` package, follow these steps:
 
-1. Make sure you have [node.js](https://nodejs.org) >=16 installed on your machine.
+1. Make sure you have [node.js](https://nodejs.org) >=18 installed on your machine.
 2. Open your terminal or command prompt.
 3. Navigate to your project directory.
 4. Run the following command to install the package using:

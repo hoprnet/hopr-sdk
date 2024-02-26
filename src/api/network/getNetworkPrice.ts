@@ -1,35 +1,21 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  PopAllMessagesPayloadType,
-  PopAllMessagesResponse,
-  PopAllMessagesResponseType,
-  RemoveBasicAuthenticationPayloadType
+  GetNetworkPricePayloadType,
+  GetNetworkPriceResponse,
+  GetNetworkPriceResponseType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-/**
- * Get the list of messages currently present in the nodes message inbox.
- * The messages are removed from the inbox.
- * @returns - A promise that resolves to the list of messages currently present in the nodes message inbox.
- */
-export const popAllMessages = async (
-  payload: PopAllMessagesPayloadType
-): Promise<PopAllMessagesResponseType> => {
+export const getNetworkPrice = async (
+  payload: GetNetworkPricePayloadType
+): Promise<GetNetworkPriceResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const urlWithApiPath = new URL('api/v3/messages/pop-all', apiEndpointParsed);
-  const fullUrl = urlWithApiPath.toString();
-  const body: RemoveBasicAuthenticationPayloadType<PopAllMessagesPayloadType> =
-    {
-      tag: payload.tag
-    };
-
   const rawResponse = await fetchWithTimeout(
-    fullUrl,
+    `${apiEndpointParsed}api/v3/network/price`,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiToken),
-      body: JSON.stringify(body)
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
@@ -40,7 +26,7 @@ export const popAllMessages = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = PopAllMessagesResponse.safeParse(jsonResponse);
+  const parsedRes = GetNetworkPriceResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

@@ -1,17 +1,23 @@
 import { ZodError } from 'zod';
-import { APIErrorResponse, type BasePayloadType } from '../../types';
 import {
-  GetStatisticsResponse,
-  GetStatisticsResponseType
-} from '../../types/tickets';
+  APIErrorResponse,
+  IsNodeHealthyPayloadType,
+  IsNodeHealthyResponse,
+  IsNodeHealthyResponseType
+} from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getStatistics = async (
-  payload: BasePayloadType
-): Promise<GetStatisticsResponseType> => {
+/**
+ * Check whether the node is healthy.
+ * @returns A Promise that resolves to a boolean stating that the node is healthy or not.
+ * @throws An error that occurred while processing the request.
+ */
+export const isNodeStarted = async (
+  payload: IsNodeHealthyPayloadType
+): Promise<IsNodeHealthyResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/tickets/statistics`,
+    `${apiEndpointParsed}api/v3/startedz`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -24,21 +30,20 @@ export const getStatistics = async (
     throw new Error(rawResponse.statusText);
   }
 
-  const jsonResponse = await rawResponse.json();
-  const parsedRes = GetStatisticsResponse.safeParse(jsonResponse);
-
   // received expected response
-  if (parsedRes.success) {
-    return parsedRes.data;
+  if (rawResponse.status === 200) {
+    return true;
+  } else if (rawResponse.status === 412) {
+    return false;
   }
 
   // check if response has the structure of an expected api error
+  const jsonResponse = await rawResponse.json();
   const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
     throw new APIError(isApiErrorResponse.data);
   }
 
-  // we could not parse the response and it is not unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw new APIError({ status: 'Unexpected error' });
 };
