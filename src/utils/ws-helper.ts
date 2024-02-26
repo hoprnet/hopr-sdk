@@ -1,5 +1,5 @@
 import WebSocket from 'isomorphic-ws';
-import { DeferredPromise, createLogger, decodeMessage } from './';
+import { DeferredPromise, createLogger } from './';
 import { createWsUrl } from '../utils';
 
 const log = createLogger('websocket');
@@ -16,7 +16,6 @@ type WebSocketHelperOptions = {
   attemptToReconnect?: boolean;
   reconnectDelay?: number;
   maxReconnectAttempts?: number;
-  decodeMessage?: boolean;
   onOpen?: () => void;
   onClose?: () => void;
   onMessage?: (data: string) => void;
@@ -38,7 +37,6 @@ class WebsocketHelper {
   private attemptToReconnect: boolean; // whether we should attempt to reconnect
   private reconnectDelay: number; // how many ms to wait before attempting to reconnect
   private maxReconnectAttempts: number; // maximum number of reconnect attempts
-  private decodeMessage: boolean; // Whether to decode the received message.
   // resolved when a connection is open
   // rejects once it has failed connecting (including reconnect attempts)
   private waitUntilSocketOpenP: DeferredPromise<WebSocket>;
@@ -52,7 +50,6 @@ class WebsocketHelper {
     this.apiEndpoint = options.apiEndpoint;
     this.apiToken = options.apiToken;
     this.path = options?.path;
-    this.decodeMessage = options?.decodeMessage ?? true;
     this.socket = new WebSocket(
       createWsUrl({
         apiEndpoint: this.apiEndpoint,
@@ -168,26 +165,7 @@ class WebsocketHelper {
    */
   private handleMessage(event: WebSocket.MessageEvent): void {
     const body = event.data.toString();
-    if (!this.decodeMessage) {
-      this.options?.onMessage?.(body);
-      return;
-    }
-
-    // message received is an acknowledgement of a
-    // message we have sent, we can safely ignore this
-    if (body.startsWith('ack:')) return;
-    log.debug('received body from HOPRd', body);
-
-    let message: string | undefined;
-    try {
-      message = decodeMessage(body);
-    } catch (error) {
-      log.error(error);
-      return;
-    }
-    if (!message) return;
-    log.debug('decoded received body', message);
-    this.options?.onMessage?.(message);
+    this.options?.onMessage?.(body);
   }
 
   /**
