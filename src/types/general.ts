@@ -7,7 +7,7 @@ export const BasePayload = z.object({
   /**
    * The API endpoint for authentication.
    */
-  apiEndpoint: z.string(),
+  apiEndpoint: z.string() | URL,
 
   /**
    * The API token for authentication.
