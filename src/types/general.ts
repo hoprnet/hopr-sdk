@@ -17,7 +17,7 @@ export const BasePayload = z.object({
   /**
    * optional timeout for the requests
    */
-  timeout: z.number().optional()
+  timeout: z.number().nonnegative().optional()
 });
 
 /**
