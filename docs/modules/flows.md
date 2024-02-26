@@ -38,7 +38,7 @@ The transaction receipts for the cash out transactions.
 
 #### Defined in
 
-[src/flows/cashOut.ts:11](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/flows/cashOut.ts#L11)
+[src/flows/cashOut.ts:11](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/flows/cashOut.ts#L11)
 
 ___
 
@@ -64,7 +64,7 @@ This is a long running function and may take a more than 5 minutes to run
 
 #### Defined in
 
-[src/flows/closeEverything.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/flows/closeEverything.ts#L10)
+[src/flows/closeEverything.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/flows/closeEverything.ts#L10)
 
 ___
 
@@ -92,7 +92,7 @@ An array of outgoing channels matching the status filter.
 
 #### Defined in
 
-[src/flows/getOutgoingChannels.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/flows/getOutgoingChannels.ts#L10)
+[src/flows/getOutgoingChannels.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/flows/getOutgoingChannels.ts#L10)
 
 ___
 
@@ -117,7 +117,7 @@ ___
 
 #### Defined in
 
-[src/flows/openMultipleChannels.ts:13](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/flows/openMultipleChannels.ts#L13)
+[src/flows/openMultipleChannels.ts:13](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/flows/openMultipleChannels.ts#L13)
 
 ___
 
@@ -148,4 +148,4 @@ one open outgoing channel
 
 #### Defined in
 
-[src/flows/safeSendMessage.ts:13](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/flows/safeSendMessage.ts#L13)
+[src/flows/safeSendMessage.ts:13](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/flows/safeSendMessage.ts#L13)

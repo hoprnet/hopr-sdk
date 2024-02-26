@@ -52,7 +52,7 @@ Error.constructor
 
 #### Defined in
 
-[src/utils/error.ts:21](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/error.ts#L21)
+[src/utils/error.ts:21](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/error.ts#L21)
 
 ## Properties
 
@@ -64,7 +64,7 @@ The error message.
 
 #### Defined in
 
-[src/utils/error.ts:15](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/error.ts#L15)
+[src/utils/error.ts:15](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/error.ts#L15)
 
 ___
 
@@ -118,7 +118,7 @@ The status message associated with the error.
 
 #### Defined in
 
-[src/utils/error.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/error.ts#L10)
+[src/utils/error.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/error.ts#L10)
 
 ___
 

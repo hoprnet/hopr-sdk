@@ -36,7 +36,7 @@ Creates an instance of a deferred promise.
 
 #### Defined in
 
-[src/utils/deferredPromise.ts:9](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/deferredPromise.ts#L9)
+[src/utils/deferredPromise.ts:9](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/deferredPromise.ts#L9)
 
 ## Properties
 
@@ -46,7 +46,7 @@ Creates an instance of a deferred promise.
 
 #### Defined in
 
-[src/utils/deferredPromise.ts:5](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/deferredPromise.ts#L5)
+[src/utils/deferredPromise.ts:5](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/deferredPromise.ts#L5)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/utils/deferredPromise.ts:7](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/deferredPromise.ts#L7)
+[src/utils/deferredPromise.ts:7](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/deferredPromise.ts#L7)
 
 ___
 
@@ -94,4 +94,4 @@ ___
 
 #### Defined in
 
-[src/utils/deferredPromise.ts:6](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/deferredPromise.ts#L6)
+[src/utils/deferredPromise.ts:6](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/deferredPromise.ts#L6)

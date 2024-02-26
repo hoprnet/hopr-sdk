@@ -16,7 +16,6 @@ Helper class for managing a WebSocket connection.
 - [apiToken](utils.WebsocketHelper.md#apitoken)
 - [attemptToReconnect](utils.WebsocketHelper.md#attempttoreconnect)
 - [connectionIsClosing](utils.WebsocketHelper.md#connectionisclosing)
-- [decodeMessage](utils.WebsocketHelper.md#decodemessage)
 - [maxReconnectAttempts](utils.WebsocketHelper.md#maxreconnectattempts)
 - [maxTimeWithoutPing](utils.WebsocketHelper.md#maxtimewithoutping)
 - [options](utils.WebsocketHelper.md#options)
@@ -56,7 +55,7 @@ Helper class for managing a WebSocket connection.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:46](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L46)
+[src/utils/ws-helper.ts:44](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L44)
 
 ## Properties
 
@@ -66,7 +65,7 @@ Helper class for managing a WebSocket connection.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:29](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L29)
+[src/utils/ws-helper.ts:28](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L28)
 
 ___
 
@@ -76,7 +75,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:30](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L30)
+[src/utils/ws-helper.ts:29](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L29)
 
 ___
 
@@ -86,7 +85,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:38](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L38)
+[src/utils/ws-helper.ts:37](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L37)
 
 ___
 
@@ -96,17 +95,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:32](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L32)
-
-___
-
-### decodeMessage
-
-• `Private` **decodeMessage**: `boolean`
-
-#### Defined in
-
-[src/utils/ws-helper.ts:41](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L41)
+[src/utils/ws-helper.ts:31](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L31)
 
 ___
 
@@ -116,7 +105,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:40](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L40)
+[src/utils/ws-helper.ts:39](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L39)
 
 ___
 
@@ -126,7 +115,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:37](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L37)
+[src/utils/ws-helper.ts:36](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L36)
 
 ___
 
@@ -136,7 +125,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:46](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L46)
+[src/utils/ws-helper.ts:44](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L44)
 
 ___
 
@@ -146,7 +135,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:31](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L31)
+[src/utils/ws-helper.ts:30](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L30)
 
 ___
 
@@ -156,7 +145,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:35](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L35)
+[src/utils/ws-helper.ts:34](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L34)
 
 ___
 
@@ -166,7 +155,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:33](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L33)
+[src/utils/ws-helper.ts:32](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L32)
 
 ___
 
@@ -176,7 +165,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:39](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L39)
+[src/utils/ws-helper.ts:38](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L38)
 
 ___
 
@@ -186,7 +175,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:36](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L36)
+[src/utils/ws-helper.ts:35](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L35)
 
 ___
 
@@ -196,7 +185,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:34](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L34)
+[src/utils/ws-helper.ts:33](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L33)
 
 ___
 
@@ -206,7 +195,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:44](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L44)
+[src/utils/ws-helper.ts:42](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L42)
 
 ## Methods
 
@@ -223,7 +212,7 @@ and not reconnect again.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:96](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L96)
+[src/utils/ws-helper.ts:93](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L93)
 
 ___
 
@@ -239,7 +228,7 @@ Closes connection to the websocket server.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:84](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L84)
+[src/utils/ws-helper.ts:81](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L81)
 
 ___
 
@@ -261,7 +250,7 @@ Closes connection to the websocket server.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:106](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L106)
+[src/utils/ws-helper.ts:103](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L103)
 
 ___
 
@@ -281,7 +270,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:206](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L206)
+[src/utils/ws-helper.ts:184](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L184)
 
 ___
 
@@ -303,7 +292,7 @@ Handles an incoming message from the WebSocket server.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:169](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L169)
+[src/utils/ws-helper.ts:166](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L166)
 
 ___
 
@@ -319,7 +308,7 @@ Updates the heartbeat timeout.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:120](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L120)
+[src/utils/ws-helper.ts:117](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L117)
 
 ___
 
@@ -333,7 +322,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:112](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L112)
+[src/utils/ws-helper.ts:109](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L109)
 
 ___
 
@@ -349,7 +338,7 @@ Sets up event handlers for the WebSocket connection.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:134](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L134)
+[src/utils/ws-helper.ts:131](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L131)
 
 ___
 
@@ -373,7 +362,7 @@ True if a reconnection attempt should be made; false otherwise.
 
 #### Defined in
 
-[src/utils/ws-helper.ts:198](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L198)
+[src/utils/ws-helper.ts:176](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L176)
 
 ___
 
@@ -393,7 +382,7 @@ ___
 
 #### Defined in
 
-[src/utils/ws-helper.ts:246](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L246)
+[src/utils/ws-helper.ts:224](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L224)
 
 ___
 
@@ -412,4 +401,4 @@ the websocket instance
 
 #### Defined in
 
-[src/utils/ws-helper.ts:72](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/utils/ws-helper.ts#L72)
+[src/utils/ws-helper.ts:69](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/utils/ws-helper.ts#L69)

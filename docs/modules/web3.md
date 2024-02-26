@@ -47,7 +47,7 @@
 
 #### Defined in
 
-[src/ethereum/smartContractAddresses.ts:12](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/smartContractAddresses.ts#L12)
+[src/ethereum/smartContractAddresses.ts:12](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/smartContractAddresses.ts#L12)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/smartContractAddresses.ts:2](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/smartContractAddresses.ts#L2)
+[src/ethereum/smartContractAddresses.ts:2](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/smartContractAddresses.ts#L2)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/erc721ABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/erc721ABI.ts#L1)
+[src/ethereum/erc721ABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/erc721ABI.ts#L1)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprBoostNFTABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprBoostNFTABI.ts#L1)
+[src/ethereum/stakingV2/hoprBoostNFTABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprBoostNFTABI.ts#L1)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprChannelsABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprChannelsABI.ts#L1)
+[src/ethereum/stakingV2/hoprChannelsABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprChannelsABI.ts#L1)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprMultiSendABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprMultiSendABI.ts#L1)
+[src/ethereum/stakingV2/hoprMultiSendABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprMultiSendABI.ts#L1)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprNetworkRegistryABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprNetworkRegistryABI.ts#L1)
+[src/ethereum/stakingV2/hoprNetworkRegistryABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprNetworkRegistryABI.ts#L1)
 
 ___
 
@@ -117,7 +117,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprNodeModuleABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprNodeModuleABI.ts#L1)
+[src/ethereum/stakingV2/hoprNodeModuleABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprNodeModuleABI.ts#L1)
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprNodeSafeRegistryABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprNodeSafeRegistryABI.ts#L1)
+[src/ethereum/stakingV2/hoprNodeSafeRegistryABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprNodeSafeRegistryABI.ts#L1)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprNodeStakeFactoryABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprNodeStakeFactoryABI.ts#L1)
+[src/ethereum/stakingV2/hoprNodeStakeFactoryABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprNodeStakeFactoryABI.ts#L1)
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprSafeABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprSafeABI.ts#L1)
+[src/ethereum/stakingV2/hoprSafeABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprSafeABI.ts#L1)
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/stakingV2/hoprWrapperABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/stakingV2/hoprWrapperABI.ts#L1)
+[src/ethereum/stakingV2/hoprWrapperABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/stakingV2/hoprWrapperABI.ts#L1)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/smartContractAddresses.ts:4](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/smartContractAddresses.ts#L4)
+[src/ethereum/smartContractAddresses.ts:4](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/smartContractAddresses.ts#L4)
 
 ___
 
@@ -177,7 +177,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/wrapperABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/wrapperABI.ts#L1)
+[src/ethereum/wrapperABI.ts:1](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/wrapperABI.ts#L1)
 
 ___
 
@@ -187,7 +187,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/smartContractAddresses.ts:8](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/smartContractAddresses.ts#L8)
+[src/ethereum/smartContractAddresses.ts:8](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/smartContractAddresses.ts#L8)
 
 ___
 
@@ -197,7 +197,7 @@ ___
 
 #### Defined in
 
-[src/ethereum/smartContractAddresses.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/smartContractAddresses.ts#L10)
+[src/ethereum/smartContractAddresses.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/smartContractAddresses.ts#L10)
 
 ___
 
@@ -207,4 +207,4 @@ ___
 
 #### Defined in
 
-[src/ethereum/smartContractAddresses.ts:6](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/ethereum/smartContractAddresses.ts#L6)
+[src/ethereum/smartContractAddresses.ts:6](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/ethereum/smartContractAddresses.ts#L6)

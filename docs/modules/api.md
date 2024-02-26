@@ -74,7 +74,7 @@ A Promise that resolves with the response of the close channel operation.
 
 #### Defined in
 
-[src/api/channels/closeChannel.ts:19](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/channels/closeChannel.ts#L19)
+[src/api/channels/closeChannel.ts:19](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/channels/closeChannel.ts#L19)
 
 ___
 
@@ -113,7 +113,7 @@ A Promise that resolves to the generated token which must be used when authentic
 
 #### Defined in
 
-[src/api/tokens/createToken.ts:22](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/tokens/createToken.ts#L22)
+[src/api/tokens/createToken.ts:22](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/tokens/createToken.ts#L22)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/api/messages/deleteMessages.ts:5](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/messages/deleteMessages.ts#L5)
+[src/api/messages/deleteMessages.ts:5](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/messages/deleteMessages.ts#L5)
 
 ___
 
@@ -170,7 +170,7 @@ A Promise that resolves to true if successful.
 
 #### Defined in
 
-[src/api/tokens/deleteToken.ts:15](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/tokens/deleteToken.ts#L15)
+[src/api/tokens/deleteToken.ts:15](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/tokens/deleteToken.ts#L15)
 
 ___
 
@@ -201,7 +201,7 @@ A promise that resolves with an object containing the HOPR and native addresses.
 
 #### Defined in
 
-[src/api/account/getAddresses.ts:18](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/account/getAddresses.ts#L18)
+[src/api/account/getAddresses.ts:18](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/account/getAddresses.ts#L18)
 
 ___
 
@@ -233,7 +233,7 @@ A promise that resolves to the peer ID associated with the alias.
 
 #### Defined in
 
-[src/api/aliases/getAlias.ts:18](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/aliases/getAlias.ts#L18)
+[src/api/aliases/getAlias.ts:18](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/aliases/getAlias.ts#L18)
 
 ___
 
@@ -264,7 +264,7 @@ An object with alias names as keys and the peerId associated with the alias.
 
 #### Defined in
 
-[src/api/aliases/getAliases.ts:18](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/aliases/getAliases.ts#L18)
+[src/api/aliases/getAliases.ts:18](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/aliases/getAliases.ts#L18)
 
 ___
 
@@ -295,7 +295,7 @@ A Promise that resolves with an object containing the HOPR and native balances.
 
 #### Defined in
 
-[src/api/account/getBalances.ts:18](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/account/getBalances.ts#L18)
+[src/api/account/getBalances.ts:18](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/account/getBalances.ts#L18)
 
 ___
 
@@ -319,7 +319,7 @@ ___
 
 #### Defined in
 
-[src/api/channels/getChannel.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/channels/getChannel.ts#L10)
+[src/api/channels/getChannel.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/channels/getChannel.ts#L10)
 
 ___
 
@@ -343,7 +343,7 @@ ___
 
 #### Defined in
 
-[src/api/channels/getChannelTickets.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/channels/getChannelTickets.ts#L10)
+[src/api/channels/getChannelTickets.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/channels/getChannelTickets.ts#L10)
 
 ___
 
@@ -368,7 +368,7 @@ ___
 
 #### Defined in
 
-[src/api/channels/getChannels.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/channels/getChannels.ts#L10)
+[src/api/channels/getChannels.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/channels/getChannels.ts#L10)
 
 ___
 
@@ -391,7 +391,7 @@ ___
 
 #### Defined in
 
-[src/api/node/getEntryNodes.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/node/getEntryNodes.ts#L10)
+[src/api/node/getEntryNodes.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/node/getEntryNodes.ts#L10)
 
 ___
 
@@ -422,7 +422,7 @@ A Promise that resolves to the HOPR address.
 
 #### Defined in
 
-[src/api/account/getHoprAddress.ts:12](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/account/getHoprAddress.ts#L12)
+[src/api/account/getHoprAddress.ts:12](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/account/getHoprAddress.ts#L12)
 
 ___
 
@@ -445,7 +445,7 @@ ___
 
 #### Defined in
 
-[src/api/node/getInfo.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/node/getInfo.ts#L10)
+[src/api/node/getInfo.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/node/getInfo.ts#L10)
 
 ___
 
@@ -469,7 +469,7 @@ ___
 
 #### Defined in
 
-[src/api/messages/getMessagesSize.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/messages/getMessagesSize.ts#L10)
+[src/api/messages/getMessagesSize.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/messages/getMessagesSize.ts#L10)
 
 ___
 
@@ -492,7 +492,7 @@ ___
 
 #### Defined in
 
-[src/api/node/getMetrics.ts:5](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/node/getMetrics.ts#L5)
+[src/api/node/getMetrics.ts:5](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/node/getMetrics.ts#L5)
 
 ___
 
@@ -523,7 +523,7 @@ A Promise that resolves to the native address.
 
 #### Defined in
 
-[src/api/account/getNativeAddress.ts:12](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/account/getNativeAddress.ts#L12)
+[src/api/account/getNativeAddress.ts:12](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/account/getNativeAddress.ts#L12)
 
 ___
 
@@ -554,7 +554,7 @@ A Promise that resolves with a string representing the native balance.
 
 #### Defined in
 
-[src/api/account/getNativeBalance.ts:12](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/account/getNativeBalance.ts#L12)
+[src/api/account/getNativeBalance.ts:12](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/account/getNativeBalance.ts#L12)
 
 ___
 
@@ -578,7 +578,7 @@ ___
 
 #### Defined in
 
-[src/api/peerInfo/getPeer.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/peerInfo/getPeer.ts#L10)
+[src/api/peerInfo/getPeer.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/peerInfo/getPeer.ts#L10)
 
 ___
 
@@ -602,7 +602,7 @@ ___
 
 #### Defined in
 
-[src/api/node/getPeers.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/node/getPeers.ts#L10)
+[src/api/node/getPeers.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/node/getPeers.ts#L10)
 
 ___
 
@@ -625,7 +625,7 @@ ___
 
 #### Defined in
 
-[src/api/settings/getSettings.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/settings/getSettings.ts#L10)
+[src/api/settings/getSettings.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/settings/getSettings.ts#L10)
 
 ___
 
@@ -648,7 +648,7 @@ ___
 
 #### Defined in
 
-[src/api/tickets/getStatistics.ts:9](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/tickets/getStatistics.ts#L9)
+[src/api/tickets/getStatistics.ts:9](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/tickets/getStatistics.ts#L9)
 
 ___
 
@@ -671,7 +671,7 @@ ___
 
 #### Defined in
 
-[src/api/tickets/getTickets.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/tickets/getTickets.ts#L10)
+[src/api/tickets/getTickets.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/tickets/getTickets.ts#L10)
 
 ___
 
@@ -702,7 +702,7 @@ A Promise that resolves to an object with the token info.
 
 #### Defined in
 
-[src/api/tokens/getToken.ts:18](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/tokens/getToken.ts#L18)
+[src/api/tokens/getToken.ts:18](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/tokens/getToken.ts#L18)
 
 ___
 
@@ -725,7 +725,7 @@ ___
 
 #### Defined in
 
-[src/api/node/getVersion.ts:5](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/node/getVersion.ts#L5)
+[src/api/node/getVersion.ts:5](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/node/getVersion.ts#L5)
 
 ___
 
@@ -760,7 +760,7 @@ A Promise that resolves with the response of the open channel operation.
 
 #### Defined in
 
-[src/api/channels/openChannel.ts:20](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/channels/openChannel.ts#L20)
+[src/api/channels/openChannel.ts:20](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/channels/openChannel.ts#L20)
 
 ___
 
@@ -784,7 +784,7 @@ ___
 
 #### Defined in
 
-[src/api/peers/pingPeer.ts:10](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/peers/pingPeer.ts#L10)
+[src/api/peers/pingPeer.ts:10](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/peers/pingPeer.ts#L10)
 
 ___
 
@@ -808,7 +808,7 @@ ___
 
 #### Defined in
 
-[src/api/messages/popAllMessages.ts:12](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/messages/popAllMessages.ts#L12)
+[src/api/messages/popAllMessages.ts:12](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/messages/popAllMessages.ts#L12)
 
 ___
 
@@ -832,7 +832,7 @@ ___
 
 #### Defined in
 
-[src/api/messages/popMessage.ts:11](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/messages/popMessage.ts#L11)
+[src/api/messages/popMessage.ts:11](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/messages/popMessage.ts#L11)
 
 ___
 
@@ -867,7 +867,7 @@ True if the operation is successful, false otherwise.
 
 #### Defined in
 
-[src/api/channels/redeemChannelTickets.ts:19](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/channels/redeemChannelTickets.ts#L19)
+[src/api/channels/redeemChannelTickets.ts:19](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/channels/redeemChannelTickets.ts#L19)
 
 ___
 
@@ -901,7 +901,7 @@ True if the operation is successful, false otherwise.
 
 #### Defined in
 
-[src/api/tickets/redeemTickets.ts:15](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/tickets/redeemTickets.ts#L15)
+[src/api/tickets/redeemTickets.ts:15](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/tickets/redeemTickets.ts#L15)
 
 ___
 
@@ -933,7 +933,7 @@ A Promise that resolves to true if the alias was successfully removed.
 
 #### Defined in
 
-[src/api/aliases/removeAlias.ts:14](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/aliases/removeAlias.ts#L14)
+[src/api/aliases/removeAlias.ts:14](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/aliases/removeAlias.ts#L14)
 
 ___
 
@@ -965,7 +965,7 @@ Send a message to another peer using a given path (list of node addresses that s
 
 #### Defined in
 
-[src/api/messages/sendMessage.ts:13](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/messages/sendMessage.ts#L13)
+[src/api/messages/sendMessage.ts:13](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/messages/sendMessage.ts#L13)
 
 ___
 
@@ -1000,7 +1000,7 @@ A Promise that resolves to true if alias successfully linked to peerId.
 
 #### Defined in
 
-[src/api/aliases/setAlias.ts:20](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/aliases/setAlias.ts#L20)
+[src/api/aliases/setAlias.ts:20](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/aliases/setAlias.ts#L20)
 
 ___
 
@@ -1025,7 +1025,7 @@ ___
 
 #### Defined in
 
-[src/api/settings/setSetting.ts:5](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/settings/setSetting.ts#L5)
+[src/api/settings/setSetting.ts:5](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/settings/setSetting.ts#L5)
 
 ___
 
@@ -1052,7 +1052,7 @@ A WebSocket instance.
 
 #### Defined in
 
-[src/api/messages/websocket.ts:13](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/messages/websocket.ts#L13)
+[src/api/messages/websocket.ts:13](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/messages/websocket.ts#L13)
 
 ___
 
@@ -1087,4 +1087,4 @@ A Promise that resolves to the transaction receipt.
 
 #### Defined in
 
-[src/api/account/withdraw.ts:17](https://github.com/hoprnet/hopr-sdk/blob/16280af/src/api/account/withdraw.ts#L17)
+[src/api/account/withdraw.ts:17](https://github.com/hoprnet/hopr-sdk/blob/46802f9/src/api/account/withdraw.ts#L17)
