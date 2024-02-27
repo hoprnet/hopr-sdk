@@ -23,11 +23,12 @@ export const sendMessage = async (
 
   // direct messages need an empty path
   if (!body.hops && !body.path) {
-      body.path = [];
+    body.path = [];
   }
 
-  const url = new URL("api/v3/messages",payload.apiEndpoint)
-  const rawResponse = await fetchWithTimeout(url,
+  const url = new URL('api/v3/messages', payload.apiEndpoint);
+  const rawResponse = await fetchWithTimeout(
+    url,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
