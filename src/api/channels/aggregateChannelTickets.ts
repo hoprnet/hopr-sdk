@@ -1,9 +1,8 @@
-import fetch from 'cross-fetch';
 import {
   APIErrorResponse,
   AggregateChannelTicketsPayloadType
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
 /**
@@ -18,7 +17,7 @@ export const aggregateChannelTickets = async (
   payload: AggregateChannelTicketsPayloadType
 ): Promise<boolean> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${apiEndpointParsed}api/v3/channels/${payload.channelId}/tickets/aggregate`,
     {
       method: 'POST',

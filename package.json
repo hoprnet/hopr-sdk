@@ -61,7 +61,6 @@
   },
   "packageManager": "yarn@1.22.19",
   "dependencies": {
-    "cross-fetch": "^3.1.5",
     "debug": "^4.3.4",
     "isomorphic-ws": "^5.0.0",
     "ws": "^8.13.0",

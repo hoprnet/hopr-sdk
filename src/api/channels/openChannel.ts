@@ -1,4 +1,3 @@
-import fetch from 'cross-fetch';
 import {
   OpenChannelResponse,
   OpenChannelResponseType,
@@ -6,7 +5,7 @@ import {
   RemoveBasicAuthenticationPayloadType,
   APIErrorResponse
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
 /**
@@ -26,11 +25,14 @@ export const openChannel = async (
   };
 
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetch(`${apiEndpointParsed}api/v3/channels`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiToken),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${apiEndpointParsed}api/v3/channels`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken),
+      body: JSON.stringify(body)
+    }
+  );
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
