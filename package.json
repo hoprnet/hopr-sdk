@@ -63,7 +63,7 @@
   "dependencies": {
     "debug": "^4.3.4",
     "isomorphic-ws": "^5.0.0",
-    "ws": "^8.13.0",
+    "ws": "^8.16.0",
     "zod": "^3.21.4"
   },
   "publishConfig": {
