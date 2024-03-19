@@ -36,7 +36,7 @@
     "lint": "tsc",
     "format": "prettier --check \"src/**/*.{ts,md}\"",
     "format:fix": "prettier --write \"src/**/*.{ts,md}\"",
-    "test": "jest /src",
+    "test": "jest --coverage",
     "test:e2e": "bash e2e/start.sh",
     "docs": "typedoc --plugin typedoc-plugin-markdown --plugin typedoc-plugin-zod --hideBreadcrumbs",
     "publish": "tsup & npm publish"
