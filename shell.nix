@@ -13,8 +13,8 @@ in
 with pkgs;
 mkShell {
   nativeBuildInputs = [
-    nodejs-16_x
-    (yarn.override { nodejs = nodejs-16_x; })
+    nodejs_20
+    (yarn.override { nodejs = nodejs_20; })
 
     # custom pkg groups
     linuxPkgs
