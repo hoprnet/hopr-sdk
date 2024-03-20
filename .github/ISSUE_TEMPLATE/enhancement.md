@@ -1,9 +1,9 @@
 ---
 name: Enhancement Template
 about: Create a enhancement request
-title: ""
-labels: "enhancement"
-assignees: ""
+title: ''
+labels: 'enhancement'
+assignees: ''
 ---
 
 <!--- Provide a general summary of the issue in the Title above -->
