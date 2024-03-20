@@ -35,7 +35,6 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-
       - name: Configure Git info
         run: ./.github/scripts/config-git-info.sh
 
