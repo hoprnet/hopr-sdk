@@ -15,6 +15,7 @@ export const fetchWithTimeout = (
       // AbortSignal not supported - only needed for nock
       return fallback(apiEndpoint, options, ms);
     }
+    throw err;
   });
 };
 
@@ -27,12 +28,12 @@ function fallback(
   const promise = fetch(apiEndpoint, {
     ...options,
     signal: controller.signal
-  }).catch((error) => {
-    if (error instanceof Error && error.name === 'AbortError') {
+  }).catch((err) => {
+    if (err instanceof Error && err.name === 'AbortError') {
       // Request was aborted due to the controller signal
       throw new Error('TIMEOUT');
     }
-    throw error;
+    throw err;
   });
   // abort promise if it has not been completed after ms
   const timeout = setTimeout(() => controller.abort(), ms);
