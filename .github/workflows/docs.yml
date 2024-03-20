@@ -31,9 +31,10 @@ jobs:
           node-version-file: '.nvmrc'
           cache: 'yarn'
           cache-dependency-path: ./yarn.lock
-          registry-url: 'https://registry.npmjs.org/'
 
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
 
       - name: Configure Git info
         run: ./.github/scripts/config-git-info.sh
