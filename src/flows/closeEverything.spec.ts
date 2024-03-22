@@ -68,7 +68,7 @@ describe('closeEverything', function () {
             receipt:
               '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
             channelStatus: 'Closed'
-          } as CloseChannelResponseType)
+          }) as CloseChannelResponseType
       );
     });
 
