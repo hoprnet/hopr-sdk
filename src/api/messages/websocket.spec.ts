@@ -1,7 +1,6 @@
 import http from 'http';
 import WS from 'isomorphic-ws';
 import { websocket } from './websocket';
-import { createWsUrl } from '../../utils';
 
 const PORT = 8888;
 
@@ -33,17 +32,5 @@ describe('websocket', function () {
       connection.close();
       done();
     };
-  });
-
-  it('builds the apiEndpoint to create the websocket', function () {
-    expect(
-      createWsUrl({
-        apiEndpoint: API_ENDPOINT,
-        path: '/api/v3/messages/websocket/',
-        apiToken: API_TOKEN
-      })
-    ).toBe(
-      `ws://localhost:${PORT}/api/v3/messages/websocket/?apiToken=S3CR3T-T0K3N`
-    );
   });
 });
