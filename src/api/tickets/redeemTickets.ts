@@ -1,6 +1,5 @@
-import fetch from 'cross-fetch';
 import { APIErrorResponse, type BasePayloadType } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
 /**
@@ -16,10 +15,13 @@ export const redeemTickets = async (
   payload: BasePayloadType
 ): Promise<boolean> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetch(`${apiEndpointParsed}api/v3/tickets/redeem`, {
-    method: 'POST',
-    headers: getHeaders(payload.apiToken)
-  });
+  const rawResponse = await fetchWithTimeout(
+    `${apiEndpointParsed}api/v3/tickets/redeem`,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken)
+    }
+  );
 
   // received expected response
   if (rawResponse.status === 204) {

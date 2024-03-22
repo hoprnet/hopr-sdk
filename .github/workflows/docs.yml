@@ -6,7 +6,7 @@ on:
   push:
     branches: [main]
     paths-ignore:
-      - "docs/**"
+      - 'docs/**'
 
 concurrency:
   # group runs by <name of the workflow>-<name of job>-<branch name>
@@ -28,12 +28,12 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
-          cache: "yarn"
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
           cache-dependency-path: ./yarn.lock
-          registry-url: "https://registry.npmjs.org/"
 
-      - run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
 
       - name: Configure Git info
         run: ./.github/scripts/config-git-info.sh
@@ -46,4 +46,4 @@ jobs:
         if: ${{ !env.ACT }}
         run: ./.github/scripts/commit-and-push-all-changes.sh
         env:
-          HOPR_GIT_MSG: "Re-generate API docs for packages"
+          HOPR_GIT_MSG: 'Re-generate API docs for packages'

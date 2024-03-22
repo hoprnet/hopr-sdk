@@ -1,6 +1,7 @@
 import WebSocket from 'isomorphic-ws';
-import { BasePayloadType } from '../../types';
-import { createWsUrl } from '../../utils';
+import { createWsUrlType, BasePayloadType } from '../../types';
+
+const WS_PATH = '/api/v3/messages/websocket/';
 
 /**
  * Creates a WebSocket instance with the specified IP and API token.
@@ -17,3 +18,11 @@ export const websocket = (payload: BasePayloadType): WebSocket => {
   });
   return new WebSocket(endpointUrl);
 };
+
+function createWsUrl(payload: createWsUrlType): string {
+  const path = payload.path ? payload.path : WS_PATH;
+  const url = new URL(path, payload.apiEndpoint);
+  url.protocol = url.protocol === 'https:' ? 'wss' : 'ws';
+  url.search = `?apiToken=${payload.apiToken}`;
+  return url.toString();
+}

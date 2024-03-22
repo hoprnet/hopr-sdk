@@ -1,11 +1,10 @@
-import fetch from 'cross-fetch';
 import {
   APIErrorResponse,
   RemoveBasicAuthenticationPayloadType,
   WithdrawPayloadType,
   WithdrawResponse
 } from '../../types';
-import { APIError, getHeaders } from '../../utils';
+import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
 /**
@@ -24,7 +23,7 @@ export const withdraw = async (
     ethereumAddress: payload.ethereumAddress
   };
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetch(
+  const rawResponse = await fetchWithTimeout(
     `${apiEndpointParsed}api/v3/account/withdraw`,
     {
       method: 'POST',

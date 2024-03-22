@@ -1,5 +1,3 @@
-import { Headers } from 'cross-fetch';
-
 /**
  * Generates the headers needed for making API requests.
  *

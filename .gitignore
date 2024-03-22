@@ -51,3 +51,8 @@ dist
 
 # e2e env file
 !/e2e/.env
+
+# generated docs
+docs/
+# generated package
+hoprnet-hopr-sdk-*.tgz

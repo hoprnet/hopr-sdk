@@ -1,23 +1,16 @@
-import fetch from 'cross-fetch';
-
 export const fetchWithTimeout = (
   apiEndpoint: URL | RequestInfo,
-  options: RequestInit | undefined,
+  options?: RequestInit,
   ms: number = 30000
 ) => {
-  const controller = new AbortController();
-  const promise = fetch(apiEndpoint, {
+  return fetch(apiEndpoint, {
     ...options,
-    signal: controller.signal
-  }).catch((error) => {
-    if (error instanceof Error && error.name === 'AbortError') {
+    signal: AbortSignal.timeout(ms)
+  }).catch((err) => {
+    if (err.name === 'TimeoutError') {
       // Request was aborted due to the controller signal
       throw new Error('TIMEOUT');
     }
-    throw error;
+    throw err;
   });
-  // abort promise if it has not been completed after ms
-  const timeout = setTimeout(() => controller.abort(), ms);
-
-  return promise.finally(() => clearTimeout(timeout));
 };
