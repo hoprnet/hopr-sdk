@@ -10,14 +10,12 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getPeers = async (
   payload: GetPeersPayloadType
 ): Promise<GetPeersResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/node/peers`, payload.apiEndpoint);
+  if (payload?.quality) {
+    url.searchParams.set('quality', payload.quality.toString());
+  }
   const rawResponse = await fetchWithTimeout(
-    payload?.quality
-      ? `${apiEndpointParsed}api/v3/node/peers?` +
-          new URLSearchParams({
-            quality: (payload.quality ?? 0).toString()
-          })
-      : `${apiEndpointParsed}api/v3/node/peers`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

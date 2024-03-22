@@ -18,9 +18,9 @@ import { ZodError } from 'zod';
 export const getToken = async (
   payload: BasePayloadType
 ): Promise<GetTokenResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/token`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/token`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

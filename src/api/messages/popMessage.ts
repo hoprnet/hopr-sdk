@@ -11,15 +11,13 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const popMessage = async (
   payload: PopMessagePayloadType
 ): Promise<PopMessageResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const urlWithApiPath = new URL('api/v3/messages/pop', apiEndpointParsed);
-  const fullUrl = urlWithApiPath.toString();
+  const url = new URL('api/v3/messages/pop', payload.apiEndpoint);
   const body: RemoveBasicAuthenticationPayloadType<PopMessagePayloadType> = {
     tag: payload.tag
   };
 
   const rawResponse = await fetchWithTimeout(
-    fullUrl,
+    url,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

@@ -10,9 +10,12 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const pingPeer = async (
   payload: PingPeerPayloadType
 ): Promise<PingPeerResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(
+    `api/v3/peers/${payload.peerId}/ping`,
+    payload.apiEndpoint
+  );
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/peers/${payload.peerId}/ping`,
+    url,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken)

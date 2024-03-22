@@ -14,14 +14,11 @@ import { ZodError } from 'zod';
 export const redeemTickets = async (
   payload: BasePayloadType
 ): Promise<boolean> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/tickets/redeem`,
-    {
-      method: 'POST',
-      headers: getHeaders(payload.apiToken)
-    }
-  );
+  const url = new URL(`api/v3/tickets/redeem`, payload.apiEndpoint);
+  const rawResponse = await fetchWithTimeout(url, {
+    method: 'POST',
+    headers: getHeaders(payload.apiToken)
+  });
 
   // received expected response
   if (rawResponse.status === 204) {

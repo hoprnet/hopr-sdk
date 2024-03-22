@@ -24,9 +24,9 @@ export const setAlias = async (
     alias: payload.alias,
     peerId: payload.peerId
   };
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/aliases`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/aliases`,
+    url,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

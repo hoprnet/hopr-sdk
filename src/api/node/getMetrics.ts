@@ -6,9 +6,9 @@ export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   const headersForMetrics = getHeaders(payload.apiToken);
   headersForMetrics.set('Accept-Content', 'text/plain');
 
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/node/metrics`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/node/metrics`,
+    url,
     {
       method: 'GET',
       headers: headersForMetrics

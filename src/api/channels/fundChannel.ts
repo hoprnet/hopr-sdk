@@ -18,9 +18,12 @@ export const fundChannel = async (
     amount: payload.amount
   };
 
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(
+    `api/v3/channels/${payload.channelId}/fund`,
+    payload.apiEndpoint
+  );
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/channels/${payload.channelId}/fund`,
+    url,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

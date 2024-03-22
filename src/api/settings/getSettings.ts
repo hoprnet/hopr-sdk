@@ -10,9 +10,9 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getSettings = async (
   payload: BasePayloadType
 ): Promise<GetSettingsResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/settings`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/settings`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

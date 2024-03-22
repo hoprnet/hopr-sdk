@@ -18,9 +18,9 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getBalances = async (
   payload: BasePayloadType
 ): Promise<GetBalancesResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v3/account/balances`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/account/balances`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

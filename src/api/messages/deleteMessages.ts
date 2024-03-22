@@ -5,19 +5,12 @@ import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 export const deleteMessages = async (
   payload: DeleteMessagesPayloadType
 ): Promise<boolean> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
-  const urlWithApiPath = new URL('api/v3/messages', apiEndpointParsed);
-  const params = new URLSearchParams();
-  // add tag to search params
-  params.append('tag', payload.tag.toString());
-
-  // join base url with search params
-  urlWithApiPath.search = params.toString();
-
-  const fullUrl = urlWithApiPath.toString();
-
+  const url = new URL('api/v3/messages', payload.apiEndpoint);
+  if (payload.tag) {
+    url.searchParams.set('tag', payload.tag.toString());
+  }
   const rawResponse = await fetchWithTimeout(
-    fullUrl,
+    url,
     {
       method: 'DELETE',
       headers: getHeaders(payload.apiToken)
