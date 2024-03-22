@@ -18,7 +18,7 @@ describe('setAlias function', () => {
       .post('/api/v3/aliases', {
         peerId: PEER_ID,
         alias: ALIAS
-      } as SetAliasPayloadType)
+      })
       .reply(201);
 
     const result = await setAlias({

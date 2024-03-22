@@ -7,7 +7,7 @@
 export const getHeaders = (apiToken: string): Headers => {
   const headers = new Headers();
   headers.set('Content-Type', 'application/json');
-  headers.set('Accept-Content', 'application/json');
+  headers.set('Accept', 'application/json');
   headers.set('x-auth-token', apiToken);
   return headers;
 };

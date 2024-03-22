@@ -21,9 +21,14 @@ export const sendMessage = async (
     hops: payload.hops
   };
 
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  // direct messages need an empty path
+  if (!body.hops && !body.path) {
+    body.path = [];
+  }
+
+  const url = new URL('api/v3/messages', payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/messages`,
+    url,
     {
       method: 'POST',
       headers: getHeaders(payload.apiToken),

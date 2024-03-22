@@ -7,7 +7,7 @@ export const BasePayload = z.object({
   /**
    * The API endpoint for authentication.
    */
-  apiEndpoint: z.string(),
+  apiEndpoint: z.string().url().or(z.custom<URL>()),
 
   /**
    * The API token for authentication.
@@ -17,7 +17,7 @@ export const BasePayload = z.object({
   /**
    * optional timeout for the requests
    */
-  timeout: z.number().optional()
+  timeout: z.number().nonnegative().optional()
 });
 
 /**
