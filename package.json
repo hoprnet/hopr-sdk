@@ -42,7 +42,6 @@
     "publish": "tsup & npm publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
     "@types/debug": "^4.1.12",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.30",
