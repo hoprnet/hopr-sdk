@@ -1,6 +1,6 @@
 import { closeChannel } from '../api/channels';
 import { BasePayloadType } from '../types/general';
-import { getStatistics, redeemTickets } from '../api/tickets';
+import { getTicketStatistics, redeemTickets } from '../api/tickets';
 import { getOutgoingChannels } from './getOutgoingChannels';
 
 /**
@@ -30,15 +30,15 @@ export const closeEverything = async (payload: BasePayloadType) => {
     }
   }
 
-  const statistics = await getStatistics({
+  const statistics = await getTicketStatistics({
     apiEndpoint: payload.apiEndpoint,
     apiToken: payload.apiToken,
     timeout: payload.timeout
   });
   let ticketsHaveBeenRedeemed = false;
 
-  // check if we have pending tickets
-  if (statistics?.pending) {
+  // check if we have unredeemed tickets
+  if (statistics?.unredeemed) {
     // redeem tickets
     ticketsHaveBeenRedeemed =
       (await redeemTickets({

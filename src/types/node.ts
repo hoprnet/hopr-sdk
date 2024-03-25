@@ -14,17 +14,19 @@ export type GetPeersPayloadType = z.infer<typeof GetPeersPayload>;
 export const Peer = z.object({
   peerId: z.string(),
   peerAddress: z.string(),
-  multiAddr: z.string(),
+  multiaddr: z.string().nullable(),
   heartbeats: z.object({
     sent: z.number(),
     success: z.number()
   }),
   lastSeen: z.number(),
+  lastSeenLatency: z.number(),
   quality: z.number(),
   backoff: z.number(),
   isNew: z.boolean(),
   reportedVersion: z.string()
 });
+
 export const GetPeersResponse = z.object({
   connected: z.array(Peer),
   announced: z.array(Peer)
@@ -43,11 +45,11 @@ export const GetInfoResponse = z.object({
   chain: z.string(),
   hoprToken: z.string(),
   hoprChannels: z.string(),
-  hoprNetworkRegistryAddress: z.string().optional(),
-  hoprNodeSafeRegistryAddress: z.string().optional(),
-  nodeManagementModule: z.string(),
-  nodeSafe: z.string(),
-  connectivityStatus: z.string(),
+  hoprNetworkRegistry: z.string().optional(),
+  hoprNodeSafeRegistry: z.string().optional(),
+  hoprManagementModule: z.string(),
+  hoprNodeSafe: z.string(),
+  connectivityStatus: z.enum(['Unknown', 'Red', 'Orange', 'Yellow', 'Green']),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()
 });

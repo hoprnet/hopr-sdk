@@ -4,11 +4,15 @@ import {
   PopAllMessagesPayloadType,
   PopAllMessagesResponse,
   PopAllMessagesResponseType,
-  PopMessageResponse,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
+/**
+ * Get the list of messages currently present in the nodes message inbox.
+ * The messages are removed from the inbox.
+ * @returns - A promise that resolves to the list of messages currently present in the nodes message inbox.
+ */
 export const popAllMessages = async (
   payload: PopAllMessagesPayloadType
 ): Promise<PopAllMessagesResponseType> => {

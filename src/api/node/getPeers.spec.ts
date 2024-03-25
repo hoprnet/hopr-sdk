@@ -16,13 +16,14 @@ describe('test getPeers', function () {
         {
           peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
           peerAddress: '0x0987654321098765432109876543210987654321',
-          multiAddr:
+          multiaddr:
             '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
           heartbeats: {
             sent: 10,
             success: 8
           },
           lastSeen: 1646410980793,
+          lastSeenLatency: 17,
           quality: 0.8,
           backoff: 0,
           isNew: true,
@@ -33,13 +34,14 @@ describe('test getPeers', function () {
         {
           peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
           peerAddress: '0x0987654321098765432109876543210987654321',
-          multiAddr:
+          multiaddr:
             '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
           heartbeats: {
             sent: 10,
             success: 8
           },
           lastSeen: 1646410980793,
+          lastSeenLatency: 16,
           quality: 0.8,
           backoff: 0,
           isNew: true,

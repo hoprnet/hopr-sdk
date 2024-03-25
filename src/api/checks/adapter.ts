@@ -1,10 +1,12 @@
 import {
-  PingPeerPayloadType,
-  GetPeerPayloadType,
+  IsNodeHealthyPayloadType,
+  IsNodeReadyPayloadType,
+  IsNodeStartedPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { pingPeer } from './pingPeer';
-import { getPeer } from './getPeer';
+import { isNodeHealthy } from './isNodeHealthy';
+import { isNodeReady } from './isNodeReady';
+import { isNodeStarted } from './isNodeStarted';
 
 export class PeersAdapter {
   private apiEndpoint: string;
@@ -31,25 +33,33 @@ export class PeersAdapter {
     this.timeout = timeout;
   }
 
-  public async pingPeer(
-    payload: RemoveBasicAuthenticationPayloadType<PingPeerPayloadType>
+  public async isNodeHealthy(
+    payload: RemoveBasicAuthenticationPayloadType<IsNodeHealthyPayloadType>
   ) {
-    return pingPeer({
+    return isNodeHealthy({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout,
-      peerId: payload.peerId
+      timeout: payload.timeout ?? this.timeout
     });
   }
 
-  public async getPeer(
-    payload: RemoveBasicAuthenticationPayloadType<GetPeerPayloadType>
+  public async isNodeReady(
+    payload: RemoveBasicAuthenticationPayloadType<IsNodeReadyPayloadType>
   ) {
-    return getPeer({
+    return isNodeReady({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout,
-      peerId: payload.peerId
+      timeout: payload.timeout ?? this.timeout
+    });
+  }
+
+  public async isNodeStarted(
+    payload: RemoveBasicAuthenticationPayloadType<IsNodeStartedPayloadType>
+  ) {
+    return isNodeStarted({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
     });
   }
 }

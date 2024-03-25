@@ -1,20 +1,20 @@
 import { ZodError } from 'zod';
 import {
   APIErrorResponse,
-  BasePayloadType,
-  GetSettingsResponse,
-  GetSettingsResponseType
+  GetNetworkPricePayloadType,
+  GetNetworkPriceResponse,
+  GetNetworkPriceResponseType
 } from '../../types';
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getSettings = async (
-  payload: BasePayloadType
-): Promise<GetSettingsResponseType> => {
-  const url = new URL(`api/v3/settings`, payload.apiEndpoint);
+export const getNetworkPrice = async (
+  payload: GetNetworkPricePayloadType
+): Promise<GetNetworkPriceResponseType> => {
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    url,
+    `${apiEndpointParsed}api/v3/network/price`,
     {
-      method: 'GET',
+      method: 'POST',
       headers: getHeaders(payload.apiToken)
     },
     payload.timeout
@@ -26,7 +26,7 @@ export const getSettings = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetSettingsResponse.safeParse(jsonResponse);
+  const parsedRes = GetNetworkPriceResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
