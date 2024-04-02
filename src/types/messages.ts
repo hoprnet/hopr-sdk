@@ -28,7 +28,7 @@ export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;
 /** Delete Messages */
 
 export const DeleteMessagesPayload = BasePayload.extend({
-  tag: z.number().nonnegative().optional(),
+  tag: z.number().nonnegative().optional()
 });
 
 export type DeleteMessagesPayloadType = z.infer<typeof DeleteMessagesPayload>;
@@ -90,7 +90,7 @@ export type PeekMessageResponseType = z.infer<typeof PeekMessageResponse>;
 /** Peek all messages */
 
 export const PeekAllMessagesPayload = BasePayload.extend({
-  tag: z.number().nonnegative().optional().nullable(),
+  tag: z.number().nonnegative().optional().nullable()
 });
 
 export type PeekAllMessagesPayloadType = z.infer<typeof PeekAllMessagesPayload>;
