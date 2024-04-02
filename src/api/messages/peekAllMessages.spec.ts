@@ -22,7 +22,8 @@ describe('test peekAllMessages', () => {
         messages: [
           {
             tag: 12,
-            body: 'This is a HOPR message.'
+            body: 'This is a HOPR message.',
+            receivedAt: 0
           }
         ]
       } as PeekAllMessagesResponseType);
@@ -43,7 +44,8 @@ describe('test peekAllMessages', () => {
         messages: [
           {
             tag: 12,
-            body: 'This is a HOPR message.'
+            body: 'This is a HOPR message.',
+            receivedAt: 0
           }
         ]
       } as PeekAllMessagesResponseType);
