@@ -17,7 +17,9 @@ export const GetTicketStatisticsResponse = z.object({
   rejectedValue: z.string()
 });
 
-export type GetTicketStatisticsResponseType = z.infer<typeof GetTicketStatisticsResponse>;
+export type GetTicketStatisticsResponseType = z.infer<
+  typeof GetTicketStatisticsResponse
+>;
 
 /**
  * Get tickets
