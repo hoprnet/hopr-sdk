@@ -8,7 +8,7 @@ import { isNodeHealthy } from './isNodeHealthy';
 import { isNodeReady } from './isNodeReady';
 import { isNodeStarted } from './isNodeStarted';
 
-export class PeersAdapter {
+export class ChecksAdapter {
   private apiEndpoint: string;
   private apiToken: string;
   private timeout: number | undefined;
