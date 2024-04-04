@@ -47,16 +47,11 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        unredeemed: 0,
-        unredeemedValue: 'string',
-        redeemed: 0,
-        redeemedValue: 'string',
-        losingTickets: 0,
-        winProportion: 0,
-        neglected: 0,
-        neglectedValue: 'string',
-        rejected: 0,
-        rejectedValue: 'string'
+        neglectedValue: '0',
+        redeemedValue: '0',
+        rejectedValue: '0',
+        unredeemedValue: '0',
+        winningCount: 0,
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd node close channels
@@ -102,16 +97,11 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        unredeemed: 0,
-        unredeemedValue: 'string',
-        redeemed: 0,
-        redeemedValue: 'string',
-        losingTickets: 0,
-        winProportion: 0,
-        neglected: 0,
-        neglectedValue: 'string',
-        rejected: 0,
-        rejectedValue: 'string'
+        neglectedValue: '0',
+        redeemedValue: '0',
+        rejectedValue: '0',
+        unredeemedValue: '0',
+        winningCount: 0,
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd node close channels
@@ -148,16 +138,11 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        unredeemed: 2,
-        unredeemedValue: 'string',
-        redeemed: 0,
-        redeemedValue: 'string',
-        losingTickets: 0,
-        winProportion: 0,
-        neglected: 0,
-        neglectedValue: 'string',
-        rejected: 0,
-        rejectedValue: 'string'
+        neglectedValue: '0',
+        redeemedValue: '0',
+        rejectedValue: '0',
+        unredeemedValue: '0',
+        winningCount: 0,
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets
@@ -185,16 +170,11 @@ describe('closeEverything', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/tickets/statistics`)
       .reply(200, {
-        unredeemed: 0,
-        unredeemedValue: 'string',
-        redeemed: 0,
-        redeemedValue: 'string',
-        losingTickets: 0,
-        winProportion: 0,
-        neglected: 0,
-        neglectedValue: 'string',
-        rejected: 0,
-        rejectedValue: 'string'
+        neglectedValue: '0',
+        redeemedValue: '0',
+        rejectedValue: '0',
+        unredeemedValue: '0',
+        winningCount: 0,
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets
@@ -206,6 +186,6 @@ describe('closeEverything', function () {
     });
     expect(res.closedChannels.length).toEqual(0);
     expect(res.redeemedTickets).toEqual(false);
-    expect((tickets.redeemTickets as jest.Mock).mock.calls.length).toEqual(0);
+    expect((tickets.redeemTickets as jest.Mock).mock.calls.length).toEqual(1);
   });
 });

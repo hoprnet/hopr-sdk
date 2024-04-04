@@ -11,16 +11,11 @@ describe('test getTicketStatistics', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(200, {
-      unredeemed: 0,
-      unredeemedValue: 'string',
-      redeemed: 1,
-      redeemedValue: 'string',
-      losingTickets: 0,
-      winProportion: 0,
-      neglected: 0,
       neglectedValue: 'string',
-      rejected: 0,
-      rejectedValue: 'string'
+      redeemedValue: 'string',
+      rejectedValue: 'string',
+      unredeemedValue: 'string',
+      winningCount: 0,
     });
 
     const response = await getTicketStatistics({
@@ -28,7 +23,7 @@ describe('test getTicketStatistics', function () {
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.redeemed).toEqual(1);
+    expect(response.winningCount).toEqual(0);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(400, {

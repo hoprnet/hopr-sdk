@@ -38,7 +38,7 @@ export const closeEverything = async (payload: BasePayloadType) => {
   let ticketsHaveBeenRedeemed = false;
 
   // check if we have unredeemed tickets
-  if (statistics?.unredeemed) {
+  if (statistics?.unredeemedValue) {
     // redeem tickets
     ticketsHaveBeenRedeemed =
       (await redeemTickets({
