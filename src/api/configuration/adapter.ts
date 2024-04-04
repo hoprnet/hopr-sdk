@@ -1,12 +1,13 @@
 import {
   GetConfigurationPayloadType,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { getConfiguration } from './getConfiguration';
 
 const log = createLogger('configuration');
 
-export class MessagesAdapter {
+export class ConfigurationAdapter {
   private apiEndpoint: string;
   private apiToken: string;
   private timeout: number | undefined;
@@ -32,7 +33,7 @@ export class MessagesAdapter {
   }
 
   public async getConfiguration(
-
+    payload: RemoveBasicAuthenticationPayloadType<GetConfigurationPayloadType>
   ) {
     return getConfiguration({
       apiToken: this.apiToken,
