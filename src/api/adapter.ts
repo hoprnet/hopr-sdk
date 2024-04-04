@@ -12,6 +12,7 @@ export class ApiAdapter {
   public account: AccountAdapter;
   public aliases: AliasesAdapter;
   public channels: ChannelsAdapter;
+  public configuration: ConfigurationAdapter;
   public node: NodeAdapter;
   public tickets: TicketsAdapter;
   public tokens: TokensAdapter;
@@ -30,6 +31,7 @@ export class ApiAdapter {
     this.account = new AccountAdapter({ apiEndpoint, apiToken, timeout });
     this.aliases = new AliasesAdapter({ apiEndpoint, apiToken, timeout });
     this.channels = new ChannelsAdapter({ apiEndpoint, apiToken, timeout });
+    this.configuration = new ConfigurationAdapter({ apiEndpoint, apiToken, timeout });
     this.node = new NodeAdapter({ apiEndpoint, apiToken, timeout });
     this.tickets = new TicketsAdapter({ apiEndpoint, apiToken, timeout });
     this.tokens = new TokensAdapter({ apiEndpoint, apiToken, timeout });
