@@ -15,7 +15,7 @@ describe('test getTicketStatistics', function () {
       redeemedValue: 'string',
       rejectedValue: 'string',
       unredeemedValue: 'string',
-      winningCount: 0,
+      winningCount: 0
     });
 
     const response = await getTicketStatistics({
