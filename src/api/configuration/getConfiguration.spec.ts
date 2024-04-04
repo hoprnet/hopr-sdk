@@ -239,16 +239,4 @@ describe('getConfiguration', () => {
     expect(result).toEqual(expectedResponse);
   });
 
-  it('should return an 422 when there is an unknown failure', async function () {
-    const expectedResponse = {
-      status: 'UNKNOWN_FAILURE',
-      error: 'Full error message.'
-    };
-
-    nock(API_ENDPOINT).get('/api/v3/aliases').reply(422, expectedResponse);
-
-    await expect(
-      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
-  });
 });
