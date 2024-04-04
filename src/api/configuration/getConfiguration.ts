@@ -36,8 +36,11 @@ export const getConfiguration = async (
   const tesxtResponse = await rawResponse.text();
   const jsonResponse = JSON.parse(tesxtResponse);
 
-  let parsedStrategies: {[key: string]: {[key: string]: string | number | boolean}} = {
-  };
+  let parsedStrategies: {
+    [key: string]: {
+        [key: string]: string | number | boolean;
+    };
+  } = {};
 
   /*
     Exapmple of jsonResponse.hoprd.strategies:
@@ -68,17 +71,12 @@ export const getConfiguration = async (
   jsonResponse.hopr.strategy.strategies.forEach((strategyObj: {[key: string]: {[key: string]: string | number | boolean}}) => {
     try{
       const strategyName = Object.keys(strategyObj)[0];
-
       if(typeof(strategyName) !== 'string') return;
-      if(!!strategyObj[strategyName]) return;
-
-
-      parsedStrategies[strategyName] = strategyObj[strategyName];
-
+      let tmp = strategyObj[strategyName];
+      if(!tmp) return;
+      parsedStrategies[strategyName] = tmp;
     } catch (e) {}
   })
-
-  console.log('parsedStrategies', parsedStrategies);
 
   jsonResponse.hopr.strategy.strategies = parsedStrategies;
 
