@@ -51,7 +51,7 @@ describe('closeEverything', function () {
         redeemedValue: '0',
         rejectedValue: '0',
         unredeemedValue: '0',
-        winningCount: 0,
+        winningCount: 0
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd node close channels
@@ -101,7 +101,7 @@ describe('closeEverything', function () {
         redeemedValue: '0',
         rejectedValue: '0',
         unredeemedValue: '0',
-        winningCount: 0,
+        winningCount: 0
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd node close channels
@@ -142,7 +142,7 @@ describe('closeEverything', function () {
         redeemedValue: '0',
         rejectedValue: '0',
         unredeemedValue: '0',
-        winningCount: 0,
+        winningCount: 0
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets
@@ -174,7 +174,7 @@ describe('closeEverything', function () {
         redeemedValue: '0',
         rejectedValue: '0',
         unredeemedValue: '0',
-        winningCount: 0,
+        winningCount: 0
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets

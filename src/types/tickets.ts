@@ -9,7 +9,7 @@ export const GetTicketStatisticsResponse = z.object({
   redeemedValue: z.string(),
   rejectedValue: z.string(),
   unredeemedValue: z.string(),
-  winningCount: z.number(),
+  winningCount: z.number()
 });
 
 export type GetTicketStatisticsResponseType = z.infer<
