@@ -1,6 +1,7 @@
 import { AccountAdapter } from './account/adapter';
 import { AliasesAdapter } from './aliases/adapter';
 import { ChannelsAdapter } from './channels/adapter';
+import { ConfigurationAdapter } from './configuration/adapter';
 import { NodeAdapter } from './node/adapter';
 import { TicketsAdapter } from './tickets/adapter';
 import { TokensAdapter } from './tokens/adapter';
