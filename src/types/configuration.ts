@@ -60,7 +60,8 @@ export const GetConfigurationResponse = z.object({
     hopr: z.object({
         host: z.object({
           address: z.object({
-            IPv4: z.string(),
+            IPv4: z.string().nullable().optional(),
+            Domain: z.string().nullable().optional(),
           }),
           port: z.number(),
         }),
@@ -112,7 +113,7 @@ export const GetConfigurationResponse = z.object({
         chain: z.object({
           announce: z.boolean(),
           network: z.string(),
-          provider: z.string(),
+          provider: z.string().nullable(),
           protocols: z.object({
             networks: NetworkStore,
             chains: ChainStore
