@@ -80,11 +80,14 @@ export const getConfiguration = async (
 
   jsonResponse.hopr.strategy.strategies = parsedStrategies;
 
+  console.log('jsonResponse', jsonResponse);
+
   const parsedRes = GetConfigurationResponse.safeParse(jsonResponse);
 
-  // we could not parse the response
-  if (!parsedRes.success) {
-    throw new ZodError(parsedRes.error.issues);
+  console.log('parsedRes', parsedRes);
+  // received expected response
+  if (parsedRes.success) {
+    return parsedRes.data;
   }
 
   // check if response has the structure of an expected api error
@@ -94,6 +97,8 @@ export const getConfiguration = async (
     throw new APIError(isApiErrorResponse.data);
   }
 
-  // parsed expected response
-  return jsonResponse;
+  console.log('isApiErrorResponse', isApiErrorResponse);
+
+  // we could not parse the response and it is not unexpected
+  throw new ZodError(parsedRes.error.issues);
 };
