@@ -17,7 +17,7 @@ export const isNodeReady = async (
 ): Promise<IsNodeHealthyResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/readyz`,
+    `${apiEndpointParsed}readyz`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

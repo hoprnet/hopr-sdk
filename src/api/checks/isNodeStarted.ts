@@ -17,7 +17,7 @@ export const isNodeStarted = async (
 ): Promise<IsNodeHealthyResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/startedz`,
+    `${apiEndpointParsed}startedz`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

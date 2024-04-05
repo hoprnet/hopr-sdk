@@ -10,7 +10,7 @@ describe('test pingPeer', function () {
     nock.cleanAll();
   });
   it('handles successful response (node healthy)', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/readyz`).reply(200);
+    nock(API_ENDPOINT).get(`/readyz`).reply(200);
 
     const response = await isNodeReady({
       apiToken: API_TOKEN,
@@ -20,7 +20,7 @@ describe('test pingPeer', function () {
     expect(response).toEqual(true);
   });
   it('handles successful response (node not healthy)', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/readyz`).reply(412);
+    nock(API_ENDPOINT).get(`/readyz`).reply(412);
 
     const response = await isNodeReady({
       apiToken: API_TOKEN,
