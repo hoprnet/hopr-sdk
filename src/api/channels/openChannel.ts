@@ -25,11 +25,15 @@ export const openChannel = async (
   };
 
   const url = new URL(`api/v3/channels`, payload.apiEndpoint);
-  const rawResponse = await fetchWithTimeout(url, {
-    method: 'POST',
-    headers: getHeaders(payload.apiToken),
-    body: JSON.stringify(body)
-  });
+  const rawResponse = await fetchWithTimeout(
+    url,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken),
+      body: JSON.stringify(body)
+    },
+    payload.timeout
+  );
 
   // received unexpected error from server
   if (rawResponse.status > 499) {

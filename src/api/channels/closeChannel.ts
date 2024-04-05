@@ -22,10 +22,13 @@ export const closeChannel = async (
     `api/v3/channels/${payload.channelId}`,
     payload.apiEndpoint
   );
-  const rawResponse = await fetchWithTimeout(url, {
-    method: 'DELETE',
-    headers: getHeaders(payload.apiToken)
-  });
+  const rawResponse = await fetchWithTimeout(
+    url, {
+      method: 'DELETE',
+      headers: getHeaders(payload.apiToken)
+    },
+    payload.timeout
+  );
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
