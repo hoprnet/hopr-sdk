@@ -23,7 +23,8 @@ export const closeChannel = async (
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(
-    url, {
+    url,
+    {
       method: 'DELETE',
       headers: getHeaders(payload.apiToken)
     },
