@@ -15,10 +15,14 @@ export const redeemTickets = async (
   payload: BasePayloadType
 ): Promise<boolean> => {
   const url = new URL(`api/v3/tickets/redeem`, payload.apiEndpoint);
-  const rawResponse = await fetchWithTimeout(url, {
-    method: 'POST',
-    headers: getHeaders(payload.apiToken)
-  });
+  const rawResponse = await fetchWithTimeout(
+    url,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken),
+    },
+    payload.timeout
+  );
 
   // received expected response
   if (rawResponse.status === 204) {

@@ -22,10 +22,14 @@ export const redeemChannelTickets = async (
     `api/v3/channels/${payload.channelId}/tickets/redeem`,
     payload.apiEndpoint
   );
-  const rawResponse = await fetchWithTimeout(url, {
-    method: 'POST',
-    headers: getHeaders(payload.apiToken)
-  });
+  const rawResponse = await fetchWithTimeout(
+    url,
+    {
+      method: 'POST',
+      headers: getHeaders(payload.apiToken),
+    },
+    payload.timeout
+  );
 
   // received expected response
   if (rawResponse.status === 204) {
