@@ -32,12 +32,16 @@ export const fundChannel = async (
     payload.timeout
   );
 
-  // received unexpected error from server
-  if (rawResponse.status >= 300) {
-    throw new Error(rawResponse.statusText);
-  }
+  let jsonResponse: any;
 
-  const jsonResponse = await rawResponse.json();
+  try {
+    jsonResponse = await rawResponse.json();
+  } catch (e) {
+    throw new APIError({
+      status: rawResponse.statusText,
+      error: `HTTP Status ${rawResponse.status}`,
+    });
+  }
   const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
 
   // received expected response

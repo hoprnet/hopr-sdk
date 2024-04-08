@@ -95,4 +95,17 @@ describe('test closeChannel', function () {
       })
     ).rejects.toThrow(APIError);
   });
+  it('throws a custom error when hoprd api response is an 422 error without body', async function () {
+    nock(API_ENDPOINT)
+      .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
+      .reply(422);
+
+    await expect(
+      closeChannel({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        channelId: BUDDY_CHANNEL_ID
+      })
+    ).rejects.toThrow(APIError);
+  });
 });

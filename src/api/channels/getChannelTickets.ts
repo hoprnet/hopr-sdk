@@ -24,7 +24,7 @@ export const getChannelTickets = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status >= 300) {
+  if (rawResponse.status >= 499) {
     throw new Error(rawResponse.statusText);
   }
 
