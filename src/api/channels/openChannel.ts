@@ -35,12 +35,18 @@ export const openChannel = async (
     payload.timeout
   );
 
-  // received unexpected error from server
-  if (rawResponse.status >= 300) {
-    throw new Error(rawResponse.statusText);
+
+  let jsonResponse: any;
+
+  try {
+    jsonResponse = await rawResponse.json();
+  } catch (e) {
+    throw new APIError({
+      status: `${rawResponse.status}`,
+      error: rawResponse.statusText
+    });
   }
 
-  const jsonResponse = await rawResponse.json();
   const parsedRes = OpenChannelResponse.safeParse(jsonResponse);
 
   // received expected response
