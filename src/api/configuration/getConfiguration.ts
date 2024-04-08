@@ -8,11 +8,12 @@ import {
 import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
- * Get all aliases you set previously and their corresponding peer IDs.
+ * Get the configuration of your node.
+ * Configuration is not type safe
  *
  * @param apiEndpoint - The API endpoint
  * @param apiToken - The API token to use for authentication.
- * @returns An object with alias names as keys and the peerId associated with the alias.
+ * @returns An object with configuration of your node.
  * @throws An error that occurred while processing the request.
  */
 export const getConfiguration = async (
@@ -34,7 +35,15 @@ export const getConfiguration = async (
   }
 
   const tesxtResponse = await rawResponse.text();
-  const jsonResponse = JSON.parse(tesxtResponse);
+
+  let jsonResponse;
+  try {
+   jsonResponse = JSON.parse(tesxtResponse);
+  } catch (e) {
+    throw new APIError({
+      status: 'Error parsing configuration into JSON'
+    });
+  }
 
   let parsedStrategies: {
     [key: string]: {
@@ -66,8 +75,6 @@ export const getConfiguration = async (
     ]
   */
 
-  console.log(jsonResponse.hopr.strategy);
-
   jsonResponse.hopr.strategy.strategies.forEach((strategyObj: {[key: string]: {[key: string]: string | number | boolean}}) => {
     try{
       const strategyName = Object.keys(strategyObj)[0];
@@ -80,25 +87,6 @@ export const getConfiguration = async (
 
   jsonResponse.hopr.strategy.strategies = parsedStrategies;
 
-  console.log('jsonResponse', jsonResponse);
+  return jsonResponse;
 
-  const parsedRes = GetConfigurationResponse.safeParse(jsonResponse);
-
-  console.log('parsedRes', parsedRes);
-  // received expected response
-  if (parsedRes.success) {
-    return parsedRes.data;
-  }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
-  }
-
-  console.log('isApiErrorResponse', isApiErrorResponse);
-
-  // we could not parse the response and it is not unexpected
-  throw new ZodError(parsedRes.error.issues);
 };

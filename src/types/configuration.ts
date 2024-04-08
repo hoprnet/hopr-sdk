@@ -56,6 +56,11 @@ const Strategy = z.record(z.string(), z.string().or(z.number()).or(z.boolean()))
 const StrategiesPayload = z.record(z.string(), Strategy);
 export type StrategiesPayloadType = z.infer<typeof StrategiesPayload>;
 
+
+export const GetConfigurationResponse = z.any();
+
+/*  Currently the full type of the response is unknown
+
 export const GetConfigurationResponse = z.object({
     hopr: z.object({
         host: z.object({
@@ -149,6 +154,9 @@ export const GetConfigurationResponse = z.object({
       })
     }),
   });
+
+
+*/
 
 export type GetConfigurationResponseType = z.infer<typeof GetConfigurationResponse>;
 
