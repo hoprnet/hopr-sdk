@@ -30,7 +30,11 @@ export const getToken = async (
 
   if (rawResponse.status === 404) {
     // 404 The specified resource was not found
-    throw new APIError({ status: 'RESOURCE WAS NOT FOUND' });
+    throw new APIError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText,
+      error: 'Resource was not found'
+    });
   }
 
   // received unexpected error from server

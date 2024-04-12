@@ -5,9 +5,14 @@ import { APIErrorResponseType } from '../types';
  */
 export class APIError extends Error {
   /**
+   * The status code associated with the error
+   */
+  status: number;
+
+  /**
    * The status message associated with the error.
    */
-  status: string;
+  statusText: string;
 
   /**
    * The error message.
@@ -22,6 +27,7 @@ export class APIError extends Error {
     super(customError.error);
     this.name = 'APIError';
     this.status = customError.status;
+    this.statusText = customError.statusText;
     this.error = customError.error;
   }
 }

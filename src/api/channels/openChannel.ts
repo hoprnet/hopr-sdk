@@ -41,7 +41,8 @@ export const openChannel = async (
     jsonResponse = await rawResponse.json();
   } catch (e) {
     throw new APIError({
-      status: rawResponse.statusText,
+      status: rawResponse.status,
+      statusText: rawResponse.statusText,
       error: `HTTP Status ${rawResponse.status}`
     });
   }

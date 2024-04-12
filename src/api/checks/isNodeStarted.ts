@@ -45,5 +45,6 @@ export const isNodeStarted = async (
     throw new APIError(isApiErrorResponse.data);
   }
 
-  throw new APIError({ status: 'Unexpected error' });
+  // we could not parse the error and it is not unexpected
+  throw new ZodError(isApiErrorResponse.error.issues);
 };
