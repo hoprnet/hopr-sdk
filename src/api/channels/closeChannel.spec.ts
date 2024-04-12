@@ -36,7 +36,8 @@ describe('test closeChannel', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(400, {
-        status: 'INVALID_CHANNELID'
+        status: 400,
+        statusText: 'INVALID_CHANNELID'
       });
 
     await expect(
@@ -51,7 +52,8 @@ describe('test closeChannel', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(401, {
-        status: 'string',
+        status: 401,
+        statusText: 'string',
         error: 'string'
       });
 
@@ -67,7 +69,8 @@ describe('test closeChannel', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(403, {
-        status: 'string',
+        status: 403,
+        statusText: 'string',
         error: 'string'
       });
 
@@ -83,7 +86,8 @@ describe('test closeChannel', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(422, {
-        status: 'UNKNOWN_FAILURE',
+        status: 422,
+        statusText: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
       });
 

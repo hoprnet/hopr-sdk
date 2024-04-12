@@ -25,7 +25,8 @@ describe('test deleteMessages', () => {
 
   it('should return 401 if authentication failed', async () => {
     const errorResponse = {
-      status: 'authentication failed',
+      status: 401,
+      statusText: 'authentication failed',
       error: 'invalid api token'
     };
     nock(API_ENDPOINT)
@@ -43,7 +44,8 @@ describe('test deleteMessages', () => {
 
   it('should return 403 if authorization failed', async () => {
     const errorResponse = {
-      status: 'authorization failed',
+      status: 403,
+      statusText: 'authorization failed',
       error: 'permission denied'
     };
     nock(API_ENDPOINT)
@@ -60,7 +62,11 @@ describe('test deleteMessages', () => {
   });
 
   it('should return 422 if unknown failure occurred', async () => {
-    const errorResponse = { status: 'unknown failure', error: 'server error' };
+    const errorResponse = {
+      status: 422,
+      statusText: 'unknown failure',
+      error: 'server error'
+    };
     nock(API_ENDPOINT)
       .delete(`/api/v3/messages?tag=${TAG}`)
       .reply(422, errorResponse);

@@ -33,7 +33,7 @@ describe('setAlias function', () => {
   test('should return 400 if invalid peerId was provided', async function () {
     nock(API_ENDPOINT)
       .post('/api/v3/aliases', { peerId: PEER_ID, alias: ALIAS })
-      .reply(400, { status: 'INVALID_PEERID' });
+      .reply(400, { status: 400, statusText: 'INVALID_PEERID' });
 
     await expect(
       setAlias({
@@ -47,7 +47,8 @@ describe('setAlias function', () => {
 
   test('should return 401 if authentication failed', async function () {
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 401,
+      statusText: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
     const invalidApiToken = 'my-invalid-api-token';
@@ -67,7 +68,8 @@ describe('setAlias function', () => {
 
   test('should return 403 if authorization failed', async function () {
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 403,
+      statusText: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
@@ -86,7 +88,8 @@ describe('setAlias function', () => {
 
   test('should return 422 if unknown failure', async function () {
     const expectedResponse = {
-      status: 'UNKNOWN_FAILURE',
+      status: 422,
+      statusText: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)

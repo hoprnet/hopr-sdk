@@ -36,7 +36,8 @@ describe('test openChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(400, {
-      status: 'INVALID_PEERID'
+      status: 400,
+      statusText: 'INVALID_PEERID'
     });
 
     await expect(
@@ -50,7 +51,8 @@ describe('test openChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(401, {
-      status: 'string',
+      status: 401,
+      statusText: 'string',
       error: 'string'
     });
 
@@ -65,7 +67,8 @@ describe('test openChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(403, {
-      status: 'NOT_ENOUGH_BALANCE'
+      status: 403,
+      statusText: 'NOT_ENOUGH_BALANCE'
     });
 
     await expect(
@@ -79,7 +82,8 @@ describe('test openChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 409 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(403, {
-      status: 'CHANNEL_ALREADY_OPEN'
+      status: 403,
+      statusText: 'CHANNEL_ALREADY_OPEN'
     });
 
     await expect(
@@ -93,7 +97,8 @@ describe('test openChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(422, {
-      status: 'UNKNOWN_FAILURE',
+      status: 422,
+      statusText: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
     await expect(
