@@ -29,7 +29,8 @@ describe('getAliases', () => {
 
   it('should return an 422 when there is an unknown failure', async function () {
     const expectedResponse = {
-      status: 'UNKNOWN_FAILURE',
+      status: 422,
+      statusText: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
 
