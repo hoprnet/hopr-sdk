@@ -63,7 +63,8 @@ describe('test getChannels', function () {
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(400, {
-        status: 'INVALID_PEERID'
+        status: 400,
+        statusText: 'INVALID_PEERID'
       });
 
     await expect(
@@ -74,7 +75,8 @@ describe('test getChannels', function () {
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(403, {
-        status: 'NOT_ENOUGH_BALANCE'
+        status: 403,
+        statusText: 'NOT_ENOUGH_BALANCE'
       });
 
     await expect(
@@ -85,7 +87,8 @@ describe('test getChannels', function () {
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(422, {
-        status: 'UNKNOWN_FAILURE',
+        status: 422,
+        statusText: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
       });
 

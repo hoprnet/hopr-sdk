@@ -77,7 +77,10 @@ describe('createToken function', () => {
 
   test('throws APIError on 422', async function () {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
-    const mockResponse = { status: expectedStatus };
+    const mockResponse = {
+      status: 422,
+      statusText: expectedStatus
+    };
 
     nock(API_ENDPOINT).post('/api/v3/tokens').reply(422, mockResponse);
 
