@@ -34,14 +34,15 @@ export const getConfiguration = async (
     throw new Error(rawResponse.statusText);
   }
 
-  const tesxtResponse = await rawResponse.text();
+  let jsonResponse: any;
 
-  let jsonResponse;
   try {
-    jsonResponse = JSON.parse(tesxtResponse);
+    jsonResponse = await rawResponse.json();
   } catch (e) {
     throw new APIError({
-      status: 'Error parsing configuration into JSON'
+      status: rawResponse.status,
+      statusText: rawResponse.statusText,
+      error: 'Failed parsing response'
     });
   }
 

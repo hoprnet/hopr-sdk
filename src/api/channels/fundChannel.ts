@@ -38,8 +38,9 @@ export const fundChannel = async (
     jsonResponse = await rawResponse.json();
   } catch (e) {
     throw new APIError({
-      status: rawResponse.statusText,
-      error: `HTTP Status ${rawResponse.status}`
+      status: rawResponse.status,
+      statusText: rawResponse.statusText,
+      error: 'Failed parsing response'
     });
   }
   const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
