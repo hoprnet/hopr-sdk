@@ -29,16 +29,17 @@ describe('getAddresses', () => {
     expect(result).toEqual(expectedResponse);
   });
 
-  test('should return 401 if authentication failed', async function () {
+  test('should return 403 if authentication failed', async function () {
     const invalidApiToken = 'Not valid';
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 403,
+      statusText: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
     nock(API_ENDPOINT)
       .get('/api/v3/account/addresses')
-      .reply(401, expectedResponse);
+      .reply(403, expectedResponse);
 
     await expect(
       getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: invalidApiToken })
@@ -47,7 +48,8 @@ describe('getAddresses', () => {
 
   test('should return 403 if authorization fails', async function () {
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 403,
+      statusText: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
 
@@ -62,7 +64,8 @@ describe('getAddresses', () => {
 
   test('should return 422 if there is an unknown failure', async function () {
     const expectedResponse = {
-      status: 'UNKNOWN_FAILURE',
+      status: 422,
+      statusText: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
 

@@ -29,7 +29,8 @@ describe('getAlias', () => {
 
   it('should return 401 when authentication fails', async function () {
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 401,
+      statusText: 'authentication failed',
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
@@ -47,7 +48,8 @@ describe('getAlias', () => {
 
   it('should return 403 when authorization fails', async function () {
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 403,
+      statusText: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
@@ -67,7 +69,7 @@ describe('getAlias', () => {
     const expectedStatus = 'PEERID_NOT_FOUND';
     nock(API_ENDPOINT)
       .get(`/api/v3/aliases/${ALIAS}`)
-      .reply(404, { status: expectedStatus });
+      .reply(404, { status: 404, statusText: expectedStatus });
 
     await expect(
       getAlias({
@@ -80,7 +82,8 @@ describe('getAlias', () => {
 
   it('should return 422 when there is an unknown failure', async function () {
     const expectedResponse = {
-      status: 'UNKNOWN_FAILURE',
+      status: 422,
+      statusText: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)

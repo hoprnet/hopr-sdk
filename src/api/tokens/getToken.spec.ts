@@ -41,7 +41,8 @@ describe('getToken', () => {
 
   it('should return 401 if authentication failed', async function () {
     const mockResponse = {
-      status: 'UNAUTHORIZED',
+      status: 401,
+      statusText: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
@@ -54,7 +55,8 @@ describe('getToken', () => {
 
   it('should return 403 if authorization failed', async function () {
     const mockResponse = {
-      status: 'UNAUTHORIZED',
+      status: 403,
+      statusText: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
 
