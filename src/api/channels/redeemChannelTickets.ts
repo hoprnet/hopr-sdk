@@ -26,7 +26,7 @@ export const redeemChannelTickets = async (
     url,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiToken),
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );

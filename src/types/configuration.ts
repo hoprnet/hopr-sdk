@@ -7,55 +7,58 @@ import { BasePayload } from './general';
 
 export const GetConfigurationPayload = BasePayload;
 
-export type GetConfigurationPayloadType = z.infer<typeof GetConfigurationPayload>;
+export type GetConfigurationPayloadType = z.infer<
+  typeof GetConfigurationPayload
+>;
 
 const NetworkPayload = z.object({
-    chain: z.string(),
-    environment_type: z.string(),
-    version_range: z.string(),
-    indexer_start_block_number: z.number(),
-    tags: z.array(z.string()).nullable(),
-    addresses: z.object({
-      network_registry: z.string(),
-      network_registry_proxy: z.string(),
-      channels: z.string(),
-      token: z.string(),
-      module_implementation: z.string(),
-      node_safe_registry: z.string(),
-      ticket_price_oracle: z.string(),
-      announcements: z.string(),
-      node_stake_v2_factory: z.string(),
-    }),
-    confirmations: z.number(),
-    tx_polling_interval: z.number(),
-    max_block_range: z.number(),
+  chain: z.string(),
+  environment_type: z.string(),
+  version_range: z.string(),
+  indexer_start_block_number: z.number(),
+  tags: z.array(z.string()).nullable(),
+  addresses: z.object({
+    network_registry: z.string(),
+    network_registry_proxy: z.string(),
+    channels: z.string(),
+    token: z.string(),
+    module_implementation: z.string(),
+    node_safe_registry: z.string(),
+    ticket_price_oracle: z.string(),
+    announcements: z.string(),
+    node_stake_v2_factory: z.string()
+  }),
+  confirmations: z.number(),
+  tx_polling_interval: z.number(),
+  max_block_range: z.number()
 });
 
 export type NetworkPayloadType = z.infer<typeof NetworkPayload>;
 const NetworkStore = z.record(z.string(), NetworkPayload);
 
-
 const ChainPayload = z.object({
-    description: z.string().nullable(),
-    chain_id: z.number(),
-    live: z.boolean(),
-    default_provider: z.string().nullable(),
-    etherscan_api_url: z.string().nullable(),
-    max_fee_per_gas: z.string().nullable(),
-    max_priority_fee_per_gas:  z.string().nullable(),
-    native_token_name: z.string().nullable(),
-    hopr_token_name: z.string().nullable(),
-    block_time: z.number().nullable(),
-    tags: z.array(z.string()).nullable(),
+  description: z.string().nullable(),
+  chain_id: z.number(),
+  live: z.boolean(),
+  default_provider: z.string().nullable(),
+  etherscan_api_url: z.string().nullable(),
+  max_fee_per_gas: z.string().nullable(),
+  max_priority_fee_per_gas: z.string().nullable(),
+  native_token_name: z.string().nullable(),
+  hopr_token_name: z.string().nullable(),
+  block_time: z.number().nullable(),
+  tags: z.array(z.string()).nullable()
 });
 
 export type ChainPayloadType = z.infer<typeof ChainPayload>;
 const ChainStore = z.record(z.string(), ChainPayload);
 
-const Strategy = z.record(z.string(), z.string().or(z.number()).or(z.boolean()));
+const Strategy = z.record(
+  z.string(),
+  z.string().or(z.number()).or(z.boolean())
+);
 const StrategiesPayload = z.record(z.string(), Strategy);
 export type StrategiesPayloadType = z.infer<typeof StrategiesPayload>;
-
 
 export const GetConfigurationResponse = z.any();
 
@@ -158,5 +161,6 @@ export const GetConfigurationResponse = z.object({
 
 */
 
-export type GetConfigurationResponseType = z.infer<typeof GetConfigurationResponse>;
-
+export type GetConfigurationResponseType = z.infer<
+  typeof GetConfigurationResponse
+>;

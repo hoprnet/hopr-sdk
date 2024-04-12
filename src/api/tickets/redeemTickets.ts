@@ -19,7 +19,7 @@ export const redeemTickets = async (
     url,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiToken),
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
