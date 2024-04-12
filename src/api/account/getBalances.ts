@@ -30,7 +30,10 @@ export const getBalances = async (
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
-    throw new Error(rawResponse.statusText);
+    throw new APIError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   const jsonResponse = await rawResponse.json();
