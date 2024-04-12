@@ -27,7 +27,8 @@ describe('removeAlias', () => {
   test('should return 401 if authentication failed', async function () {
     const invalidApiToken = 'my-invalid-api-token';
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 401,
+      statusText: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
@@ -46,7 +47,8 @@ describe('removeAlias', () => {
 
   test('should return 403 if authorization failed', async function () {
     const expectedResponse = {
-      status: 'UNAUTHORIZED',
+      status: 403,
+      statusText: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
 
@@ -64,7 +66,8 @@ describe('removeAlias', () => {
 
   test('should return 422 if unknown failure occurred', async function () {
     const expectedResponse = {
-      status: 'UNKNOWN_FAILURE',
+      status: 422,
+      statusText: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
 
