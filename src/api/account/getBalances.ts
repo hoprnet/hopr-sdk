@@ -29,7 +29,7 @@ export const getBalances = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status > 499) {
+  if (rawResponse.status !== 200) {
     throw new APIError({
       status: rawResponse.status,
       statusText: rawResponse.statusText
