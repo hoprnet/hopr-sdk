@@ -25,7 +25,7 @@ export const withdraw = async (
   const url = new URL(`api/v3/account/withdraw`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
-      {
+    {
       method: 'POST',
       headers: getHeaders(payload.apiToken),
       body: JSON.stringify(body)

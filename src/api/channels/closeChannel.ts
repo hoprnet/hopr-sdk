@@ -38,7 +38,7 @@ export const closeChannel = async (
   } catch (e) {
     throw new APIError({
       status: rawResponse.statusText,
-      error: `HTTP Status ${rawResponse.status}`,
+      error: `HTTP Status ${rawResponse.status}`
     });
   }
   const parsedRes = CloseChannelResponse.safeParse(jsonResponse);

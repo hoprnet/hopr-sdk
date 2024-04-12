@@ -38,7 +38,7 @@ export const getConfiguration = async (
 
   let jsonResponse;
   try {
-   jsonResponse = JSON.parse(tesxtResponse);
+    jsonResponse = JSON.parse(tesxtResponse);
   } catch (e) {
     throw new APIError({
       status: 'Error parsing configuration into JSON'
@@ -47,7 +47,7 @@ export const getConfiguration = async (
 
   let parsedStrategies: {
     [key: string]: {
-        [key: string]: string | number | boolean;
+      [key: string]: string | number | boolean;
     };
   } = {};
 
@@ -75,18 +75,21 @@ export const getConfiguration = async (
     ]
   */
 
-  jsonResponse.hopr.strategy.strategies.forEach((strategyObj: {[key: string]: {[key: string]: string | number | boolean}}) => {
-    try{
-      const strategyName = Object.keys(strategyObj)[0];
-      if(typeof(strategyName) !== 'string') return;
-      let tmp = strategyObj[strategyName];
-      if(!tmp) return;
-      parsedStrategies[strategyName] = tmp;
-    } catch (e) {}
-  })
+  jsonResponse.hopr.strategy.strategies.forEach(
+    (strategyObj: {
+      [key: string]: { [key: string]: string | number | boolean };
+    }) => {
+      try {
+        const strategyName = Object.keys(strategyObj)[0];
+        if (typeof strategyName !== 'string') return;
+        let tmp = strategyObj[strategyName];
+        if (!tmp) return;
+        parsedStrategies[strategyName] = tmp;
+      } catch (e) {}
+    }
+  );
 
   jsonResponse.hopr.strategy.strategies = parsedStrategies;
 
   return jsonResponse;
-
 };

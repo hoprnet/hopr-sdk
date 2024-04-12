@@ -2,7 +2,7 @@ export * from './checks';
 export * from './aliases';
 export * from './general';
 export * from './channels';
-export * from './configuration'
+export * from './configuration';
 export * from './error';
 export * from './node';
 export * from './tickets';

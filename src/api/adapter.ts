@@ -34,7 +34,11 @@ export class ApiAdapter {
     this.aliases = new AliasesAdapter({ apiEndpoint, apiToken, timeout });
     this.channels = new ChannelsAdapter({ apiEndpoint, apiToken, timeout });
     this.checks = new ChecksAdapter({ apiEndpoint, apiToken, timeout });
-    this.configuration = new ConfigurationAdapter({ apiEndpoint, apiToken, timeout });
+    this.configuration = new ConfigurationAdapter({
+      apiEndpoint,
+      apiToken,
+      timeout
+    });
     this.node = new NodeAdapter({ apiEndpoint, apiToken, timeout });
     this.tickets = new TicketsAdapter({ apiEndpoint, apiToken, timeout });
     this.tokens = new TokensAdapter({ apiEndpoint, apiToken, timeout });

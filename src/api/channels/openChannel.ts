@@ -35,7 +35,6 @@ export const openChannel = async (
     payload.timeout
   );
 
-
   let jsonResponse: any;
 
   try {
@@ -43,7 +42,7 @@ export const openChannel = async (
   } catch (e) {
     throw new APIError({
       status: rawResponse.statusText,
-      error: `HTTP Status ${rawResponse.status}`,
+      error: `HTTP Status ${rawResponse.status}`
     });
   }
 
