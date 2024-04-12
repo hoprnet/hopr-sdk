@@ -49,7 +49,10 @@ describe('createToken function', () => {
   test('throws APIError on 400', async function () {
     const expectedStatus =
       'INVALID_TOKEN_LIFETIME | INVALID_TOKEN_CAPABILITIES';
-    const mockResponse = { status: expectedStatus };
+    const mockResponse = {
+      status: 400,
+      statusText: expectedStatus
+    };
     const invalidBody: CreateTokenPayloadType = {
       description: 'my test token',
       apiToken: API_TOKEN,

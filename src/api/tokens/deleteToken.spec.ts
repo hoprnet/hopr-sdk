@@ -26,7 +26,8 @@ describe('deleteToken', () => {
 
   it('should return 401 when authentication fails', async function () {
     const mockResponse = {
-      status: 'UNAUTHORIZED',
+      status: 401,
+      statusText: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
@@ -45,7 +46,8 @@ describe('deleteToken', () => {
 
   it('should return 403 when authorization fails', async function () {
     const mockResponse = {
-      status: 'UNAUTHORIZED',
+      status: 403,
+      statusText: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
