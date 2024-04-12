@@ -40,8 +40,8 @@ export const getAliases = async (
   const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
 
   // we could not parse the response
-  if (!parsedRes.success) {
-    throw new ZodError(parsedRes.error.issues);
+  if (parsedRes.success) {
+    return parsedRes.data;
   }
 
   // check if response has the structure of an expected api error
@@ -51,6 +51,5 @@ export const getAliases = async (
     throw new APIError(isApiErrorResponse.data);
   }
 
-  // received expected response
-  return parsedRes.data;
+  throw new ZodError(parsedRes.error.issues);
 };
