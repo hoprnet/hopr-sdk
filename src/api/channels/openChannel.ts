@@ -41,9 +41,8 @@ export const openChannel = async (
     jsonResponse = await rawResponse.json();
   } catch (e) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
-      statusText: rawResponse.statusText,
-      error: `HTTP Status ${rawResponse.status}`
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
     });
   }
 
@@ -59,9 +58,9 @@ export const openChannel = async (
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      hoprdErrorPayload: isApiErrorResponse.data,
     });
   }
 

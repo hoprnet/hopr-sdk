@@ -41,9 +41,9 @@ export const deleteToken = async (
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      hoprdErrorPayload: isApiErrorResponse.data,
     });
   }
 

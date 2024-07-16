@@ -37,9 +37,8 @@ export const closeChannel = async (
     jsonResponse = await rawResponse.json();
   } catch (e) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: rawResponse.statusText,
-      error: `HTTP Status ${rawResponse.status}`
     });
   }
   const parsedRes = CloseChannelResponse.safeParse(jsonResponse);
@@ -54,9 +53,9 @@ export const closeChannel = async (
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      hoprdErrorPayload: isApiErrorResponse.data,
     });
   }
 

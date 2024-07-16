@@ -44,9 +44,9 @@ export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      hoprdErrorPayload: isApiErrorResponse.data,
     });
   }
 

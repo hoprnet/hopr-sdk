@@ -39,4 +39,12 @@ describe('getAliases', () => {
       getAliases({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(sdkApiError);
   });
+
+  it('should return a status 500', async function () {
+    nock(API_ENDPOINT).get('/api/v3/aliases').reply(500);
+
+    await expect(
+      getAliases({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

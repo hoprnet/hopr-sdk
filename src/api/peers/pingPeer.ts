@@ -26,7 +26,7 @@ export const pingPeer = async (
   // received unexpected error from server
   if (rawResponse.status > 499) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: rawResponse.statusText
     });
   }
@@ -44,9 +44,9 @@ export const pingPeer = async (
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      hoprdErrorPayload: isApiErrorResponse.data,
     });
   }
 

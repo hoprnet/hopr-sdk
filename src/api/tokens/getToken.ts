@@ -31,9 +31,9 @@ export const getToken = async (
   if (rawResponse.status === 404) {
     // 404 The specified resource was not found
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: rawResponse.statusText,
-      error: 'Resource was not found'
+      description: 'Resource was not found'
     });
   }
 
@@ -55,9 +55,9 @@ export const getToken = async (
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      hoprdErrorPayload: isApiErrorResponse.data,
     });
   }
 

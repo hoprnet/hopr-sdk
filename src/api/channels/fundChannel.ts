@@ -38,9 +38,9 @@ export const fundChannel = async (
     jsonResponse = await rawResponse.json();
   } catch (e) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: rawResponse.statusText,
-      error: 'Failed parsing response'
+      description: 'Failed parsing response'
     });
   }
   const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
@@ -55,9 +55,9 @@ export const fundChannel = async (
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      hoprdErrorPayload: isApiErrorResponse.data,
     });
   }
 

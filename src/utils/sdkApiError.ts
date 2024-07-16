@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { ApiErrorResponse, ApiErrorResponseType } from '../types';
 
 
 const SdkApiErrorResponse = z.object({
-  httpStatus: z.number(),
+  status: z.number(),
   statusText: z.string(),
-  error: z.string().optional()
+  hoprdErrorPayload: ApiErrorResponse.optional(),
+  description: z.string().optional()
 });
 
 type SdkApiErrorResponseType = z.infer<typeof SdkApiErrorResponse>;
@@ -25,20 +27,26 @@ export class sdkApiError extends Error {
   statusText: string;
 
   /**
-   * The error message.
+   * Error Object
    */
-  error?: string;
+  hoprdErrorPayload?: ApiErrorResponseType;
+
+  /**
+   * Descriton of the error
+   */
+  description?: string;
 
   /**
    * Creates a new instance of the APIError class.
    * @param customError - An object containing custom error properties.
    */
   constructor(customError: SdkApiErrorResponseType) {
-    super(customError.error);
-    this.name = 'SDK API Error';
-    this.status = customError.httpStatus;
+    super(customError.statusText);
+    this.name = 'APIError';
+    this.status = customError.status;
     this.statusText = customError.statusText;
-    this.error = customError.error ? customError.error : `HTTP Status ${customError.httpStatus}`;
+    this.hoprdErrorPayload = customError.hoprdErrorPayload;
+    this.description = customError?.hoprdErrorPayload?.error ? customError.hoprdErrorPayload.error : `HTTP Status code ${customError.status}`;
   }
 }
 

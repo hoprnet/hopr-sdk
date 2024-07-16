@@ -40,9 +40,9 @@ export const getConfiguration = async (
     jsonResponse = await rawResponse.json();
   } catch (e) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: rawResponse.statusText,
-      error: 'Failed parsing response'
+      description: 'Failed parsing response'
     });
   }
 

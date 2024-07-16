@@ -31,29 +31,36 @@ export const getAliases = async (
   // received unexpected error from server
   if (rawResponse.status > 499) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
+      status: rawResponse.status,
       statusText: rawResponse.statusText
     });
   }
 
+
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
 
-  // we could not parse the response
-  if (parsedRes.success) {
-    return parsedRes.data;
+  if(rawResponse.status >= 200 && rawResponse.status < 300) {
+    if (parsedRes.success) {
+      return parsedRes.data;
+    }
   }
+
+
 
   // check if response has the structure of an expected api error
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
-      httpStatus: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      error: isApiErrorResponse.data?.error
+      status: rawResponse.status,
+      statusText: rawResponse.statusText,
+      hoprdErrorPayload: isApiErrorResponse.data
     });
   }
 
+  // we could not parse the response and it is not unexpected
+  // @ts-ignore
   throw new ZodError(parsedRes.error.issues);
+
 };
