@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { getToken } from './getToken';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { GetTokenResponseType } from '../../types';
 
 // Set up global constants for apiEndpoint and apiToken
@@ -41,8 +41,7 @@ describe('getToken', () => {
 
   it('should return 401 if authentication failed', async function () {
     const mockResponse = {
-      status: 401,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
@@ -50,13 +49,12 @@ describe('getToken', () => {
 
     await expect(
       getToken({ apiEndpoint: API_ENDPOINT, apiToken: 'invalid token' })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 403 if authorization failed', async function () {
     const mockResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
 
@@ -64,7 +62,7 @@ describe('getToken', () => {
 
     await expect(
       getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 404 if resource not found', async function () {
@@ -72,6 +70,6 @@ describe('getToken', () => {
 
     await expect(
       getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

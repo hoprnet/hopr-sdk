@@ -1,6 +1,6 @@
 import { ZodError } from 'zod';
-import { AliasPayloadType, APIErrorResponse } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { AliasPayloadType, ApiErrorResponse } from '../../types';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Unassign an alias from a PeerId.
@@ -36,10 +36,14 @@ export const removeAlias = async (
 
   // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      error: isApiErrorResponse.data?.error
+    });
   }
 
   // we could not parse the error and it is not unexpected

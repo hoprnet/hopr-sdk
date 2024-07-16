@@ -1,11 +1,11 @@
 import { ZodError } from 'zod';
 import {
-  APIErrorResponse,
+  ApiErrorResponse,
   BasePayloadType,
   GetAliasesResponse,
   GetAliasesResponseType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Get all aliases you set previously and their corresponding peer IDs.
@@ -30,8 +30,8 @@ export const getAliases = async (
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
-    throw new APIError({
-      status: rawResponse.status,
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
       statusText: rawResponse.statusText
     });
   }
@@ -45,10 +45,14 @@ export const getAliases = async (
   }
 
   // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      error: isApiErrorResponse.data?.error
+    });
   }
 
   throw new ZodError(parsedRes.error.issues);

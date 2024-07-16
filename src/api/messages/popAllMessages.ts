@@ -1,12 +1,12 @@
 import { ZodError } from 'zod';
 import {
-  APIErrorResponse,
+  ApiErrorResponse,
   PopAllMessagesPayloadType,
   PopAllMessagesResponse,
   PopAllMessagesResponseType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Get the list of messages currently present in the nodes message inbox.
@@ -46,10 +46,14 @@ export const popAllMessages = async (
   }
 
   // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      error: isApiErrorResponse.data?.error
+    });
   }
 
   // we could not parse the response and it is not unexpected

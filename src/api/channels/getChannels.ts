@@ -1,11 +1,11 @@
 import { ZodError } from 'zod';
 import {
-  APIErrorResponse,
+  ApiErrorResponse,
   GetChannelsPayloadType,
   GetChannelsResponse,
   GetChannelsResponseType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getChannels = async (
   payload: GetChannelsPayloadType
@@ -36,10 +36,14 @@ export const getChannels = async (
   }
 
   // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      error: isApiErrorResponse.data?.error
+    });
   }
 
   // we could not parse the response and it is not unexpected

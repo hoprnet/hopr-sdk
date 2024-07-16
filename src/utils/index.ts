@@ -1,4 +1,4 @@
 export * from './log';
-export * from './error';
+export * from './sdkApiError';
 export * from './headers';
 export * from './fetchWithTimeout';

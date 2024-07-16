@@ -3,9 +3,9 @@ import {
   GetBalancesResponseType,
   GetBalancesResponse,
   BasePayloadType,
-  APIErrorResponse
+  ApiErrorResponse
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Fetches the HOPR and native balances of the node.
@@ -30,8 +30,8 @@ export const getBalances = async (
 
   // received unexpected error from server
   if (rawResponse.status !== 200) {
-    throw new APIError({
-      status: rawResponse.status,
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
       statusText: rawResponse.statusText
     });
   }
@@ -58,10 +58,14 @@ export const getBalances = async (
   }
 
   // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      error: isApiErrorResponse.data?.error
+    });
   }
 
   // we could not parse the response and it is not unexpected

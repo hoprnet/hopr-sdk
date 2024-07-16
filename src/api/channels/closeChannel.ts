@@ -2,9 +2,9 @@ import {
   CloseChannelResponse,
   type CloseChannelResponseType,
   type CloseChannelPayloadType,
-  APIErrorResponse
+  ApiErrorResponse
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
 /**
@@ -36,8 +36,8 @@ export const closeChannel = async (
   try {
     jsonResponse = await rawResponse.json();
   } catch (e) {
-    throw new APIError({
-      status: rawResponse.status,
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
       statusText: rawResponse.statusText,
       error: `HTTP Status ${rawResponse.status}`
     });
@@ -50,10 +50,14 @@ export const closeChannel = async (
   }
 
   // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      error: isApiErrorResponse.data?.error
+    });
   }
 
   // we could not parse the response and it is not unexpected

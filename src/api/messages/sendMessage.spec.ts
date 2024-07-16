@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { sendMessage } from './sendMessage';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -51,8 +51,7 @@ describe('sendMessage', () => {
 
   it('should return 401 if authentication failed', async () => {
     const errorResponse = {
-      status: 401,
-      statusText: 'authentication failed',
+      status: 'authentication failed',
       error: 'invalid api token'
     };
     nock(API_ENDPOINT)
@@ -65,13 +64,12 @@ describe('sendMessage', () => {
         apiEndpoint: API_ENDPOINT,
         ...PAYLOAD
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 403 if authorization failed', async () => {
     const errorResponse = {
-      status: 403,
-      statusText: 'authorization failed',
+      status: 'authorization failed',
       error: 'permission denied'
     };
     nock(API_ENDPOINT)
@@ -84,13 +82,12 @@ describe('sendMessage', () => {
         apiEndpoint: API_ENDPOINT,
         ...PAYLOAD
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 422 if unknown failure occurred', async () => {
     const errorResponse = {
-      status: 422,
-      statusText: 'unknown failure',
+      status: 'unknown failure',
       error: 'server error'
     };
     nock(API_ENDPOINT)
@@ -103,6 +100,6 @@ describe('sendMessage', () => {
         apiEndpoint: API_ENDPOINT,
         ...PAYLOAD
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

@@ -1,7 +1,7 @@
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 import {
   AliasPayloadType,
-  APIErrorResponse,
+  ApiErrorResponse,
   GetAliasResponse
 } from '../../types';
 import { ZodError } from 'zod';
@@ -40,10 +40,14 @@ export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
   }
 
   // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      httpStatus: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      error: isApiErrorResponse.data?.error
+    });
   }
 
   // we could not parse the response and it is not unexpected

@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { closeChannel } from './closeChannel';
 import { CloseChannelResponseType } from '../../types';
 
@@ -36,8 +36,7 @@ describe('test closeChannel', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(400, {
-        status: 400,
-        statusText: 'INVALID_CHANNELID'
+        status:'INVALID_CHANNELID'
       });
 
     await expect(
@@ -46,14 +45,13 @@ describe('test closeChannel', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(401, {
-        status: 401,
-        statusText: 'string',
+        status: 'string',
         error: 'string'
       });
 
@@ -63,14 +61,13 @@ describe('test closeChannel', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(403, {
-        status: 403,
-        statusText: 'string',
+        status: 'string',
         error: 'string'
       });
 
@@ -80,14 +77,13 @@ describe('test closeChannel', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(422, {
-        status: 422,
-        statusText: 'UNKNOWN_FAILURE',
+        status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
       });
 
@@ -97,7 +93,7 @@ describe('test closeChannel', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error without body', async function () {
     nock(API_ENDPOINT)
@@ -110,6 +106,6 @@ describe('test closeChannel', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

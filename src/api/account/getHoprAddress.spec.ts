@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { getHoprAddress } from './getHoprAddress';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { GetAddressesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -31,8 +31,7 @@ describe('getHoprAddress', () => {
   test('should return 401 if authentication failed', async function () {
     const invalidApiToken = 'Not valid';
     const expectedResponse = {
-      status: 401,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
@@ -42,13 +41,12 @@ describe('getHoprAddress', () => {
 
     await expect(
       getHoprAddress({ apiEndpoint: API_ENDPOINT, apiToken: invalidApiToken })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 403 if authorization fails', async function () {
     const expectedResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
 
@@ -58,13 +56,12 @@ describe('getHoprAddress', () => {
 
     await expect(
       getHoprAddress({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 422 if there is an unknown failure', async function () {
     const expectedResponse = {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
 
@@ -74,6 +71,6 @@ describe('getHoprAddress', () => {
 
     await expect(
       getHoprAddress({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });
