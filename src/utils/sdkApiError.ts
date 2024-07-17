@@ -11,7 +11,6 @@ const SdkApiErrorResponse = z.object({
 
 type SdkApiErrorResponseType = z.infer<typeof SdkApiErrorResponse>;
 
-
 /**
  * Represents an HOPR SDK API error.
  */
@@ -46,7 +45,12 @@ export class sdkApiError extends Error {
     this.status = customError.status;
     this.statusText = customError.statusText;
     this.hoprdErrorPayload = customError.hoprdErrorPayload;
-    this.description = customError?.hoprdErrorPayload?.error ? customError.hoprdErrorPayload.error : `HTTP Status code ${customError.status}`;
+    this.description = `HTTP Status code ${customError.status}`;
+    if(customError.hoprdErrorPayload?.status) this.description = customError.hoprdErrorPayload.status;
+    else if(customError.hoprdErrorPayload?.error) this.description = customError.hoprdErrorPayload.error;
   }
 }
+
+
+
 
