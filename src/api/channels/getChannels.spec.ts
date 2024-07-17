@@ -63,7 +63,7 @@ describe('test getChannels', function () {
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(400, {
-        status:'INVALID_PEERID'
+        status: 'INVALID_PEERID'
       });
 
     await expect(

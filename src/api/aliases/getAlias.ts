@@ -46,10 +46,10 @@ export const getAlias = async (payload: AliasPayloadType): Promise<string> => {
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data,
+      hoprdErrorPayload: isApiErrorResponse.data
     });
   }
 
-  // we could not parse the response and it is not unexpected
+  // we could not parse the response and it is unexpected
   throw new ZodError(parsedRes.error.issues);
 };

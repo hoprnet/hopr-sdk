@@ -36,18 +36,19 @@ export const getAliases = async (
     });
   }
 
-
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
 
   // parsedRes and error {} from HOPRd have the same type,
   // we can only rely on rawResponse.ok to know if its a success
-  if (parsedRes.success && rawResponse.ok) {
-    return parsedRes.data;
+  if (rawResponse.ok) {
+    const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
+    if (parsedRes.success) {
+      return parsedRes.data;
+    }
+    throw new ZodError(parsedRes.error.issues);
   }
 
-
-  // check if response has the structure of an expected api error
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
@@ -58,6 +59,6 @@ export const getAliases = async (
     });
   }
 
-  // we could not parse the response and it is not unexpected
-  throw new Error('We could not parse the response and it is not unexpected');
+  // we could not parse the response and it is unexpected
+  throw new ZodError(isApiErrorResponse.error.issues);
 };

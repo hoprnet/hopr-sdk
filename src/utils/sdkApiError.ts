@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { ApiErrorResponse, ApiErrorResponseType } from '../types';
 
-
 const SdkApiErrorResponse = z.object({
   status: z.number(),
   statusText: z.string(),
@@ -46,11 +45,9 @@ export class sdkApiError extends Error {
     this.statusText = customError.statusText;
     this.hoprdErrorPayload = customError.hoprdErrorPayload;
     this.description = `HTTP Status code ${customError.status}`;
-    if(customError.hoprdErrorPayload?.status) this.description = customError.hoprdErrorPayload.status;
-    else if(customError.hoprdErrorPayload?.error) this.description = customError.hoprdErrorPayload.error;
+    if (customError.hoprdErrorPayload?.status)
+      this.description = customError.hoprdErrorPayload.status;
+    else if (customError.hoprdErrorPayload?.error)
+      this.description = customError.hoprdErrorPayload.error;
   }
 }
-
-
-
-

@@ -44,7 +44,7 @@ describe('test redeemTickets', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(400, {
-        status:'INVALID_CHANNELID'
+        status: 'INVALID_CHANNELID'
       });
 
     await expect(
@@ -91,7 +91,7 @@ describe('test redeemTickets', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(404, {
-        status:'TICKETS_NOT_FOUND'
+        status: 'TICKETS_NOT_FOUND'
       });
 
     await expect(

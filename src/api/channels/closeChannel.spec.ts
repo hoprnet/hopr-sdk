@@ -36,7 +36,7 @@ describe('test closeChannel', function () {
     nock(API_ENDPOINT)
       .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
       .reply(400, {
-        status:'INVALID_CHANNELID'
+        status: 'INVALID_CHANNELID'
       });
 
     await expect(

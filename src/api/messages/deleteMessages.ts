@@ -37,7 +37,7 @@ export const deleteMessages = async (
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data,
+      hoprdErrorPayload: isApiErrorResponse.data
     });
   }
 

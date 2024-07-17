@@ -32,7 +32,7 @@ export const getVersion = async (payload: BasePayloadType): Promise<string> => {
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data,
+      hoprdErrorPayload: isApiErrorResponse.data
     });
   }
 
