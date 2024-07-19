@@ -29,7 +29,8 @@ export const PeerConnected = z.object({
 
 export const PeerAnnounced = z.object({
   peerId: z.string(),
-  peerAddress: z.string()
+  peerAddress: z.string(),
+  multiaddr: z.string().nullable(),
 });
 
 export const GetPeersResponse = z.object({
