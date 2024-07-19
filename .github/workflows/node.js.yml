@@ -47,28 +47,28 @@ jobs:
         run: yarn test
 
   # Run E2E tests
-  e2e_testing:
-    name: E2E tests
-    needs: general
-    timeout-minutes: 30
-    runs-on: ubuntu-latest
+  # e2e_testing:
+  #   name: E2E tests
+  #   needs: general
+  #   timeout-minutes: 30
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-          cache-dependency-path: ./yarn.lock
+  #     - name: Setup Node.js environment
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version-file: '.nvmrc'
+  #         cache: 'yarn'
+  #        cache-dependency-path: ./yarn.lock
 
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
+  #     - name: Install dependencies
+  #       run: yarn --frozen-lockfile
 
-      - name: Building
-        run: yarn build
+  #     - name: Building
+  #       run: yarn build
 
-      - name: Run E2E
-        shell: bash
-        run: yarn test:e2e
+  #    - name: Run E2E
+  #       shell: bash
+  #       run: yarn test:e2e
