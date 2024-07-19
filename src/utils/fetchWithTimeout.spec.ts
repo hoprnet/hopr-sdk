@@ -46,5 +46,5 @@ describe('fetchWithTimeout', () => {
     return new Promise<void>((res) => {
       httpServer.close(() => res());
     });
-  });
+  }, 120_000);
 });

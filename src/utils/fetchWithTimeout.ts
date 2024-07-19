@@ -3,6 +3,7 @@ export const fetchWithTimeout = (
   options?: RequestInit,
   ms: number = 30000
 ) => {
+  console.log(new Date)
   return fetch(apiEndpoint, {
     ...options,
     signal: AbortSignal.timeout(ms)
