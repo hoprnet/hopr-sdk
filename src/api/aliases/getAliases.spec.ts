@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { getAliases } from './getAliases';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { GetAliasesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -29,8 +29,7 @@ describe('getAliases', () => {
 
   it('should return an 422 when there is an unknown failure', async function () {
     const expectedResponse = {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
 
@@ -38,6 +37,14 @@ describe('getAliases', () => {
 
     await expect(
       getAliases({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
+  });
+
+  it('should return a status 500', async function () {
+    nock(API_ENDPOINT).get('/api/v3/aliases').reply(500);
+
+    await expect(
+      getAliases({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(sdkApiError);
   });
 });

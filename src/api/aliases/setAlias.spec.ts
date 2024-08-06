@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { setAlias } from './setAlias';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { SetAliasPayloadType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -33,7 +33,7 @@ describe('setAlias function', () => {
   test('should return 400 if invalid peerId was provided', async function () {
     nock(API_ENDPOINT)
       .post('/api/v3/aliases', { peerId: PEER_ID, alias: ALIAS })
-      .reply(400, { status: 400, statusText: 'INVALID_PEERID' });
+      .reply(400, { status: 'INVALID_PEERID' });
 
     await expect(
       setAlias({
@@ -42,13 +42,12 @@ describe('setAlias function', () => {
         peerId: PEER_ID,
         alias: ALIAS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 401 if authentication failed', async function () {
     const expectedResponse = {
-      status: 401,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
     const invalidApiToken = 'my-invalid-api-token';
@@ -63,13 +62,12 @@ describe('setAlias function', () => {
         peerId: PEER_ID,
         alias: ALIAS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 403 if authorization failed', async function () {
     const expectedResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
@@ -83,13 +81,12 @@ describe('setAlias function', () => {
         peerId: PEER_ID,
         alias: ALIAS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 422 if unknown failure', async function () {
     const expectedResponse = {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
@@ -103,6 +100,6 @@ describe('setAlias function', () => {
         peerId: PEER_ID,
         alias: ALIAS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

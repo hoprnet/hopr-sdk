@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { fundChannel } from './fundChannel';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -34,8 +34,7 @@ describe('test fundChannels', function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(400, {
-        status: 400,
-        statusText: 'INVALID_PEERID'
+        status: 'INVALID_PEERID'
       });
 
     await expect(
@@ -45,14 +44,13 @@ describe('test fundChannels', function () {
         channelId: BUDDY_CHANNEL_ID,
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(403, {
-        status: 403,
-        statusText: 'NOT_ENOUGH_BALANCE'
+        status: 'NOT_ENOUGH_BALANCE'
       });
 
     await expect(
@@ -62,14 +60,13 @@ describe('test fundChannels', function () {
         channelId: BUDDY_CHANNEL_ID,
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(422, {
-        status: 422,
-        statusText: 'UNKNOWN_FAILURE',
+        status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
       });
     await expect(
@@ -79,7 +76,7 @@ describe('test fundChannels', function () {
         channelId: BUDDY_CHANNEL_ID,
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error without body', async function () {
     nock(API_ENDPOINT)
@@ -92,6 +89,6 @@ describe('test fundChannels', function () {
         channelId: BUDDY_CHANNEL_ID,
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

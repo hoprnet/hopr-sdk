@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { getBalances } from './getBalances';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { GetBalancesResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -31,8 +31,7 @@ describe('getBalances', () => {
 
   it('should return 401 if authentication fails', async () => {
     const response = {
-      status: 401,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
@@ -40,13 +39,12 @@ describe('getBalances', () => {
 
     await expect(
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 403 if authorization fails', async () => {
     const response = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
 
@@ -54,13 +52,12 @@ describe('getBalances', () => {
 
     await expect(
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 422 if unknown failure', async () => {
     const response = {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
 
@@ -68,6 +65,6 @@ describe('getBalances', () => {
 
     await expect(
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

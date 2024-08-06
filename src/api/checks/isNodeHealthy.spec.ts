@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { isNodeHealthy } from './isNodeHealthy';
 
 const API_ENDPOINT = 'http://localhost:3001';

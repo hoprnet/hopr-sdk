@@ -1,6 +1,6 @@
 import { getAlias } from './getAlias';
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { GetAliasResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -29,8 +29,7 @@ describe('getAlias', () => {
 
   it('should return 401 when authentication fails', async function () {
     const expectedResponse = {
-      status: 401,
-      statusText: 'authentication failed',
+      status: 'authentication failed',
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
@@ -43,13 +42,12 @@ describe('getAlias', () => {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 403 when authorization fails', async function () {
     const expectedResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
@@ -62,14 +60,14 @@ describe('getAlias', () => {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 404 when alias is not found', async function () {
     const expectedStatus = 'PEERID_NOT_FOUND';
     nock(API_ENDPOINT)
       .get(`/api/v3/aliases/${ALIAS}`)
-      .reply(404, { status: 404, statusText: expectedStatus });
+      .reply(404, { status: expectedStatus });
 
     await expect(
       getAlias({
@@ -77,13 +75,12 @@ describe('getAlias', () => {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 422 when there is an unknown failure', async function () {
     const expectedResponse = {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
@@ -96,6 +93,6 @@ describe('getAlias', () => {
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

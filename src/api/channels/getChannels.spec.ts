@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { getChannels } from './getChannels';
 import { GetChannelsResponseType } from '../../types';
 
@@ -63,37 +63,34 @@ describe('test getChannels', function () {
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(400, {
-        status: 400,
-        statusText: 'INVALID_PEERID'
+        status: 'INVALID_PEERID'
       });
 
     await expect(
       getChannels({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(403, {
-        status: 403,
-        statusText: 'NOT_ENOUGH_BALANCE'
+        status: 'NOT_ENOUGH_BALANCE'
       });
 
     await expect(
       getChannels({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
       .get('/api/v3/channels?includingClosed=false&fullTopology=false')
       .reply(422, {
-        status: 422,
-        statusText: 'UNKNOWN_FAILURE',
+        status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
       });
 
     await expect(
       getChannels({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

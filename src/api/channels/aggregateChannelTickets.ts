@@ -1,8 +1,8 @@
 import {
-  APIErrorResponse,
+  ApiErrorResponse,
   AggregateChannelTicketsPayloadType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
 /**
@@ -41,10 +41,14 @@ export const aggregateChannelTickets = async (
 
   // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      hoprdErrorPayload: isApiErrorResponse.data
+    });
   }
 
   // we could not parse the error and it is not unexpected

@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { getPeer } from './getPeer';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -37,8 +37,7 @@ describe('test getPeer', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_PEER_ID}`).reply(400, {
-      status: 400,
-      statusText: 'INVALID_PEERID'
+      status: 'INVALID_PEERID'
     });
 
     await expect(
@@ -47,12 +46,11 @@ describe('test getPeer', function () {
         apiEndpoint: API_ENDPOINT,
         peerId: BUDDY_PEER_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_PEER_ID}`).reply(401, {
-      status: 401,
-      statusText: 'string',
+      status: 'string',
       error: 'string'
     });
 
@@ -62,12 +60,11 @@ describe('test getPeer', function () {
         apiEndpoint: API_ENDPOINT,
         peerId: BUDDY_PEER_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_PEER_ID}`).reply(403, {
-      status: 403,
-      statusText: 'string',
+      status: 'string',
       error: 'string'
     });
 
@@ -77,12 +74,11 @@ describe('test getPeer', function () {
         apiEndpoint: API_ENDPOINT,
         peerId: BUDDY_PEER_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_PEER_ID}`).reply(422, {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
 
@@ -92,6 +88,6 @@ describe('test getPeer', function () {
         apiEndpoint: API_ENDPOINT,
         peerId: BUDDY_PEER_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });
