@@ -1,10 +1,10 @@
 import { ZodError } from 'zod';
 import {
-  APIErrorResponse,
+  ApiErrorResponse,
   RemoveBasicAuthenticationPayloadType,
   SetAliasPayloadType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
@@ -47,10 +47,14 @@ export const setAlias = async (
 
   // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      hoprdErrorPayload: isApiErrorResponse.data
+    });
   }
 
   // we could not parse the error and it is not unexpected

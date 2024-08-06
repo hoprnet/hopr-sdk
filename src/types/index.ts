@@ -3,7 +3,7 @@ export * from './aliases';
 export * from './general';
 export * from './channels';
 export * from './configuration';
-export * from './error';
+export * from './ApiErrorResponse';
 export * from './node';
 export * from './tickets';
 export * from './messages';

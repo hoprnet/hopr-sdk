@@ -1,5 +1,5 @@
 import { createToken } from './createToken';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import type {
   CreateTokenPayloadType,
   CreateTokenResponseType
@@ -50,8 +50,7 @@ describe('createToken function', () => {
     const expectedStatus =
       'INVALID_TOKEN_LIFETIME | INVALID_TOKEN_CAPABILITIES';
     const mockResponse = {
-      status: 400,
-      statusText: expectedStatus
+      status: expectedStatus
     };
     const invalidBody: CreateTokenPayloadType = {
       description: 'my test token',
@@ -75,18 +74,17 @@ describe('createToken function', () => {
 
     nock(API_ENDPOINT).post('/api/v3/tokens').reply(400, mockResponse);
 
-    await expect(createToken({ ...invalidBody })).rejects.toThrow(APIError);
+    await expect(createToken({ ...invalidBody })).rejects.toThrow(sdkApiError);
   });
 
   test('throws APIError on 422', async function () {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
     const mockResponse = {
-      status: 422,
-      statusText: expectedStatus
+      status: expectedStatus
     };
 
     nock(API_ENDPOINT).post('/api/v3/tokens').reply(422, mockResponse);
 
-    await expect(createToken({ ...body })).rejects.toThrow(APIError);
+    await expect(createToken({ ...body })).rejects.toThrow(sdkApiError);
   });
 });
