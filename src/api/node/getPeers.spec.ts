@@ -33,7 +33,8 @@ describe('test getPeers', function () {
       announced: [
         {
           peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          peerAddress: '0x0987654321098765432109876543210987654321'
+          peerAddress: '0x0987654321098765432109876543210987654321',
+          multiaddr: '1.1.1.1'
         }
       ]
     };
