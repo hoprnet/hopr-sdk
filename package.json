@@ -34,6 +34,7 @@
     "build": "tsup",
     "pack": "tsup && yarn pack",
     "lint": "tsc",
+    "lint:ci": "tsc",
     "format": "prettier --write src/ e2e/ .github/ *.js *.ts *.json *.md",
     "format:ci": "prettier --check src/ e2e/ .github/ *.js *.ts *.json *.md",
     "test": "jest --coverage src/",
