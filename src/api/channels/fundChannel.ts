@@ -4,9 +4,9 @@ import {
   type FundChannelsPayloadType,
   type FundChannelsResponseType,
   type RemoveBasicAuthenticationPayloadType,
-  APIErrorResponse
+  ApiErrorResponse
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Funds an existing channel with the given amount. The channel must be in state OPEN
@@ -37,10 +37,10 @@ export const fundChannel = async (
   try {
     jsonResponse = await rawResponse.json();
   } catch (e) {
-    throw new APIError({
+    throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText,
-      error: 'Failed parsing response'
+      description: 'Failed parsing response'
     });
   }
   const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
@@ -51,12 +51,16 @@ export const fundChannel = async (
   }
 
   // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      hoprdErrorPayload: isApiErrorResponse.data
+    });
   }
 
-  // we could not parse the response and it is not unexpected
+  // we could not parse the response and it is unexpected
   throw new ZodError(parsedRes.error.issues);
 };

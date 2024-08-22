@@ -1,11 +1,11 @@
 import { ZodError } from 'zod';
 import {
-  APIErrorResponse,
+  ApiErrorResponse,
   BasePayloadType,
   GetConfigurationResponse,
   GetConfigurationResponseType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Get the configuration of your node.
@@ -39,10 +39,10 @@ export const getConfiguration = async (
   try {
     jsonResponse = await rawResponse.json();
   } catch (e) {
-    throw new APIError({
+    throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText,
-      error: 'Failed parsing response'
+      description: 'Failed parsing response'
     });
   }
 

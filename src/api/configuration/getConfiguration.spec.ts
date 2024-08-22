@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { getConfiguration } from './getConfiguration';
 import { GetConfigurationResponseType } from '../../types';
 

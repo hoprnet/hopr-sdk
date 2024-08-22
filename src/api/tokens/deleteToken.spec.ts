@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { deleteToken } from './deleteToken';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 
 // Set up global constants for API endpoint and API token
 const API_ENDPOINT = 'http://localhost:3001';
@@ -26,8 +26,7 @@ describe('deleteToken', () => {
 
   it('should return 401 when authentication fails', async function () {
     const mockResponse = {
-      status: 401,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
@@ -41,13 +40,12 @@ describe('deleteToken', () => {
         apiEndpoint: API_ENDPOINT,
         id: TOKEN_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should return 403 when authorization fails', async function () {
     const mockResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
@@ -61,7 +59,7 @@ describe('deleteToken', () => {
         apiEndpoint: API_ENDPOINT,
         id: TOKEN_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   it('should throw APIError on internal server error', async function () {

@@ -1,6 +1,6 @@
 import nock from 'nock';
 import { withdraw } from './withdraw';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -33,7 +33,7 @@ describe('withdraw function', () => {
 
   test('should return 400 when withdraw fails with incorrect data', async function () {
     const expectedStatus = 'INVALID_CURRENCY | INVALID_AMOUNT';
-    const mockResponse = { status: 422, statusText: expectedStatus };
+    const mockResponse = { status: expectedStatus };
     nock(API_ENDPOINT)
       .post('/api/v3/account/withdraw')
       .reply(400, mockResponse);
@@ -46,13 +46,12 @@ describe('withdraw function', () => {
         amount: AMOUNT,
         ethereumAddress: ETHEREUM_ADDRESS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 401 when authentication fails', async function () {
     const mockResponse = {
-      status: 401,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
@@ -67,13 +66,12 @@ describe('withdraw function', () => {
         amount: AMOUNT,
         ethereumAddress: ETHEREUM_ADDRESS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 403 when authorization fails', async function () {
     const mockResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
@@ -88,12 +86,12 @@ describe('withdraw function', () => {
         amount: AMOUNT,
         ethereumAddress: ETHEREUM_ADDRESS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 422 when withdraw amount exceeds current balance', async function () {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
-    const mockResponse = { status: 422, statusText: expectedStatus };
+    const mockResponse = { status: expectedStatus };
     nock(API_ENDPOINT)
       .post('/api/v3/account/withdraw')
       .reply(422, mockResponse);
@@ -106,6 +104,6 @@ describe('withdraw function', () => {
         amount: AMOUNT,
         ethereumAddress: ETHEREUM_ADDRESS
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

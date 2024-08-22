@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { getChannelTickets } from './getChannelTickets';
 import { GetChannelTicketsResponseType } from '../../types';
 
@@ -44,8 +44,7 @@ describe('test redeemTickets', function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(400, {
-        status: 400,
-        statusText: 'INVALID_CHANNELID'
+        status: 'INVALID_CHANNELID'
       });
 
     await expect(
@@ -54,14 +53,13 @@ describe('test redeemTickets', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(401, {
-        status: 401,
-        statusText: 'string',
+        status: 'string',
         error: 'string'
       });
 
@@ -71,14 +69,13 @@ describe('test redeemTickets', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(403, {
-        status: 403,
-        statusText: 'string',
+        status: 'string',
         error: 'string'
       });
 
@@ -88,14 +85,13 @@ describe('test redeemTickets', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 404 error', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(404, {
-        status: 404,
-        statusText: 'TICKETS_NOT_FOUND'
+        status: 'TICKETS_NOT_FOUND'
       });
 
     await expect(
@@ -104,14 +100,13 @@ describe('test redeemTickets', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(422, {
-        status: 422,
-        statusText: 'UNKNOWN_FAILURE',
+        status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
       });
 
@@ -121,6 +116,6 @@ describe('test redeemTickets', function () {
         apiEndpoint: API_ENDPOINT,
         channelId: BUDDY_CHANNEL_ID
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

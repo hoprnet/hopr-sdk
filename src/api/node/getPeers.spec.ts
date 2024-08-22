@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { getPeers } from './getPeers';
 import { GetPeersResponseType } from '../../types';
 
@@ -52,45 +52,41 @@ describe('test getPeers', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(400, {
-      status: 400,
-      statusText: 'INVALID_PEERID'
+      status: 'INVALID_PEERID'
     });
 
     await expect(
       getPeers({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(401, {
-      status: 401,
-      statusText: 'string',
+      status: 'string',
       error: 'string'
     });
 
     await expect(
       getPeers({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(403, {
-      status: 403,
-      statusText: 'string',
+      status: 'string',
       error: 'string'
     });
 
     await expect(
       getPeers({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(422, {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
 
     await expect(
       getPeers({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

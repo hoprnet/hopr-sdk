@@ -1,11 +1,11 @@
 import { ZodError } from 'zod';
 import {
-  APIErrorResponse,
+  ApiErrorResponse,
   BasePayloadType,
   GetAliasesResponse,
   GetAliasesResponseType
 } from '../../types';
-import { APIError, fetchWithTimeout, getHeaders } from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Get all aliases you set previously and their corresponding peer IDs.
@@ -30,7 +30,7 @@ export const getAliases = async (
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
-    throw new APIError({
+    throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText
     });
@@ -39,17 +39,26 @@ export const getAliases = async (
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
 
-  // we could not parse the response
-  if (parsedRes.success) {
-    return parsedRes.data;
+  // parsedRes and error {} from HOPRd have the same type,
+  // we can only rely on rawResponse.ok to know if its a success
+  if (rawResponse.ok) {
+    const parsedRes = GetAliasesResponse.safeParse(jsonResponse);
+    if (parsedRes.success) {
+      return parsedRes.data;
+    }
+    throw new ZodError(parsedRes.error.issues);
   }
 
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = APIErrorResponse.safeParse(jsonResponse);
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
-    throw new APIError(isApiErrorResponse.data);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText,
+      hoprdErrorPayload: isApiErrorResponse.data
+    });
   }
 
-  throw new ZodError(parsedRes.error.issues);
+  // we could not parse the response and it is unexpected
+  throw new ZodError(isApiErrorResponse.error.issues);
 };

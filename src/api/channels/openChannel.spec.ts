@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { openChannel } from './openChannel';
 import { OpenChannelResponseType } from '../../types';
 
@@ -36,8 +36,7 @@ describe('test openChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(400, {
-      status: 400,
-      statusText: 'INVALID_PEERID'
+      status: 'INVALID_PEERID'
     });
 
     await expect(
@@ -47,12 +46,11 @@ describe('test openChannel', function () {
         peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(401, {
-      status: 401,
-      statusText: 'string',
+      status: 'string',
       error: 'string'
     });
 
@@ -63,12 +61,11 @@ describe('test openChannel', function () {
         peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(403, {
-      status: 403,
-      statusText: 'NOT_ENOUGH_BALANCE'
+      status: 'NOT_ENOUGH_BALANCE'
     });
 
     await expect(
@@ -78,12 +75,11 @@ describe('test openChannel', function () {
         peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 409 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(403, {
-      status: 403,
-      statusText: 'CHANNEL_ALREADY_OPEN'
+      status: 'CHANNEL_ALREADY_OPEN'
     });
 
     await expect(
@@ -93,12 +89,11 @@ describe('test openChannel', function () {
         peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(422, {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
     await expect(
@@ -108,7 +103,7 @@ describe('test openChannel', function () {
         peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error without body', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(422);
@@ -120,6 +115,6 @@ describe('test openChannel', function () {
         peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
         amount: '1000000'
       })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 });

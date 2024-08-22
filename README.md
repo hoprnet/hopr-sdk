@@ -182,9 +182,9 @@ async function getResource(payload: ResourcePayloadType) {
         return parseResponse(rawResponse);
     }
 
-    // check if response has the structure of an expected api error
+    // check if response has the structure of an expected sdk api error
     if (isApiErrorResponse(rawResponse)) {
-        throw new APIError();
+        throw new sdkApiError();
     }
 
     // if we get to this point then we could not parse the response

@@ -1,5 +1,5 @@
 import { ZodError } from 'zod';
-import { APIError } from '../../utils';
+import { sdkApiError } from '../../utils';
 import { getAddresses } from './getAddresses';
 import nock from 'nock';
 import { GetAddressesResponseType } from '../../types';
@@ -32,8 +32,7 @@ describe('getAddresses', () => {
   test('should return 403 if authentication failed', async function () {
     const invalidApiToken = 'Not valid';
     const expectedResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
@@ -43,13 +42,12 @@ describe('getAddresses', () => {
 
     await expect(
       getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: invalidApiToken })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 403 if authorization fails', async function () {
     const expectedResponse = {
-      status: 403,
-      statusText: 'UNAUTHORIZED',
+      status: 'UNAUTHORIZED',
       error: 'You are not authorized to perform this action'
     };
 
@@ -59,13 +57,12 @@ describe('getAddresses', () => {
 
     await expect(
       getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return 422 if there is an unknown failure', async function () {
     const expectedResponse = {
-      status: 422,
-      statusText: 'UNKNOWN_FAILURE',
+      status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     };
 
@@ -75,7 +72,7 @@ describe('getAddresses', () => {
 
     await expect(
       getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
-    ).rejects.toThrow(APIError);
+    ).rejects.toThrow(sdkApiError);
   });
 
   test('should return ZodError if there is a parsing error', async function () {
