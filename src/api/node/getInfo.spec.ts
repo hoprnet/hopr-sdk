@@ -25,7 +25,8 @@ describe('test getInfo', function () {
         hoprManagementModule: '0x39b0445b32f5a544eb7917912f5f837bd061be4c',
         hoprNodeSafe: '0x0361a040acb376dd7e5a4643e5a4c7ae9d20c834',
         indexerBlock: 35346732,
-        indexerChecksum: "0xe780bd95f350e96fe30e98d17560ade3c892f0d3bd75d681f99b0d3c1690517d",
+        indexerChecksum:
+          '0xe780bd95f350e96fe30e98d17560ade3c892f0d3bd75d681f99b0d3c1690517d',
         indexBlockPrevChecksum: 35611556,
         isEligible: false,
         connectivityStatus: 'Orange',
