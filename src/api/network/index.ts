@@ -1,1 +1,1 @@
-export * from './getNetworkPrice';
+export * from './getTicketPrice';

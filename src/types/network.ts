@@ -5,14 +5,14 @@ import { BasePayload } from './general';
  * Get network price
  */
 
-export const GetNetworkPricePayload = BasePayload;
+export const GetTicketPricePayload = BasePayload;
 
-export type GetNetworkPricePayloadType = z.infer<typeof GetNetworkPricePayload>;
+export type GetTicketPricePayloadType = z.infer<typeof GetTicketPricePayload>;
 
-export const GetNetworkPriceResponse = z.object({
+export const GetTicketPriceResponse = z.object({
   price: z.string()
 });
 
-export type GetNetworkPriceResponseType = z.infer<
-  typeof GetNetworkPriceResponse
+export type GetTicketPriceResponseType = z.infer<
+  typeof GetTicketPriceResponse
 >;

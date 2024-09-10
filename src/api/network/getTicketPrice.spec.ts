@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { sdkApiError } from '../../utils';
-import { getNetworkPrice } from './getNetworkPrice';
-import { GetNetworkPriceResponseType } from '../../types';
+import { getTicketPrice } from './getTicketPrice';
+import { GetTicketPriceResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -15,9 +15,9 @@ describe('test pingPeer', function () {
       .post(`/api/v3/network/price`)
       .reply(200, {
         price: '1000000'
-      } as GetNetworkPriceResponseType);
+      } as GetTicketPriceResponseType);
 
-    const response = await getNetworkPrice({
+    const response = await getTicketPrice({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT
     });
@@ -30,7 +30,7 @@ describe('test pingPeer', function () {
     });
 
     await expect(
-      getNetworkPrice({
+      getTicketPrice({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
@@ -43,7 +43,7 @@ describe('test pingPeer', function () {
     });
 
     await expect(
-      getNetworkPrice({
+      getTicketPrice({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
@@ -56,7 +56,7 @@ describe('test pingPeer', function () {
     });
 
     await expect(
-      getNetworkPrice({
+      getTicketPrice({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
@@ -69,7 +69,7 @@ describe('test pingPeer', function () {
     });
 
     await expect(
-      getNetworkPrice({
+      getTicketPrice({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT
       })
