@@ -1,17 +1,16 @@
 import {
-  PingPeerPayloadType,
-  GetPeerPayloadType,
+  GetTicketPricePayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import { getNetworkPrice } from './getNetworkPrice';
+import { getTicketPrice } from './getTicketPrice';
 
-export class PeersAdapter {
+export class NetworkAdapter {
   private apiEndpoint: string;
   private apiToken: string;
   private timeout: number | undefined;
 
   /**
-   * Creates a new instance of the `PeersAdapter` class.
+   * Creates a new instance of the `NetworkAdapter` class.
    * @param apiEndpoint - The API endpoint of the API server.
    * @param apiToken - The API token to use for authentication.
    * @param timeout - optional timeout for all functions
@@ -30,10 +29,10 @@ export class PeersAdapter {
     this.timeout = timeout;
   }
 
-  public async getNetworkPrice(
-    payload: RemoveBasicAuthenticationPayloadType<PingPeerPayloadType>
+  public async getTicketPrice(
+    payload: RemoveBasicAuthenticationPayloadType<GetTicketPricePayloadType>
   ) {
-    return getNetworkPrice({
+    return getTicketPrice({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout

@@ -1,15 +1,15 @@
 import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
-  GetNetworkPricePayloadType,
-  GetNetworkPriceResponse,
-  GetNetworkPriceResponseType
+  GetTicketPricePayloadType,
+  GetTicketPriceResponse,
+  GetTicketPriceResponseType
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getNetworkPrice = async (
-  payload: GetNetworkPricePayloadType
-): Promise<GetNetworkPriceResponseType> => {
+export const getTicketPrice = async (
+  payload: GetTicketPricePayloadType
+): Promise<GetTicketPriceResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
     `${apiEndpointParsed}api/v3/network/price`,
@@ -26,7 +26,7 @@ export const getNetworkPrice = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetNetworkPriceResponse.safeParse(jsonResponse);
+  const parsedRes = GetTicketPriceResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

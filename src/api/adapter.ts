@@ -3,6 +3,7 @@ import { AliasesAdapter } from './aliases/adapter';
 import { ChannelsAdapter } from './channels/adapter';
 import { ChecksAdapter } from './checks/adapter';
 import { ConfigurationAdapter } from './configuration/adapter';
+import { NetworkAdapter } from './network/adapter';
 import { NodeAdapter } from './node/adapter';
 import { TicketsAdapter } from './tickets/adapter';
 import { TokensAdapter } from './tokens/adapter';
@@ -15,6 +16,7 @@ export class ApiAdapter {
   public channels: ChannelsAdapter;
   public checks: ChecksAdapter;
   public configuration: ConfigurationAdapter;
+  public network: NetworkAdapter;
   public node: NodeAdapter;
   public tickets: TicketsAdapter;
   public tokens: TokensAdapter;
@@ -39,6 +41,7 @@ export class ApiAdapter {
       apiToken,
       timeout
     });
+    this.network = new NetworkAdapter({ apiEndpoint, apiToken, timeout });
     this.node = new NodeAdapter({ apiEndpoint, apiToken, timeout });
     this.tickets = new TicketsAdapter({ apiEndpoint, apiToken, timeout });
     this.tokens = new TokensAdapter({ apiEndpoint, apiToken, timeout });
