@@ -13,6 +13,4 @@ export const GetTicketPriceResponse = z.object({
   price: z.string()
 });
 
-export type GetTicketPriceResponseType = z.infer<
-  typeof GetTicketPriceResponse
->;
+export type GetTicketPriceResponseType = z.infer<typeof GetTicketPriceResponse>;
