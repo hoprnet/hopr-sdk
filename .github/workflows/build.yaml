@@ -11,7 +11,7 @@ concurrency:
 jobs:
   build:
     name: Build
-    runs-on: self-hosted-hoprnet-small
+    runs-on: self-hosted-hoprnet-big
     strategy:
       matrix:
         node-version: [20.x, 22.x]
