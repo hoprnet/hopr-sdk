@@ -193,3 +193,7 @@ async function getResource(payload: ResourcePayloadType) {
     throw new ZodError(parsedRes.error.issues);
 }
 ```
+
+## Deployment process
+
+To contribute to this repository you will need to create a pull request. More information about the existing automated workflows can be found in [GitHub Actions](./.github/workflows/README.md)
