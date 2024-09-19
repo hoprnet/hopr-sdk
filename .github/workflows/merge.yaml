@@ -16,7 +16,7 @@ jobs:
   merge:
     name: Merge PR
     runs-on: self-hosted-hoprnet-small
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
 
     steps:
       - name: Checkout repository
