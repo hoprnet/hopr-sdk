@@ -57,3 +57,5 @@ hoprnet-hopr-sdk-*.tgz
 
 # Created by github pipeline
 gha-creds-*.json
+
+docs/
