@@ -1,8 +1,6 @@
-name: Merge PR
+name: Docs
 
 on:
-  pull_request:
-    types: [synchronize]
   push:
     branches:
       - main
@@ -12,8 +10,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  merge:
-    name: Merge PR
+  docs:
+    name: Generate Documentation
     runs-on: self-hosted-hoprnet-small
 
     steps:
@@ -30,7 +28,7 @@ jobs:
           rm -rf docs/*
           yarn docs
 
-      - name: Publish to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
