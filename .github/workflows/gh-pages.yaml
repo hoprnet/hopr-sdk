@@ -30,7 +30,7 @@ jobs:
           rm -rf docs/*
           yarn docs
 
-      - name: Deploy to GitHub Pages
+      - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
