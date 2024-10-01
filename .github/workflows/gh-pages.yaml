@@ -1,0 +1,40 @@
+name: Merge PR
+
+on:
+  pull_request:
+    types: [synchronize]
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: docs
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    name: Merge PR
+    runs-on: self-hosted-hoprnet-small
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: hoprnet/hopr-workflows/actions/setup-node-js@master
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Create docs
+        run: |
+          rm -rf docs/*
+          yarn docs
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: docs
+          cname: hoprnet.org
+          force_orphan: true
