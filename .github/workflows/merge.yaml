@@ -26,19 +26,6 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Create docs
-        run: |
-          rm -rf docs/*
-          yarn docs
-
-      - uses: EndBug/add-and-commit@v9
-        with:
-          add: 'docs'
-          default_author: github_actor
-          new_branch: ${{ github.event.pull_request.head.ref }}
-          message: 'Update docs before merge'
-          pathspec_error_handling: exitImmediately
-
       - name: Setup GCP
         id: gcp
         uses: hoprnet/hopr-workflows/actions/setup-gcp@master
@@ -57,7 +44,7 @@ jobs:
       - name: Publish alpha version
         run: |
           BUILD_DATE=$(date +%Y%m%d%H%M%S)
-          PR_VERSION=$(node -p "require('./package.json').version")-pr.${{ github.event.pull_request.number }}
+          PR_VERSION=$(jq -r '.version' package.json)-pr.${{ github.event.pull_request.number }}
           jq --arg version "${PR_VERSION}-${BUILD_DATE}" '.version = $version' package.json > temp.json
           mv temp.json package.json
           yarn publish --no-git-tag-version --tag next
