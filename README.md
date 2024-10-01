@@ -114,11 +114,11 @@ console.log(res);
 
 ## Documentation
 
-- [HoprSDK Class](https://github.com/hoprnet/hopr-sdk/blob/docs/docs/classes/HoprSDK.md)
-- [API functions](https://github.com/hoprnet/hopr-sdk/blob/docs/docs/modules/api.md)
-- [Flows functions](https://github.com/hoprnet/hopr-sdk/blob/docs/docs/modules/flows.md)
-- [Utils](https://github.com/hoprnet/hopr-sdk/blob/docs/docs/modules/utils.md)
-- [Type Aliases and Variables](https://github.com/hoprnet/hopr-sdk/blob/docs/docs/modules.md)
+- [HoprSDK Class](https://hoprnet.github.io/hopr-sdk/classes/HoprSDK.html)
+- [API functions](https://hoprnet.github.io/hopr-sdk/modules/api.html)
+- [Flows functions](https://hoprnet.github.io/hopr-sdk/modules/flows.html)
+- [Utils](https://hoprnet.github.io/hopr-sdk/modules/utils.html)
+- [Type Aliases and Variables](https://hoprnet.github.io/hopr-sdk/modules.html)
 
 ## Project setup
 
