@@ -36,5 +36,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: docs
-          cname: hoprnet.org
           force_orphan: true
