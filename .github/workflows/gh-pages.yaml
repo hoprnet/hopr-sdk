@@ -1,8 +1,6 @@
-name: Merge PR
+name: Docs
 
 on:
-  pull_request:
-    types: [synchronize]
   push:
     branches:
       - main
@@ -12,8 +10,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  merge:
-    name: Merge PR
+  docs:
+    name: Generate Documentation
     runs-on: self-hosted-hoprnet-small
 
     steps:
@@ -36,5 +34,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: docs
-          cname: hoprnet.org
           force_orphan: true
