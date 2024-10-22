@@ -16,12 +16,17 @@ export const ReceivedMessage = z.object({
  */
 
 export const SendMessagePayload = BasePayload.extend({
-  tag: z.number().min(0).max(Math.pow(2, 16)),
+  tag: z.number().min(1024).max(Math.pow(2, 16)),
   body: z.string(),
-  peerId: z.string(),
+  peerId: z.string().optional(),
+  peerAddress: z.string().optional(),
+  destination: z.string().optional(),
   path: z.array(z.string()).min(1).max(3).optional(),
   hops: z.number().min(1).max(3).optional()
-});
+}).refine(
+  ( data ) => !!data.peerId || !!data.peerAddress || !!data.destination,
+    'Either destination, peerId or peerAddress have to be filled in.',
+);
 
 export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;
 
