@@ -24,8 +24,8 @@ export const SendMessagePayload = BasePayload.extend({
   path: z.array(z.string()).min(1).max(3).optional(),
   hops: z.number().min(1).max(3).optional()
 }).refine(
-  ( data ) => !!data.peerId || !!data.peerAddress || !!data.destination,
-    'Either destination, peerId or peerAddress have to be filled in.',
+  (data) => !!data.peerId || !!data.peerAddress || !!data.destination,
+  'Either destination, peerId or peerAddress have to be filled in.'
 );
 
 export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;

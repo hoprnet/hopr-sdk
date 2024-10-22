@@ -13,15 +13,20 @@ import { ZodError } from 'zod';
 export const sendMessage = async (
   payload: SendMessagePayloadType
 ): Promise<string> => {
+  const destination =
+    payload.destination || payload.peerId || payload.peerAddress;
 
-  const destination =  payload.destination || payload.peerId || payload.peerAddress;
+  if (!destination)
+    throw 'Either destination, peerId or peerAddress have to be filled in.';
 
-  if (!destination) throw  'Either destination, peerId or peerAddress have to be filled in.';
-
-  if(payload.destination && (payload.peerId) || payload.peerAddress) {
-    console.log('You provided multiple destination/peerId/peerAddress attributes.\nOnly destination property will be used.\nPlease only use destination property in sendMessage function.')
+  if ((payload.destination && payload.peerId) || payload.peerAddress) {
+    console.log(
+      'You provided multiple destination/peerId/peerAddress attributes.\nOnly destination property will be used.\nPlease only use destination property in sendMessage function.'
+    );
   } else if (payload.peerId || payload.peerAddress) {
-    console.log('Properties peerId and peerAddress are deprecated. Please only use destination property in sendMessage function.')
+    console.log(
+      'Properties peerId and peerAddress are deprecated. Please only use destination property in sendMessage function.'
+    );
   }
 
   const body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
