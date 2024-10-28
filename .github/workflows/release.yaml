@@ -4,18 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       release_type:
-        description: 'Next version type: [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease | from-git]'
-        required: true
-        type: string
-        default: 'patch'
-      release_tag:
-        description: 'NPM release tag'
+        description: 'Next version type'
         required: true
         type: choice
-        default: 'latest'
         options:
-          - latest
-          - beta
+          - major
+          - minor
+          - patch
+        default: 'patch'
 
 concurrency:
   group: release
@@ -108,7 +104,8 @@ jobs:
 
       - name: Publish to Google Artifact Registry
         if: steps.unpublish.outputs.already_released != 'true'
-        run: yarn publish --tag ${{ inputs.release_tag }}
+        run: |
+          yarn publish --non-interactive --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --tag release-candidate
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
 
@@ -122,7 +119,7 @@ jobs:
 
       - name: Publish to npm
         run: |
-          yarn publish --no-git-tag-version --tag ${{ inputs.release_tag }}
+          yarn publish --non-interactive --registry=https://registry.npmjs.org/ --no-git-tag-version --tag release-candidate
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
