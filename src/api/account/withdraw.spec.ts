@@ -25,7 +25,7 @@ describe('withdraw function', () => {
       apiEndpoint: API_ENDPOINT,
       currency: CURRENCY,
       amount: AMOUNT,
-      ethereumAddress: ETHEREUM_ADDRESS
+      address: ETHEREUM_ADDRESS
     });
 
     expect(actualResult).toEqual(expectedReceipt);
@@ -44,7 +44,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        ethereumAddress: ETHEREUM_ADDRESS
+        address: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -64,7 +64,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        ethereumAddress: ETHEREUM_ADDRESS
+        address: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -84,7 +84,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        ethereumAddress: ETHEREUM_ADDRESS
+        address: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -102,7 +102,7 @@ describe('withdraw function', () => {
         apiEndpoint: API_ENDPOINT,
         currency: CURRENCY,
         amount: AMOUNT,
-        ethereumAddress: ETHEREUM_ADDRESS
+        address: ETHEREUM_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
