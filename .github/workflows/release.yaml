@@ -20,7 +20,7 @@ concurrency:
 jobs:
   release:
     name: Close release
-    runs-on: self-hosted-hoprnet-small
+    runs-on: self-hosted-hoprnet-big
 
     steps:
       - name: Checkout repository
