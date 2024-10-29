@@ -120,7 +120,7 @@ jobs:
       - name: Publish to npm
         run: |
           rm .yarnrc
-          sed -i '' '/hoprassociation/d' .npmrc
+          sed -i '/hoprassociation/d' .npmrc
           yarn publish --non-interactive --registry=https://registry.npmjs.org/ --no-git-tag-version --tag release-candidate
           git checkout .npmrc .yarnrc
         env:
