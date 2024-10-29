@@ -119,9 +119,11 @@ jobs:
 
       - name: Publish to npm
         run: |
+          rm .yarnrc
+          sed -i '/hoprassociation/d' .npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
           yarn publish --non-interactive --registry=https://registry.npmjs.org/ --no-git-tag-version --tag release-candidate
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          git checkout .npmrc .yarnrc
 
       - name: Bump Version
         id: bump
