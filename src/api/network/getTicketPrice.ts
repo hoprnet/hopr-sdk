@@ -14,7 +14,7 @@ export const getTicketPrice = async (
   const rawResponse = await fetchWithTimeout(
     `${apiEndpointParsed}api/v3/network/price`,
     {
-      method: 'POST',
+      method: 'GET',
       headers: getHeaders(payload.apiToken)
     },
     payload.timeout
