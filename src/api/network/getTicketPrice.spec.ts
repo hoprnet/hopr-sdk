@@ -12,7 +12,7 @@ describe('test pingPeer', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/network/price`)
+      .get(`/api/v3/network/price`)
       .reply(200, {
         price: '1000000'
       } as GetTicketPriceResponseType);
@@ -25,7 +25,7 @@ describe('test pingPeer', function () {
     expect(response.price).toEqual('1000000');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/network/price`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -37,7 +37,7 @@ describe('test pingPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/network/price`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -50,7 +50,7 @@ describe('test pingPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/network/price`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -63,7 +63,7 @@ describe('test pingPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/network/price`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
