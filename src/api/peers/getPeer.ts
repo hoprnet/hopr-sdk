@@ -22,7 +22,7 @@ export const getPeer = async (
     console.error('[HOPR SDK: pingPeer] Please provide destination');
   }
 
-  const url = new URL(`api/v3/peers/${payload.peerId}`, payload.apiEndpoint);
+  const url = new URL(`api/v3/peers/${destination}`, payload.apiEndpoint);
 
   const rawResponse = await fetchWithTimeout(
     url,
