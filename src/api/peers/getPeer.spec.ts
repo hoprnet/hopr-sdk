@@ -10,6 +10,7 @@ describe('test getPeer', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
+  /* Transition period between 2.1 and 2.2 */
   it('handles successful response using peerId', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/peers/${BUDDY_PEER_ID}`)
@@ -35,6 +36,7 @@ describe('test getPeer', function () {
 
     expect(response.observed.at(0)).toEqual('/ip4/');
   });
+  /* ------------------------------------ */
   it('handles successful response using destination', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/peers/${BUDDY_PEER_ID}`)

@@ -16,11 +16,12 @@ export const ReceivedMessage = z.object({
  */
 
 export const SendMessagePayload = BasePayload.extend({
-  tag: z.number().min(0).max(Math.pow(2, 16)),
+  tag: z.number().min(Math.pow(2, 10)).max(Math.pow(2, 16)),
   body: z.string(),
-  peerId: z.string(),
+  destination: z.string().optional(),
+  peerId: z.string().optional(),
   path: z.array(z.string()).min(1).max(3).optional(),
-  hops: z.number().min(1).max(3).optional()
+  hops: z.number().min(1).max(3).optional(),
 });
 
 export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;

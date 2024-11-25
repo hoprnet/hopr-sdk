@@ -11,6 +11,7 @@ describe('test pingPeer', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
+  /* Transition period between 2.1 and 2.2 */
   it('handles successful response using peerId', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/peers/${BUDDY_PEER_ID}/ping`)
@@ -27,6 +28,7 @@ describe('test pingPeer', function () {
 
     expect(response.latency).toEqual(10);
   });
+  /* ------------------------------------ */
   it('handles successful response using destination', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/peers/${BUDDY_PEER_ID}/ping`)
