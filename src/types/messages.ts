@@ -26,6 +26,12 @@ export const SendMessagePayload = BasePayload.extend({
 
 export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;
 
+export const SendMessageResponse = z.object({
+  timestamp: z.number()
+});
+
+export type SendMessageResponseType = z.infer<typeof SendMessageResponse>;
+
 /** Delete Messages */
 
 export const DeleteMessagesPayload = BasePayload.extend({
