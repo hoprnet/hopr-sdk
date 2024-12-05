@@ -58,6 +58,7 @@ export const GetInfoResponse = z.object({
   indexerBlock: z.number().optional(), //from HORPd 2.1.3
   indexerChecksum: z.string().optional(), //from HORPd 2.1.3
   indexBlockPrevChecksum: z.number().optional(), //from HORPd 2.1.5
+  provider: z.string().optional(), //from HORPd 2.2.0
   connectivityStatus: z.enum(['Unknown', 'Red', 'Orange', 'Yellow', 'Green']),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()
