@@ -4,8 +4,7 @@ import {
   SetSessionResponseType,
   SetSessionPayloadType,
   GetSessionsResponseType,
-  RemoveBasicAuthenticationPayloadType,
-  CloseSessionResponseType
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { getSessions } from './getSessions';
