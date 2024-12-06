@@ -2,7 +2,10 @@ import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   RemoveBasicAuthenticationPayloadType,
-  SetAliasPayloadType
+  SetSessionResponse,
+  SetSessionResponseType,
+  SetSessionPayloadType,
+  SetSessionPayloadCallType
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
@@ -17,55 +20,45 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
  * @returns A Promise that resolves to true if alias successfully linked to peerId.
  * @throws An error that occurred while processing the request.
  */
-export const setAlias = async (
-  payload: SetAliasPayloadType
-): Promise<boolean> => {
-  let body: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType> = {
-    alias: payload.alias
-  };
-  /* Transition period between 2.1 and 2.2 */
-  if (payload.peerId) {
-    console.warn(
-      '[HOPR SDK: setAlias] peerId key is deprecated. Please use destination key'
-    );
-    body.peerId = payload.peerId;
-  }
-  if (payload.destination) {
-    console.warn(
-      '[HOPR SDK: setAlias] peerId key is deprecated. Please use destination key'
-    );
-    body.destination = payload.destination;
-  }
-  if (!payload.destination && !payload.peerId) {
-    console.error('[HOPR SDK: setAlias] Please provide destination');
-  }
-  /* ------------------------------------ */
+export const setSession = async (
+  payload: SetSessionPayloadType
+): Promise<SetSessionResponseType> => {
+  const { protocol, apiToken, apiEndpoint, ...rest } = payload;
+  const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> =
+    {
+      ...rest
+    };
 
-  const url = new URL(`api/v3/aliases`, payload.apiEndpoint);
+  const url = new URL(`api/v3/session/${protocol}`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
       method: 'POST',
-      headers: getHeaders(payload.apiToken),
+      headers: getHeaders(apiToken),
       body: JSON.stringify(body)
     },
     payload.timeout
   );
-
-  // received expected response
-  if (rawResponse.status === 201) {
-    return true;
-  }
 
   // received unexpected error from server
   if (rawResponse.status > 499) {
     throw new Error(rawResponse.statusText);
   }
 
-  // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
+  // parsedRes and error {} from HOPRd have the same type,
+  // we can only rely on rawResponse.ok to know if its a success
+  if (rawResponse.ok) {
+    const parsedRes = SetSessionResponse.safeParse(jsonResponse);
+    if (parsedRes.success) {
+      console.log('xx', parsedRes.data);
+      return parsedRes.data;
+    }
+    throw new ZodError(parsedRes.error.issues);
+  }
+
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
       status: rawResponse.status,

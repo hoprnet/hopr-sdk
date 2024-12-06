@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { boolean, z } from 'zod';
 
 /**
  * Get statistics
@@ -14,4 +14,14 @@ export const GetTicketStatisticsResponse = z.object({
 
 export type GetTicketStatisticsResponseType = z.infer<
   typeof GetTicketStatisticsResponse
+>;
+
+/**
+ * Reset statistics
+ */
+
+export const ResetTicketStatisticsResponse = z.boolean();
+
+export type ResetTicketStatisticsResponseType = z.infer<
+  typeof ResetTicketStatisticsResponse
 >;

@@ -11,18 +11,36 @@ describe('test pingPeer', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
-  it('handles successful response', async function () {
+  /* Transition period between 2.1 and 2.2 */
+  it('handles successful response using peerId', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/peers/${BUDDY_PEER_ID}/ping`)
       .reply(200, {
         latency: 10,
-        reportedVersion: '1.92.12'
+        reportedVersion: '2.2.0'
       } as PingPeerResponseType);
 
     const response = await pingPeer({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
       peerId: BUDDY_PEER_ID
+    });
+
+    expect(response.latency).toEqual(10);
+  });
+  /* ------------------------------------ */
+  it('handles successful response using destination', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v3/peers/${BUDDY_PEER_ID}/ping`)
+      .reply(200, {
+        latency: 10,
+        reportedVersion: '2.2.0'
+      } as PingPeerResponseType);
+
+    const response = await pingPeer({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      destination: BUDDY_PEER_ID
     });
 
     expect(response.latency).toEqual(10);
@@ -36,7 +54,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -50,7 +68,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -64,7 +82,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -78,7 +96,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });

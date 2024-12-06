@@ -10,7 +10,8 @@ describe('test getPeer', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
-  it('handles successful response', async function () {
+  /* Transition period between 2.1 and 2.2 */
+  it('handles successful response using peerId', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v3/peers/${BUDDY_PEER_ID}`)
       .reply(200, {
@@ -35,6 +36,32 @@ describe('test getPeer', function () {
 
     expect(response.observed.at(0)).toEqual('/ip4/');
   });
+  /* ------------------------------------ */
+  it('handles successful response using destination', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v3/peers/${BUDDY_PEER_ID}`)
+      .reply(200, {
+        announced: [
+          '/ip4/',
+          '/p2p/',
+          '/p2p/',
+          '/p2p/',
+          '/p2p/',
+          '/p2p/',
+          '/ip4/',
+          '/ip4/'
+        ],
+        observed: ['/ip4/', '/ip4/', '/ip4/', '/p2p/']
+      });
+
+    const response = await getPeer({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      destination: BUDDY_PEER_ID
+    });
+
+    expect(response.observed.at(0)).toEqual('/ip4/');
+  });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_PEER_ID}`).reply(400, {
       status: 'INVALID_PEERID'
@@ -44,7 +71,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -58,7 +85,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -72,7 +99,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -86,7 +113,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: BUDDY_PEER_ID
+        destination: BUDDY_PEER_ID
       })
     ).rejects.toThrow(sdkApiError);
   });

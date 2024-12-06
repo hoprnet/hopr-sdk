@@ -24,7 +24,8 @@ export type GetAliasesResponseType = z.infer<typeof GetAliasesResponse>;
  */
 
 export const SetAliasPayload = BasePayload.extend({
-  peerId: z.string(),
+  peerId: z.string().optional(),
+  destination: z.string().optional(),
   alias: z.string()
 });
 
