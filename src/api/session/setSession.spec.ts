@@ -1,63 +1,65 @@
 import nock from 'nock';
 import { setSession } from './setSession';
 import { sdkApiError } from '../../utils';
-import { SetAliasPayloadType } from '../../types';
+import { RemoveBasicAuthenticationPayloadType, SetSessionResponseType, SetSessionPayloadCallType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
-const ALIAS = 'my-alias';
+const API_TOKEN_INVALID = 'my-invalid-api-token';
 const PEER_ID = 'peer123';
+const PROTOCOL = 'udp';
 
-describe('setAlias function', () => {
+const body:  RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
+  destination: PEER_ID,
+  capabilities: [
+    "Retransmission",
+    "Segmentation"
+  ],
+  listenHost: "127.0.0.1:10000",
+  path: {
+    Hops: 1
+  },
+  target: {
+    Plain: "example.com:8080"
+  }
+};
+
+
+describe('setSession function', () => {
   afterEach(() => {
     nock.cleanAll();
   });
-  /* Transition period between 2.1 and 2.2 */
-  test('should return 201 and undefined if successful using peerId', async function () {
+  test('should return 200 if successful', async function () {
+    const resp = {
+      ip: "127.0.0.1",
+      port: 5542,
+      protocol: "tcp",
+      target: "example.com:80"
+    }
     nock(API_ENDPOINT)
-      .post('/api/v3/aliases', {
-        peerId: PEER_ID,
-        alias: ALIAS
-      })
-      .reply(201);
+      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .reply(200, resp);
 
-    const result = await setAlias({
+    const result = await setSession({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      peerId: PEER_ID,
-      alias: ALIAS
+      protocol: PROTOCOL,
+      ...body
     });
-    expect(result).toBe(true);
-  });
-  /* ------------------------------------ */
-  test('should return 201 and undefined if successful', async function () {
-    nock(API_ENDPOINT)
-      .post('/api/v3/aliases', {
-        destination: PEER_ID,
-        alias: ALIAS
-      })
-      .reply(201);
-
-    const result = await setAlias({
-      apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT,
-      destination: PEER_ID,
-      alias: ALIAS
-    });
-    expect(result).toBe(true);
+    expect(result).toBe(resp);
   });
 
   test('should return 400 if invalid peerId was provided', async function () {
     nock(API_ENDPOINT)
-      .post('/api/v3/aliases', { peerId: PEER_ID, alias: ALIAS })
+      .post(`/api/v3/session/${PROTOCOL}`, body)
       .reply(400, { status: 'INVALID_PEERID' });
 
     await expect(
-      setAlias({
+      setSession({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: PEER_ID,
-        alias: ALIAS
+        protocol: PROTOCOL,
+        ...body
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -67,17 +69,16 @@ describe('setAlias function', () => {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
-    const invalidApiToken = 'my-invalid-api-token';
     nock(API_ENDPOINT)
-      .post('/api/v3/aliases', { peerId: PEER_ID, alias: ALIAS })
+      .post(`/api/v3/session/${PROTOCOL}`, body)
       .reply(401, expectedResponse);
 
     await expect(
-      setAlias({
-        apiToken: invalidApiToken,
+      setSession({
+        apiToken: API_TOKEN_INVALID,
         apiEndpoint: API_ENDPOINT,
-        peerId: PEER_ID,
-        alias: ALIAS
+        protocol: PROTOCOL,
+        ...body
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -88,15 +89,15 @@ describe('setAlias function', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .post('/api/v3/aliases', { peerId: PEER_ID, alias: ALIAS })
+      .post(`/api/v3/session/${PROTOCOL}`, body)
       .reply(403, expectedResponse);
 
     await expect(
-      setAlias({
+      setSession({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: PEER_ID,
-        alias: ALIAS
+        protocol: PROTOCOL,
+        ...body
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -107,15 +108,15 @@ describe('setAlias function', () => {
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
-      .post('/api/v3/aliases', { peerId: PEER_ID, alias: ALIAS })
+      .post(`/api/v3/session/${PROTOCOL}`, body)
       .reply(422, expectedResponse);
 
     await expect(
-      setAlias({
+      setSession({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        peerId: PEER_ID,
-        alias: ALIAS
+        protocol: PROTOCOL,
+        ...body
       })
     ).rejects.toThrow(sdkApiError);
   });

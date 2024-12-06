@@ -2,6 +2,8 @@ import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   RemoveBasicAuthenticationPayloadType,
+  SetSessionResponse,
+  SetSessionResponseType,
   SetSessionPayloadType,
   SetSessionPayloadCallType
 } from '../../types';
@@ -20,7 +22,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
  */
 export const setSession = async (
   payload: SetSessionPayloadType
-): Promise<boolean> => {
+): Promise<SetSessionResponseType> => {
   const { protocol, apiToken, apiEndpoint, ...rest } = payload;
   const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
     ...rest
@@ -37,20 +39,24 @@ export const setSession = async (
     payload.timeout
   );
 
-  // received expected response
-  if (rawResponse.status === 200) {
-    return true;
-  }
-
   // received unexpected error from server
   if (rawResponse.status > 499) {
     throw new Error(rawResponse.statusText);
   }
 
-  // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
+  // parsedRes and error {} from HOPRd have the same type,
+  // we can only rely on rawResponse.ok to know if its a success
+  if (rawResponse.ok) {
+    const parsedRes = SetSessionResponse.safeParse(jsonResponse);
+    if (parsedRes.success) {
+      return parsedRes.data;
+    }
+    throw new ZodError(parsedRes.error.issues);
+  }
+
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
       status: rawResponse.status,

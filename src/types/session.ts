@@ -36,7 +36,7 @@ export type GetSessionsResponseType = z.infer<typeof GetSessionsResponse>;
  */
 
 export const SetSessionPayloadCall = BasePayload.extend({
-  capabilities: SessionCapabilities,
+  capabilities: SessionCapabilities.array(),
   destination: z.string(),
   listenHost: z.string(),
   path:  z.object({
@@ -53,6 +53,8 @@ export const SetSessionPayload = SetSessionPayloadCall.extend({
 
 export type SetSessionPayloadCallType = z.infer<typeof SetSessionPayloadCall>;
 export type SetSessionPayloadType = z.infer<typeof SetSessionPayload>;
+export const SetSessionResponse = SessionPayload;
+export type SetSessionResponseType = SessionPayloadType;
 
 /**
  * getAlias
