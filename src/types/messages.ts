@@ -21,7 +21,7 @@ export const SendMessagePayload = BasePayload.extend({
   destination: z.string().optional(),
   peerId: z.string().optional(),
   path: z.array(z.string()).min(1).max(3).optional(),
-  hops: z.number().min(1).max(3).optional(),
+  hops: z.number().min(1).max(3).optional()
 });
 
 export type SendMessagePayloadType = z.infer<typeof SendMessagePayload>;

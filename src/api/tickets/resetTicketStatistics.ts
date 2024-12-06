@@ -24,13 +24,12 @@ export const resetTicketStatistics = async (
     return true;
   }
 
-
   // received unexpected error from server
   if (rawResponse.status > 499) {
     throw new Error(rawResponse.statusText);
   }
 
-    // check if response has the structure of an expected api error
+  // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 

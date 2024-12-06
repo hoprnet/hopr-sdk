@@ -21,14 +21,16 @@ export const sendMessage = async (
     hops: payload.hops
   };
 
-  if(payload.peerId) {
-    console.warn('[HOPR SDK: pingPeer] peerId key is deprecated. Please use destination key');
+  if (payload.peerId) {
+    console.warn(
+      '[HOPR SDK: pingPeer] peerId key is deprecated. Please use destination key'
+    );
     body.peerId = payload.peerId;
   }
-  if(payload.destination) {
+  if (payload.destination) {
     body.destination = payload.destination;
   }
-  if(!payload.destination && !payload.peerId) {
+  if (!payload.destination && !payload.peerId) {
     console.error('[HOPR SDK: pingPeer] Please provide destination');
   }
   /* ------------------------------------ */

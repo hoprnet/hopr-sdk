@@ -15,18 +15,18 @@ describe('getSessions', () => {
   it('should return a list of sessions with their corresponding data if 200', async function () {
     const expectedResponse: GetSessionsResponseType = [
       {
-        ip: "127.0.0.1",
+        ip: '127.0.0.1',
         port: 5542,
         protocol: PROTOCOL,
-        target: "example.com:80"
+        target: 'example.com:80'
       },
       {
-        ip: "127.0.0.1",
+        ip: '127.0.0.1',
         port: 5543,
         protocol: PROTOCOL,
-        target: "example.com:80"
+        target: 'example.com:80'
       }
-    ]
+    ];
 
     nock(API_ENDPOINT)
       .get(`/api/v3/session/${PROTOCOL}`)
@@ -61,9 +61,7 @@ describe('getSessions', () => {
   });
 
   it('should return a status 500', async function () {
-    nock(API_ENDPOINT)
-      .get(`/api/v3/session/${PROTOCOL}`)
-      .reply(500);
+    nock(API_ENDPOINT).get(`/api/v3/session/${PROTOCOL}`).reply(500);
 
     await expect(
       getSessions({

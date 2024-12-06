@@ -1,2 +1,2 @@
-export * from './getMinimumTicketProbability'
+export * from './getMinimumTicketProbability';
 export * from './getTicketPrice';

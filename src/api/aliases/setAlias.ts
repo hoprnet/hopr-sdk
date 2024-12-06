@@ -21,18 +21,22 @@ export const setAlias = async (
   payload: SetAliasPayloadType
 ): Promise<boolean> => {
   let body: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType> = {
-    alias: payload.alias,
+    alias: payload.alias
   };
   /* Transition period between 2.1 and 2.2 */
-  if(payload.peerId) {
-    console.warn('[HOPR SDK: setAlias] peerId key is deprecated. Please use destination key');
+  if (payload.peerId) {
+    console.warn(
+      '[HOPR SDK: setAlias] peerId key is deprecated. Please use destination key'
+    );
     body.peerId = payload.peerId;
   }
-  if(payload.destination) {
-    console.warn('[HOPR SDK: setAlias] peerId key is deprecated. Please use destination key');
+  if (payload.destination) {
+    console.warn(
+      '[HOPR SDK: setAlias] peerId key is deprecated. Please use destination key'
+    );
     body.destination = payload.destination;
   }
-  if(!payload.destination && !payload.peerId) {
+  if (!payload.destination && !payload.peerId) {
     console.error('[HOPR SDK: setAlias] Please provide destination');
   }
   /* ------------------------------------ */

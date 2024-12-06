@@ -11,11 +11,11 @@ const API_TOKEN = 'S3CR3T-T0K3N';
 const API_TOKEN_INVALID = 'my-invalid-api-token';
 const PROTOCOL = 'udp';
 
-const body: RemoveBasicAuthenticationPayloadType<CloseSessionPayloadCallType> = {
-  listeningIp: "127.0.0.1",
-  port: 9999
-};
-
+const body: RemoveBasicAuthenticationPayloadType<CloseSessionPayloadCallType> =
+  {
+    listeningIp: '127.0.0.1',
+    port: 9999
+  };
 
 describe('closeSession', () => {
   afterEach(() => {
@@ -23,9 +23,7 @@ describe('closeSession', () => {
   });
 
   test('should return 204 if session is removed successfully', async function () {
-    nock(API_ENDPOINT)
-      .delete(`/api/v3/session/${PROTOCOL}`, body)
-      .reply(204);
+    nock(API_ENDPOINT).delete(`/api/v3/session/${PROTOCOL}`, body).reply(204);
 
     const response = await closeSession({
       apiEndpoint: API_ENDPOINT,

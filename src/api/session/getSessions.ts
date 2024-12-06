@@ -5,11 +5,7 @@ import {
   GetSessionsResponse,
   GetSessionsResponseType
 } from '../../types';
-import {
-  sdkApiError,
-  fetchWithTimeout,
-  getHeaders
-} from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Get all aliases you set previously and their corresponding peer IDs.

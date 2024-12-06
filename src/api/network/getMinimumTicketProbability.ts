@@ -26,7 +26,8 @@ export const getMinimumTicketProbability = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetMinimumNetworkProbabilityResponse.safeParse(jsonResponse);
+  const parsedRes =
+    GetMinimumNetworkProbabilityResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

@@ -24,9 +24,10 @@ export const setSession = async (
   payload: SetSessionPayloadType
 ): Promise<SetSessionResponseType> => {
   const { protocol, apiToken, apiEndpoint, ...rest } = payload;
-  const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
-    ...rest
-  };
+  const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> =
+    {
+      ...rest
+    };
 
   const url = new URL(`api/v3/session/${protocol}`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(
@@ -51,7 +52,7 @@ export const setSession = async (
   if (rawResponse.ok) {
     const parsedRes = SetSessionResponse.safeParse(jsonResponse);
     if (parsedRes.success) {
-      console.log('xx', parsedRes.data)
+      console.log('xx', parsedRes.data);
       return parsedRes.data;
     }
     throw new ZodError(parsedRes.error.issues);

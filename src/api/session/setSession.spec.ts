@@ -1,7 +1,11 @@
 import nock from 'nock';
 import { setSession } from './setSession';
 import { sdkApiError } from '../../utils';
-import { RemoveBasicAuthenticationPayloadType, SetSessionResponseType, SetSessionPayloadCallType } from '../../types';
+import {
+  RemoveBasicAuthenticationPayloadType,
+  SetSessionResponseType,
+  SetSessionPayloadCallType
+} from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -9,21 +13,17 @@ const API_TOKEN_INVALID = 'my-invalid-api-token';
 const PEER_ID = 'peer123';
 const PROTOCOL = 'udp';
 
-const body:  RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
+const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
   destination: PEER_ID,
-  capabilities: [
-    "Retransmission",
-    "Segmentation"
-  ],
-  listenHost: "127.0.0.1:10000",
+  capabilities: ['Retransmission', 'Segmentation'],
+  listenHost: '127.0.0.1:10000',
   path: {
     Hops: 1
   },
   target: {
-    Plain: "example.com:8080"
+    Plain: 'example.com:8080'
   }
 };
-
 
 describe('setSession function', () => {
   afterEach(() => {
@@ -31,11 +31,11 @@ describe('setSession function', () => {
   });
   test('should return 200 if successful', async function () {
     const resp = {
-      ip: "127.0.0.1",
+      ip: '127.0.0.1',
       port: 5542,
-      protocol: "tcp",
-      target: "example.com:80"
-    }
+      protocol: 'tcp',
+      target: 'example.com:80'
+    };
     nock(API_ENDPOINT)
       .post(`/api/v3/session/${PROTOCOL}`, body)
       .reply(200, resp);

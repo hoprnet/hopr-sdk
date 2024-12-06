@@ -5,11 +5,7 @@ import {
   CloseSessionPayloadCallType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
-import {
-  sdkApiError,
-  fetchWithTimeout,
-  getHeaders
-} from '../../utils';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
  * Unassign an alias from a PeerId.
@@ -25,7 +21,8 @@ export const closeSession = async (
 ): Promise<boolean> => {
   const { protocol, apiToken, apiEndpoint, ...rest } = payload;
   const url = new URL(`api/v3/session/${protocol}`, apiEndpoint);
-  const body: RemoveBasicAuthenticationPayloadType<CloseSessionPayloadCallType> = rest;
+  const body: RemoveBasicAuthenticationPayloadType<CloseSessionPayloadCallType> =
+    rest;
   const rawResponse = await fetchWithTimeout(
     url,
     {

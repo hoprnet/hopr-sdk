@@ -5,14 +5,14 @@ import { BasePayload } from './general';
  * General
  */
 
-const SessionProtocols = z.enum([ "udp", "tcp"]);
-const SessionCapabilities = z.enum([ "Retransmission", "Segmentation"]);
+const SessionProtocols = z.enum(['udp', 'tcp']);
+const SessionCapabilities = z.enum(['Retransmission', 'Segmentation']);
 
 export const SessionPayload = z.object({
   ip: z.string(),
   port: z.number(),
   protocol: SessionProtocols,
-  target: z.string(),
+  target: z.string()
 });
 
 export type SessionPayloadType = z.infer<typeof SessionPayload>;
@@ -22,7 +22,7 @@ export type SessionPayloadType = z.infer<typeof SessionPayload>;
  */
 
 export const GetSessionsPayload = BasePayload.extend({
-  protocol: SessionProtocols,
+  protocol: SessionProtocols
 });
 
 export type GetSessionsPayloadType = z.infer<typeof GetSessionsPayload>;
@@ -39,11 +39,11 @@ export const SetSessionPayloadCall = BasePayload.extend({
   capabilities: SessionCapabilities.array(),
   destination: z.string(),
   listenHost: z.string(),
-  path:  z.object({
-    Hops: z.number(),
+  path: z.object({
+    Hops: z.number()
   }),
   target: z.object({
-    Plain: z.string(),
+    Plain: z.string()
   })
 });
 
@@ -72,14 +72,16 @@ export type SetSessionResponseType = SessionPayloadType;
 
 export const CloseSessionPayloadCall = BasePayload.extend({
   listeningIp: z.string(),
-  port: z.number(),
+  port: z.number()
 });
 
 export const CloseSessionPayload = CloseSessionPayloadCall.extend({
   protocol: SessionProtocols
 });
 
-export type CloseSessionPayloadCallType = z.infer<typeof CloseSessionPayloadCall>;
+export type CloseSessionPayloadCallType = z.infer<
+  typeof CloseSessionPayloadCall
+>;
 export type CloseSessionPayloadType = z.infer<typeof CloseSessionPayload>;
 
 // export const CloseSessionResponse = z.object({ peerId: z.string() });
