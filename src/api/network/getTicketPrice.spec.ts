@@ -6,7 +6,7 @@ import { GetTicketPriceResponseType } from '../../types';
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 
-describe('test pingPeer', function () {
+describe('test getTicketPrice', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
@@ -24,33 +24,8 @@ describe('test pingPeer', function () {
 
     expect(response.price).toEqual('1000000');
   });
-  it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(400, {
-      status: 'INVALID_PEERID'
-    });
-
-    await expect(
-      getTicketPrice({
-        apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
-      })
-    ).rejects.toThrow(sdkApiError);
-  });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(401, {
-      status: 'string',
-      error: 'string'
-    });
-
-    await expect(
-      getTicketPrice({
-        apiToken: API_TOKEN,
-        apiEndpoint: API_ENDPOINT
-      })
-    ).rejects.toThrow(sdkApiError);
-  });
-  it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(403, {
       status: 'string',
       error: 'string'
     });

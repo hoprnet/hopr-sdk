@@ -1,5 +1,5 @@
 import nock from 'nock';
-import { setAlias } from './setAlias';
+import { setSession } from './setSession';
 import { sdkApiError } from '../../utils';
 import { SetAliasPayloadType } from '../../types';
 
