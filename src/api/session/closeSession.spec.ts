@@ -1,45 +1,57 @@
 import { sdkApiError } from '../../utils';
-import { removeAlias } from './removeAlias';
+import { closeSession } from './closeSession';
+import {
+  RemoveBasicAuthenticationPayloadType,
+  CloseSessionPayloadCallType
+} from '../../types';
 import nock from 'nock';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
-const ALIAS = 'my-alias';
+const API_TOKEN_INVALID = 'my-invalid-api-token';
+const PROTOCOL = 'udp';
 
-describe('removeAlias', () => {
+const body: RemoveBasicAuthenticationPayloadType<CloseSessionPayloadCallType> = {
+  listeningIp: "127.0.0.1",
+  port: 9999
+};
+
+
+describe('closeSession', () => {
   afterEach(() => {
     nock.cleanAll();
   });
 
-  test('should return 204 if alias is removed successfully', async function () {
-    const API_TOKEN = 'my-api-key';
+  test('should return 204 if session is removed successfully', async function () {
+    nock(API_ENDPOINT)
+      .delete(`/api/v3/session/${PROTOCOL}`, body)
+      .reply(204);
 
-    nock(API_ENDPOINT).delete(`/api/v3/aliases/${ALIAS}`).reply(204);
-
-    const response = await removeAlias({
+    const response = await closeSession({
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN,
-      alias: ALIAS
+      protocol: PROTOCOL,
+      ...body
     });
     expect(response).toBe(true);
   });
 
   test('should return 401 if authentication failed', async function () {
-    const invalidApiToken = 'my-invalid-api-token';
     const expectedResponse = {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
 
     nock(API_ENDPOINT)
-      .delete(`/api/v3/aliases/${ALIAS}`)
+      .delete(`/api/v3/session/${PROTOCOL}`, body)
       .reply(401, expectedResponse);
 
     await expect(
-      removeAlias({
-        alias: ALIAS,
-        apiToken: invalidApiToken,
-        apiEndpoint: API_ENDPOINT
+      closeSession({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN_INVALID,
+        protocol: PROTOCOL,
+        ...body
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -51,13 +63,14 @@ describe('removeAlias', () => {
     };
 
     nock(API_ENDPOINT)
-      .delete(`/api/v3/aliases/${ALIAS}`)
+      .delete(`/api/v3/session/${PROTOCOL}`, body)
       .reply(403, expectedResponse);
     await expect(
-      removeAlias({
+      closeSession({
         apiEndpoint: API_ENDPOINT,
         apiToken: API_TOKEN,
-        alias: ALIAS
+        protocol: PROTOCOL,
+        ...body
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -69,14 +82,15 @@ describe('removeAlias', () => {
     };
 
     nock(API_ENDPOINT)
-      .delete(`/api/v3/aliases/${ALIAS}`)
+      .delete(`/api/v3/session/${PROTOCOL}`, body)
       .reply(422, expectedResponse);
 
     await expect(
-      removeAlias({
+      closeSession({
         apiEndpoint: API_ENDPOINT,
         apiToken: API_TOKEN,
-        alias: ALIAS
+        protocol: PROTOCOL,
+        ...body
       })
     ).rejects.toThrow(sdkApiError);
   });

@@ -20,7 +20,7 @@ import {
  * @returns A Promise that resolves to true if the alias was successfully removed.
  * @throws An error that occurred while processing the request.
  */
-export const removeAlias = async (
+export const closeSession = async (
   payload: CloseSessionPayloadType
 ): Promise<boolean> => {
   const { protocol, apiToken, apiEndpoint, ...rest } = payload;

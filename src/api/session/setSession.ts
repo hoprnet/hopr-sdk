@@ -51,6 +51,7 @@ export const setSession = async (
   if (rawResponse.ok) {
     const parsedRes = SetSessionResponse.safeParse(jsonResponse);
     if (parsedRes.success) {
+      console.log('xx', parsedRes.data)
       return parsedRes.data;
     }
     throw new ZodError(parsedRes.error.issues);

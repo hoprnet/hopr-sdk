@@ -8,7 +8,7 @@ import { BasePayload } from './general';
 const SessionProtocols = z.enum([ "udp", "tcp"]);
 const SessionCapabilities = z.enum([ "Retransmission", "Segmentation"]);
 
-export const SessionPayload = BasePayload.extend({
+export const SessionPayload = z.object({
   ip: z.string(),
   port: z.number(),
   protocol: SessionProtocols,

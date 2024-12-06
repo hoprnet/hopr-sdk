@@ -46,7 +46,7 @@ describe('setSession function', () => {
       protocol: PROTOCOL,
       ...body
     });
-    expect(result).toBe(resp);
+    expect(result).toEqual(resp);
   });
 
   test('should return 400 if invalid peerId was provided', async function () {
