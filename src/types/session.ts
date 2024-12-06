@@ -27,7 +27,7 @@ export const GetSessionsPayload = BasePayload.extend({
 
 export type GetSessionsPayloadType = z.infer<typeof GetSessionsPayload>;
 
-export const GetSessionsResponse = z.record(SessionPayload);
+export const GetSessionsResponse = z.array(SessionPayload);
 
 export type GetSessionsResponseType = z.infer<typeof GetSessionsResponse>;
 

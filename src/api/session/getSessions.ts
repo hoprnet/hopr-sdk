@@ -23,7 +23,7 @@ export const getSessions = async (
   payload: GetSessionsPayloadType
 ): Promise<GetSessionsResponseType> => {
   const { protocol, apiToken, apiEndpoint } = payload;
-  const url = new URL(`api/v3/sessions/${protocol}`, apiEndpoint);
+  const url = new URL(`api/v3/session/${protocol}`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

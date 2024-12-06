@@ -1,27 +1,41 @@
 import nock from 'nock';
-import { getAliases } from './getAliases';
+import { getSessions } from './getSessions';
 import { sdkApiError } from '../../utils';
-import { GetAliasesResponseType } from '../../types';
+import { GetSessionsResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+const PROTOCOL = 'udp';
 
-describe('getAliases', () => {
+describe('getSessions', () => {
   beforeEach(() => {
     nock.cleanAll();
   });
 
-  it('should return a list of aliases with their corresponding peerIds if 200', async function () {
-    const expectedResponse: GetAliasesResponseType = {
-      alice: '0x1234567890123456789012345678901234567890',
-      bob: '0x0987654321098765432109876543210987654321'
-    };
+  it('should return a list of sessions with their corresponding data if 200', async function () {
+    const expectedResponse: GetSessionsResponseType = [
+      {
+        ip: "127.0.0.1",
+        port: 5542,
+        protocol: PROTOCOL,
+        target: "example.com:80"
+      },
+      {
+        ip: "127.0.0.1",
+        port: 5543,
+        protocol: PROTOCOL,
+        target: "example.com:80"
+      }
+    ]
 
-    nock(API_ENDPOINT).get('/api/v3/aliases').reply(200, expectedResponse);
+    nock(API_ENDPOINT)
+      .get(`/api/v3/session/${PROTOCOL}`)
+      .reply(200, expectedResponse);
 
-    const result = await getAliases({
+    const result = await getSessions({
       apiEndpoint: API_ENDPOINT,
-      apiToken: API_TOKEN
+      apiToken: API_TOKEN,
+      protocol: PROTOCOL
     });
 
     expect(result).toEqual(expectedResponse);
@@ -33,18 +47,30 @@ describe('getAliases', () => {
       error: 'Full error message.'
     };
 
-    nock(API_ENDPOINT).get('/api/v3/aliases').reply(422, expectedResponse);
+    nock(API_ENDPOINT)
+      .get(`/api/v3/session/${PROTOCOL}`)
+      .reply(422, expectedResponse);
 
     await expect(
-      getAliases({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+      getSessions({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN,
+        protocol: PROTOCOL
+      })
     ).rejects.toThrow(sdkApiError);
   });
 
   it('should return a status 500', async function () {
-    nock(API_ENDPOINT).get('/api/v3/aliases').reply(500);
+    nock(API_ENDPOINT)
+      .get(`/api/v3/session/${PROTOCOL}`)
+      .reply(500);
 
     await expect(
-      getAliases({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+      getSessions({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN,
+        protocol: PROTOCOL
+      })
     ).rejects.toThrow(sdkApiError);
   });
 });
