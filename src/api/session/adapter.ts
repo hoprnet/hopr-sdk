@@ -1,21 +1,23 @@
 import {
-  AliasPayloadType,
-  BasePayloadType,
+  CloseSessionPayloadType,
+  GetSessionsPayloadType,
+  SetSessionResponseType,
+  SetSessionPayloadType,
+  GetSessionsResponseType,
   RemoveBasicAuthenticationPayloadType,
-  SetAliasPayloadType
+  CloseSessionResponseType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { getSessions } from './getSessions';
 import { setSession } from './setSession';
 import { closeSession } from './closeSession';
-import { setAlias } from './setAlias';
 
-const log = createLogger('aliases');
+const log = createLogger('session');
 
 /**
  * A class that provides a wrapper around aliases-related API endpoints.
  */
-export class AliasesAdapter {
+export class SessionAdapter {
   private apiEndpoint: string;
   private apiToken: string;
   private timeout: number | undefined;
@@ -44,33 +46,19 @@ export class AliasesAdapter {
    *
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
-  public async getAliases(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ): Promise<Record<string, string> | undefined> {
-    return getAliases({
+  public async setSession(
+    payload: RemoveBasicAuthenticationPayloadType<SetSessionPayloadType>
+  ): Promise<SetSessionResponseType> {
+    return setSession({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
-    });
-  }
-
-  /**
-   * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
-   * Give an address a more memorable alias and use it instead of Hopr address.
-   * Aliases are kept locally and are not saved or shared on the network.
-   *
-   * @param payload - A object containing the peer ID and alias to link.
-   * @returns A Promise that resolves to true if alias succesfully linked to peerId.
-   */
-  public async setAlias(
-    payload: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType>
-  ): Promise<boolean | undefined> {
-    return setAlias({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout,
-      alias: payload.alias,
-      peerId: payload.peerId
+      timeout: payload?.timeout ?? this.timeout,
+      destination: payload.destination,
+      capabilities: payload.capabilities,
+      listenHost: payload.listenHost,
+      path: payload.path,
+      target: payload.target,
+      protocol: payload.protocol
     });
   }
 
@@ -80,14 +68,14 @@ export class AliasesAdapter {
    * @param payload - An object containing the alias to retrieve the peer ID for.
    * @returns A promise that resolves to the peer ID associated with the alias.
    */
-  public async getAlias(
-    payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
-  ): Promise<string | undefined> {
-    return getAlias({
+  public async getSessions(
+    payload: RemoveBasicAuthenticationPayloadType<GetSessionsPayloadType>
+  ): Promise<GetSessionsResponseType> {
+    return getSessions({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout,
-      alias: payload.alias
+      protocol: payload.protocol
     });
   }
 
@@ -97,14 +85,16 @@ export class AliasesAdapter {
    * @param payload - The payload containing the details of the alias to remove.
    * @returns A Promise that resolves to true if the alias was successfully removed.
    */
-  public async removeAlias(
-    payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
-  ): Promise<boolean | undefined> {
-    return removeAlias({
+  public async closeSession(
+    payload: RemoveBasicAuthenticationPayloadType<CloseSessionPayloadType>
+  ): Promise<boolean> {
+    return closeSession({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout,
-      alias: payload.alias
+      protocol: payload.protocol,
+      listeningIp: payload.listeningIp,
+      port: payload.port
     });
   }
 }

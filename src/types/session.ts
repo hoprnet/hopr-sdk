@@ -84,6 +84,6 @@ export type CloseSessionPayloadCallType = z.infer<
 >;
 export type CloseSessionPayloadType = z.infer<typeof CloseSessionPayload>;
 
-// export const CloseSessionResponse = z.object({ peerId: z.string() });
+// export const CloseSessionResponse = z.object({ listeningIp: z.string(), port: z.number() });
 
-// export type CloseSessionResponseType = z.infer<typeof GetAliasResponse>;
+// export type CloseSessionResponseType = z.infer<typeof CloseSessionResponse>;
