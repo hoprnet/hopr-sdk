@@ -1,2 +1,2 @@
 export * from './getTicketStatistics';
-export * from './redeemTickets';
+export * from './redeemAllTickets';

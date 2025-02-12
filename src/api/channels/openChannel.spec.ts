@@ -131,6 +131,18 @@ describe('test openChannel', function () {
       })
     ).rejects.toThrow(sdkApiError);
   });
+  it('throws a custom error when hoprd api response is an 412 error without body', async function () {
+    nock(API_ENDPOINT).post('/api/v3/channels').reply(412);
+
+    await expect(
+      openChannel({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+        amount: '1000000'
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
   it('throws a custom error when hoprd api response is an 422 error without body', async function () {
     nock(API_ENDPOINT).post('/api/v3/channels').reply(422);
 

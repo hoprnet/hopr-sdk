@@ -78,3 +78,15 @@ const nodeSchema = z.object({
 export const GetEntryNodesResponse = z.record(nodeSchema);
 
 export type GetEntryNodesResponseType = z.infer<typeof GetEntryNodesResponse>;
+
+/**
+ * Get version
+ */
+
+export const GetVersionResponse = z.object({
+  apiVersion: z.string().optional(),
+  version: z.string()
+});
+
+export type GetVersionResponseType = z.infer<typeof GetVersionResponse>;
+

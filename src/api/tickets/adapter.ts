@@ -4,7 +4,7 @@ import {
 } from '../../types';
 import { createLogger } from '../../utils';
 import { getTicketStatistics } from './getTicketStatistics';
-import { redeemTickets } from './redeemTickets';
+import { redeemAllTickets } from './redeemAllTickets';
 
 const log = createLogger('tickets');
 
@@ -47,10 +47,10 @@ export class TicketsAdapter {
    * Redeems all the unredeemed HOPR tickets owned by the HOPR node.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
-  public async redeemTickets(
+  public async redeemAllTickets(
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
-    return redeemTickets({
+    return redeemAllTickets({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout

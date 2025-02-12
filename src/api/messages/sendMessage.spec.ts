@@ -108,6 +108,24 @@ describe('sendMessage', () => {
     ).rejects.toThrow(sdkApiError);
   });
 
+  it('should return 412 if the node is not ready', async () => {
+    const errorResponse = {
+      status: 'The node is not ready',
+      error: 'The node is not ready'
+    };
+    nock(API_ENDPOINT)
+      .post('/api/v3/messages', PAYLOAD)
+      .reply(412, errorResponse);
+
+    await expect(
+      sendMessage({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        ...PAYLOAD
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+
   it('should return 422 if unknown failure occurred', async () => {
     const errorResponse = {
       status: 'unknown failure',

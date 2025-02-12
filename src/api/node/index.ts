@@ -3,4 +3,5 @@ export * from './getInfo';
 export * from './getMetrics';
 export * from './getPeers';
 export * from './getVersion';
+export * from './getVersions';
 export * from '../peers/pingPeer';

@@ -62,6 +62,22 @@ describe('test fundChannels', function () {
       })
     ).rejects.toThrow(sdkApiError);
   });
+  it('throws a custom error when hoprd api response is an 412 error', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
+      .reply(412, {
+        status: 'the node is not ready'
+      });
+
+    await expect(
+      fundChannel({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        channelId: BUDDY_CHANNEL_ID,
+        amount: '1000000'
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
