@@ -69,7 +69,8 @@ export type FundChannelsResponseType = z.infer<typeof FundChannelsResponse>;
 /** Open channel */
 
 export const OpenChannelPayload = BasePayload.extend({
-  peerAddress: z.string(),
+  peerAddress: z.string().optional(),
+  destination: z.string().optional(),
   amount: z.string()
 });
 

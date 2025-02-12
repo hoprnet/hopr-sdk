@@ -1,6 +1,6 @@
 import { closeChannel } from '../api/channels';
 import { BasePayloadType } from '../types/general';
-import { getTicketStatistics, redeemTickets } from '../api/tickets';
+import { getTicketStatistics, redeemAllTickets } from '../api/tickets';
 import { getOutgoingChannels } from './getOutgoingChannels';
 
 /**
@@ -41,7 +41,7 @@ export const closeEverything = async (payload: BasePayloadType) => {
   if (statistics?.unredeemedValue) {
     // redeem tickets
     ticketsHaveBeenRedeemed =
-      (await redeemTickets({
+      (await redeemAllTickets({
         apiEndpoint: payload.apiEndpoint,
         apiToken: payload.apiToken,
         timeout: payload.timeout

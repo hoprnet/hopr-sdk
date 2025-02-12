@@ -11,7 +11,7 @@ import { ZodError } from 'zod';
  *
  * @throws APIError - If the operation fails. The error object contains the status code and the error message.
  */
-export const redeemTickets = async (
+export const redeemAllTickets = async (
   payload: BasePayloadType
 ): Promise<boolean> => {
   const url = new URL(`api/v3/tickets/redeem`, payload.apiEndpoint);

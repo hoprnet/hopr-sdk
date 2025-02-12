@@ -1,18 +1,18 @@
 import nock from 'nock';
 import { sdkApiError } from '../../utils';
-import { redeemTickets } from './redeemTickets';
+import { redeemAllTickets } from './redeemAllTickets';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 
-describe('test redeemTickets', function () {
+describe('test redeemAllTickets', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(204);
 
-    const response = await redeemTickets({
+    const response = await redeemAllTickets({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT
     });
@@ -25,7 +25,7 @@ describe('test redeemTickets', function () {
     });
 
     await expect(
-      redeemTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      redeemAllTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
@@ -35,7 +35,7 @@ describe('test redeemTickets', function () {
     });
 
     await expect(
-      redeemTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      redeemAllTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
@@ -45,7 +45,17 @@ describe('test redeemTickets', function () {
     });
 
     await expect(
-      redeemTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      redeemAllTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('throws the node is not ready when hoprd api response is an 412 error ', async function () {
+    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(412, {
+      status: 'the node is not ready',
+      error: 'the node is not ready'
+    });
+
+    await expect(
+      redeemAllTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
@@ -55,7 +65,7 @@ describe('test redeemTickets', function () {
     });
 
     await expect(
-      redeemTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      redeemAllTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
 });

@@ -10,10 +10,23 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const pingPeer = async (
   payload: PingPeerPayloadType
 ): Promise<PingPeerResponseType> => {
-  const url = new URL(
-    `api/v3/peers/${payload.peerId}/ping`,
-    payload.apiEndpoint
-  );
+  /* Transition period between 2.1 and 2.2 */
+  let destination = '';
+  if (payload.peerId) {
+    console.warn(
+      '[HOPR SDK: pingPeer] peerId key is deprecated. Please use destination key'
+    );
+    destination = payload.peerId;
+  }
+  if (payload.destination) {
+    destination = payload.destination;
+  }
+  if (!payload.destination && !payload.peerId) {
+    console.error('[HOPR SDK: pingPeer] Please provide destination');
+  }
+  /* ------------------------------------ */
+
+  const url = new URL(`api/v3/peers/${destination}/ping`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

@@ -89,6 +89,24 @@ describe('withdraw function', () => {
     ).rejects.toThrow(sdkApiError);
   });
 
+  test('should return 412 when withdraw amount exceeds current balance', async function () {
+    const expectedStatus = 'the node is not ready';
+    const mockResponse = { status: expectedStatus };
+    nock(API_ENDPOINT)
+      .post('/api/v3/account/withdraw')
+      .reply(412, mockResponse);
+
+    await expect(
+      withdraw({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        currency: CURRENCY,
+        amount: AMOUNT,
+        address: ETHEREUM_ADDRESS
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+
   test('should return 422 when withdraw amount exceeds current balance', async function () {
     const expectedStatus = 'NOT_ENOUGH_BALANCE';
     const mockResponse = { status: expectedStatus };
