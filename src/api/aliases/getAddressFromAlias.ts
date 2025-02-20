@@ -2,7 +2,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 import {
   AliasPayloadType,
   ApiErrorResponse,
-  GetAliasResponse
+  GetAddressFromAliasResponse
 } from '../../types';
 import { ZodError } from 'zod';
 
@@ -32,11 +32,11 @@ export const getAddressFromAlias = async (payload: AliasPayloadType): Promise<st
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetAliasResponse.safeParse(jsonResponse);
+  const parsedRes = GetAddressFromAliasResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {
-    return parsedRes.data.peerId;
+    return parsedRes.data.address;
   }
 
   // check if response has the structure of an expected api error

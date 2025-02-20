@@ -15,7 +15,7 @@ describe('getAddressFromAlias', () => {
   it('should return peerId when provided alias exists', async function () {
     const expectedPeerId = '0x1234567890123456789012345678901234567890';
     nock(API_ENDPOINT)
-      .get(`/api/v3/aliases/${ALIAS}`)
+      .get(`/api/v3/aliases_addresses/${ALIAS}`)
       .reply(200, { address: expectedPeerId } as GetAddressFromAliasResponseType);
 
     const result = await getAddressFromAlias({
