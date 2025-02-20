@@ -38,3 +38,7 @@ export type SetAliasPayloadType = z.infer<typeof SetAliasPayload>;
 export const GetAliasResponse = z.object({ peerId: z.string() });
 
 export type GetAliasResponseType = z.infer<typeof GetAliasResponse>;
+
+export const GetAddressFromAliasResponse = z.object({ address: z.string() });
+
+export type GetAddressFromAliasResponseType = z.infer<typeof GetAddressFromAliasResponse>;
