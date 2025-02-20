@@ -28,6 +28,8 @@ describe('test getInfo', function () {
         indexerChecksum:
           '0xe780bd95f350e96fe30e98d17560ade3c892f0d3bd75d681f99b0d3c1690517d',
         indexBlockPrevChecksum: 35611556,
+        indexerLastLogBlock: 35611556,
+        indexerLastLogChecksum:  '0xe780bd95f350e96fe30e98d17560ade3c892f0d3bd75d681f99b0d3c1690517d',
         provider: 'http://localhost:8545/',
         isEligible: false,
         connectivityStatus: 'Orange',
