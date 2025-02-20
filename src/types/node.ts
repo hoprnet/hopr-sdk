@@ -92,3 +92,20 @@ export const GetVersionResponse = z.object({
 
 export type GetVersionResponseType = z.infer<typeof GetVersionResponse>;
 
+
+/**
+ * Get graph
+ */
+
+export const GetGraphPayload = BasePayload.extend({
+  ignoreDisconnectedComponents: z.boolean().optional(),
+  ignoreNonOpenedChannels: z.boolean().optional(),
+  rawGraph: z.boolean().optional(),
+});
+
+export type GetGraphPayloadType = z.infer<typeof GetGraphPayload>;
+
+export const GetGraphResponse = z.string();
+
+export type GetGraphResponseType = z.infer<typeof GetGraphResponse>;
+

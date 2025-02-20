@@ -16,7 +16,7 @@ const PROTOCOL = 'udp';
 const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
   destination: PEER_ID,
   capabilities: ['Retransmission', 'Segmentation'],
-  listenHost: '127.0.0.1:10000',
+  listenHost: '127.0.0.1:5542',
   path: {
     Hops: 1
   },
@@ -31,10 +31,13 @@ describe('setSession function', () => {
   });
   test('should return 200 if successful', async function () {
     const resp = {
-      ip: '127.0.0.1',
-      port: 5542,
-      protocol: 'tcp',
-      target: 'example.com:80'
+      "ip": "127.0.0.1",
+      "path": {
+        "Hops": 1
+      },
+      "port": 5542,
+      "protocol": "tcp",
+      "target": "example.com:8080"
     };
     nock(API_ENDPOINT)
       .post(`/api/v3/session/${PROTOCOL}`, body)
@@ -91,6 +94,25 @@ describe('setSession function', () => {
     nock(API_ENDPOINT)
       .post(`/api/v3/session/${PROTOCOL}`, body)
       .reply(403, expectedResponse);
+
+    await expect(
+      setSession({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        protocol: PROTOCOL,
+        ...body
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+
+  test('should return 409 if listening address and port already in use.', async function () {
+    const expectedResponse = {
+      status: 'INVALID_INPUT',
+      error: 'Listening address and port already in use.'
+    };
+    nock(API_ENDPOINT)
+      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .reply(409, expectedResponse);
 
     await expect(
       setSession({

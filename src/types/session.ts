@@ -12,7 +12,10 @@ export const SessionPayload = z.object({
   ip: z.string(),
   port: z.number(),
   protocol: SessionProtocols,
-  target: z.string()
+  target: z.string(),
+  path: z.object({
+    Hops: z.number()
+  }),
 });
 
 export type SessionPayloadType = z.infer<typeof SessionPayload>;
