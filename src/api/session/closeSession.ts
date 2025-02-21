@@ -31,7 +31,7 @@ export const closeSession = async (
   );
 
   // received expected response
-  if (rawResponse.status === 204) {
+  if (rawResponse.ok) {
     return true;
   }
 
