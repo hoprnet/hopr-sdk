@@ -62,10 +62,10 @@ export class SessionAdapter {
   }
 
   /**
-   * Get the PeerId (Hopr address) that have this alias assigned to it.
+   * Get information about active sessions.
    *
-   * @param payload - An object containing the alias to retrieve the peer ID for.
-   * @returns A promise that resolves to the peer ID associated with the alias.
+   * @param payload - An object containing the protocol filter for sessions.
+   * @returns A promise that resolves to the active sessions information.
    */
   public async getSessions(
     payload: RemoveBasicAuthenticationPayloadType<GetSessionsPayloadType>
