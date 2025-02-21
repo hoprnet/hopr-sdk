@@ -41,4 +41,6 @@ export type GetAliasResponseType = z.infer<typeof GetAliasResponse>;
 
 export const GetAddressFromAliasResponse = z.object({ address: z.string() });
 
-export type GetAddressFromAliasResponseType = z.infer<typeof GetAddressFromAliasResponse>;
+export type GetAddressFromAliasResponseType = z.infer<
+  typeof GetAddressFromAliasResponse
+>;

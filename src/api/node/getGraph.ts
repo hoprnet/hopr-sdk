@@ -10,20 +10,23 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getGraph = async (
   payload: GetGraphPayloadType
 ): Promise<GetGraphResponseType> => {
-
-  const {
-    ignoreDisconnectedComponents,
-    ignoreNonOpenedChannels,
-    rawGraph
-  } = payload;
+  const { ignoreDisconnectedComponents, ignoreNonOpenedChannels, rawGraph } =
+    payload;
 
   const params = [
-    ignoreDisconnectedComponents !== undefined ? `ignoreDisconnectedComponents=${ignoreDisconnectedComponents}` : null,
-    ignoreNonOpenedChannels !== undefined ? `ignoreNonOpenedChannels=${ignoreNonOpenedChannels}` : null,
-    rawGraph !== undefined ? `rawGraph=${rawGraph}` : null,
-  ].filter(elem => !!elem);
+    ignoreDisconnectedComponents !== undefined
+      ? `ignoreDisconnectedComponents=${ignoreDisconnectedComponents}`
+      : null,
+    ignoreNonOpenedChannels !== undefined
+      ? `ignoreNonOpenedChannels=${ignoreNonOpenedChannels}`
+      : null,
+    rawGraph !== undefined ? `rawGraph=${rawGraph}` : null
+  ].filter((elem) => !!elem);
 
-  const url = new URL(`api/v3/node/graph?${params.join('&')}`, payload.apiEndpoint);
+  const url = new URL(
+    `api/v3/node/graph?${params.join('&')}`,
+    payload.apiEndpoint
+  );
 
   const rawResponse = await fetchWithTimeout(
     url,
@@ -43,7 +46,7 @@ export const getGraph = async (
   let jsonResponse = null;
   try {
     jsonResponse = JSON.parse(textResponse);
-  } catch (e){
+  } catch (e) {
     // If it fails, it doesn't mean the function failed as it can return json as a string or a string
   }
 

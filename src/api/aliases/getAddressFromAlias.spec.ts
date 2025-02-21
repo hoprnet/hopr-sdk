@@ -16,7 +16,9 @@ describe('getAddressFromAlias', () => {
     const expectedPeerId = '0x1234567890123456789012345678901234567890';
     nock(API_ENDPOINT)
       .get(`/api/v3/aliases_addresses/${ALIAS}`)
-      .reply(200, { address: expectedPeerId } as GetAddressFromAliasResponseType);
+      .reply(200, {
+        address: expectedPeerId
+      } as GetAddressFromAliasResponseType);
 
     const result = await getAddressFromAlias({
       alias: ALIAS,
@@ -59,5 +61,4 @@ describe('getAddressFromAlias', () => {
       })
     ).rejects.toThrow(sdkApiError);
   });
-
 });

@@ -1,7 +1,7 @@
 import {
   GetMinimumNetworkProbabilityPayloadType,
   GetTicketPricePayloadType,
-  RemoveBasicAuthenticationPayloadType,
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { getTicketPrice } from './getTicketPrice';
 import { getMinimumTicketProbability } from './getMinimumTicketProbability';

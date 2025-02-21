@@ -1,8 +1,15 @@
 import { ZodError } from 'zod';
-import { ApiErrorResponse, type BasePayloadType, GetVersionResponse, GetVersionResponseType } from '../../types';
+import {
+  ApiErrorResponse,
+  type BasePayloadType,
+  GetVersionResponse,
+  GetVersionResponseType
+} from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getVersions = async (payload: BasePayloadType): Promise<GetVersionResponseType> => {
+export const getVersions = async (
+  payload: BasePayloadType
+): Promise<GetVersionResponseType> => {
   const url = new URL(`api/v3/node/version`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,

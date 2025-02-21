@@ -11,8 +11,8 @@ describe('test getVersion', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(200, {
-      "apiVersion": "3.10.0",
-      "version": "2.2.2"
+      apiVersion: '3.10.0',
+      version: '2.2.2'
     });
 
     const response = await getVersion({

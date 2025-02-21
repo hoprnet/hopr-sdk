@@ -21,7 +21,7 @@ describe('getSessions', () => {
         target: 'example.com:80',
         path: {
           Hops: 1
-        },
+        }
       },
       {
         ip: '127.0.0.1',
@@ -30,7 +30,7 @@ describe('getSessions', () => {
         target: 'example.com:80',
         path: {
           Hops: 2
-        },
+        }
       }
     ];
 

@@ -56,21 +56,20 @@ export class AliasesAdapter {
     });
   }
 
-    /**
+  /**
    * Get all aliases you set previously and their corresponding peer IDs.
    *
    * @returns An object with alias names as keys and the peerId associated with the alias.
    */
-    public async getAliases(
-      payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-    ): Promise<Record<string, string> | undefined> {
-      return getAliases({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: payload?.timeout ?? this.timeout
-      });
-    }
-
+  public async getAliases(
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ): Promise<Record<string, string> | undefined> {
+    return getAliases({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload?.timeout ?? this.timeout
+    });
+  }
 
   /**
    * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
@@ -92,7 +91,7 @@ export class AliasesAdapter {
     });
   }
 
-    /**
+  /**
    * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
    * Give an address a more memorable alias and use it instead of Hopr address.
    * Aliases are kept locally and are not saved or shared on the network.
@@ -100,16 +99,16 @@ export class AliasesAdapter {
    * @param payload - A object containing the peer ID and alias to link.
    * @returns A Promise that resolves to true if alias successfully linked to peerId.
    */
-    public async getAddressFromAlias(
-      payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
-    ): Promise<string | undefined> {
-      return getAddressFromAlias({
-        apiEndpoint: this.apiEndpoint,
-        apiToken: this.apiToken,
-        timeout: payload.timeout ?? this.timeout,
-        alias: payload.alias
-      });
-    }
+  public async getAddressFromAlias(
+    payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
+  ): Promise<string | undefined> {
+    return getAddressFromAlias({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      alias: payload.alias
+    });
+  }
 
   /**
    * Get the PeerId (Hopr address) that have this alias assigned to it.

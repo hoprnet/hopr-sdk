@@ -28,7 +28,9 @@ describe('closeSession', () => {
   });
 
   test('should return 204 if session is removed successfully', async function () {
-    nock(API_ENDPOINT).delete(`/api/v3/session/${protocol}/${listeningIp}/${port}`).reply(204);
+    nock(API_ENDPOINT)
+      .delete(`/api/v3/session/${protocol}/${listeningIp}/${port}`)
+      .reply(204);
 
     const response = await closeSession(payload);
     expect(response).toBe(true);
@@ -44,9 +46,7 @@ describe('closeSession', () => {
       .delete(`/api/v3/session/${protocol}/${listeningIp}/${port}`)
       .reply(401, expectedResponse);
 
-    await expect(
-      closeSession(payload)
-    ).rejects.toThrow(sdkApiError);
+    await expect(closeSession(payload)).rejects.toThrow(sdkApiError);
   });
 
   test('should return 403 if authorization failed', async function () {
@@ -58,9 +58,7 @@ describe('closeSession', () => {
     nock(API_ENDPOINT)
       .delete(`/api/v3/session/${protocol}/${listeningIp}/${port}`)
       .reply(403, expectedResponse);
-    await expect(
-      closeSession(payload)
-    ).rejects.toThrow(sdkApiError);
+    await expect(closeSession(payload)).rejects.toThrow(sdkApiError);
   });
 
   test('should return 422 if unknown failure occurred', async function () {
@@ -73,8 +71,6 @@ describe('closeSession', () => {
       .delete(`/api/v3/session/${protocol}/${listeningIp}/${port}`)
       .reply(422, expectedResponse);
 
-    await expect(
-      closeSession(payload)
-    ).rejects.toThrow(sdkApiError);
+    await expect(closeSession(payload)).rejects.toThrow(sdkApiError);
   });
 });

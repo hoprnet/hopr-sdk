@@ -31,13 +31,13 @@ describe('setSession function', () => {
   });
   test('should return 200 if successful', async function () {
     const resp = {
-      "ip": "127.0.0.1",
-      "path": {
-        "Hops": 1
+      ip: '127.0.0.1',
+      path: {
+        Hops: 1
       },
-      "port": 5542,
-      "protocol": "tcp",
-      "target": "example.com:8080"
+      port: 5542,
+      protocol: 'tcp',
+      target: 'example.com:8080'
     };
     nock(API_ENDPOINT)
       .post(`/api/v3/session/${PROTOCOL}`, body)

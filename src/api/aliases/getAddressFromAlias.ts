@@ -15,8 +15,13 @@ import { ZodError } from 'zod';
  * @returns A promise that resolves to the ETH address associated with the alias.
  * @throws An error that occurred while processing the request.
  */
-export const getAddressFromAlias = async (payload: AliasPayloadType): Promise<string> => {
-  const url = new URL(`api/v3/aliases_addresses/${payload.alias}`, payload.apiEndpoint);
+export const getAddressFromAlias = async (
+  payload: AliasPayloadType
+): Promise<string> => {
+  const url = new URL(
+    `api/v3/aliases_addresses/${payload.alias}`,
+    payload.apiEndpoint
+  );
   const rawResponse = await fetchWithTimeout(
     url,
     {

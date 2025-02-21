@@ -59,7 +59,7 @@ export class NodeAdapter {
       timeout: payload?.timeout ?? this.timeout,
       ignoreDisconnectedComponents: payload?.ignoreDisconnectedComponents,
       ignoreNonOpenedChannels: payload?.ignoreNonOpenedChannels,
-      rawGraph: payload?.rawGraph,
+      rawGraph: payload?.rawGraph
     });
   }
 

@@ -19,13 +19,16 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const closeSession = async (
   payload: CloseSessionPayloadType
 ): Promise<boolean> => {
-  const { protocol, listeningIp, port, apiToken, apiEndpoint, } = payload;
-  const url = new URL(`api/v3/session/${protocol}/${listeningIp}/${port}`, apiEndpoint);
+  const { protocol, listeningIp, port, apiToken, apiEndpoint } = payload;
+  const url = new URL(
+    `api/v3/session/${protocol}/${listeningIp}/${port}`,
+    apiEndpoint
+  );
   const rawResponse = await fetchWithTimeout(
     url,
     {
       method: 'DELETE',
-      headers: getHeaders(apiToken),
+      headers: getHeaders(apiToken)
     },
     payload.timeout
   );

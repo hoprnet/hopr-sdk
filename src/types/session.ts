@@ -15,7 +15,7 @@ export const SessionPayload = z.object({
   target: z.string(),
   path: z.object({
     Hops: z.number()
-  }),
+  })
 });
 
 export type SessionPayloadType = z.infer<typeof SessionPayload>;

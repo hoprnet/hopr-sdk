@@ -154,7 +154,9 @@ describe('closeEverything', function () {
     });
     expect(res.closedChannels.length).toEqual(0);
     expect(res.redeemedTickets).toEqual(true);
-    expect((tickets.redeemAllTickets as jest.Mock).mock.calls.length).toEqual(1);
+    expect((tickets.redeemAllTickets as jest.Mock).mock.calls.length).toEqual(
+      1
+    );
   });
   it('does not try to redeem tickets if no tickets are unredeemed', async function () {
     // mock hoprd node get channels
@@ -186,6 +188,8 @@ describe('closeEverything', function () {
     });
     expect(res.closedChannels.length).toEqual(0);
     expect(res.redeemedTickets).toEqual(false);
-    expect((tickets.redeemAllTickets as jest.Mock).mock.calls.length).toEqual(1);
+    expect((tickets.redeemAllTickets as jest.Mock).mock.calls.length).toEqual(
+      1
+    );
   });
 });

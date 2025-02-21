@@ -7,7 +7,6 @@ import { getTicketStatistics } from './getTicketStatistics';
 import { redeemAllTickets } from './redeemAllTickets';
 import { resetTicketStatistics } from './resetTicketStatistics';
 
-
 const log = createLogger('tickets');
 
 export class TicketsAdapter {
