@@ -41,9 +41,9 @@ export class SessionAdapter {
   }
 
   /**
-   * Get all aliases you set previously and their corresponding peer IDs.
+   * Set up a new session with specified capabilities and configuration.
    *
-   * @returns An object with alias names as keys and the peerId associated with the alias.
+   * @returns A promise that resolves to the session configuration response.
    */
   public async setSession(
     payload: RemoveBasicAuthenticationPayloadType<SetSessionPayloadType>
