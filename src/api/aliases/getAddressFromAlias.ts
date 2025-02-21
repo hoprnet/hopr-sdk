@@ -27,7 +27,7 @@ export const getAddressFromAlias = async (payload: AliasPayloadType): Promise<st
   );
 
   // received unexpected error from server
-  if (rawResponse.status > 499) {
+  if (rawResponse.status >= 500) {
     throw new Error(rawResponse.statusText);
   }
 
