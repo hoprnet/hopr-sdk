@@ -5,6 +5,8 @@ import {
 import { createLogger } from '../../utils';
 import { getTicketStatistics } from './getTicketStatistics';
 import { redeemAllTickets } from './redeemAllTickets';
+import { resetTicketStatistics } from './resetTicketStatistics';
+
 
 const log = createLogger('tickets');
 
@@ -37,6 +39,16 @@ export class TicketsAdapter {
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getTicketStatistics({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload?.timeout ?? this.timeout
+    });
+  }
+
+  public async resetTicketStatistics(
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return resetTicketStatistics({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout

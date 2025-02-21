@@ -6,7 +6,9 @@ import {
 } from '../../types';
 import { createLogger } from '../../utils';
 import { getAlias } from './getAlias';
+import { getAddressFromAlias } from './getAddressFromAlias';
 import { getAliases } from './getAliases';
+import { getAliasesWithAddresses } from './getAliasesWithAddresses';
 import { removeAlias } from './removeAlias';
 import { setAlias } from './setAlias';
 
@@ -40,19 +42,35 @@ export class AliasesAdapter {
   }
 
   /**
-   * Get all aliases you set previously and their corresponding peer IDs.
+   * Get all aliases you set previously and their corresponding addresses.
    *
-   * @returns An object with alias names as keys and the peerId associated with the alias.
+   * @returns An object with alias names as keys and the addresses associated with the alias.
    */
-  public async getAliases(
+  public async getAliasesWithAddresses(
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ): Promise<Record<string, string> | undefined> {
-    return getAliases({
+    return getAliasesWithAddresses({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout
     });
   }
+
+    /**
+   * Get all aliases you set previously and their corresponding peer IDs.
+   *
+   * @returns An object with alias names as keys and the peerId associated with the alias.
+   */
+    public async getAliases(
+      payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    ): Promise<Record<string, string> | undefined> {
+      return getAliases({
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
+        timeout: payload?.timeout ?? this.timeout
+      });
+    }
+
 
   /**
    * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
@@ -60,7 +78,7 @@ export class AliasesAdapter {
    * Aliases are kept locally and are not saved or shared on the network.
    *
    * @param payload - A object containing the peer ID and alias to link.
-   * @returns A Promise that resolves to true if alias succesfully linked to peerId.
+   * @returns A Promise that resolves to true if alias successfully linked to peerId.
    */
   public async setAlias(
     payload: RemoveBasicAuthenticationPayloadType<SetAliasPayloadType>
@@ -73,6 +91,25 @@ export class AliasesAdapter {
       peerId: payload.peerId
     });
   }
+
+    /**
+   * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
+   * Give an address a more memorable alias and use it instead of Hopr address.
+   * Aliases are kept locally and are not saved or shared on the network.
+   *
+   * @param payload - A object containing the peer ID and alias to link.
+   * @returns A Promise that resolves to true if alias successfully linked to peerId.
+   */
+    public async getAddressFromAlias(
+      payload: RemoveBasicAuthenticationPayloadType<AliasPayloadType>
+    ): Promise<string | undefined> {
+      return getAddressFromAlias({
+        apiEndpoint: this.apiEndpoint,
+        apiToken: this.apiToken,
+        timeout: payload.timeout ?? this.timeout,
+        alias: payload.alias
+      });
+    }
 
   /**
    * Get the PeerId (Hopr address) that have this alias assigned to it.

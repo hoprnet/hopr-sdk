@@ -7,12 +7,12 @@ import {
 import { ZodError } from 'zod';
 
 /**
- * Get the PeerId (Hopr address) that have this alias assigned to it.
+ * Get the ETH address that have this alias assigned to it.
  *
  * @param apiEndpoint - The API endpoint
  * @param apiToken - The API token to use for authentication.
- * @param body - An object containing the alias to retrieve the peer ID for.
- * @returns A promise that resolves to the peer ID associated with the alias.
+ * @param body - An object containing the alias to retrieve the ETH address for.
+ * @returns A promise that resolves to the ETH address associated with the alias.
  * @throws An error that occurred while processing the request.
  */
 export const getAddressFromAlias = async (payload: AliasPayloadType): Promise<string> => {

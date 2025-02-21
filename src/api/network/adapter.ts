@@ -1,8 +1,10 @@
 import {
+  GetMinimumNetworkProbabilityPayloadType,
   GetTicketPricePayloadType,
-  RemoveBasicAuthenticationPayloadType
+  RemoveBasicAuthenticationPayloadType,
 } from '../../types';
 import { getTicketPrice } from './getTicketPrice';
+import { getMinimumTicketProbability } from './getMinimumTicketProbability';
 
 export class NetworkAdapter {
   private apiEndpoint: string;
@@ -33,6 +35,16 @@ export class NetworkAdapter {
     payload: RemoveBasicAuthenticationPayloadType<GetTicketPricePayloadType>
   ) {
     return getTicketPrice({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
+  }
+
+  public async getMinimumTicketProbability(
+    payload: RemoveBasicAuthenticationPayloadType<GetMinimumNetworkProbabilityPayloadType>
+  ) {
+    return getMinimumTicketProbability({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout
