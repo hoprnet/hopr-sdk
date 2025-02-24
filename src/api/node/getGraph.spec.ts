@@ -19,8 +19,6 @@ describe('test getGraph', function () {
       )
       .reply(200, expectedResponse);
 
-    console.log('mockedFunction', mockedFunction);
-
     const response = await getGraph({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
@@ -39,8 +37,6 @@ describe('test getGraph', function () {
         `/api/v3/node/graph?ignoreDisconnectedComponents=false&ignoreNonOpenedChannels=false&rawGraph=false`
       )
       .reply(200, expectedResponse);
-
-    console.log('mockedFunction', mockedFunction);
 
     const response = await getGraph({
       apiToken: API_TOKEN,
@@ -61,8 +57,6 @@ describe('test getGraph', function () {
       )
       .reply(200, expectedResponse);
 
-    console.log('mockedFunction', mockedFunction);
-
     const response = await getGraph({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
@@ -80,8 +74,6 @@ describe('test getGraph', function () {
       .get(`/api/v3/node/graph?ignoreNonOpenedChannels=true&rawGraph=false`)
       .reply(200, expectedResponse);
 
-    console.log('mockedFunction', mockedFunction);
-
     const response = await getGraph({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
@@ -98,8 +90,6 @@ describe('test getGraph', function () {
       .get(`/api/v3/node/graph?ignoreDisconnectedComponents=true`)
       .reply(200, expectedResponse);
 
-    console.log('mockedFunction', mockedFunction);
-
     const response = await getGraph({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
@@ -114,8 +104,6 @@ describe('test getGraph', function () {
     const mockedFunction = nock(API_ENDPOINT)
       .get(`/api/v3/node/graph?ignoreNonOpenedChannels=true`)
       .reply(200, expectedResponse);
-
-    console.log('mockedFunction', mockedFunction);
 
     const response = await getGraph({
       apiToken: API_TOKEN,
@@ -132,8 +120,6 @@ describe('test getGraph', function () {
       .get(`/api/v3/node/graph?rawGraph=true`)
       .reply(200, expectedResponse);
 
-    console.log('mockedFunction', mockedFunction);
-
     const response = await getGraph({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
@@ -148,8 +134,6 @@ describe('test getGraph', function () {
     const mockedFunction = nock(API_ENDPOINT)
       .get(`/api/v3/node/graph?rawGraph=false`)
       .reply(200, expectedResponse);
-
-    console.log('mockedFunction', mockedFunction);
 
     const response = await getGraph({
       apiToken: API_TOKEN,
