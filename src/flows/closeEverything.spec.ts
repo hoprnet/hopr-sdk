@@ -15,7 +15,7 @@ jest.mock('../api/channels', () => ({
 }));
 jest.mock('../api/tickets', () => ({
   ...jest.requireActual('../api/tickets'),
-  redeemTickets: jest.fn()
+  redeemAllTickets: jest.fn()
 }));
 
 // Set up global constants for URL and API key
@@ -146,7 +146,7 @@ describe('closeEverything', function () {
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets
-    (tickets.redeemTickets as jest.Mock).mockImplementation(() => true);
+    (tickets.redeemAllTickets as jest.Mock).mockImplementation(() => true);
 
     const res = await closeEverything({
       apiEndpoint: API_ENDPOINT,
@@ -154,7 +154,9 @@ describe('closeEverything', function () {
     });
     expect(res.closedChannels.length).toEqual(0);
     expect(res.redeemedTickets).toEqual(true);
-    expect((tickets.redeemTickets as jest.Mock).mock.calls.length).toEqual(1);
+    expect((tickets.redeemAllTickets as jest.Mock).mock.calls.length).toEqual(
+      1
+    );
   });
   it('does not try to redeem tickets if no tickets are unredeemed', async function () {
     // mock hoprd node get channels
@@ -178,7 +180,7 @@ describe('closeEverything', function () {
       } as GetTicketStatisticsResponseType);
 
     // mock hoprd redeem tickets
-    (tickets.redeemTickets as jest.Mock).mockImplementation(() => false);
+    (tickets.redeemAllTickets as jest.Mock).mockImplementation(() => false);
 
     const res = await closeEverything({
       apiEndpoint: API_ENDPOINT,
@@ -186,6 +188,8 @@ describe('closeEverything', function () {
     });
     expect(res.closedChannels.length).toEqual(0);
     expect(res.redeemedTickets).toEqual(false);
-    expect((tickets.redeemTickets as jest.Mock).mock.calls.length).toEqual(1);
+    expect((tickets.redeemAllTickets as jest.Mock).mock.calls.length).toEqual(
+      1
+    );
   });
 });

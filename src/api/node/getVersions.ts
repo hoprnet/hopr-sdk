@@ -1,36 +1,38 @@
-import { ApiErrorResponse, type BasePayloadType } from '../../types';
-import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
+import {
+  ApiErrorResponse,
+  type BasePayloadType,
+  GetVersionResponse,
+  GetVersionResponseType
+} from '../../types';
+import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
-/**
- * Redeems all the unredeemed HOPR tickets owned by the HOPR node.
- *
- * This operation may take more than 5 minutes to complete as it involves on-chain operations.
- * @returns A Promise that resolves to a boolean indicating the success of the operation.
- * True if the operation is successful, false otherwise.
- *
- * @throws APIError - If the operation fails. The error object contains the status code and the error message.
- */
-export const redeemTickets = async (
+export const getVersions = async (
   payload: BasePayloadType
-): Promise<boolean> => {
-  const url = new URL(`api/v3/tickets/redeem`, payload.apiEndpoint);
+): Promise<GetVersionResponseType> => {
+  const url = new URL(`api/v3/node/version`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
-      method: 'POST',
+      method: 'GET',
       headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
 
   // received expected response
-  if (rawResponse.status === 204) {
-    return true;
+  if (rawResponse.status === 200) {
+    const jsonResponse = await rawResponse.json();
+    const parsedRes = GetVersionResponse.safeParse(jsonResponse);
+
+    // received expected response
+    if (parsedRes.success) {
+      return parsedRes.data;
+    }
   }
 
   // received unexpected error from server
-  if (rawResponse.status > 499) {
+  if (rawResponse.status >= 500) {
     throw new Error(rawResponse.statusText);
   }
 

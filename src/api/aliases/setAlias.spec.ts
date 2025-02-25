@@ -12,8 +12,8 @@ describe('setAlias function', () => {
   afterEach(() => {
     nock.cleanAll();
   });
-
-  test('should return 201 and undefined if successful', async function () {
+  /* Transition period between 2.1 and 2.2 */
+  test('should return 201 and undefined if successful using peerId', async function () {
     nock(API_ENDPOINT)
       .post('/api/v3/aliases', {
         peerId: PEER_ID,
@@ -25,6 +25,23 @@ describe('setAlias function', () => {
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
       peerId: PEER_ID,
+      alias: ALIAS
+    });
+    expect(result).toBe(true);
+  });
+  /* ------------------------------------ */
+  test('should return 201 and undefined if successful', async function () {
+    nock(API_ENDPOINT)
+      .post('/api/v3/aliases', {
+        destination: PEER_ID,
+        alias: ALIAS
+      })
+      .reply(201);
+
+    const result = await setAlias({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      destination: PEER_ID,
       alias: ALIAS
     });
     expect(result).toBe(true);

@@ -22,7 +22,7 @@ export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   }
 
   // received unexpected error from server
-  if (rawResponse.status > 499) {
+  if (rawResponse.status >= 500) {
     throw new Error(rawResponse.statusText);
   }
 

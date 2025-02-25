@@ -58,6 +58,9 @@ export const GetInfoResponse = z.object({
   indexerBlock: z.number().optional(), //from HORPd 2.1.3
   indexerChecksum: z.string().optional(), //from HORPd 2.1.3
   indexBlockPrevChecksum: z.number().optional(), //from HORPd 2.1.5
+  indexerLastLogBlock: z.number().optional(), //from HORPd 2.2.0
+  indexerLastLogChecksum: z.string().optional(), //from HORPd 2.2.0
+  provider: z.string().optional(), //from HORPd 2.2.0
   connectivityStatus: z.enum(['Unknown', 'Red', 'Orange', 'Yellow', 'Green']),
   isEligible: z.boolean(),
   channelClosurePeriod: z.number()
@@ -77,3 +80,30 @@ const nodeSchema = z.object({
 export const GetEntryNodesResponse = z.record(nodeSchema);
 
 export type GetEntryNodesResponseType = z.infer<typeof GetEntryNodesResponse>;
+
+/**
+ * Get version
+ */
+
+export const GetVersionResponse = z.object({
+  apiVersion: z.string().optional(),
+  version: z.string()
+});
+
+export type GetVersionResponseType = z.infer<typeof GetVersionResponse>;
+
+/**
+ * Get graph
+ */
+
+export const GetGraphPayload = BasePayload.extend({
+  ignoreDisconnectedComponents: z.boolean().optional(),
+  ignoreNonOpenedChannels: z.boolean().optional(),
+  rawGraph: z.boolean().optional()
+});
+
+export type GetGraphPayloadType = z.infer<typeof GetGraphPayload>;
+
+export const GetGraphResponse = z.string();
+
+export type GetGraphResponseType = z.infer<typeof GetGraphResponse>;

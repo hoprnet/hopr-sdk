@@ -7,6 +7,7 @@ import {
 import { isNodeHealthy } from './isNodeHealthy';
 import { isNodeReady } from './isNodeReady';
 import { isNodeStarted } from './isNodeStarted';
+import { isNodeEligible } from './isNodeEligible';
 
 export class ChecksAdapter {
   private apiEndpoint: string;
@@ -57,6 +58,16 @@ export class ChecksAdapter {
     payload: RemoveBasicAuthenticationPayloadType<IsNodeStartedPayloadType>
   ) {
     return isNodeStarted({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout
+    });
+  }
+
+  public async isNodeEligible(
+    payload: RemoveBasicAuthenticationPayloadType<IsNodeStartedPayloadType>
+  ) {
+    return isNodeEligible({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout

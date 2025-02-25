@@ -24,7 +24,8 @@ export type GetAliasesResponseType = z.infer<typeof GetAliasesResponse>;
  */
 
 export const SetAliasPayload = BasePayload.extend({
-  peerId: z.string(),
+  peerId: z.string().optional(),
+  destination: z.string().optional(),
   alias: z.string()
 });
 
@@ -37,3 +38,9 @@ export type SetAliasPayloadType = z.infer<typeof SetAliasPayload>;
 export const GetAliasResponse = z.object({ peerId: z.string() });
 
 export type GetAliasResponseType = z.infer<typeof GetAliasResponse>;
+
+export const GetAddressFromAliasResponse = z.object({ address: z.string() });
+
+export type GetAddressFromAliasResponseType = z.infer<
+  typeof GetAddressFromAliasResponse
+>;

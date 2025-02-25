@@ -13,13 +13,27 @@ import { ZodError } from 'zod';
 export const sendMessage = async (
   payload: SendMessagePayloadType
 ): Promise<string> => {
-  const body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
+  /* Transition period between 2.1 and 2.2 */
+  let body: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType> = {
     tag: payload.tag,
     body: payload.body,
-    peerId: payload.peerId,
     path: payload.path,
     hops: payload.hops
   };
+
+  if (payload.peerId) {
+    console.warn(
+      '[HOPR SDK: pingPeer] peerId key is deprecated. Please use destination key'
+    );
+    body.peerId = payload.peerId;
+  }
+  if (payload.destination) {
+    body.destination = payload.destination;
+  }
+  if (!payload.destination && !payload.peerId) {
+    console.error('[HOPR SDK: pingPeer] Please provide destination');
+  }
+  /* ------------------------------------ */
 
   // direct messages need an empty path
   if (!body.hops && !body.path) {
@@ -43,7 +57,7 @@ export const sendMessage = async (
   }
 
   // received unexpected error from server
-  if (rawResponse.status > 499) {
+  if (rawResponse.status >= 500) {
     throw new Error(rawResponse.statusText);
   }
 

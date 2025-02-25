@@ -10,7 +10,8 @@ describe('test openChannel', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
-  it('handles successful response', async function () {
+  /* Transition period between 2.1 and 2.2 */
+  it('handles successful response using peerId', async function () {
     nock(API_ENDPOINT)
       .post('/api/v3/channels')
       .reply(201, {
@@ -24,6 +25,31 @@ describe('test openChannel', function () {
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
       peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+      amount: '1000000'
+    });
+
+    expect(response.channelId).toEqual(
+      '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5'
+    );
+    expect(response.transactionReceipt).toEqual(
+      '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
+    );
+  });
+  /* ------------------------------------ */
+  it('handles successful response', async function () {
+    nock(API_ENDPOINT)
+      .post('/api/v3/channels')
+      .reply(201, {
+        channelId:
+          '0x04e50b7ddce9770f58cebe51f33b472c92d1c40384759f5a0b1025220bf15ec5',
+        transactionReceipt:
+          '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
+      } as OpenChannelResponseType);
+
+    const response = await openChannel({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      destination: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
       amount: '1000000'
     });
 
@@ -96,6 +122,18 @@ describe('test openChannel', function () {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
+    await expect(
+      openChannel({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        peerAddress: '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12',
+        amount: '1000000'
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('throws a custom error when hoprd api response is an 412 error without body', async function () {
+    nock(API_ENDPOINT).post('/api/v3/channels').reply(412);
+
     await expect(
       openChannel({
         apiToken: API_TOKEN,
