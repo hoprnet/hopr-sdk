@@ -32,6 +32,11 @@ export const fundChannel = async (
     payload.timeout
   );
 
+  // received expected response
+  if (rawResponse.status === 200) {
+    return await rawResponse.text();
+  }
+
   let jsonResponse: any;
 
   try {

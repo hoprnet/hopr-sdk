@@ -53,7 +53,7 @@ export const sendMessage = async (
 
   // received expected response
   if (rawResponse.status === 202) {
-    return rawResponse.text();
+    return await rawResponse.text();
   }
 
   // received unexpected error from server

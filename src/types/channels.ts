@@ -60,9 +60,7 @@ export const FundChannelsPayload = BasePayload.extend({
 
 export type FundChannelsPayloadType = z.infer<typeof FundChannelsPayload>;
 
-export const FundChannelsResponse = z.object({
-  receipt: z.string()
-});
+export const FundChannelsResponse = z.string();
 
 export type FundChannelsResponseType = z.infer<typeof FundChannelsResponse>;
 
