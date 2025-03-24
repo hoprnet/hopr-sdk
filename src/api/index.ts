@@ -7,5 +7,6 @@ export * from './messages';
 export * from './network';
 export * from './node';
 export * from './peers';
+export * from './sessions';
 export * from './tickets';
 export * from './tokens';

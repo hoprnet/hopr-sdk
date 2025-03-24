@@ -16,7 +16,7 @@ const log = createLogger('session');
 /**
  * A class that provides a wrapper around aliases-related API endpoints.
  */
-export class SessionAdapter {
+export class SessionsAdapter {
   private apiEndpoint: string;
   private apiToken: string;
   private timeout: number | undefined;

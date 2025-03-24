@@ -6,7 +6,8 @@ const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const BUDDY_CHANNEL_ID =
   '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12';
-const RECEIPT = '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e';
+const RECEIPT =
+  '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e';
 
 describe('test fundChannels', function () {
   beforeEach(function () {
