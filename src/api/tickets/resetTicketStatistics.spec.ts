@@ -1,67 +1,85 @@
 import nock from 'nock';
 import { sdkApiError } from '../../utils';
-import { getTicketStatistics } from './getTicketStatistics';
+import { resetTicketStatistics } from './resetTicketStatistics';
+import { ZodError } from 'zod';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 
-describe('test getTicketStatistics', function () {
+describe('test resetTicketStatistics', function () {
   beforeEach(function () {
     nock.cleanAll();
   });
-  it('handles successful response', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(200, {
-      neglectedValue: 'string',
-      redeemedValue: 'string',
-      rejectedValue: 'string',
-      unredeemedValue: 'string',
-      winningCount: 0
-    });
 
-    const response = await getTicketStatistics({
+  it('handles successful response (204)', async function () {
+    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(204);
+
+    const response = await resetTicketStatistics({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.winningCount).toEqual(0);
+    expect(response).toEqual(true);
   });
-  it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(400, {
+
+  it('throws an Error when server returns 500+ error', async function () {
+    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(500, 'Server Error');
+
+    await expect(
+      resetTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(Error);
+  });
+
+  it('throws a custom error when hoprd api response is a 400 error', async function () {
+    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
     await expect(
-      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      resetTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
-  it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(401, {
-      status: 'string',
-      error: 'string'
+
+  it('throws a custom error when hoprd api response is a 401 error', async function () {
+    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(401, {
+      status: 'UNAUTHORIZED',
+      error: 'Invalid token'
     });
 
     await expect(
-      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      resetTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
-  it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(403, {
-      status: 'string',
-      error: 'string'
+
+  it('throws a custom error when hoprd api response is a 403 error', async function () {
+    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(403, {
+      status: 'FORBIDDEN',
+      error: 'Access denied'
     });
 
     await expect(
-      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      resetTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
-  it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(422, {
-      status: 'UNKNOWN_FAILURE',
-      error: 'Full error message.'
+
+  it('throws a custom error when hoprd api response is a 422 error', async function () {
+    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(422, {
+      status: 'UNPROCESSABLE_ENTITY',
+      error: 'Cannot process request'
     });
 
     await expect(
-      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+      resetTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
+  });
+
+  it('throws a ZodError when response cannot be parsed as ApiErrorResponse', async function () {
+    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(400, {
+      unexpectedFormat: 'This is not the expected error format'
+    });
+
+    await expect(
+      resetTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(ZodError);
   });
 });
