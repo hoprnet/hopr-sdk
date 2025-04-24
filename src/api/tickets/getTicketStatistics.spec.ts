@@ -1,6 +1,7 @@
 import nock from 'nock';
 import { sdkApiError } from '../../utils';
 import { getTicketStatistics } from './getTicketStatistics';
+import { ZodError } from 'zod';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -63,5 +64,14 @@ describe('test getTicketStatistics', function () {
     await expect(
       getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
+  });
+  it('throws a ZodError when response cannot be parsed as ApiErrorResponse', async function () {
+    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(400, {
+      unexpectedFormat: 'This is not the expected error format'
+    });
+
+    await expect(
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(ZodError);
   });
 });

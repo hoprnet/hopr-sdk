@@ -2,10 +2,10 @@ import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   RemoveBasicAuthenticationPayloadType,
-  SetSessionResponse,
-  SetSessionResponseType,
-  SetSessionPayloadType,
-  SetSessionPayloadCallType
+  OpenSessionResponse,
+  OpenSessionResponseType,
+  OpenSessionPayloadType,
+  OpenSessionPayloadCallType
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
@@ -20,11 +20,11 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
  * @returns A Promise that resolves to true if alias successfully linked to peerId.
  * @throws An error that occurred while processing the request.
  */
-export const setSession = async (
-  payload: SetSessionPayloadType
-): Promise<SetSessionResponseType> => {
+export const openSession = async (
+  payload: OpenSessionPayloadType
+): Promise<OpenSessionResponseType> => {
   const { protocol, apiToken, apiEndpoint, ...rest } = payload;
-  const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> =
+  const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> =
     {
       ...rest
     };
@@ -50,7 +50,7 @@ export const setSession = async (
   // parsedRes and error {} from HOPRd have the same type,
   // we can only rely on rawResponse.ok to know if its a success
   if (rawResponse.ok) {
-    const parsedRes = SetSessionResponse.safeParse(jsonResponse);
+    const parsedRes = OpenSessionResponse.safeParse(jsonResponse);
     if (parsedRes.success) {
       return parsedRes.data;
     }

@@ -1,14 +1,14 @@
 import {
   CloseSessionPayloadType,
   GetSessionsPayloadType,
-  SetSessionResponseType,
-  SetSessionPayloadType,
+  OpenSessionResponseType,
+  OpenSessionPayloadType,
   GetSessionsResponseType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { getSessions } from './getSessions';
-import { setSession } from './setSession';
+import { openSession } from './openSession';
 import { closeSession } from './closeSession';
 
 const log = createLogger('session');
@@ -45,10 +45,10 @@ export class SessionsAdapter {
    *
    * @returns A promise that resolves to the session configuration response.
    */
-  public async setSession(
-    payload: RemoveBasicAuthenticationPayloadType<SetSessionPayloadType>
-  ): Promise<SetSessionResponseType> {
-    return setSession({
+  public async OpenSession(
+    payload: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadType>
+  ): Promise<OpenSessionResponseType> {
+    return openSession({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout,

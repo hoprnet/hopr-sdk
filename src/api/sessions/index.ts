@@ -1,3 +1,3 @@
 export * from './getSessions';
-export * from './setSession';
+export * from './openSession';
 export * from './closeSession';

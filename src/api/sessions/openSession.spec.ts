@@ -1,10 +1,10 @@
 import nock from 'nock';
-import { setSession } from './setSession';
+import { openSession } from './openSession';
 import { sdkApiError } from '../../utils';
 import {
   RemoveBasicAuthenticationPayloadType,
-  SetSessionResponseType,
-  SetSessionPayloadCallType
+  OpenSessionResponseType,
+  OpenSessionPayloadCallType
 } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -13,7 +13,7 @@ const API_TOKEN_INVALID = 'my-invalid-api-token';
 const PEER_ID = 'peer123';
 const PROTOCOL = 'udp';
 
-const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
+const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> = {
   destination: PEER_ID,
   capabilities: ['Retransmission', 'Segmentation'],
   listenHost: '127.0.0.1:5542',
@@ -25,11 +25,11 @@ const body: RemoveBasicAuthenticationPayloadType<SetSessionPayloadCallType> = {
   }
 };
 
-describe('setSession function', () => {
+describe('openSession function', () => {
   afterEach(() => {
     nock.cleanAll();
   });
-  test('should return 200 if successful', async function () {
+  test('open using hops - should return 200 if successful', async function () {
     const resp = {
       ip: '127.0.0.1',
       path: {
@@ -43,7 +43,33 @@ describe('setSession function', () => {
       .post(`/api/v3/session/${PROTOCOL}`, body)
       .reply(200, resp);
 
-    const result = await setSession({
+    const result = await openSession({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      protocol: PROTOCOL,
+      ...body
+    });
+    expect(result).toEqual(resp);
+  });
+  test('open using IntermediatePath - should return 200 if successful', async function () {
+    const resp = {
+      ip: '127.0.0.1',
+      path: {
+        IntermediatePath: [
+          'peer1',
+          'peer2',
+          'peer3'
+        ]
+      },
+      port: 5542,
+      protocol: 'tcp',
+      target: 'example.com:8080'
+    };
+    nock(API_ENDPOINT)
+      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .reply(200, resp);
+
+    const result = await openSession({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
       protocol: PROTOCOL,
@@ -58,7 +84,7 @@ describe('setSession function', () => {
       .reply(400, { status: 'INVALID_PEERID' });
 
     await expect(
-      setSession({
+      openSession({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         protocol: PROTOCOL,
@@ -77,7 +103,7 @@ describe('setSession function', () => {
       .reply(401, expectedResponse);
 
     await expect(
-      setSession({
+      openSession({
         apiToken: API_TOKEN_INVALID,
         apiEndpoint: API_ENDPOINT,
         protocol: PROTOCOL,
@@ -96,7 +122,7 @@ describe('setSession function', () => {
       .reply(403, expectedResponse);
 
     await expect(
-      setSession({
+      openSession({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         protocol: PROTOCOL,
@@ -115,7 +141,7 @@ describe('setSession function', () => {
       .reply(409, expectedResponse);
 
     await expect(
-      setSession({
+      openSession({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         protocol: PROTOCOL,
@@ -134,7 +160,7 @@ describe('setSession function', () => {
       .reply(422, expectedResponse);
 
     await expect(
-      setSession({
+      openSession({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
         protocol: PROTOCOL,

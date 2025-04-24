@@ -14,7 +14,8 @@ export const SessionPayload = z.object({
   protocol: SessionProtocols,
   target: z.string(),
   path: z.object({
-    Hops: z.number()
+    Hops: z.number().optional(),
+    IntermediatePath: z.array(z.string()).optional(),
   })
 });
 
@@ -35,29 +36,30 @@ export const GetSessionsResponse = z.array(SessionPayload);
 export type GetSessionsResponseType = z.infer<typeof GetSessionsResponse>;
 
 /**
- * setSession
+ * OpenSession
  */
 
-export const SetSessionPayloadCall = BasePayload.extend({
+export const OpenSessionPayloadCall = BasePayload.extend({
   capabilities: SessionCapabilities.array(),
   destination: z.string(),
   listenHost: z.string(),
   path: z.object({
-    Hops: z.number()
+    Hops: z.number().optional(),
+    IntermediatePath: z.array(z.string()).optional(),
   }),
   target: z.object({
     Plain: z.string()
   })
 });
 
-export const SetSessionPayload = SetSessionPayloadCall.extend({
+export const OpenSessionPayload = OpenSessionPayloadCall.extend({
   protocol: SessionProtocols
 });
 
-export type SetSessionPayloadCallType = z.infer<typeof SetSessionPayloadCall>;
-export type SetSessionPayloadType = z.infer<typeof SetSessionPayload>;
-export const SetSessionResponse = SessionPayload;
-export type SetSessionResponseType = SessionPayloadType;
+export type OpenSessionPayloadCallType = z.infer<typeof OpenSessionPayloadCall>;
+export type OpenSessionPayloadType = z.infer<typeof OpenSessionPayload>;
+export const OpenSessionResponse = SessionPayload;
+export type OpenSessionResponseType = SessionPayloadType;
 
 /**
  * getAlias
@@ -67,7 +69,7 @@ export type SetSessionResponseType = SessionPayloadType;
 
 // export type GetAliasResponseType = z.infer<typeof GetAliasResponse>;
 
-// export type SetSessionPayloadType = z.infer<typeof SetSessionPayload>;
+// export type OpenSessionPayloadType = z.infer<typeof OpenSessionPayload>;
 
 /**
  * closeSession
