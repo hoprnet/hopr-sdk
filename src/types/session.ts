@@ -15,7 +15,7 @@ export const SessionPayload = z.object({
   target: z.string(),
   path: z.object({
     Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional(),
+    IntermediatePath: z.array(z.string()).optional()
   })
 });
 
@@ -45,7 +45,7 @@ export const OpenSessionPayloadCall = BasePayload.extend({
   listenHost: z.string(),
   path: z.object({
     Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional(),
+    IntermediatePath: z.array(z.string()).optional()
   }),
   target: z.object({
     Plain: z.string()

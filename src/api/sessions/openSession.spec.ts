@@ -55,11 +55,7 @@ describe('openSession function', () => {
     const resp = {
       ip: '127.0.0.1',
       path: {
-        IntermediatePath: [
-          'peer1',
-          'peer2',
-          'peer3'
-        ]
+        IntermediatePath: ['peer1', 'peer2', 'peer3']
       },
       port: 5542,
       protocol: 'tcp',

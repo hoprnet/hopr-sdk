@@ -51,7 +51,9 @@ describe('test resetTicketStatistics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws an Error when server returns 500+ error', async function () {
-    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(500, 'Server Error');
+    nock(API_ENDPOINT)
+      .delete(`/api/v3/tickets/statistics`)
+      .reply(500, 'Server Error');
 
     await expect(
       resetTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
