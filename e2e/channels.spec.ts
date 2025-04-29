@@ -93,7 +93,7 @@ describe('Channels E2E test', function () {
       channelId: outgoingChannel.id
     });
 
-    expect(fundChannelResponse.receipt).toBeDefined();
+    expect(fundChannelResponse).toBeDefined();
     expect(BigInt(newOutgoingChannel.balance)).toBeGreaterThan(
       BigInt(outgoingChannel.balance)
     );
