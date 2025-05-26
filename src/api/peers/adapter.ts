@@ -38,7 +38,7 @@ export class PeersAdapter {
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout,
-      peerId: payload.peerId
+      destination: payload.destination
     });
   }
 
@@ -49,7 +49,7 @@ export class PeersAdapter {
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout,
-      peerId: payload.peerId
+      destination: payload.destination
     });
   }
 }

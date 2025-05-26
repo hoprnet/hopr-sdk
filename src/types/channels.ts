@@ -8,7 +8,7 @@ const ChannelStatus = z.enum(['Open', 'PendingToClose', 'Closed']);
 const TopologyChannel = z.object({
   channelId: z.string(),
   sourcePeerId: z.string(),
-  destinationPeerId: z.string(),
+  destination: z.string(),
   sourceAddress: z.string(),
   destinationAddress: z.string(),
   balance: z.string(),
@@ -20,7 +20,7 @@ const TopologyChannel = z.object({
 
 export const Channel = z.object({
   id: z.string(),
-  peerAddress: z.string(),
+  destination: z.string(),
   status: ChannelStatus,
   balance: z.string()
 });
@@ -67,8 +67,7 @@ export type FundChannelsResponseType = z.infer<typeof FundChannelsResponse>;
 /** Open channel */
 
 export const OpenChannelPayload = BasePayload.extend({
-  peerAddress: z.string().optional(),
-  destination: z.string().optional(),
+  destination: z.string(),
   amount: z.string()
 });
 

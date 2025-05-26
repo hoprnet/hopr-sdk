@@ -62,16 +62,6 @@ export const OpenSessionResponse = SessionPayload;
 export type OpenSessionResponseType = SessionPayloadType;
 
 /**
- * getAlias
- */
-
-// export const GetAliasResponse = z.object({ peerId: z.string() });
-
-// export type GetAliasResponseType = z.infer<typeof GetAliasResponse>;
-
-// export type OpenSessionPayloadType = z.infer<typeof OpenSessionPayload>;
-
-/**
  * closeSession
  */
 

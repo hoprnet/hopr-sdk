@@ -14,7 +14,7 @@ import { closeSession } from './closeSession';
 const log = createLogger('session');
 
 /**
- * A class that provides a wrapper around aliases-related API endpoints.
+ * A class that provides a wrapper around session-related API endpoints.
  */
 export class SessionsAdapter {
   private apiEndpoint: string;
@@ -22,7 +22,7 @@ export class SessionsAdapter {
   private timeout: number | undefined;
 
   /**
-   * Creates a new instance of the `AliasesAdapter` class.
+   * Creates a new instance of the `SessionsAdapter` class.
    * @param apiEndpoint - The API endpoint of the API server.
    * @param apiToken - The API token to use for authentication.
    */

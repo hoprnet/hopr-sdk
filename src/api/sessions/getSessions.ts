@@ -8,7 +8,7 @@ import {
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
- * Get all aliases you set previously and their corresponding peer IDs.
+ * Get all sessions you set previously and their corresponding data.
  *
  * @param apiEndpoint - The API endpoint
  * @param apiToken - The API token to use for authentication.

@@ -53,14 +53,14 @@ export const openMultipleChannels = async (
     return;
   }
 
-  // Open channels for each peerId and gather the promises
+  // Open channels for each node address and gather the promises
   const openChannelPromises = payload.peerAddresses.map(async (peerAddress) => {
     try {
       const { transactionReceipt, channelId } = await openChannel({
         apiEndpoint: payload.apiEndpoint,
         apiToken: payload.apiToken,
         timeout: payload.timeout,
-        peerAddress: peerAddress,
+        destination: peerAddress,
         amount: payload.amount
       });
       return { peerAddress, transactionReceipt, channelId };
@@ -72,9 +72,9 @@ export const openMultipleChannels = async (
   // Use Promise.allSettled to wait for all the promises to settle
   const results = await Promise.allSettled(openChannelPromises);
 
-  // Filter out the fulfilled results and return an object with receipts and channelId keyed by peerId
+  // Filter out the fulfilled results and return an object with receipts and channelId keyed by node address
   const transactionReceipts: {
-    [peerId: string]: { channelId: string; transactionReceipt: string };
+    [destination: string]: { channelId: string; transactionReceipt: string };
   } = {};
   results.forEach((result) => {
     if (result.status === 'fulfilled' && result.value.transactionReceipt) {

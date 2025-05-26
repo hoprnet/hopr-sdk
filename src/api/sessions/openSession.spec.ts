@@ -10,11 +10,11 @@ import {
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const API_TOKEN_INVALID = 'my-invalid-api-token';
-const PEER_ID = 'peer123';
+const BUDDY_NODE_ADDRESS = '0x3262f13a39efaca789ae58390441c9ed76bc658a';
 const PROTOCOL = 'udp';
 
 const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> = {
-  destination: PEER_ID,
+  destination: BUDDY_NODE_ADDRESS,
   capabilities: ['Retransmission', 'Segmentation'],
   listenHost: '127.0.0.1:5542',
   path: {
@@ -74,10 +74,10 @@ describe('openSession function', () => {
     expect(result).toEqual(resp);
   });
 
-  test('should return 400 if invalid peerId was provided', async function () {
+  test('should return 400 if invalid node address was provided', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/session/${PROTOCOL}`, body)
-      .reply(400, { status: 'INVALID_PEERID' });
+      .reply(400, { status: 'INVALID_ERROR' });
 
     await expect(
       openSession({

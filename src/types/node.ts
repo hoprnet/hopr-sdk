@@ -12,7 +12,6 @@ export const GetPeersPayload = BasePayload.extend({
 export type GetPeersPayloadType = z.infer<typeof GetPeersPayload>;
 
 export const PeerConnected = z.object({
-  peerId: z.string(),
   peerAddress: z.string(),
   multiaddr: z.string().nullable(),
   heartbeats: z.object({
@@ -28,7 +27,6 @@ export const PeerConnected = z.object({
 });
 
 export const PeerAnnounced = z.object({
-  peerId: z.string(),
   peerAddress: z.string(),
   multiaddr: z.string().nullable()
 });

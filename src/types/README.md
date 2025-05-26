@@ -36,7 +36,6 @@ export const GetPeersPayload = BasePayload.extend({
 export type GetPeersPayloadType = z.infer<typeof GetPeersPayload>;
 
 export const Peer = z.object({
-  peerId: z.string(),
   peerAddress: z.string(),
   multiaddr: z.string(),
   heartbeats: z.object({
