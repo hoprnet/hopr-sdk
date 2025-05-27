@@ -8,7 +8,6 @@ import { createLogger } from '../../utils';
 import { getEntryNodes } from './getEntryNodes';
 import { getGraph } from './getGraph';
 import { getInfo } from './getInfo';
-import { getMetrics } from './getMetrics';
 import { getPeers } from './getPeers';
 import { getVersion } from './getVersion';
 import { getVersions } from './getVersions';
@@ -67,16 +66,6 @@ export class NodeAdapter {
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getInfo({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
-    });
-  }
-
-  public async getMetrics(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getMetrics({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout

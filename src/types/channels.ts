@@ -7,10 +7,8 @@ const ChannelStatus = z.enum(['Open', 'PendingToClose', 'Closed']);
 
 const TopologyChannel = z.object({
   channelId: z.string(),
-  sourcePeerId: z.string(),
   destination: z.string(),
-  sourceAddress: z.string(),
-  destinationAddress: z.string(),
+  source: z.string(),
   balance: z.string(),
   status: ChannelStatus,
   ticketIndex: z.string(),

@@ -13,9 +13,15 @@ export const SessionPayload = z.object({
   port: z.number(),
   protocol: SessionProtocols,
   target: z.string(),
-  path: z.object({
+  destination: z.string(),
+  mtu: z.number(),
+  forwardPath: z.object({
     Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional()
+    IntermediatePath: z.array(z.string()).optional(),
+  }),
+  returnPath: z.object({
+    Hops: z.number().optional(),
+    IntermediatePath: z.array(z.string()).optional(),
   })
 });
 
@@ -43,10 +49,15 @@ export const OpenSessionPayloadCall = BasePayload.extend({
   capabilities: SessionCapabilities.array(),
   destination: z.string(),
   listenHost: z.string(),
-  path: z.object({
+  forwardPath: z.object({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
   }),
+  returnPath: z.object({
+    Hops: z.number().optional(),
+    IntermediatePath: z.array(z.string()).optional()
+  }),
+  responseBuffer: z.string(),
   target: z.object({
     Plain: z.string()
   })

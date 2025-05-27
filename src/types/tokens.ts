@@ -27,7 +27,6 @@ const VALUES = [
   'nodeStreamWebsocket',
   'nodePing',
   'nodeGetPeers',
-  'nodeGetMetrics',
   'nodeGetInfo',
   'nodeGetEntryNodes',
   // PeerId

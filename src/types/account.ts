@@ -20,7 +20,6 @@ export type GetBalancesResponseType = z.infer<typeof GetBalancesResponse>;
  */
 
 export const GetAddressesResponse = z.object({
-  hopr: z.string(),
   native: z.string()
 });
 
@@ -31,7 +30,6 @@ export type GetAddressesResponseType = z.infer<typeof GetAddressesResponse>;
  */
 
 export const WithdrawPayload = BasePayload.extend({
-  currency: z.enum(['NATIVE', 'HOPR']),
   amount: z.string(),
   address: z.string()
 });
