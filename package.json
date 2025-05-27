@@ -1,6 +1,6 @@
 {
   "name": "@hoprnet/hopr-sdk",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.3",
   "description": "A SDK for HOPRd's Rest API functions",
   "author": "HOPR Association",
   "license": "GPL-3.0",
