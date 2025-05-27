@@ -31,7 +31,25 @@ export const getChannels = async (
   const parsedRes = GetChannelsResponse.safeParse(jsonResponse);
 
   // received expected response
-  if (parsedRes.success) {
+  if(parsedRes.success) {
+    parsedRes.data.all.forEach((channel) => {
+      channel.balance = channel.balance.includes(' ')
+      ? channel.balance.split(' ')[0] as string
+      : channel.balance;
+    });
+
+    parsedRes.data.incoming.forEach((channel) => {
+      channel.balance = channel.balance.includes(' ')
+      ? channel.balance.split(' ')[0] as string
+      : channel.balance;
+    });
+
+    parsedRes.data.outgoing.forEach((channel) => {
+      channel.balance = channel.balance.includes(' ')
+      ? channel.balance.split(' ')[0] as string
+      : channel.balance;
+    });
+
     return parsedRes.data;
   }
 
