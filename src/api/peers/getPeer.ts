@@ -13,10 +13,10 @@ export const getPeer = async (
   const {
     apiEndpoint,
     apiToken,
-    destination,
+    address,
     timeout
   } = payload;
-  const url = new URL(`api/v3/peers/${destination}`, apiEndpoint);
+  const url = new URL(`api/v3/peers/${address}`, apiEndpoint);
 
   const rawResponse = await fetchWithTimeout(
     url,

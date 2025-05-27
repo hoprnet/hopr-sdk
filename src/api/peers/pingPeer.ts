@@ -13,11 +13,11 @@ export const pingPeer = async (
   const {
     apiEndpoint,
     apiToken,
-    destination,
+    address,
     timeout
   } = payload;
 
-  const url = new URL(`api/v3/peers/${destination}/ping`, apiEndpoint);
+  const url = new URL(`api/v3/peers/${address}/ping`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

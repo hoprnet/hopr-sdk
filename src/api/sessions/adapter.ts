@@ -55,7 +55,9 @@ export class SessionsAdapter {
       destination: payload.destination,
       capabilities: payload.capabilities,
       listenHost: payload.listenHost,
-      path: payload.path,
+      forwardPath: payload.forwardPath,
+      returnPath: payload.returnPath,
+      responseBuffer: payload.responseBuffer,
       target: payload.target,
       protocol: payload.protocol
     });

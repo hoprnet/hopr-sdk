@@ -6,7 +6,7 @@ import { BasePayload } from './general';
  */
 
 export const GetPeerPayload = BasePayload.extend({
-  destination: string()
+  address: string()
 });
 
 export type GetPeerPayloadType = z.infer<typeof GetPeerPayload>;
@@ -23,7 +23,7 @@ export type GetPeerResponseType = z.infer<typeof GetPeerResponse>;
  */
 
 export const PingPeerPayload = BasePayload.extend({
-  destination: string()
+  address: string()
 });
 
 export type PingPeerPayloadType = z.infer<typeof PingPeerPayload>;

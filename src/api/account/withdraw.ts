@@ -19,7 +19,6 @@ export const withdraw = async (
   // Fetch and check error responses
   const body: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType> = {
     amount: payload.amount,
-    currency: payload.currency,
     address: payload.address
   };
   const url = new URL(`api/v3/account/withdraw`, payload.apiEndpoint);
