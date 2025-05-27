@@ -33,7 +33,7 @@ describe('test fundChannels', function () {
     nock(API_ENDPOINT)
       .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(400, {
-        status: 'INVALID_PEERID'
+        status: 'INVALID_CHANNEL_ID'
       });
 
     await expect(

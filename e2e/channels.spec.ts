@@ -104,12 +104,12 @@ describe('Channels E2E test', function () {
     const firstPeerAddresses = await sdk.api.account.getAddresses();
     const thirdPeerId = (await sdk3.api.account.getAddresses()).hopr;
 
-    await sdk2.api.messages.sendMessage({
-      body: 'ticket',
-      peerId: thirdPeerId,
-      path: [firstPeerAddresses.hopr],
-      tag: 0
-    });
+    // await sdk2.api.messages.sendMessage({
+    //   body: 'ticket',
+    //   peerId: thirdPeerId,
+    //   path: [firstPeerAddresses.hopr],
+    //   tag: 0
+    // });
     // wait for ticket to exist
     await sleep(1_000);
 

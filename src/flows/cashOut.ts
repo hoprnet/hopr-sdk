@@ -24,7 +24,6 @@ export const cashOut = async (payload: CashOutPayloadType) => {
       timeout: payload.timeout,
       address: payload.address,
       amount: balance?.native,
-      currency: 'NATIVE'
     });
     receipts.native = transferNativeFunds;
   }
@@ -36,7 +35,6 @@ export const cashOut = async (payload: CashOutPayloadType) => {
       timeout: payload.timeout,
       address: payload.address,
       amount: balance?.hopr,
-      currency: 'HOPR'
     });
     receipts.hopr = transferHoprFunds;
   }

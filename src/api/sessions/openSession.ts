@@ -10,9 +10,7 @@ import {
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
- * Instead of using HOPR address, we can assign HOPR address to a specific name called alias.
- * Give an address a more memorable alias and use it instead of Hopr address.
- * Aliases are kept locally and are not saved or shared on the network.
+ * Opens HOPR session with the specified configuration.
  *
  * @param apiEndpoint - The API endpoint
  * @param apiToken - The API token to be used for authentication.

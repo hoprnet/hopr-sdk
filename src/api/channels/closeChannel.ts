@@ -8,7 +8,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 import { ZodError } from 'zod';
 
 /**
- * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId and the direction of the channel.
+ * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, and the  channel id.
  *
  * This operation may take more than 5 minutes to complete as it involves on-chain operations.
  *

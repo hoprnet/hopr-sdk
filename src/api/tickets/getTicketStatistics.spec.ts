@@ -28,7 +28,7 @@ describe('test getTicketStatistics', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(400, {
-      status: 'INVALID_PEERID'
+      status: 'INVALID_ERROR'
     });
 
     await expect(

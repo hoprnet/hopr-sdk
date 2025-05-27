@@ -11,7 +11,7 @@ describe('test getEntryNodes', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/node/entryNodes`)
+      .get(`/api/v3/node/entry-nodes`)
       .reply(200, {
         '16Uiu2HAmUsJwbECMroQUC29LQZZWsYpYZx1oaM1H9DBoZHLkYn12': {
           multiaddrs: ['/ip4/'],
@@ -42,7 +42,7 @@ describe('test getEntryNodes', function () {
     ).toEqual(true);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/entryNodes`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v3/node/entry-nodes`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -51,7 +51,7 @@ describe('test getEntryNodes', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/entryNodes`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v3/node/entry-nodes`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -61,7 +61,7 @@ describe('test getEntryNodes', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/entryNodes`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v3/node/entry-nodes`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -71,7 +71,7 @@ describe('test getEntryNodes', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/entryNodes`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v3/node/entry-nodes`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
