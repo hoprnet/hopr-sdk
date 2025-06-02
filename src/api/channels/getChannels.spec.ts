@@ -12,7 +12,7 @@ describe('test getChannels', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [
           {
@@ -61,7 +61,7 @@ describe('test getChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(400, {
         status: 'INVALID_PEERID'
       });
@@ -72,7 +72,7 @@ describe('test getChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(403, {
         status: 'NOT_ENOUGH_BALANCE'
       });
@@ -83,7 +83,7 @@ describe('test getChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'

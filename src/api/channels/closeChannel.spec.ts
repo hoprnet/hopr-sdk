@@ -14,7 +14,7 @@ describe('test closeChannel', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
+      .delete(`/api/v4/channels/${BUDDY_CHANNEL_ID}`)
       .reply(200, {
         receipt:
           '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
@@ -34,7 +34,7 @@ describe('test closeChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
+      .delete(`/api/v4/channels/${BUDDY_CHANNEL_ID}`)
       .reply(400, {
         status: 'INVALID_CHANNELID'
       });
@@ -49,7 +49,7 @@ describe('test closeChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
+      .delete(`/api/v4/channels/${BUDDY_CHANNEL_ID}`)
       .reply(401, {
         status: 'string',
         error: 'string'
@@ -65,7 +65,7 @@ describe('test closeChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
+      .delete(`/api/v4/channels/${BUDDY_CHANNEL_ID}`)
       .reply(403, {
         status: 'string',
         error: 'string'
@@ -81,7 +81,7 @@ describe('test closeChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
+      .delete(`/api/v4/channels/${BUDDY_CHANNEL_ID}`)
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
@@ -97,7 +97,7 @@ describe('test closeChannel', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error without body', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v3/channels/${BUDDY_CHANNEL_ID}`)
+      .delete(`/api/v4/channels/${BUDDY_CHANNEL_ID}`)
       .reply(422);
 
     await expect(

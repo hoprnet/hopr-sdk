@@ -18,7 +18,7 @@ import { ZodError } from 'zod';
 export const getToken = async (
   payload: BasePayloadType
 ): Promise<GetTokenResponseType> => {
-  const url = new URL(`api/v3/token`, payload.apiEndpoint);
+  const url = new URL(`api/v4/token`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

@@ -12,7 +12,7 @@ describe('test getPeer', function () {
   });
   it('handles successful response using destination', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/peers/${BUDDY_NODE_ADDRESS}`)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
       .reply(200, {
         announced: [
           '/ip4/',
@@ -36,7 +36,7 @@ describe('test getPeer', function () {
     expect(response.observed.at(0)).toEqual('/ip4/');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_NODE_ADDRESS}`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -49,7 +49,7 @@ describe('test getPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_NODE_ADDRESS}`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -63,7 +63,7 @@ describe('test getPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_NODE_ADDRESS}`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -77,7 +77,7 @@ describe('test getPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/peers/${BUDDY_NODE_ADDRESS}`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

@@ -14,7 +14,7 @@ describe('test getChannelTickets', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
+      .get(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(200, [
         {
           channelId: '0xBb6f3A07a6EF6d4Aa6Aa244949AA59cBE735549f',
@@ -42,7 +42,7 @@ describe('test getChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
+      .get(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(400, {
         status: 'INVALID_CHANNELID'
       });
@@ -57,7 +57,7 @@ describe('test getChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
+      .get(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(401, {
         status: 'string',
         error: 'string'
@@ -73,7 +73,7 @@ describe('test getChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
+      .get(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(403, {
         status: 'string',
         error: 'string'
@@ -89,7 +89,7 @@ describe('test getChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 404 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
+      .get(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(404, {
         status: 'TICKETS_NOT_FOUND'
       });
@@ -104,7 +104,7 @@ describe('test getChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets`)
+      .get(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets`)
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'

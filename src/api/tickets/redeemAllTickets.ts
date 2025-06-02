@@ -14,7 +14,7 @@ import { ZodError } from 'zod';
 export const redeemAllTickets = async (
   payload: BasePayloadType
 ): Promise<boolean> => {
-  const url = new URL(`api/v3/tickets/redeem`, payload.apiEndpoint);
+  const url = new URL(`api/v4/tickets/redeem`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

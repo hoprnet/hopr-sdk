@@ -1,39 +1,33 @@
 import { ZodError } from 'zod';
-import {
-  ApiErrorResponse,
-  BasePayloadType,
-  GetInfoResponse,
-  GetInfoResponseType
-} from '../../types';
+import { BasePayloadType, ApiErrorResponse } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getInfo = async (
-  payload: BasePayloadType
-): Promise<GetInfoResponseType> => {
-  const url = new URL(`api/v4/node/info`, payload.apiEndpoint);
+export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
+  const headersForMetrics = getHeaders(payload.apiToken);
+  headersForMetrics.set('Accept-Content', 'text/plain');
+
+  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    url,
+    `${apiEndpointParsed}metrics`,
     {
       method: 'GET',
-      headers: getHeaders(payload.apiToken)
+      headers: headersForMetrics
     },
     payload.timeout
   );
+
+  // received expected response
+  if (rawResponse.status === 200) {
+    return rawResponse.text();
+  }
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
     throw new Error(rawResponse.statusText);
   }
 
-  const jsonResponse = await rawResponse.json();
-  const parsedRes = GetInfoResponse.safeParse(jsonResponse);
-
-  // received expected response
-  if (parsedRes.success) {
-    return parsedRes.data;
-  }
-
   // check if response has the structure of an expected api error
+  const jsonResponse = await rawResponse.json();
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
@@ -44,6 +38,6 @@ export const getInfo = async (
     });
   }
 
-  // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  // we could not parse the error and it is not unexpected
+  throw new ZodError(isApiErrorResponse.error.issues);
 };

@@ -11,7 +11,7 @@ describe('test getTicketStatistics', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(200, {
+    nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(200, {
       neglectedValue: 'string',
       redeemedValue: 'string',
       rejectedValue: 'string',
@@ -27,7 +27,7 @@ describe('test getTicketStatistics', function () {
     expect(response.winningCount).toEqual(0);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(400, {
       status: 'INVALID_ERROR'
     });
 
@@ -36,7 +36,7 @@ describe('test getTicketStatistics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -46,7 +46,7 @@ describe('test getTicketStatistics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -56,7 +56,7 @@ describe('test getTicketStatistics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
@@ -66,7 +66,7 @@ describe('test getTicketStatistics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a ZodError when response cannot be parsed as ApiErrorResponse', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/tickets/statistics`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(400, {
       unexpectedFormat: 'This is not the expected error format'
     });
 

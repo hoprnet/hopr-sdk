@@ -11,7 +11,7 @@ export const getChannelTickets = async (
   payload: GetChannelTicketsPayloadType
 ): Promise<GetChannelTicketsResponseType> => {
   const url = new URL(
-    `api/v3/channels/${payload.channelId}/tickets`,
+    `api/v4/channels/${payload.channelId}/tickets`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(

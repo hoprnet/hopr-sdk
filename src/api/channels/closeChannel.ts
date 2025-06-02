@@ -19,7 +19,7 @@ export const closeChannel = async (
   payload: CloseChannelPayloadType
 ): Promise<CloseChannelResponseType> => {
   const url = new URL(
-    `api/v3/channels/${payload.channelId}`,
+    `api/v4/channels/${payload.channelId}`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(

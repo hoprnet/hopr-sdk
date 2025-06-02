@@ -18,7 +18,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getBalances = async (
   payload: BasePayloadType
 ): Promise<GetBalancesResponseType> => {
-  const url = new URL(`api/v3/account/balances`, payload.apiEndpoint);
+  const url = new URL(`api/v4/account/balances`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
@@ -38,21 +38,18 @@ export const getBalances = async (
 
   const jsonResponse = await rawResponse.json();
 
-  // remove currency names from strings
   const currencies = Object.keys(jsonResponse);
+  jsonResponse.token = jsonResponse.safeHoprAllowance.includes(' ')
+      ? jsonResponse.safeHoprAllowance.split(' ')[1]
+      : null;
   for (let i = 0; i < currencies.length; i++) {
-    const token = currencies[i];
-    if(!token) continue
+    const token = currencies[i] as string;
     jsonResponse[token] = jsonResponse[
       `${currencies[i]}`
     ].includes(' ')
       ? jsonResponse[token].split(' ')[0]
       : jsonResponse[token];
   }
-
-  jsonResponse.token = jsonResponse.safeHoprAllowance.includes(' ')
-      ? jsonResponse.safeHoprAllowance.split(' ')[1]
-      : null;
 
   const parsedRes = GetBalancesResponse.safeParse(jsonResponse);
 

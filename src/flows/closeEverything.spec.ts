@@ -31,7 +31,7 @@ describe('closeEverything', function () {
     const openOutgoingChannels = ['1', '2', '3'];
     // mock hoprd node get channels
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
         outgoing: openOutgoingChannels.map((address) => ({
@@ -45,7 +45,7 @@ describe('closeEverything', function () {
 
     // mock hoprd node tickets statistics
     nock(API_ENDPOINT)
-      .get(`/api/v3/tickets/statistics`)
+      .get(`/api/v4/tickets/statistics`)
       .reply(200, {
         neglectedValue: '0',
         redeemedValue: '0',
@@ -81,7 +81,7 @@ describe('closeEverything', function () {
     const openOutgoingChannels = ['1', '2', '3'];
     // mock hoprd node get channels
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
         outgoing: openOutgoingChannels.map((address) => ({
@@ -95,7 +95,7 @@ describe('closeEverything', function () {
 
     // mock hoprd node tickets statistics
     nock(API_ENDPOINT)
-      .get(`/api/v3/tickets/statistics`)
+      .get(`/api/v4/tickets/statistics`)
       .reply(200, {
         neglectedValue: '0',
         redeemedValue: '0',
@@ -107,7 +107,7 @@ describe('closeEverything', function () {
     // mock hoprd node close channels
     openOutgoingChannels.map((id) => {
       nock(API_ENDPOINT)
-        .delete(`/api/v3/channels/${id}`)
+        .delete(`/api/v4/channels/${id}`)
         .reply(200, {
           receipt:
             '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
@@ -127,7 +127,7 @@ describe('closeEverything', function () {
   it('redeems unredeemed tickets', async function () {
     // mock hoprd node get channels
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
         outgoing: [],
@@ -136,7 +136,7 @@ describe('closeEverything', function () {
 
     // mock hoprd node tickets statistics
     nock(API_ENDPOINT)
-      .get(`/api/v3/tickets/statistics`)
+      .get(`/api/v4/tickets/statistics`)
       .reply(200, {
         neglectedValue: '0',
         redeemedValue: '0',
@@ -161,7 +161,7 @@ describe('closeEverything', function () {
   it('does not try to redeem tickets if no tickets are unredeemed', async function () {
     // mock hoprd node get channels
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [],
         outgoing: [],
@@ -170,7 +170,7 @@ describe('closeEverything', function () {
 
     // mock hoprd node tickets statistics
     nock(API_ENDPOINT)
-      .get(`/api/v3/tickets/statistics`)
+      .get(`/api/v4/tickets/statistics`)
       .reply(200, {
         neglectedValue: '0',
         redeemedValue: '0',

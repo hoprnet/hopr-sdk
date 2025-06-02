@@ -19,7 +19,7 @@ export const redeemChannelTickets = async (
   payload: RedeemChannelTicketsPayloadType
 ): Promise<boolean> => {
   const url = new URL(
-    `api/v3/channels/${payload.channelId}/tickets/redeem`,
+    `api/v4/channels/${payload.channelId}/tickets/redeem`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(

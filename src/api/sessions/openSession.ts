@@ -27,7 +27,7 @@ export const openSession = async (
       ...rest
     };
 
-  const url = new URL(`api/v3/session/${protocol}`, apiEndpoint);
+  const url = new URL(`api/v4/session/${protocol}`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

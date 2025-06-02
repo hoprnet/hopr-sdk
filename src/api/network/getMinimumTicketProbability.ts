@@ -12,7 +12,7 @@ export const getMinimumTicketProbability = async (
 ): Promise<GetMinimumNetworkProbabilityResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/network/probability`,
+    `${apiEndpointParsed}api/v4/network/probability`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

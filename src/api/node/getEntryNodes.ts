@@ -10,7 +10,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getEntryNodes = async (
   payload: BasePayloadType
 ): Promise<GetEntryNodesResponseType> => {
-  const url = new URL(`api/v3/node/entry-nodes`, payload.apiEndpoint);
+  const url = new URL(`api/v4/node/entry-nodes`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

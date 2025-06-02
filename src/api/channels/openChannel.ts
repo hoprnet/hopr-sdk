@@ -24,7 +24,7 @@ export const openChannel = async (
     destination: payload.destination
   };
 
-  const url = new URL(`api/v3/channels`, payload.apiEndpoint);
+  const url = new URL(`api/v4/channels`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

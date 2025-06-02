@@ -15,7 +15,7 @@ describe('test fundChannels', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(200, RECEIPT);
 
     const response = await fundChannel({
@@ -31,7 +31,7 @@ describe('test fundChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(400, {
         status: 'INVALID_CHANNEL_ID'
       });
@@ -47,7 +47,7 @@ describe('test fundChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(403, {
         status: 'NOT_ENOUGH_BALANCE'
       });
@@ -63,7 +63,7 @@ describe('test fundChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 412 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(412, {
         status: 'the node is not ready'
       });
@@ -79,7 +79,7 @@ describe('test fundChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'
@@ -95,7 +95,7 @@ describe('test fundChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error without body', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/fund`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/fund`)
       .reply(422);
     await expect(
       fundChannel({

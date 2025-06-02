@@ -12,7 +12,7 @@ describe('test getInfo', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/node/info`)
+      .get(`/api/v4/node/info`)
       .reply(200, {
         network: 'rotsee',
         announcedAddress: [],
@@ -44,7 +44,7 @@ describe('test getInfo', function () {
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -53,7 +53,7 @@ describe('test getInfo', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -63,7 +63,7 @@ describe('test getInfo', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -73,7 +73,7 @@ describe('test getInfo', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

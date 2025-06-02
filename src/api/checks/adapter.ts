@@ -1,4 +1,5 @@
 import {
+  BasePayloadType,
   IsNodeHealthyPayloadType,
   IsNodeReadyPayloadType,
   IsNodeStartedPayloadType,
@@ -8,6 +9,7 @@ import { isNodeHealthy } from './isNodeHealthy';
 import { isNodeReady } from './isNodeReady';
 import { isNodeStarted } from './isNodeStarted';
 import { isNodeEligible } from './isNodeEligible';
+import { getMetrics } from './getMetrics';
 
 export class ChecksAdapter {
   private apiEndpoint: string;
@@ -71,6 +73,16 @@ export class ChecksAdapter {
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload.timeout ?? this.timeout
+    });
+  }
+
+  public async getMetrics(
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getMetrics({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload?.timeout ?? this.timeout
     });
   }
 }

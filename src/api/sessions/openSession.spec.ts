@@ -40,7 +40,7 @@ describe('openSession function', () => {
       target: 'example.com:8080'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(200, resp);
 
     const result = await openSession({
@@ -62,7 +62,7 @@ describe('openSession function', () => {
       target: 'example.com:8080'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(200, resp);
 
     const result = await openSession({
@@ -76,7 +76,7 @@ describe('openSession function', () => {
 
   test('should return 400 if invalid node address was provided', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(400, { status: 'INVALID_ERROR' });
 
     await expect(
@@ -95,7 +95,7 @@ describe('openSession function', () => {
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(401, expectedResponse);
 
     await expect(
@@ -114,7 +114,7 @@ describe('openSession function', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(403, expectedResponse);
 
     await expect(
@@ -133,7 +133,7 @@ describe('openSession function', () => {
       error: 'Listening address and port already in use.'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(409, expectedResponse);
 
     await expect(
@@ -152,7 +152,7 @@ describe('openSession function', () => {
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(422, expectedResponse);
 
     await expect(

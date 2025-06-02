@@ -12,7 +12,7 @@ export const getTicketPrice = async (
 ): Promise<GetTicketPriceResponseType> => {
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v3/network/price`,
+    `${apiEndpointParsed}api/v4/network/price`,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)

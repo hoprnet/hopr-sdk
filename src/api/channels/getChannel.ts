@@ -11,7 +11,7 @@ export const getChannel = async (
   payload: GetChannelPayloadType
 ): Promise<GetChannelResponseType> => {
   const url = new URL(
-    `api/v3/channels/${payload.channelId}`,
+    `api/v4/channels/${payload.channelId}`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(
