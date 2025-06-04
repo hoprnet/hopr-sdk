@@ -27,7 +27,7 @@ describe('cashOut', function () {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/balances')
+      .get('/api/v4/account/balances')
       .reply(200, expectedResponse);
 
     const res = await cashOut({
@@ -51,7 +51,7 @@ describe('cashOut', function () {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/balances')
+      .get('/api/v4/account/balances')
       .reply(200, expectedResponse);
 
     // mock hoprd node withdraw response

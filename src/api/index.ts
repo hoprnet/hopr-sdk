@@ -1,5 +1,4 @@
 export * from './account';
-export * from './aliases';
 export * from './channels';
 export * from './checks';
 export * from './configuration';

@@ -10,7 +10,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getVersions = async (
   payload: BasePayloadType
 ): Promise<GetVersionResponseType> => {
-  const url = new URL(`api/v3/node/version`, payload.apiEndpoint);
+  const url = new URL(`api/v4/node/version`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

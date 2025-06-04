@@ -10,7 +10,7 @@ describe('test getMetrics', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/metrics`).reply(200, 'metrics');
+    nock(API_ENDPOINT).get(`/metrics`).reply(200, 'metrics');
 
     const response = await getMetrics({
       apiToken: API_TOKEN,
@@ -20,7 +20,7 @@ describe('test getMetrics', function () {
     expect(response).toEqual('metrics');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/metrics`).reply(400, {
+    nock(API_ENDPOINT).get(`/metrics`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -29,7 +29,7 @@ describe('test getMetrics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/metrics`).reply(401, {
+    nock(API_ENDPOINT).get(`/metrics`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -39,7 +39,7 @@ describe('test getMetrics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/metrics`).reply(403, {
+    nock(API_ENDPOINT).get(`/metrics`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -49,7 +49,7 @@ describe('test getMetrics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/metrics`).reply(422, {
+    nock(API_ENDPOINT).get(`/metrics`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

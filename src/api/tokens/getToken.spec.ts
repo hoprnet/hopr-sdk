@@ -32,7 +32,7 @@ describe('getToken', () => {
       ]
     };
 
-    nock(API_ENDPOINT).get('/api/v3/token').reply(200, expectedResponse);
+    nock(API_ENDPOINT).get('/api/v4/token').reply(200, expectedResponse);
 
     expect(
       await getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
@@ -45,7 +45,7 @@ describe('getToken', () => {
       error: 'authentication failed'
     };
 
-    nock(API_ENDPOINT).get('/api/v3/token').reply(401, mockResponse);
+    nock(API_ENDPOINT).get('/api/v4/token').reply(401, mockResponse);
 
     await expect(
       getToken({ apiEndpoint: API_ENDPOINT, apiToken: 'invalid token' })
@@ -58,7 +58,7 @@ describe('getToken', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_ENDPOINT).get('/api/v3/token').reply(403, mockResponse);
+    nock(API_ENDPOINT).get('/api/v4/token').reply(403, mockResponse);
 
     await expect(
       getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
@@ -66,7 +66,7 @@ describe('getToken', () => {
   });
 
   it('should return 404 if resource not found', async function () {
-    nock(API_ENDPOINT).get('/api/v3/token').reply(404);
+    nock(API_ENDPOINT).get('/api/v4/token').reply(404);
 
     await expect(
       getToken({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

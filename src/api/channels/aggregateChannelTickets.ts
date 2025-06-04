@@ -17,7 +17,7 @@ export const aggregateChannelTickets = async (
   payload: AggregateChannelTicketsPayloadType
 ): Promise<boolean> => {
   const url = new URL(
-    `api/v3/channels/${payload.channelId}/tickets/aggregate`,
+    `api/v4/channels/${payload.channelId}/tickets/aggregate`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(

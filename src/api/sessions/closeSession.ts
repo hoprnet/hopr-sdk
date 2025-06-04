@@ -21,7 +21,7 @@ export const closeSession = async (
 ): Promise<boolean> => {
   const { protocol, listeningIp, port, apiToken, apiEndpoint } = payload;
   const url = new URL(
-    `api/v3/session/${protocol}/${listeningIp}/${port}`,
+    `api/v4/session/${protocol}/${listeningIp}/${port}`,
     apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(

@@ -1,5 +1,4 @@
 import { AccountAdapter } from './account/adapter';
-import { AliasesAdapter } from './aliases/adapter';
 import { ChannelsAdapter } from './channels/adapter';
 import { ChecksAdapter } from './checks/adapter';
 import { ConfigurationAdapter } from './configuration/adapter';
@@ -13,7 +12,6 @@ import { SessionsAdapter } from './sessions/adapter';
 
 export class ApiAdapter {
   public account: AccountAdapter;
-  public aliases: AliasesAdapter;
   public channels: ChannelsAdapter;
   public checks: ChecksAdapter;
   public configuration: ConfigurationAdapter;
@@ -35,7 +33,6 @@ export class ApiAdapter {
     timeout?: number;
   }) {
     this.account = new AccountAdapter({ apiEndpoint, apiToken, timeout });
-    this.aliases = new AliasesAdapter({ apiEndpoint, apiToken, timeout });
     this.channels = new ChannelsAdapter({ apiEndpoint, apiToken, timeout });
     this.checks = new ChecksAdapter({ apiEndpoint, apiToken, timeout });
     this.configuration = new ConfigurationAdapter({

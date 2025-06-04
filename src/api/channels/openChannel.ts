@@ -21,10 +21,10 @@ export const openChannel = async (
 ): Promise<OpenChannelResponseType> => {
   const body: RemoveBasicAuthenticationPayloadType<OpenChannelPayloadType> = {
     amount: payload.amount,
-    peerAddress: payload.peerAddress
+    destination: payload.destination
   };
 
-  const url = new URL(`api/v3/channels`, payload.apiEndpoint);
+  const url = new URL(`api/v4/channels`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

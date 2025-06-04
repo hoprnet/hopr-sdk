@@ -27,7 +27,7 @@ describe('openMultipleChannels', function () {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/balances')
+      .get('/api/v4/account/balances')
       .reply(200, expectedResponse);
 
     const res = await openMultipleChannels({
@@ -52,7 +52,7 @@ describe('openMultipleChannels', function () {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/balances')
+      .get('/api/v4/account/balances')
       .reply(200, expectedResponse);
 
     // mock hoprd node open channel

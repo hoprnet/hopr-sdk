@@ -6,7 +6,6 @@ import {
 import { createLogger } from '../../utils';
 import { getAddresses } from './getAddresses';
 import { getBalances } from './getBalances';
-import { getHoprAddress } from './getHoprAddress';
 import { getHoprBalance } from './getHoprBalance';
 import { getNativeAddress } from './getNativeAddress';
 import { getNativeBalance } from './getNativeBalance';
@@ -63,20 +62,6 @@ export class AccountAdapter {
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getBalances({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
-    });
-  }
-
-  /**
-   * Gets the HOPR address associated to the node.
-   * @returns — A Promise that resolves to the HOPR address.
-   */
-  public async getHoprAddress(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getHoprAddress({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout

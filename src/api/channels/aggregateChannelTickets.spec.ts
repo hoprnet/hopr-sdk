@@ -13,7 +13,7 @@ describe('test aggregateChannelTickets', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
       .reply(204);
 
     const response = await aggregateChannelTickets({
@@ -26,7 +26,7 @@ describe('test aggregateChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
       .reply(400, {
         status: 'INVALID_CHANNELID'
       });
@@ -41,7 +41,7 @@ describe('test aggregateChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
       .reply(401, {
         status: 'string',
         error: 'string'
@@ -57,7 +57,7 @@ describe('test aggregateChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
       .reply(403, {
         status: 'string',
         error: 'string'
@@ -73,7 +73,7 @@ describe('test aggregateChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 404 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
       .reply(404, {
         status: 'TICKETS_NOT_FOUND'
       });
@@ -88,7 +88,7 @@ describe('test aggregateChannelTickets', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
+      .post(`/api/v4/channels/${BUDDY_CHANNEL_ID}/tickets/aggregate`)
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'

@@ -9,7 +9,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const resetTicketStatistics = async (
   payload: BasePayloadType
 ): Promise<ResetTicketStatisticsResponseType> => {
-  const url = new URL(`api/v3/tickets/statistics`, payload.apiEndpoint);
+  const url = new URL(`api/v4/tickets/statistics`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

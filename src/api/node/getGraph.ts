@@ -24,7 +24,7 @@ export const getGraph = async (
   ].filter((elem) => !!elem);
 
   const url = new URL(
-    `api/v3/node/graph?${params.join('&')}`,
+    `api/v4/node/graph?${params.join('&')}`,
     payload.apiEndpoint
   );
 

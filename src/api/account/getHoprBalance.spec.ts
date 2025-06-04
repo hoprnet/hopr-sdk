@@ -20,7 +20,7 @@ describe('getHoprBalance', () => {
       safeHoprAllowance: '1000000000'
     };
 
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(200, response);
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(200, response);
 
     const result = await getHoprBalance({
       apiEndpoint: API_ENDPOINT,
@@ -35,7 +35,7 @@ describe('getHoprBalance', () => {
       error: 'authentication failed'
     };
 
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(401, response);
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(401, response);
 
     await expect(
       getHoprBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
@@ -48,7 +48,7 @@ describe('getHoprBalance', () => {
       error: 'You are not authorized to perform this action'
     };
 
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(403, response);
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(403, response);
 
     await expect(
       getHoprBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
@@ -61,7 +61,7 @@ describe('getHoprBalance', () => {
       error: 'Full error message.'
     };
 
-    nock(API_ENDPOINT).get('/api/v3/account/balances').reply(422, response);
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(422, response);
 
     await expect(
       getHoprBalance({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })

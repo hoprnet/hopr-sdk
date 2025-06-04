@@ -246,7 +246,7 @@ describe('getConfiguration', () => {
       }
     };
 
-    nock(API_ENDPOINT).get('/api/v3/node/configuration').reply(200, response);
+    nock(API_ENDPOINT).get('/api/v4/node/configuration').reply(200, response);
 
     const result = await getConfiguration({
       apiEndpoint: API_ENDPOINT,
@@ -492,7 +492,7 @@ describe('getConfiguration', () => {
       }
     };
 
-    nock(API_ENDPOINT).get('/api/v3/node/configuration').reply(200, response);
+    nock(API_ENDPOINT).get('/api/v4/node/configuration').reply(200, response);
 
     const result = await getConfiguration({
       apiEndpoint: API_ENDPOINT,

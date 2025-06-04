@@ -10,11 +10,11 @@ import {
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const API_TOKEN_INVALID = 'my-invalid-api-token';
-const PEER_ID = 'peer123';
+const BUDDY_NODE_ADDRESS = '0x3262f13a39efaca789ae58390441c9ed76bc658a';
 const PROTOCOL = 'udp';
 
 const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> = {
-  destination: PEER_ID,
+  destination: BUDDY_NODE_ADDRESS,
   capabilities: ['Retransmission', 'Segmentation'],
   listenHost: '127.0.0.1:5542',
   path: {
@@ -40,7 +40,7 @@ describe('openSession function', () => {
       target: 'example.com:8080'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(200, resp);
 
     const result = await openSession({
@@ -62,7 +62,7 @@ describe('openSession function', () => {
       target: 'example.com:8080'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(200, resp);
 
     const result = await openSession({
@@ -74,10 +74,10 @@ describe('openSession function', () => {
     expect(result).toEqual(resp);
   });
 
-  test('should return 400 if invalid peerId was provided', async function () {
+  test('should return 400 if invalid node address was provided', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
-      .reply(400, { status: 'INVALID_PEERID' });
+      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .reply(400, { status: 'INVALID_ERROR' });
 
     await expect(
       openSession({
@@ -95,7 +95,7 @@ describe('openSession function', () => {
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(401, expectedResponse);
 
     await expect(
@@ -114,7 +114,7 @@ describe('openSession function', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(403, expectedResponse);
 
     await expect(
@@ -133,7 +133,7 @@ describe('openSession function', () => {
       error: 'Listening address and port already in use.'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(409, expectedResponse);
 
     await expect(
@@ -152,7 +152,7 @@ describe('openSession function', () => {
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v3/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
       .reply(422, expectedResponse);
 
     await expect(
