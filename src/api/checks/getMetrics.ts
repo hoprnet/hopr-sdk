@@ -4,7 +4,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   const headersForMetrics = getHeaders(payload.apiToken);
-  headersForMetrics.set('Accept-Content', 'text/plain');
+  headersForMetrics.set('accept', 'text/plain');
 
   const apiEndpointParsed = new URL(payload.apiEndpoint).href;
   const rawResponse = await fetchWithTimeout(
