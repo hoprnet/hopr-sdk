@@ -36,35 +36,37 @@ describe('getConfiguration', () => {
               Aggregating: {
                 aggregate_on_channel_close: true,
                 aggregation_threshold: 3,
-                unrealized_balance_ratio: 0.95,
-              },
+                unrealized_balance_ratio: 0.95
+              }
             },
             {
               AutoRedeeming: {
-                on_close_redeem_single_tickets_value_min: "2000000000000000000 HOPR",
-                redeem_only_aggregated: true,
-              },
+                on_close_redeem_single_tickets_value_min:
+                  '2000000000000000000 HOPR',
+                redeem_only_aggregated: true
+              }
             },
             {
               ClosureFinalizer: {
-                max_closure_overdue: 3600,
-              },
-            },
+                max_closure_overdue: 3600
+              }
+            }
           ],
           parsedStrategies: {
             Aggregating: {
               aggregate_on_channel_close: true,
               aggregation_threshold: 3,
-              unrealized_balance_ratio: 0.95,
+              unrealized_balance_ratio: 0.95
             },
             AutoRedeeming: {
-              on_close_redeem_single_tickets_value_min: "2000000000000000000 HOPR",
-              redeem_only_aggregated: true,
+              on_close_redeem_single_tickets_value_min:
+                '2000000000000000000 HOPR',
+              redeem_only_aggregated: true
             },
             ClosureFinalizer: {
-              max_closure_overdue: 3600,
-            },
-          },
+              max_closure_overdue: 3600
+            }
+          }
         },
         heartbeat: {
           variance: 2,
@@ -298,39 +300,41 @@ describe('getConfiguration', () => {
           strategies: [
             {
               AutoFunding: {
-                funding_amount: "10000000000000000000 HOPR",
-                min_stake_threshold: "1000000000000000000 HOPR",
-              },
+                funding_amount: '10000000000000000000 HOPR',
+                min_stake_threshold: '1000000000000000000 HOPR'
+              }
             },
             {
               Aggregating: {
                 aggregate_on_channel_close: true,
                 aggregation_threshold: 100,
-                unrealized_balance_ratio: 0.9,
-              },
+                unrealized_balance_ratio: 0.9
+              }
             },
             {
               AutoRedeeming: {
-                on_close_redeem_single_tickets_value_min: "2000000000000000000 HOPR",
-                redeem_only_aggregated: true,
-              },
-            },
+                on_close_redeem_single_tickets_value_min:
+                  '2000000000000000000 HOPR',
+                redeem_only_aggregated: true
+              }
+            }
           ],
           parsedStrategies: {
             Aggregating: {
               aggregate_on_channel_close: true,
               aggregation_threshold: 100,
-              unrealized_balance_ratio: 0.9,
+              unrealized_balance_ratio: 0.9
             },
             AutoFunding: {
-              funding_amount: "10000000000000000000 HOPR",
-              min_stake_threshold: "1000000000000000000 HOPR",
+              funding_amount: '10000000000000000000 HOPR',
+              min_stake_threshold: '1000000000000000000 HOPR'
             },
             AutoRedeeming: {
-              on_close_redeem_single_tickets_value_min: "2000000000000000000 HOPR",
-              redeem_only_aggregated: true,
-            },
-          },
+              on_close_redeem_single_tickets_value_min:
+                '2000000000000000000 HOPR',
+              redeem_only_aggregated: true
+            }
+          }
         },
         heartbeat: {
           variance: 2,

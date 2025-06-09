@@ -27,12 +27,12 @@ describe('getBalances', () => {
       apiToken: API_TOKEN
     });
     expect(result).toEqual({
-        native: '100000000000000000',
-        hopr: '1000000000',
-        safeHopr: '1000000000',
-        safeNative: '1000000000',
-        safeHoprAllowance: '1000000000',
-        token: 'wxHOPR',
+      native: '100000000000000000',
+      hopr: '1000000000',
+      safeHopr: '1000000000',
+      safeNative: '1000000000',
+      safeHoprAllowance: '1000000000',
+      token: 'wxHOPR'
     });
   });
 

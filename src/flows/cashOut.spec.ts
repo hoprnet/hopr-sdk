@@ -35,9 +35,7 @@ describe('cashOut', function () {
       token: 'wxHOPR'
     };
 
-    nock(API_ENDPOINT)
-      .get('/api/v4/account/balances')
-      .reply(200, apiResponse);
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(200, apiResponse);
 
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
@@ -68,10 +66,7 @@ describe('cashOut', function () {
       token: 'wxHOPR'
     };
 
-
-    nock(API_ENDPOINT)
-      .get('/api/v4/account/balances')
-      .reply(200, apiResponse);
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(200, apiResponse);
 
     // mock hoprd node withdraw response
     const expectedReceipt = '0x123456789abcdef';

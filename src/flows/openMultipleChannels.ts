@@ -43,7 +43,11 @@ export const openMultipleChannels = async (
   const nodeHasEnoughNativeBalance =
     nativeBalanceBN >= sumOfNativeBalanceExpectedInFunds;
 
-  if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance || !nodeHasEnoughHoprAllowance) {
+  if (
+    !nodeHasEnoughHoprBalance ||
+    !nodeHasEnoughNativeBalance ||
+    !nodeHasEnoughHoprAllowance
+  ) {
     log.debug(
       `Node does not have enough HOPR balance to fund channels it needs: ${String(
         sumOfHoprBalanceExpectedInFunds
