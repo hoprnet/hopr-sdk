@@ -10,12 +10,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getPeer = async (
   payload: GetPeerPayloadType
 ): Promise<GetPeerResponseType> => {
-  const {
-    apiEndpoint,
-    apiToken,
-    address,
-    timeout
-  } = payload;
+  const { apiEndpoint, apiToken, address, timeout } = payload;
   const url = new URL(`api/v4/peers/${address}`, apiEndpoint);
 
   const rawResponse = await fetchWithTimeout(

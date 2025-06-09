@@ -31,16 +31,16 @@ export const getTicketStatistics = async (
   if (parsedRes.success) {
     return {
       neglectedValue: parsedRes.data.neglectedValue.includes(' ')
-        ? parsedRes.data.neglectedValue.split(' ')[0] as string
+        ? (parsedRes.data.neglectedValue.split(' ')[0] as string)
         : parsedRes.data.neglectedValue,
       redeemedValue: parsedRes.data.redeemedValue.includes(' ')
-        ? parsedRes.data.redeemedValue.split(' ')[0] as string
+        ? (parsedRes.data.redeemedValue.split(' ')[0] as string)
         : parsedRes.data.redeemedValue,
       rejectedValue: parsedRes.data.rejectedValue.includes(' ')
-        ? parsedRes.data.rejectedValue.split(' ')[0] as string
+        ? (parsedRes.data.rejectedValue.split(' ')[0] as string)
         : parsedRes.data.rejectedValue,
       unredeemedValue: parsedRes.data.unredeemedValue.includes(' ')
-        ? parsedRes.data.unredeemedValue.split(' ')[0] as string
+        ? (parsedRes.data.unredeemedValue.split(' ')[0] as string)
         : parsedRes.data.unredeemedValue,
       winningCount: parsedRes.data.winningCount
     };

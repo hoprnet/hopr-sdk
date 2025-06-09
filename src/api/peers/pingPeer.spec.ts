@@ -28,9 +28,11 @@ describe('test pingPeer', function () {
     expect(response.latency).toEqual(10);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`).reply(400, {
-      status: 'INVALID_ERROR'
-    });
+    nock(API_ENDPOINT)
+      .post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`)
+      .reply(400, {
+        status: 'INVALID_ERROR'
+      });
 
     await expect(
       pingPeer({
@@ -41,10 +43,12 @@ describe('test pingPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`).reply(401, {
-      status: 'string',
-      error: 'string'
-    });
+    nock(API_ENDPOINT)
+      .post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`)
+      .reply(401, {
+        status: 'string',
+        error: 'string'
+      });
 
     await expect(
       pingPeer({
@@ -55,10 +59,12 @@ describe('test pingPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`).reply(403, {
-      status: 'string',
-      error: 'string'
-    });
+    nock(API_ENDPOINT)
+      .post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`)
+      .reply(403, {
+        status: 'string',
+        error: 'string'
+      });
 
     await expect(
       pingPeer({
@@ -69,10 +75,12 @@ describe('test pingPeer', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`).reply(422, {
-      status: 'UNKNOWN_FAILURE',
-      error: 'Full error message.'
-    });
+    nock(API_ENDPOINT)
+      .post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`)
+      .reply(422, {
+        status: 'UNKNOWN_FAILURE',
+        error: 'Full error message.'
+      });
 
     await expect(
       pingPeer({

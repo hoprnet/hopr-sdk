@@ -10,12 +10,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const pingPeer = async (
   payload: PingPeerPayloadType
 ): Promise<PingPeerResponseType> => {
-  const {
-    apiEndpoint,
-    apiToken,
-    address,
-    timeout
-  } = payload;
+  const { apiEndpoint, apiToken, address, timeout } = payload;
 
   const url = new URL(`api/v4/peers/${address}/ping`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(

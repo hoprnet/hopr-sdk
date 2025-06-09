@@ -40,13 +40,11 @@ export const getBalances = async (
 
   const currencies = Object.keys(jsonResponse);
   jsonResponse.token = jsonResponse.safeHoprAllowance.includes(' ')
-      ? jsonResponse.safeHoprAllowance.split(' ')[1]
-      : null;
+    ? jsonResponse.safeHoprAllowance.split(' ')[1]
+    : null;
   for (let i = 0; i < currencies.length; i++) {
     const token = currencies[i] as string;
-    jsonResponse[token] = jsonResponse[
-      `${currencies[i]}`
-    ].includes(' ')
+    jsonResponse[token] = jsonResponse[`${currencies[i]}`].includes(' ')
       ? jsonResponse[token].split(' ')[0]
       : jsonResponse[token];
   }

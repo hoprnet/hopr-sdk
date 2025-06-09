@@ -31,7 +31,7 @@ export const getTicketPrice = async (
   // received expected response
   if (parsedRes.success) {
     parsedRes.data.price = parsedRes.data.price.includes(' ')
-      ? parsedRes.data.price.split(' ')[0] as string
+      ? (parsedRes.data.price.split(' ')[0] as string)
       : parsedRes.data.price;
     return parsedRes.data;
   }

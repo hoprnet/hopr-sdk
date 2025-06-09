@@ -17,11 +17,11 @@ export const SessionPayload = z.object({
   mtu: z.number(),
   forwardPath: z.object({
     Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional(),
+    IntermediatePath: z.array(z.string()).optional()
   }),
   returnPath: z.object({
     Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional(),
+    IntermediatePath: z.array(z.string()).optional()
   })
 });
 
