@@ -13,11 +13,11 @@ describe('getBalances', () => {
 
   it('should return balances if successful', async () => {
     const response: GetBalancesResponseType = {
-      native: '100000000000000000',
-      hopr: '1000000000',
-      safeHopr: '1000000000',
-      safeNative: '1000000000',
-      safeHoprAllowance: '1000000000'
+      native: '100000000000000000 xDai',
+      hopr: '1000000000 wxHOPR',
+      safeHopr: '1000000000 wxHOPR',
+      safeNative: '1000000000 xDai',
+      safeHoprAllowance: '1000000000 wxHOPR'
     };
 
     nock(API_ENDPOINT).get('/api/v4/account/balances').reply(200, response);
@@ -26,7 +26,14 @@ describe('getBalances', () => {
       apiEndpoint: API_ENDPOINT,
       apiToken: API_TOKEN
     });
-    expect(result).toEqual(response);
+    expect(result).toEqual({
+        native: '100000000000000000',
+        hopr: '1000000000',
+        safeHopr: '1000000000',
+        safeNative: '1000000000',
+        safeHoprAllowance: '1000000000',
+        token: 'wxHOPR',
+    });
   });
 
   it('should return 401 if authentication fails', async () => {

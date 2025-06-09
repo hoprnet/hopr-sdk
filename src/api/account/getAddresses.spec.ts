@@ -76,7 +76,7 @@ describe('getAddresses', () => {
 
   test('should return ZodError if there is a parsing error', async function () {
     const expectedResponse = {
-      native: '0x123abc'
+      native: null
     };
 
     nock(API_ENDPOINT)

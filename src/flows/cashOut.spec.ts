@@ -18,17 +18,26 @@ describe('cashOut', function () {
   });
   it('does not call withdraw without balance', async function () {
     // mock hoprd node get balances
+    const apiResponse: GetBalancesResponseType = {
+      native: '0 xDAI',
+      hopr: '0 wxHOPR',
+      safeHopr: '0 wxHOPR',
+      safeNative: '0 xDAI',
+      safeHoprAllowance: '0 wxHOPR'
+    };
+
     const expectedResponse: GetBalancesResponseType = {
       native: '0',
       hopr: '0',
       safeHopr: '0',
       safeNative: '0',
-      safeHoprAllowance: '0'
+      safeHoprAllowance: '0',
+      token: 'wxHOPR'
     };
 
     nock(API_ENDPOINT)
       .get('/api/v4/account/balances')
-      .reply(200, expectedResponse);
+      .reply(200, apiResponse);
 
     const res = await cashOut({
       apiEndpoint: API_ENDPOINT,
@@ -42,17 +51,27 @@ describe('cashOut', function () {
   });
   it('sends tx to recipient', async function () {
     // mock hoprd node get balances
+    const apiResponse: GetBalancesResponseType = {
+      native: '10 xDAI',
+      hopr: '10 wxHOPR',
+      safeHopr: '0 wxHOPR',
+      safeNative: '0 xDAI',
+      safeHoprAllowance: '0 wxHOPR'
+    };
+
     const expectedResponse: GetBalancesResponseType = {
-      native: '10',
-      hopr: '10',
+      native: '0',
+      hopr: '0',
       safeHopr: '0',
       safeNative: '0',
-      safeHoprAllowance: '0'
+      safeHoprAllowance: '0',
+      token: 'wxHOPR'
     };
+
 
     nock(API_ENDPOINT)
       .get('/api/v4/account/balances')
-      .reply(200, expectedResponse);
+      .reply(200, apiResponse);
 
     // mock hoprd node withdraw response
     const expectedReceipt = '0x123456789abcdef';

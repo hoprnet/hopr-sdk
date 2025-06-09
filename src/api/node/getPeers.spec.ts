@@ -45,7 +45,7 @@ describe('test getPeers', function () {
     });
 
     expect(response.announced.at(0)?.address).toEqual(
-      '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar'
+      '0x0987654321098765432109876543210987654321'
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {

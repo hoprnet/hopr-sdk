@@ -36,12 +36,17 @@ describe('openSession function', () => {
   test('open using hops - should return 200 if successful', async function () {
     const resp = {
       ip: '127.0.0.1',
-      path: {
+      forwardPath: {
+        Hops: 1
+      },
+      returnPath: {
         Hops: 1
       },
       port: 5542,
+      mtu: 1500,
       protocol: 'tcp',
-      target: 'example.com:8080'
+      target: 'example.com:8080',
+      destination: BUDDY_NODE_ADDRESS
     };
     nock(API_ENDPOINT)
       .post(`/api/v4/session/${PROTOCOL}`, body)
@@ -58,12 +63,17 @@ describe('openSession function', () => {
   test('open using IntermediatePath - should return 200 if successful', async function () {
     const resp = {
       ip: '127.0.0.1',
-      path: {
+      forwardPath: {
+        IntermediatePath: ['peer1', 'peer2', 'peer3']
+      },
+      returnPath: {
         IntermediatePath: ['peer1', 'peer2', 'peer3']
       },
       port: 5542,
+      mtu: 1500,
       protocol: 'tcp',
-      target: 'example.com:8080'
+      target: 'example.com:8080',
+      destination: BUDDY_NODE_ADDRESS
     };
     nock(API_ENDPOINT)
       .post(`/api/v4/session/${PROTOCOL}`, body)
