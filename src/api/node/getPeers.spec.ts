@@ -14,8 +14,7 @@ describe('test getPeers', function () {
     const expectedResponse: GetPeersResponseType = {
       connected: [
         {
-          peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          peerAddress: '0x0987654321098765432109876543210987654321',
+          address: '0x0987654321098765432109876543210987654321',
           multiaddr:
             '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
           heartbeats: {
@@ -32,8 +31,7 @@ describe('test getPeers', function () {
       ],
       announced: [
         {
-          peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          peerAddress: '0x0987654321098765432109876543210987654321',
+          address: '0x0987654321098765432109876543210987654321',
           multiaddr: '1.1.1.1'
         }
       ]
@@ -46,7 +44,7 @@ describe('test getPeers', function () {
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.announced.at(0)?.peerId).toEqual(
+    expect(response.announced.at(0)?.address).toEqual(
       '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar'
     );
   });

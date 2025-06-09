@@ -18,8 +18,8 @@ describe('test getChannel', function () {
       .reply(200, {
         channelId:
           '0x624d7f7a76d60b6e4546ec9429f2266620aa010d47bf05998c3f73e2256b1f7e',
-        sourcePeerId: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
-        destinationPeerId: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
+        source: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
+        destination: '12Diu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQ',
         sourceAddress: '1.339446426793328e+48',
         destinationAddress: '1.339446426793328e+48',
         balance: '10000000000000000000',

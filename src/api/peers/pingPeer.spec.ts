@@ -22,7 +22,7 @@ describe('test pingPeer', function () {
     const response = await pingPeer({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      destination: BUDDY_NODE_ADDRESS
+      address: BUDDY_NODE_ADDRESS
     });
 
     expect(response.latency).toEqual(10);
@@ -38,7 +38,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -54,7 +54,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -70,7 +70,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -86,7 +86,7 @@ describe('test pingPeer', function () {
       pingPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });

@@ -5,7 +5,7 @@ import { sdkApiError } from '../../utils';
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const CURRENCY = 'NATIVE';
-const AMOUNT = '1337';
+const AMOUNT = '1337 wxHOPR';
 const ETHEREUM_ADDRESS = '1.339446426793328e+48';
 
 describe('withdraw function', () => {
@@ -23,7 +23,6 @@ describe('withdraw function', () => {
     const actualResult = await withdraw({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      currency: CURRENCY,
       amount: AMOUNT,
       address: ETHEREUM_ADDRESS
     });
@@ -42,7 +41,6 @@ describe('withdraw function', () => {
       withdraw({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        currency: CURRENCY,
         amount: AMOUNT,
         address: ETHEREUM_ADDRESS
       })
@@ -62,7 +60,6 @@ describe('withdraw function', () => {
       withdraw({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        currency: CURRENCY,
         amount: AMOUNT,
         address: ETHEREUM_ADDRESS
       })
@@ -82,7 +79,6 @@ describe('withdraw function', () => {
       withdraw({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        currency: CURRENCY,
         amount: AMOUNT,
         address: ETHEREUM_ADDRESS
       })
@@ -100,7 +96,6 @@ describe('withdraw function', () => {
       withdraw({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        currency: CURRENCY,
         amount: AMOUNT,
         address: ETHEREUM_ADDRESS
       })
@@ -118,7 +113,6 @@ describe('withdraw function', () => {
       withdraw({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        currency: CURRENCY,
         amount: AMOUNT,
         address: ETHEREUM_ADDRESS
       })

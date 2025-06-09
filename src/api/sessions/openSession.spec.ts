@@ -17,12 +17,16 @@ const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> = {
   destination: BUDDY_NODE_ADDRESS,
   capabilities: ['Retransmission', 'Segmentation'],
   listenHost: '127.0.0.1:5542',
-  path: {
+  forwardPath: {
+    Hops: 1
+  },
+  returnPath: {
     Hops: 1
   },
   target: {
     Plain: 'example.com:8080'
-  }
+  },
+  responseBuffer: '2 MB'
 };
 
 describe('openSession function', () => {

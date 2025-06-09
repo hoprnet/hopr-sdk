@@ -30,7 +30,7 @@ describe('test getPeer', function () {
     const response = await getPeer({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      destination: BUDDY_NODE_ADDRESS
+      address: BUDDY_NODE_ADDRESS
     });
 
     expect(response.observed.at(0)).toEqual('/ip4/');
@@ -44,7 +44,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -58,7 +58,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -72,7 +72,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });
@@ -86,7 +86,7 @@ describe('test getPeer', function () {
       getPeer({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        destination: BUDDY_NODE_ADDRESS
+        address: BUDDY_NODE_ADDRESS
       })
     ).rejects.toThrow(sdkApiError);
   });

@@ -14,7 +14,6 @@ describe('getAddresses', () => {
 
   test('should return the HOPR and native addresses if 200', async function () {
     const expectedResponse: GetAddressesResponseType = {
-      hopr: 'peer123',
       native: '0x123abc'
     };
 

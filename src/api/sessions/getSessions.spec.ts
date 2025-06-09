@@ -19,18 +19,28 @@ describe('getSessions', () => {
         port: 5542,
         protocol: PROTOCOL,
         target: 'example.com:80',
-        path: {
+        destination: '0x123',
+        forwardPath: {
           Hops: 1
-        }
+        },
+        returnPath: {
+          Hops: 1
+        },
+        mtu: 1500
       },
       {
         ip: '127.0.0.1',
         port: 5543,
         protocol: PROTOCOL,
         target: 'example.com:80',
-        path: {
-          Hops: 2
-        }
+        destination: '0x1234',
+        forwardPath: {
+          Hops: 1
+        },
+        returnPath: {
+          Hops: 1
+        },
+        mtu: 1500
       }
     ];
 
