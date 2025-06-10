@@ -12,5 +12,6 @@
   "typedocOptions": {
     "entryPoints": ["src/index.ts"] /* Entry point for typedoc */,
     "out": "docs" /* Directory with typedoc generated docs */
-  }
+  },
+  "exclude": ["e2e/"]
 }

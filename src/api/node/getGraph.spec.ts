@@ -15,7 +15,7 @@ describe('test getGraph', function () {
 
     const mockedFunction = nock(API_ENDPOINT)
       .get(
-        `/api/v3/node/graph?ignoreDisconnectedComponents=true&ignoreNonOpenedChannels=true&rawGraph=true`
+        `/api/v4/node/graph?ignoreDisconnectedComponents=true&ignoreNonOpenedChannels=true&rawGraph=true`
       )
       .reply(200, expectedResponse);
 
@@ -34,7 +34,7 @@ describe('test getGraph', function () {
 
     const mockedFunction = nock(API_ENDPOINT)
       .get(
-        `/api/v3/node/graph?ignoreDisconnectedComponents=false&ignoreNonOpenedChannels=false&rawGraph=false`
+        `/api/v4/node/graph?ignoreDisconnectedComponents=false&ignoreNonOpenedChannels=false&rawGraph=false`
       )
       .reply(200, expectedResponse);
 
@@ -53,7 +53,7 @@ describe('test getGraph', function () {
 
     const mockedFunction = nock(API_ENDPOINT)
       .get(
-        `/api/v3/node/graph?ignoreDisconnectedComponents=false&ignoreNonOpenedChannels=true&rawGraph=false`
+        `/api/v4/node/graph?ignoreDisconnectedComponents=false&ignoreNonOpenedChannels=true&rawGraph=false`
       )
       .reply(200, expectedResponse);
 
@@ -71,7 +71,7 @@ describe('test getGraph', function () {
     const expectedResponse: GetGraphResponseType = 'string';
 
     const mockedFunction = nock(API_ENDPOINT)
-      .get(`/api/v3/node/graph?ignoreNonOpenedChannels=true&rawGraph=false`)
+      .get(`/api/v4/node/graph?ignoreNonOpenedChannels=true&rawGraph=false`)
       .reply(200, expectedResponse);
 
     const response = await getGraph({
@@ -87,7 +87,7 @@ describe('test getGraph', function () {
     const expectedResponse: GetGraphResponseType = 'string';
 
     const mockedFunction = nock(API_ENDPOINT)
-      .get(`/api/v3/node/graph?ignoreDisconnectedComponents=true`)
+      .get(`/api/v4/node/graph?ignoreDisconnectedComponents=true`)
       .reply(200, expectedResponse);
 
     const response = await getGraph({
@@ -102,7 +102,7 @@ describe('test getGraph', function () {
     const expectedResponse: GetGraphResponseType = 'string';
 
     const mockedFunction = nock(API_ENDPOINT)
-      .get(`/api/v3/node/graph?ignoreNonOpenedChannels=true`)
+      .get(`/api/v4/node/graph?ignoreNonOpenedChannels=true`)
       .reply(200, expectedResponse);
 
     const response = await getGraph({
@@ -117,7 +117,7 @@ describe('test getGraph', function () {
     const expectedResponse: GetGraphResponseType = 'string';
 
     const mockedFunction = nock(API_ENDPOINT)
-      .get(`/api/v3/node/graph?rawGraph=true`)
+      .get(`/api/v4/node/graph?rawGraph=true`)
       .reply(200, expectedResponse);
 
     const response = await getGraph({
@@ -132,7 +132,7 @@ describe('test getGraph', function () {
     const expectedResponse: GetGraphResponseType = 'string';
 
     const mockedFunction = nock(API_ENDPOINT)
-      .get(`/api/v3/node/graph?rawGraph=false`)
+      .get(`/api/v4/node/graph?rawGraph=false`)
       .reply(200, expectedResponse);
 
     const response = await getGraph({
@@ -144,7 +144,7 @@ describe('test getGraph', function () {
     expect(response).toEqual(expectedResponse);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/graph`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/node/graph`).reply(401, {
       status: 'string',
       error: 'string'
     });

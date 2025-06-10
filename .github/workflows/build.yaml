@@ -38,7 +38,7 @@ jobs:
 
   publish:
     name: Publish
-    runs-on: self-hosted-hoprnet-small
+    runs-on: self-hosted-hoprnet-big
     needs: build
     steps:
       - name: Checkout repository
@@ -62,6 +62,7 @@ jobs:
           PR_VERSION=$(jq -r '.version' package.json)-pr.${{ github.event.pull_request.number }}
           jq --arg version "${PR_VERSION}-${BUILD_DATE}" '.version = $version' package.json > temp.json
           mv temp.json package.json
-          yarn publish --no-git-tag-version --tag next
+          yarn build
+          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag next
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}

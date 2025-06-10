@@ -14,7 +14,7 @@ describe('test getVersions', function () {
       apiVersion: '3.10.0',
       version: '2.1.0'
     };
-    nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(200, expectedResponse);
+    nock(API_ENDPOINT).get(`/api/v4/node/version`).reply(200, expectedResponse);
 
     const response = await getVersions({
       apiToken: API_TOKEN,
@@ -24,7 +24,7 @@ describe('test getVersions', function () {
     expect(response).toEqual(expectedResponse);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/node/version`).reply(401, {
       status: 'string',
       error: 'string'
     });

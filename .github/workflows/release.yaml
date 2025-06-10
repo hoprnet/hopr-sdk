@@ -122,7 +122,7 @@ jobs:
           rm .yarnrc
           sed -i '/hoprassociation/d' .npmrc
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
-          yarn publish --non-interactive --registry=https://registry.npmjs.org/ --no-git-tag-version --tag release-candidate
+          yarn publish --non-interactive --registry=https://registry.npmjs.org/ --access public --no-git-tag-version --tag release-candidate
           git checkout .npmrc .yarnrc
 
       - name: Bump Version

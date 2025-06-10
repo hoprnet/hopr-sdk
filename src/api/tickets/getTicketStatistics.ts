@@ -9,7 +9,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getTicketStatistics = async (
   payload: BasePayloadType
 ): Promise<GetTicketStatisticsResponseType> => {
-  const url = new URL(`api/v3/tickets/statistics`, payload.apiEndpoint);
+  const url = new URL(`api/v4/tickets/statistics`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
@@ -29,7 +29,21 @@ export const getTicketStatistics = async (
 
   // received expected response
   if (parsedRes.success) {
-    return parsedRes.data;
+    return {
+      neglectedValue: parsedRes.data.neglectedValue.includes(' ')
+        ? (parsedRes.data.neglectedValue.split(' ')[0] as string)
+        : parsedRes.data.neglectedValue,
+      redeemedValue: parsedRes.data.redeemedValue.includes(' ')
+        ? (parsedRes.data.redeemedValue.split(' ')[0] as string)
+        : parsedRes.data.redeemedValue,
+      rejectedValue: parsedRes.data.rejectedValue.includes(' ')
+        ? (parsedRes.data.rejectedValue.split(' ')[0] as string)
+        : parsedRes.data.rejectedValue,
+      unredeemedValue: parsedRes.data.unredeemedValue.includes(' ')
+        ? (parsedRes.data.unredeemedValue.split(' ')[0] as string)
+        : parsedRes.data.unredeemedValue,
+      winningCount: parsedRes.data.winningCount
+    };
   }
 
   // check if response has the structure of an expected api error

@@ -22,24 +22,32 @@ export const openMultipleChannels = async (
   });
 
   // Convert the balances into BigInt constants
-  const hoprBalanceBN = BigInt(balance.hopr);
+  const hoprAllowanceBN = BigInt(balance.safeHoprAllowance);
+  const hoprBalanceBN = BigInt(balance.safeHopr);
   const nativeBalanceBN = BigInt(balance.native);
 
   // The HOPR balance needed to open the channels is equivalent to the `<Amount to fund each channel> * <The number of channels to open>`
   const sumOfHoprBalanceExpectedInFunds =
-    amountBN * BigInt(payload.peerAddresses.length);
+    amountBN * BigInt(payload.destinations.length);
 
   const nodeHasEnoughHoprBalance =
     hoprBalanceBN >= sumOfHoprBalanceExpectedInFunds;
 
+  const nodeHasEnoughHoprAllowance =
+    hoprAllowanceBN >= sumOfHoprBalanceExpectedInFunds;
+
   // The NATIVE balance needed to open the channels is equivalent to the `<Gnosis minimum gas> * <The number of channels to open>`
   const sumOfNativeBalanceExpectedInFunds =
-    MINIMUM_GNOSIS_GAS * BigInt(payload.peerAddresses.length);
+    MINIMUM_GNOSIS_GAS * BigInt(payload.destinations.length);
 
   const nodeHasEnoughNativeBalance =
     nativeBalanceBN >= sumOfNativeBalanceExpectedInFunds;
 
-  if (!nodeHasEnoughHoprBalance || !nodeHasEnoughNativeBalance) {
+  if (
+    !nodeHasEnoughHoprBalance ||
+    !nodeHasEnoughNativeBalance ||
+    !nodeHasEnoughHoprAllowance
+  ) {
     log.debug(
       `Node does not have enough HOPR balance to fund channels it needs: ${String(
         sumOfHoprBalanceExpectedInFunds
@@ -53,33 +61,33 @@ export const openMultipleChannels = async (
     return;
   }
 
-  // Open channels for each peerId and gather the promises
-  const openChannelPromises = payload.peerAddresses.map(async (peerAddress) => {
+  // Open channels for each node address and gather the promises
+  const openChannelPromises = payload.destinations.map(async (destination) => {
     try {
       const { transactionReceipt, channelId } = await openChannel({
         apiEndpoint: payload.apiEndpoint,
         apiToken: payload.apiToken,
         timeout: payload.timeout,
-        peerAddress: peerAddress,
+        destination,
         amount: payload.amount
       });
-      return { peerAddress, transactionReceipt, channelId };
+      return { destination, transactionReceipt, channelId };
     } catch (error) {
-      return { peerAddress, transactionReceipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
+      return { destination, transactionReceipt: null, channelId: '' }; // Set channelId as an empty string in case of an error
     }
   });
 
   // Use Promise.allSettled to wait for all the promises to settle
   const results = await Promise.allSettled(openChannelPromises);
 
-  // Filter out the fulfilled results and return an object with receipts and channelId keyed by peerId
+  // Filter out the fulfilled results and return an object with receipts and channelId keyed by node address
   const transactionReceipts: {
-    [peerId: string]: { channelId: string; transactionReceipt: string };
+    [destination: string]: { channelId: string; transactionReceipt: string };
   } = {};
   results.forEach((result) => {
     if (result.status === 'fulfilled' && result.value.transactionReceipt) {
-      const { peerAddress, transactionReceipt, channelId } = result.value;
-      transactionReceipts[peerAddress] = { channelId, transactionReceipt };
+      const { destination, transactionReceipt, channelId } = result.value;
+      transactionReceipts[destination] = { channelId, transactionReceipt };
     }
   });
 

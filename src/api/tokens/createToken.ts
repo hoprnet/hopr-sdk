@@ -28,7 +28,7 @@ export const createToken = async (
     lifetime: payload.lifetime
   };
 
-  const url = new URL(`api/v3/tokens`, payload.apiEndpoint);
+  const url = new URL(`api/v4/tokens`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

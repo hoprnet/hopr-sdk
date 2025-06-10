@@ -11,7 +11,7 @@ describe('test redeemAllTickets', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(204);
+    nock(API_ENDPOINT).post(`/api/v4/tickets/redeem`).reply(204);
 
     const response = await redeemAllTickets({
       apiToken: API_TOKEN,
@@ -21,8 +21,8 @@ describe('test redeemAllTickets', function () {
     expect(response).toEqual(true);
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(400, {
-      status: 'INVALID_PEERID'
+    nock(API_ENDPOINT).post(`/api/v4/tickets/redeem`).reply(400, {
+      status: 'INVALID_ERROR'
     });
 
     await expect(
@@ -30,7 +30,7 @@ describe('test redeemAllTickets', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(401, {
+    nock(API_ENDPOINT).post(`/api/v4/tickets/redeem`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -40,7 +40,7 @@ describe('test redeemAllTickets', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(403, {
+    nock(API_ENDPOINT).post(`/api/v4/tickets/redeem`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -50,7 +50,7 @@ describe('test redeemAllTickets', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws the node is not ready when hoprd api response is an 412 error ', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(412, {
+    nock(API_ENDPOINT).post(`/api/v4/tickets/redeem`).reply(412, {
       status: 'the node is not ready',
       error: 'the node is not ready'
     });
@@ -60,7 +60,7 @@ describe('test redeemAllTickets', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(422, {
+    nock(API_ENDPOINT).post(`/api/v4/tickets/redeem`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
@@ -70,7 +70,7 @@ describe('test redeemAllTickets', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a ZodError when response cannot be parsed as ApiErrorResponse', async function () {
-    nock(API_ENDPOINT).post(`/api/v3/tickets/redeem`).reply(400, {
+    nock(API_ENDPOINT).post(`/api/v4/tickets/redeem`).reply(400, {
       unexpectedFormat: 'This is not the expected error format'
     });
 

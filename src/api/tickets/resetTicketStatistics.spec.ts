@@ -11,7 +11,7 @@ describe('test resetTicketStatistics', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(204);
+    nock(API_ENDPOINT).delete(`/api/v4/tickets/statistics`).reply(204);
 
     const response = await resetTicketStatistics({
       apiToken: API_TOKEN,
@@ -21,7 +21,7 @@ describe('test resetTicketStatistics', function () {
     expect(response).toEqual(true);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(401, {
+    nock(API_ENDPOINT).delete(`/api/v4/tickets/statistics`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -31,7 +31,7 @@ describe('test resetTicketStatistics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(403, {
+    nock(API_ENDPOINT).delete(`/api/v4/tickets/statistics`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -41,7 +41,7 @@ describe('test resetTicketStatistics', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(422, {
+    nock(API_ENDPOINT).delete(`/api/v4/tickets/statistics`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
@@ -52,7 +52,7 @@ describe('test resetTicketStatistics', function () {
   });
   it('throws an Error when server returns 500+ error', async function () {
     nock(API_ENDPOINT)
-      .delete(`/api/v3/tickets/statistics`)
+      .delete(`/api/v4/tickets/statistics`)
       .reply(500, 'Server Error');
 
     await expect(
@@ -60,7 +60,7 @@ describe('test resetTicketStatistics', function () {
     ).rejects.toThrow(Error);
   });
   it('throws a ZodError when response cannot be parsed as ApiErrorResponse', async function () {
-    nock(API_ENDPOINT).delete(`/api/v3/tickets/statistics`).reply(400, {
+    nock(API_ENDPOINT).delete(`/api/v4/tickets/statistics`).reply(400, {
       unexpectedFormat: 'This is not the expected error format'
     });
 

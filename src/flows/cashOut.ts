@@ -23,8 +23,7 @@ export const cashOut = async (payload: CashOutPayloadType) => {
       apiToken: payload.apiToken,
       timeout: payload.timeout,
       address: payload.address,
-      amount: balance?.native,
-      currency: 'NATIVE'
+      amount: balance?.native
     });
     receipts.native = transferNativeFunds;
   }
@@ -35,8 +34,7 @@ export const cashOut = async (payload: CashOutPayloadType) => {
       apiToken: payload.apiToken,
       timeout: payload.timeout,
       address: payload.address,
-      amount: balance?.hopr,
-      currency: 'HOPR'
+      amount: balance?.hopr
     });
     receipts.hopr = transferHoprFunds;
   }

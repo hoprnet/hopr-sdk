@@ -13,12 +13,11 @@ describe('getNativeAddress', () => {
 
   test('should return the HOPR addresses if 200', async function () {
     const expectedResponse: GetAddressesResponseType = {
-      hopr: 'peer123',
       native: '0x123abc'
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(200, expectedResponse);
 
     const result = await getNativeAddress({
@@ -36,7 +35,7 @@ describe('getNativeAddress', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(401, expectedResponse);
 
     await expect(
@@ -51,7 +50,7 @@ describe('getNativeAddress', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(403, expectedResponse);
 
     await expect(
@@ -66,7 +65,7 @@ describe('getNativeAddress', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(422, expectedResponse);
 
     await expect(

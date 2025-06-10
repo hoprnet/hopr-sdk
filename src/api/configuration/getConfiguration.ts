@@ -19,7 +19,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getConfiguration = async (
   payload: BasePayloadType
 ): Promise<GetConfigurationResponseType> => {
-  const url = new URL(`api/v3/node/configuration`, payload.apiEndpoint);
+  const url = new URL(`api/v4/node/configuration`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
@@ -90,7 +90,7 @@ export const getConfiguration = async (
     }
   );
 
-  jsonResponse.hopr.strategy.strategies = parsedStrategies;
+  jsonResponse.hopr.strategy.parsedStrategies = parsedStrategies;
 
   return jsonResponse;
 };
