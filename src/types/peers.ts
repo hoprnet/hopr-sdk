@@ -29,8 +29,7 @@ export const PingPeerPayload = BasePayload.extend({
 export type PingPeerPayloadType = z.infer<typeof PingPeerPayload>;
 
 export const PingPeerResponse = z.object({
-  latency: z.number(),
-  reportedVersion: z.string()
+  latency: z.number()
 });
 
 export type PingPeerResponseType = z.infer<typeof PingPeerResponse>;

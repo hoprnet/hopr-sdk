@@ -31,7 +31,6 @@ describe('Node E2E Tests', function () {
       lastSeen: expect.any(Number),
       lastSeenLatency: expect.any(Number),
       backoff: expect.any(Number),
-      reportedVersion: expect.any(String),
       isNew: expect.any(Boolean)
     };
 

@@ -15,8 +15,7 @@ describe('test pingPeer', function () {
     nock(API_ENDPOINT)
       .post(`/api/v4/peers/${BUDDY_NODE_ADDRESS}/ping`)
       .reply(200, {
-        latency: 10,
-        reportedVersion: '2.2.0'
+        latency: 10
       } as PingPeerResponseType);
 
     const response = await pingPeer({

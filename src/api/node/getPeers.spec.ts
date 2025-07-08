@@ -25,8 +25,7 @@ describe('test getPeers', function () {
           lastSeenLatency: 17,
           quality: 0.8,
           backoff: 0,
-          isNew: true,
-          reportedVersion: '1.92.12'
+          isNew: true
         }
       ],
       announced: [

@@ -31,8 +31,7 @@ describe('peerInfo E2E Tests', function () {
     const address = (await sdk2.api.account.getHoprAddress()) as string;
     const response = await sdk.api.peers.pingPeer({ address });
     const expectedResponse: PingPeerResponseType = {
-      latency: expect.any(Number),
-      reportedVersion: expect.any(String)
+      latency: expect.any(Number)
     };
 
     expect(response).toStrictEqual(expectedResponse);

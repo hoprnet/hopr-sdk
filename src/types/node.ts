@@ -22,8 +22,7 @@ export const PeerConnected = z.object({
   lastSeenLatency: z.number(),
   quality: z.number(),
   backoff: z.number(),
-  isNew: z.boolean(),
-  reportedVersion: z.string()
+  isNew: z.boolean()
 });
 
 export const PeerAnnounced = z.object({
