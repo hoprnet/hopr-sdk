@@ -63,6 +63,11 @@ jobs:
           jq --arg version "${PR_VERSION}-${BUILD_DATE}" '.version = $version' package.json > temp.json
           mv temp.json package.json
           yarn build
+          if [ -z "${NODE_AUTH_TOKEN}" ] || [ "${NODE_AUTH_TOKEN}" = "" ]; then
+            echo "NODE_AUTH_TOKEN is not set. Skipping publish."
+            exit 1
+          fi
+          npm run login
           yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag next
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
