@@ -10,10 +10,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getChannelsCorrupted = async (
   payload: BasePayloadType
 ): Promise<GetChannelsCorruptedResponseType> => {
-  const url = new URL(
-    `api/v4/channels/corrupted`,
-    payload.apiEndpoint
-  );
+  const url = new URL(`api/v4/channels/corrupted`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

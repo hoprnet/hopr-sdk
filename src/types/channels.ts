@@ -158,11 +158,13 @@ export const ChannelCorrupted = z.object({
   destination: z.string(),
   source: z.string(),
   status: ChannelStatus,
-  ticketIndex: z.number(),
+  ticketIndex: z.number()
 });
 
 export type ChannelCorruptedType = z.infer<typeof ChannelCorrupted>;
 
 export const GetChannelsCorruptedResponse = z.array(ChannelCorrupted);
 
-export type GetChannelsCorruptedResponseType = z.infer<typeof GetChannelsCorruptedResponse>;
+export type GetChannelsCorruptedResponseType = z.infer<
+  typeof GetChannelsCorruptedResponse
+>;

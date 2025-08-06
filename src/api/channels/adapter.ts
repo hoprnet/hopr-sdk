@@ -157,7 +157,7 @@ export class ChannelsAdapter {
     return getChannelsCorrupted({
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout,
+      timeout: payload.timeout ?? this.timeout
     });
   }
 }
