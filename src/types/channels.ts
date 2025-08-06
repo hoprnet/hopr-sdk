@@ -147,3 +147,20 @@ export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;
 export const GetChannelResponse = TopologyChannel;
 
 export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
+
+export const ChannelCorrupted = z.object({
+  balance: z.string(),
+  channelEpoch: z.number(),
+  channelId: z.string(),
+  closureTime: z.number(),
+  destination: z.string(),
+  source: z.string(),
+  status: ChannelStatus,
+  ticketIndex: z.string(),
+});
+
+export type ChannelCorruptedType = z.infer<typeof ChannelCorrupted>;
+
+export const GetChannelsCorruptedResponse = z.array(ChannelCorrupted);
+
+export type GetChannelsCorruptedResponseType = z.infer<typeof GetChannelsCorruptedResponse>;
