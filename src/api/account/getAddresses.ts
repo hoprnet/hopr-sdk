@@ -18,7 +18,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getAddresses = async (
   payload: BasePayloadType
 ): Promise<GetAddressesResponseType> => {
-  const url = new URL(`api/v3/account/addresses`, payload.apiEndpoint);
+  const url = new URL(`api/v4/account/addresses`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

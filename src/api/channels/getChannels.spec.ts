@@ -12,7 +12,7 @@ describe('test getChannels', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(200, {
         incoming: [
           {
@@ -34,12 +34,8 @@ describe('test getChannels', function () {
           {
             channelId:
               '0x00023da9f252f16970ed0987153e5e64fdae0f41799b6a87306e12d17d060301',
-            sourcePeerId:
-              '16Uiu2HAm8RWC2ZwhMm1AX8FeJmS9FkWn82qigTYGH4vkrX6Z6AV8',
-            destinationPeerId:
-              '16Uiu2HAmJpsfNg1JBUFGoJx6gp58BPQwymhPGaJidqPKMm5cETW7',
-            sourceAddress: '0xbFdbE0e896C989b23D6cA83E12AD4df1739B6E28',
-            destinationAddress: '0xaB51F95ED1Fa8d4afE40A3a1B8f44A242307390c',
+            source: '0xbFdbE0e896C989b23D6cA83E12AD4df1739B6E28',
+            destination: '0xaB51F95ED1Fa8d4afE40A3a1B8f44A242307390c',
             balance: '100000000000000000',
             status: 'Open',
             ticketIndex: '0',
@@ -61,7 +57,7 @@ describe('test getChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(400, {
         status: 'INVALID_PEERID'
       });
@@ -72,7 +68,7 @@ describe('test getChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(403, {
         status: 'NOT_ENOUGH_BALANCE'
       });
@@ -83,7 +79,7 @@ describe('test getChannels', function () {
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
     nock(API_ENDPOINT)
-      .get('/api/v3/channels?includingClosed=false&fullTopology=false')
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
       .reply(422, {
         status: 'UNKNOWN_FAILURE',
         error: 'Full error message.'

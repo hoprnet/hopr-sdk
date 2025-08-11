@@ -13,7 +13,13 @@ export const SessionPayload = z.object({
   port: z.number(),
   protocol: SessionProtocols,
   target: z.string(),
-  path: z.object({
+  destination: z.string(),
+  mtu: z.number(),
+  forwardPath: z.object({
+    Hops: z.number().optional(),
+    IntermediatePath: z.array(z.string()).optional()
+  }),
+  returnPath: z.object({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
   })
@@ -43,10 +49,15 @@ export const OpenSessionPayloadCall = BasePayload.extend({
   capabilities: SessionCapabilities.array(),
   destination: z.string(),
   listenHost: z.string(),
-  path: z.object({
+  forwardPath: z.object({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
   }),
+  returnPath: z.object({
+    Hops: z.number().optional(),
+    IntermediatePath: z.array(z.string()).optional()
+  }),
+  responseBuffer: z.string(),
   target: z.object({
     Plain: z.string()
   })
@@ -60,16 +71,6 @@ export type OpenSessionPayloadCallType = z.infer<typeof OpenSessionPayloadCall>;
 export type OpenSessionPayloadType = z.infer<typeof OpenSessionPayload>;
 export const OpenSessionResponse = SessionPayload;
 export type OpenSessionResponseType = SessionPayloadType;
-
-/**
- * getAlias
- */
-
-// export const GetAliasResponse = z.object({ peerId: z.string() });
-
-// export type GetAliasResponseType = z.infer<typeof GetAliasResponse>;
-
-// export type OpenSessionPayloadType = z.infer<typeof OpenSessionPayload>;
 
 /**
  * closeSession

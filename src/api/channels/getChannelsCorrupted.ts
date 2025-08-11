@@ -1,43 +1,32 @@
 import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
-  PopMessagePayloadType,
-  PopMessageResponse,
-  PopMessageResponseType,
-  RemoveBasicAuthenticationPayloadType
+  BasePayloadType,
+  GetChannelsCorruptedResponse,
+  GetChannelsCorruptedResponseType
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
-/**
- * Get the oldest message currently present in the nodes message inbox.
- * The message is removed from the inbox.
- * @returns - A promise that resolves to the oldest message currently present in the nodes message inbox.
- */
-export const popMessage = async (
-  payload: PopMessagePayloadType
-): Promise<PopMessageResponseType> => {
-  const url = new URL('api/v3/messages/pop', payload.apiEndpoint);
-  const body: RemoveBasicAuthenticationPayloadType<PopMessagePayloadType> = {
-    tag: payload.tag
-  };
-
+export const getChannelsCorrupted = async (
+  payload: BasePayloadType
+): Promise<GetChannelsCorruptedResponseType> => {
+  const url = new URL(`api/v4/channels/corrupted`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
-      method: 'POST',
-      headers: getHeaders(payload.apiToken),
-      body: JSON.stringify(body)
+      method: 'GET',
+      headers: getHeaders(payload.apiToken)
     },
     payload.timeout
   );
 
   // received unexpected error from server
-  if (rawResponse.status >= 500) {
+  if (rawResponse.status >= 499) {
     throw new Error(rawResponse.statusText);
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = PopMessageResponse.safeParse(jsonResponse);
+  const parsedRes = GetChannelsCorruptedResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

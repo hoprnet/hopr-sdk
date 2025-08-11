@@ -10,7 +10,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getPeers = async (
   payload: GetPeersPayloadType
 ): Promise<GetPeersResponseType> => {
-  const url = new URL(`api/v3/node/peers`, payload.apiEndpoint);
+  const url = new URL(`api/v4/node/peers`, payload.apiEndpoint);
   if (payload?.quality) {
     url.searchParams.set('quality', payload.quality.toString());
   }

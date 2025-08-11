@@ -14,8 +14,7 @@ describe('test getPeers', function () {
     const expectedResponse: GetPeersResponseType = {
       connected: [
         {
-          peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          peerAddress: '0x0987654321098765432109876543210987654321',
+          address: '0x0987654321098765432109876543210987654321',
           multiaddr:
             '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
           heartbeats: {
@@ -26,32 +25,30 @@ describe('test getPeers', function () {
           lastSeenLatency: 17,
           quality: 0.8,
           backoff: 0,
-          isNew: true,
-          reportedVersion: '1.92.12'
+          isNew: true
         }
       ],
       announced: [
         {
-          peerId: '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar',
-          peerAddress: '0x0987654321098765432109876543210987654321',
+          address: '0x0987654321098765432109876543210987654321',
           multiaddr: '1.1.1.1'
         }
       ]
     };
 
-    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(200, expectedResponse);
+    nock(API_ENDPOINT).get(`/api/v4/node/peers`).reply(200, expectedResponse);
 
     const response = await getPeers({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.announced.at(0)?.peerId).toEqual(
-      '16Uiu2HAmVfV4GKQhdECMqYmUMGLy84RjTJQxTWDcmUX5847roBar'
+    expect(response.announced.at(0)?.address).toEqual(
+      '0x0987654321098765432109876543210987654321'
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v4/node/peers`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -60,7 +57,7 @@ describe('test getPeers', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/node/peers`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -70,7 +67,7 @@ describe('test getPeers', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v4/node/peers`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -80,7 +77,7 @@ describe('test getPeers', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/peers`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v4/node/peers`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

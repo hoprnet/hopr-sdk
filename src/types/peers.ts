@@ -6,8 +6,7 @@ import { BasePayload } from './general';
  */
 
 export const GetPeerPayload = BasePayload.extend({
-  peerId: string().optional(),
-  destination: string().optional()
+  address: string()
 });
 
 export type GetPeerPayloadType = z.infer<typeof GetPeerPayload>;
@@ -24,15 +23,13 @@ export type GetPeerResponseType = z.infer<typeof GetPeerResponse>;
  */
 
 export const PingPeerPayload = BasePayload.extend({
-  peerId: z.string().optional(),
-  destination: string().optional()
+  address: string()
 });
 
 export type PingPeerPayloadType = z.infer<typeof PingPeerPayload>;
 
 export const PingPeerResponse = z.object({
-  latency: z.number(),
-  reportedVersion: z.string()
+  latency: z.number()
 });
 
 export type PingPeerResponseType = z.infer<typeof PingPeerResponse>;

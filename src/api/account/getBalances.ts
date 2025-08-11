@@ -18,7 +18,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getBalances = async (
   payload: BasePayloadType
 ): Promise<GetBalancesResponseType> => {
-  const url = new URL(`api/v3/account/balances`, payload.apiEndpoint);
+  const url = new URL(`api/v4/account/balances`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
@@ -38,19 +38,18 @@ export const getBalances = async (
 
   const jsonResponse = await rawResponse.json();
 
-  // remove currency names from strings
   const currencies = Object.keys(jsonResponse);
-  let parsedResNoCurrency = {};
+  jsonResponse.token = jsonResponse.safeHoprAllowance.includes(' ')
+    ? jsonResponse.safeHoprAllowance.split(' ')[1]
+    : null;
   for (let i = 0; i < currencies.length; i++) {
-    //@ts-ignore
-    parsedResNoCurrency[`${currencies[i]}`] = jsonResponse[
-      `${currencies[i]}`
-    ].includes(' ')
-      ? jsonResponse[`${currencies[i]}`].split(' ')[0]
-      : jsonResponse[`${currencies[i]}`];
+    const token = currencies[i] as string;
+    jsonResponse[token] = jsonResponse[`${currencies[i]}`].includes(' ')
+      ? jsonResponse[token].split(' ')[0]
+      : jsonResponse[token];
   }
 
-  const parsedRes = GetBalancesResponse.safeParse(parsedResNoCurrency);
+  const parsedRes = GetBalancesResponse.safeParse(jsonResponse);
 
   // received expected response
   if (parsedRes.success) {

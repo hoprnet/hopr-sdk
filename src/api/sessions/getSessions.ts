@@ -8,7 +8,7 @@ import {
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
- * Get all aliases you set previously and their corresponding peer IDs.
+ * Get all sessions you set previously and their corresponding data.
  *
  * @param apiEndpoint - The API endpoint
  * @param apiToken - The API token to use for authentication.
@@ -19,7 +19,7 @@ export const getSessions = async (
   payload: GetSessionsPayloadType
 ): Promise<GetSessionsResponseType> => {
   const { protocol, apiToken, apiEndpoint } = payload;
-  const url = new URL(`api/v3/session/${protocol}`, apiEndpoint);
+  const url = new URL(`api/v4/session/${protocol}`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

@@ -4,7 +4,6 @@ import {
 } from '../types';
 import { openMultipleChannels } from './openMultipleChannels';
 import { cashOut } from './cashOut';
-import { safeSendMessage } from './safeSendMessage';
 import { getOutgoingChannels } from './getOutgoingChannels';
 import { closeEverything } from './closeEverything';
 import {
@@ -12,7 +11,6 @@ import {
   GetOutgoingChannelsPayloadType,
   OpenMultipleChannelsPayloadType
 } from '../types/flows';
-import { SendMessagePayloadType } from '../types/messages';
 
 export class FlowsAdapter {
   private apiEndpoint: string;
@@ -43,7 +41,7 @@ export class FlowsAdapter {
    * Opens multiple channels.
    *
    * @param payload - The payload to open multiple channels consisting of:
-   * - `peerIds`: An array of the peer Ids to the node we want to open channels to.
+   * - `destinations`: An array of the peer addresses to the node we want to open channels to.
    * - `amount`: How much currency we want to open the channel and fund it with.
    * @returns A Promise that resolves with keyed by the peerId containing the channel Id and receipt.
    */
@@ -78,29 +76,6 @@ export class FlowsAdapter {
   }
 
   /**
-   * Sends a safe message using the `SendMessagePayloadType` payload.
-   *
-   * @param payload - The payload to send a safe message consisting of:
-   *   - `body`: The message body to send.
-   *   - `recipient`: The recipient of the message.
-   *   - `path`: The path to take for the message, if any.
-   *   - `hops`: The number of hops to take for the message, if any.
-   *
-   * @returns A Promise that resolves with a string representing the sent message, or `undefined`
-   * if the message sending was not successful.
-   */
-  public async safeSendMessage(
-    payload: RemoveBasicAuthenticationPayloadType<SendMessagePayloadType>
-  ) {
-    return safeSendMessage({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload.timeout ?? this.timeout,
-      ...payload
-    });
-  }
-
-  /**
    * Retrieves outgoing channels.
    *
    * @param payload - The status to filter the outgoing channels by.
@@ -110,7 +85,7 @@ export class FlowsAdapter {
    *   - `status`: The status of the channel, which can be one of "Open", "WaitingForCommitment",
    *      "PendingToClose", or "Closed".
    *   - `channelId`: A string representing the channel ID.
-   *   - `peerId`: A string representing the peer ID of the channel.
+   *   - `destination`: A string representing the destination peer address of the channel.
    *   - `balance`: A string representing the current balance of the channel.
    */
   public async getOutgoingChannels(

@@ -7,7 +7,8 @@ import {
   GetChannelTicketsPayloadType,
   OpenChannelPayloadType,
   RedeemChannelTicketsPayloadType,
-  RemoveBasicAuthenticationPayloadType
+  RemoveBasicAuthenticationPayloadType,
+  BasePayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { aggregateChannelTickets } from './aggregateChannelTickets';
@@ -15,6 +16,7 @@ import { closeChannel } from './closeChannel';
 import { fundChannel } from './fundChannel';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
+import { getChannelsCorrupted } from './getChannelsCorrupted';
 import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
@@ -47,7 +49,7 @@ export class ChannelsAdapter {
   }
 
   /**
-   * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId and the direction of the channel.
+   * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, and the channel id.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
   public async closeChannel(
@@ -85,7 +87,7 @@ export class ChannelsAdapter {
   }
 
   /**
-   * Opens a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
+   * Opens a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the destination, and the amount of HOPR tokens to be staked in the channel.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.
    */
   public async openChannel(
@@ -96,7 +98,7 @@ export class ChannelsAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       amount: payload.amount,
-      peerAddress: payload.peerAddress
+      destination: payload.destination
     });
   }
 
@@ -146,6 +148,16 @@ export class ChannelsAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       channelId: payload.channelId
+    });
+  }
+
+  public async getChannelsCorrupted(
+    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getChannelsCorrupted({
+      apiToken: this.apiToken,
+      apiEndpoint: this.apiEndpoint,
+      timeout: payload.timeout ?? this.timeout
     });
   }
 }

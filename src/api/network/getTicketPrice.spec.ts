@@ -12,7 +12,7 @@ describe('test getTicketPrice', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/network/price`)
+      .get(`/api/v4/network/price`)
       .reply(200, {
         price: '1000000'
       } as GetTicketPriceResponseType);
@@ -25,7 +25,7 @@ describe('test getTicketPrice', function () {
     expect(response.price).toEqual('1000000');
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/network/price`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -38,7 +38,7 @@ describe('test getTicketPrice', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/network/price`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v4/network/price`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

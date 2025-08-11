@@ -136,7 +136,7 @@ Source code resides under `src/` folder.
 
 The api folder is used to find routes with ease.
 
-For example if you are looking for `GET /api/v3/node/info` you would go straight
+For example if you are looking for `GET /api/v4/node/info` you would go straight
 to the node folder and find the file `getInfo.ts` alongside `getInfo.spec.ts` to
 understand how this function will react to different responses from the node.
 
@@ -154,7 +154,7 @@ The adapter creates a resource class used by the [sdk class](./sdk.ts)
 
 #### Adding a new route
 
-The resource of the route can be seen after the `v3` keyword, for example in this example `/api/v3/node/info` the resource is `node`.
+The resource of the route can be seen after the `v4` keyword, for example in this example `/api/v4/node/info` the resource is `node`.
 
 ##### New Resource
 

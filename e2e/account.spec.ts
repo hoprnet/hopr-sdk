@@ -19,12 +19,6 @@ describe('Account E2E tests', function () {
     });
   });
 
-  it('receives the hopr address', async function () {
-    const response = await sdk.api.account.getHoprAddress();
-
-    expect(typeof response).toEqual('string');
-  });
-
   it('receives the native address', async function () {
     nativeAddress = (await sdk.api.account.getNativeAddress()) as string;
 

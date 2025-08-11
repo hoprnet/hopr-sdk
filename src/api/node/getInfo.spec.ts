@@ -12,7 +12,7 @@ describe('test getInfo', function () {
   });
   it('handles successful response', async function () {
     nock(API_ENDPOINT)
-      .get(`/api/v3/node/info`)
+      .get(`/api/v4/node/info`)
       .reply(200, {
         network: 'rotsee',
         announcedAddress: [],
@@ -25,9 +25,6 @@ describe('test getInfo', function () {
         hoprManagementModule: '0x39b0445b32f5a544eb7917912f5f837bd061be4c',
         hoprNodeSafe: '0x0361a040acb376dd7e5a4643e5a4c7ae9d20c834',
         indexerBlock: 35346732,
-        indexerChecksum:
-          '0xe780bd95f350e96fe30e98d17560ade3c892f0d3bd75d681f99b0d3c1690517d',
-        indexBlockPrevChecksum: 35611556,
         indexerLastLogBlock: 35611556,
         indexerLastLogChecksum:
           '0xe780bd95f350e96fe30e98d17560ade3c892f0d3bd75d681f99b0d3c1690517d',
@@ -47,7 +44,7 @@ describe('test getInfo', function () {
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(400, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(400, {
       status: 'INVALID_PEERID'
     });
 
@@ -56,7 +53,7 @@ describe('test getInfo', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(401, {
       status: 'string',
       error: 'string'
     });
@@ -66,7 +63,7 @@ describe('test getInfo', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 403 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(403, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(403, {
       status: 'string',
       error: 'string'
     });
@@ -76,7 +73,7 @@ describe('test getInfo', function () {
     ).rejects.toThrow(sdkApiError);
   });
   it('throws a custom error when hoprd api response is an 422 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/info`).reply(422, {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(422, {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });

@@ -16,8 +16,8 @@ const sdk2 = new SDK({
 
 describe('peerInfo E2E Tests', function () {
   test('should get information about this peer', async function () {
-    const peerId = await sdk2.api.account.getHoprAddress();
-    const response = await sdk.api.peers.getPeer({ peerId });
+    const address = 'await sdk2.api.account.getHoprAddress()';
+    const response = await sdk.api.peers.getPeer({ address });
 
     const expectedResponse: GetPeerResponseType = {
       announced: expect.any(Array<String>),
@@ -28,11 +28,10 @@ describe('peerInfo E2E Tests', function () {
   });
 
   test('should get the latency of the node specified', async function () {
-    const peerId = (await sdk2.api.account.getHoprAddress()) as string;
-    const response = await sdk.api.peers.pingPeer({ peerId: peerId });
+    const address = (await sdk2.api.account.getHoprAddress()) as string;
+    const response = await sdk.api.peers.pingPeer({ address });
     const expectedResponse: PingPeerResponseType = {
-      latency: expect.any(Number),
-      reportedVersion: expect.any(String)
+      latency: expect.any(Number)
     };
 
     expect(response).toStrictEqual(expectedResponse);

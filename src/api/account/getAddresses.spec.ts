@@ -14,12 +14,11 @@ describe('getAddresses', () => {
 
   test('should return the HOPR and native addresses if 200', async function () {
     const expectedResponse: GetAddressesResponseType = {
-      hopr: 'peer123',
       native: '0x123abc'
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(200, expectedResponse);
 
     const result = await getAddresses({
@@ -37,7 +36,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(403, expectedResponse);
 
     await expect(
@@ -52,7 +51,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(403, expectedResponse);
 
     await expect(
@@ -67,7 +66,7 @@ describe('getAddresses', () => {
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(422, expectedResponse);
 
     await expect(
@@ -77,11 +76,11 @@ describe('getAddresses', () => {
 
   test('should return ZodError if there is a parsing error', async function () {
     const expectedResponse = {
-      native: '0x123abc'
+      native: null
     };
 
     nock(API_ENDPOINT)
-      .get('/api/v3/account/addresses')
+      .get('/api/v4/account/addresses')
       .reply(200, expectedResponse);
 
     await expect(

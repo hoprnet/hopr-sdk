@@ -19,23 +19,33 @@ describe('getSessions', () => {
         port: 5542,
         protocol: PROTOCOL,
         target: 'example.com:80',
-        path: {
+        destination: '0x123',
+        forwardPath: {
           Hops: 1
-        }
+        },
+        returnPath: {
+          Hops: 1
+        },
+        mtu: 1500
       },
       {
         ip: '127.0.0.1',
         port: 5543,
         protocol: PROTOCOL,
         target: 'example.com:80',
-        path: {
-          Hops: 2
-        }
+        destination: '0x1234',
+        forwardPath: {
+          Hops: 1
+        },
+        returnPath: {
+          Hops: 1
+        },
+        mtu: 1500
       }
     ];
 
     nock(API_ENDPOINT)
-      .get(`/api/v3/session/${PROTOCOL}`)
+      .get(`/api/v4/session/${PROTOCOL}`)
       .reply(200, expectedResponse);
 
     const result = await getSessions({
@@ -54,7 +64,7 @@ describe('getSessions', () => {
     };
 
     nock(API_ENDPOINT)
-      .get(`/api/v3/session/${PROTOCOL}`)
+      .get(`/api/v4/session/${PROTOCOL}`)
       .reply(422, expectedResponse);
 
     await expect(
@@ -67,7 +77,7 @@ describe('getSessions', () => {
   });
 
   it('should return a status 500', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/session/${PROTOCOL}`).reply(500);
+    nock(API_ENDPOINT).get(`/api/v4/session/${PROTOCOL}`).reply(500);
 
     await expect(
       getSessions({

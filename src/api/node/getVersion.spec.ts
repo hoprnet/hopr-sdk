@@ -10,7 +10,7 @@ describe('test getVersion', function () {
     nock.cleanAll();
   });
   it('handles successful response', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(200, {
+    nock(API_ENDPOINT).get(`/api/v4/node/version`).reply(200, {
       apiVersion: '3.10.0',
       version: '2.2.2'
     });
@@ -23,7 +23,7 @@ describe('test getVersion', function () {
     expect(response).toEqual('2.2.2');
   });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
-    nock(API_ENDPOINT).get(`/api/v3/node/version`).reply(401, {
+    nock(API_ENDPOINT).get(`/api/v4/node/version`).reply(401, {
       status: 'string',
       error: 'string'
     });

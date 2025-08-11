@@ -7,10 +7,8 @@ const ChannelStatus = z.enum(['Open', 'PendingToClose', 'Closed']);
 
 const TopologyChannel = z.object({
   channelId: z.string(),
-  sourcePeerId: z.string(),
-  destinationPeerId: z.string(),
-  sourceAddress: z.string(),
-  destinationAddress: z.string(),
+  destination: z.string(),
+  source: z.string(),
   balance: z.string(),
   status: ChannelStatus,
   ticketIndex: z.string(),
@@ -67,8 +65,7 @@ export type FundChannelsResponseType = z.infer<typeof FundChannelsResponse>;
 /** Open channel */
 
 export const OpenChannelPayload = BasePayload.extend({
-  peerAddress: z.string().optional(),
-  destination: z.string().optional(),
+  destination: z.string(),
   amount: z.string()
 });
 
@@ -150,3 +147,11 @@ export type GetChannelPayloadType = z.infer<typeof GetChannelPayload>;
 export const GetChannelResponse = TopologyChannel;
 
 export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
+
+/** Get channels corrupted */
+
+export const GetChannelsCorruptedResponse = z.array(z.string());
+
+export type GetChannelsCorruptedResponseType = z.infer<
+  typeof GetChannelsCorruptedResponse
+>;

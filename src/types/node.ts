@@ -12,8 +12,7 @@ export const GetPeersPayload = BasePayload.extend({
 export type GetPeersPayloadType = z.infer<typeof GetPeersPayload>;
 
 export const PeerConnected = z.object({
-  peerId: z.string(),
-  peerAddress: z.string(),
+  address: z.string(),
   multiaddr: z.string().nullable(),
   heartbeats: z.object({
     sent: z.number(),
@@ -23,13 +22,11 @@ export const PeerConnected = z.object({
   lastSeenLatency: z.number(),
   quality: z.number(),
   backoff: z.number(),
-  isNew: z.boolean(),
-  reportedVersion: z.string()
+  isNew: z.boolean()
 });
 
 export const PeerAnnounced = z.object({
-  peerId: z.string(),
-  peerAddress: z.string(),
+  address: z.string(),
   multiaddr: z.string().nullable()
 });
 
@@ -56,8 +53,6 @@ export const GetInfoResponse = z.object({
   hoprManagementModule: z.string(),
   hoprNodeSafe: z.string(),
   indexerBlock: z.number().optional(), //from HORPd 2.1.3
-  indexerChecksum: z.string().optional(), //from HORPd 2.1.3
-  indexBlockPrevChecksum: z.number().optional(), //from HORPd 2.1.5
   indexerLastLogBlock: z.number().optional(), //from HORPd 2.2.0
   indexerLastLogChecksum: z.string().optional(), //from HORPd 2.2.0
   provider: z.string().optional(), //from HORPd 2.2.0

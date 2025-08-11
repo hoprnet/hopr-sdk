@@ -31,7 +31,6 @@ describe('Node E2E Tests', function () {
       lastSeen: expect.any(Number),
       lastSeenLatency: expect.any(Number),
       backoff: expect.any(Number),
-      reportedVersion: expect.any(String),
       isNew: expect.any(Boolean)
     };
 
@@ -43,12 +42,6 @@ describe('Node E2E Tests', function () {
     };
 
     expect(response).toStrictEqual(expectedResponse);
-  });
-
-  test('should get prometheus metrics from the node', async function () {
-    const metrics = await sdk.api.node.getMetrics();
-
-    expect(typeof metrics).toBe('string');
   });
 
   test('should get the nodes info', async function () {

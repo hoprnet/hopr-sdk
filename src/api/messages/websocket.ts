@@ -1,14 +1,14 @@
 import WebSocket from 'isomorphic-ws';
 import { createWsUrlType, BasePayloadType } from '../../types';
 
-const WS_PATH = '/api/v3/messages/websocket/';
+const WS_PATH = '/api/v4/messages/websocket/';
 
 /**
  * Creates a WebSocket instance with the specified IP and API token.
  *
  * @param apiEndpoint - The base URL to connect to.
  * @param apiToken - The API token to use for authentication.
- * @param path - The API path for websocket endpoint. By default: '/api/v3/messages/websocket/'
+ * @param path - The API path for websocket endpoint. By default: '/api/v4/messages/websocket/'
  * @returns A WebSocket instance.
  */
 export const websocket = (payload: BasePayloadType): WebSocket => {

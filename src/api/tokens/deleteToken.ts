@@ -15,7 +15,7 @@ import { ZodError } from 'zod';
 export const deleteToken = async (
   payload: DeleteTokenPayloadType
 ): Promise<boolean> => {
-  const url = new URL(`api/v3/tokens/${payload.id}`, payload.apiEndpoint);
+  const url = new URL(`api/v4/tokens/${payload.id}`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {

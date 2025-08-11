@@ -19,7 +19,7 @@ export const fundChannel = async (
   };
 
   const url = new URL(
-    `api/v3/channels/${payload.channelId}/fund`,
+    `api/v4/channels/${payload.channelId}/fund`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(

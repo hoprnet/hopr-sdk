@@ -10,7 +10,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getChannels = async (
   payload: GetChannelsPayloadType
 ): Promise<GetChannelsResponseType> => {
-  const url = new URL('api/v3/channels', payload.apiEndpoint);
+  const url = new URL('api/v4/channels', payload.apiEndpoint);
   url.searchParams.set('includingClosed', String(!!payload.includingClosed));
   url.searchParams.set('fullTopology', String(!!payload.fullTopology));
   const rawResponse = await fetchWithTimeout(
@@ -32,6 +32,24 @@ export const getChannels = async (
 
   // received expected response
   if (parsedRes.success) {
+    parsedRes.data.all.forEach((channel) => {
+      channel.balance = channel.balance.includes(' ')
+        ? (channel.balance.split(' ')[0] as string)
+        : channel.balance;
+    });
+
+    parsedRes.data.incoming.forEach((channel) => {
+      channel.balance = channel.balance.includes(' ')
+        ? (channel.balance.split(' ')[0] as string)
+        : channel.balance;
+    });
+
+    parsedRes.data.outgoing.forEach((channel) => {
+      channel.balance = channel.balance.includes(' ')
+        ? (channel.balance.split(' ')[0] as string)
+        : channel.balance;
+    });
+
     return parsedRes.data;
   }
 

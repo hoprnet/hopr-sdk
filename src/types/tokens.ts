@@ -12,11 +12,6 @@ const VALUES = [
   'accountWithdraw',
   'accountGetBalances',
   'accountGetAddresses',
-  // Aliases
-  'aliasesGetAliases',
-  'aliasesSetAlias',
-  'aliasesGetAlias',
-  'aliasesRemoveAlias',
   // Channels
   'channelsFundChannels',
   'channelsOpenChannel',
@@ -27,14 +22,11 @@ const VALUES = [
   'channelsCloseChannel',
   // Messages
   'messagesWebsocket',
-  'messagesSign',
-  'messagesSendMessage',
   // Node
   'nodeGetVersion',
   'nodeStreamWebsocket',
   'nodePing',
   'nodeGetPeers',
-  'nodeGetMetrics',
   'nodeGetInfo',
   'nodeGetEntryNodes',
   // PeerId

@@ -14,7 +14,7 @@ concurrency:
 jobs:
   merge:
     name: Merge PR
-    runs-on: self-hosted-hoprnet-small
+    runs-on: self-hosted-hoprnet-big
     if: github.event.pull_request.merged == true
 
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node.js
         uses: hoprnet/hopr-workflows/actions/setup-node-js@master
         with:
-          node-version: ${{ vars.NODE_VERSION }}
+          node-version: 22.x
 
       - name: Setup GCP
         id: gcp
@@ -47,9 +47,10 @@ jobs:
           PR_VERSION=$(jq -r '.version' package.json)-pr.${{ github.event.pull_request.number }}
           jq --arg version "${PR_VERSION}-${BUILD_DATE}" '.version = $version' package.json > temp.json
           mv temp.json package.json
-          yarn publish --no-git-tag-version --tag next
+          yarn build
+          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag next
           jq --arg version "${PR_VERSION}" '.version = $version' package.json > temp.json
           mv temp.json package.json
-          yarn publish --no-git-tag-version --tag alpha
+          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag alpha
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
