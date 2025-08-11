@@ -6,17 +6,8 @@ import { GetChannelsCorruptedResponseType } from '../../types';
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const REZ = [
-  {
-    balance: '10 wxHOPR',
-    channelEpoch: 1,
-    channelId:
-      '0x04efc1481d3f106b88527b3844ba40042b823218a9cd29d1aa11c2c2ef8f538f',
-    closureTime: 0,
-    destination: '0x188c4462b75e46f0c7262d7f48d182447b93a93c',
-    source: '0x07eaf07d6624f741e04f4092a755a9027aaab7f6',
-    status: 'Open',
-    ticketIndex: 0
-  }
+  '0x04efc1481d3f106b88527b3844ba40042b823218a9cd29d1aa11c2c2ef8f538a',
+  '0x04efc1481d3f106b88527b3844ba40042b823218a9cd29d1aa11c2c2ef8f538b'
 ];
 
 describe('test getChannelsCorrupted', function () {

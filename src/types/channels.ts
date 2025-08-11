@@ -150,20 +150,7 @@ export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
 
 /** Get channels corrupted */
 
-export const ChannelCorrupted = z.object({
-  balance: z.string(),
-  channelEpoch: z.number(),
-  channelId: z.string(),
-  closureTime: z.number(),
-  destination: z.string(),
-  source: z.string(),
-  status: ChannelStatus,
-  ticketIndex: z.number()
-});
-
-export type ChannelCorruptedType = z.infer<typeof ChannelCorrupted>;
-
-export const GetChannelsCorruptedResponse = z.array(ChannelCorrupted);
+export const GetChannelsCorruptedResponse = z.array(z.string());
 
 export type GetChannelsCorruptedResponseType = z.infer<
   typeof GetChannelsCorruptedResponse
