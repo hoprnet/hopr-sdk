@@ -120,11 +120,12 @@ jobs:
 
       - name: Publish to npm
         run: |
-          set -x
           rm .yarnrc
-          sed -i '/hoprassociation/d' .npmrc
-          sed -i 's/false/true/' .npmrc
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+          cat > .npmrc <<EOF
+          registry=https://registry.npmjs.org/
+          //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+          //registry.npmjs.org/:always-auth=true
+          EOF
           cat .npmrc
           yarn publish --non-interactive --registry=https://registry.npmjs.org/ --access public --no-git-tag-version --tag release-candidate
           git checkout .npmrc .yarnrc
