@@ -48,6 +48,7 @@ jobs:
           jq --arg version "${PR_VERSION}-${BUILD_DATE}" '.version = $version' package.json > temp.json
           mv temp.json package.json
           yarn build
+          npm run login
           yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag next
           jq --arg version "${PR_VERSION}" '.version = $version' package.json > temp.json
           mv temp.json package.json
