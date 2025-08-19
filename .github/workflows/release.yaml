@@ -105,6 +105,7 @@ jobs:
       - name: Publish to Google Artifact Registry
         if: steps.unpublish.outputs.already_released != 'true'
         run: |
+          npm run login
           yarn publish --non-interactive --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --tag release-candidate
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
