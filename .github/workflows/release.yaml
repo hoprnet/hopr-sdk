@@ -121,8 +121,12 @@ jobs:
       - name: Publish to npm
         run: |
           rm .yarnrc
-          sed -i '/hoprassociation/d' .npmrc
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> .npmrc
+          cat > .npmrc <<EOF
+          registry=https://registry.npmjs.org/
+          //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+          //registry.npmjs.org/:always-auth=true
+          EOF
+          cat .npmrc
           yarn publish --non-interactive --registry=https://registry.npmjs.org/ --access public --no-git-tag-version --tag release-candidate
           git checkout .npmrc .yarnrc
 
@@ -147,7 +151,7 @@ jobs:
           email: ${{ secrets.ZULIP_EMAIL }}
           organization-url: 'https://hopr.zulipchat.com'
           type: 'stream'
-          to: 'HOPRd'
-          topic: 'Releases'
+          to: 'Products'
+          topic: 'main'
           content: |
             I'm thrilled to inform that version **${{ vars.NPM_PACKAGE_NAME }}@${{ steps.changelog.outputs.current_version }}** has been released. See [ChangeLog](https://github.com/${{ github.repository }}/releases/tag/v${{ steps.changelog.outputs.current_version }})
