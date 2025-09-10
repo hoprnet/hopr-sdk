@@ -43,7 +43,8 @@ describe('openSession function', () => {
         Hops: 1
       },
       port: 5542,
-      mtu: 1500,
+      hoprMtu: 1500,
+      surbLen: 398,
       protocol: 'tcp',
       target: 'example.com:8080',
       destination: BUDDY_NODE_ADDRESS
@@ -70,7 +71,8 @@ describe('openSession function', () => {
         IntermediatePath: ['peer1', 'peer2', 'peer3']
       },
       port: 5542,
-      mtu: 1500,
+      hoprMtu: 1500,
+      surbLen: 398,
       protocol: 'tcp',
       target: 'example.com:8080',
       destination: BUDDY_NODE_ADDRESS

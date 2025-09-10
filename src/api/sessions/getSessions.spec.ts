@@ -20,13 +20,15 @@ describe('getSessions', () => {
         protocol: PROTOCOL,
         target: 'example.com:80',
         destination: '0x123',
+
         forwardPath: {
           Hops: 1
         },
         returnPath: {
           Hops: 1
         },
-        mtu: 1500
+        hoprMtu: 1500,
+        surbLen: 398,
       },
       {
         ip: '127.0.0.1',
@@ -40,7 +42,8 @@ describe('getSessions', () => {
         returnPath: {
           Hops: 1
         },
-        mtu: 1500
+        hoprMtu: 1500,
+        surbLen: 398,
       }
     ];
 

@@ -6,7 +6,13 @@ import { BasePayload } from './general';
  */
 
 const SessionProtocols = z.enum(['udp', 'tcp']);
-const SessionCapabilities = z.enum(['Retransmission', 'Segmentation']);
+const SessionCapabilities = z.enum([
+  'Retransmission',
+  'Segmentation',
+  'RetransmissionAckOnly',
+  'NoDelay',
+  'NoRateControl',
+]);
 
 export const SessionPayload = z.object({
   ip: z.string(),
@@ -14,7 +20,9 @@ export const SessionPayload = z.object({
   protocol: SessionProtocols,
   target: z.string(),
   destination: z.string(),
-  mtu: z.number(),
+  hoprMtu: z.number(),
+  surbLen: z.number(),
+  activeClients: z.array(z.string()),
   forwardPath: z.object({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
@@ -57,7 +65,10 @@ export const OpenSessionPayloadCall = BasePayload.extend({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
   }),
-  responseBuffer: z.string(),
+  maxClientSessions: z.number().nullable().optional(),
+  maxSurbUpstream: z.string().optional(),
+  responseBuffer: z.string().optional(),
+  sessionPool: z.number().max(5).min(0).nullable().optional(),
   target: z.object({
     Plain: z.string()
   })
