@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Building
-        run: nix develop .#node${{ matrix.node-version }} --command yarn build
+        run: nix develop .#node${{ matrix.node-version }} --command "yarn install --frozen-lockfile && yarn build"
 
       - name: Linting
         run: nix develop .#node${{ matrix.node-version }} --command yarn lint:ci
