@@ -11,7 +11,7 @@ const SessionCapabilities = z.enum([
   'Segmentation',
   'RetransmissionAckOnly',
   'NoDelay',
-  'NoRateControl',
+  'NoRateControl'
 ]);
 
 export const SessionPayload = z.object({
@@ -88,12 +88,12 @@ export type OpenSessionResponseType = SessionPayloadType;
  */
 
 export const GetSessionConfigPayloadCall = BasePayload.extend({
-  sessionId: z.string(),
+  sessionId: z.string()
 });
 
 const SessionConfig = z.object({
   maxSurbUpstream: z.string(),
-  responseBuffer: z.string(),
+  responseBuffer: z.string()
 });
 
 export const GetSessionConfigPayload = SessionConfig;
@@ -101,16 +101,21 @@ export const GetSessionConfigPayload = SessionConfig;
 export type GetSessionConfigPayloadCallType = z.infer<
   typeof GetSessionConfigPayloadCall
 >;
-export type GetSessionConfigPayloadType = z.infer<typeof GetSessionConfigPayload>;
+export type GetSessionConfigPayloadType = z.infer<
+  typeof GetSessionConfigPayload
+>;
 
-export const UpdateSessionConfigPayloadCall = GetSessionConfigPayloadCall.extend(SessionConfig.shape);
+export const UpdateSessionConfigPayloadCall =
+  GetSessionConfigPayloadCall.extend(SessionConfig.shape);
 
 export const UpdateSessionConfigPayload = SessionConfig;
 
 export type UpdateSessionConfigPayloadCallType = z.infer<
   typeof UpdateSessionConfigPayloadCall
 >;
-export type UpdateSessionConfigPayloadType = z.infer<typeof UpdateSessionConfigPayload>;
+export type UpdateSessionConfigPayloadType = z.infer<
+  typeof UpdateSessionConfigPayload
+>;
 
 /**
  * closeSession
