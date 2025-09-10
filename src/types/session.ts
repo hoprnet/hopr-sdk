@@ -84,6 +84,35 @@ export const OpenSessionResponse = SessionPayload;
 export type OpenSessionResponseType = SessionPayloadType;
 
 /**
+ * Session config
+ */
+
+export const GetSessionConfigPayloadCall = BasePayload.extend({
+  sessionId: z.string(),
+});
+
+const SessionConfig = z.object({
+  maxSurbUpstream: z.string(),
+  responseBuffer: z.string(),
+});
+
+export const GetSessionConfigPayload = SessionConfig;
+
+export type GetSessionConfigPayloadCallType = z.infer<
+  typeof GetSessionConfigPayloadCall
+>;
+export type GetSessionConfigPayloadType = z.infer<typeof GetSessionConfigPayload>;
+
+export const UpdateSessionConfigPayloadCall = GetSessionConfigPayloadCall.extend(SessionConfig.shape);
+
+export const UpdateSessionConfigPayload = SessionConfig;
+
+export type UpdateSessionConfigPayloadCallType = z.infer<
+  typeof UpdateSessionConfigPayloadCall
+>;
+export type UpdateSessionConfigPayloadType = z.infer<typeof UpdateSessionConfigPayload>;
+
+/**
  * closeSession
  */
 
