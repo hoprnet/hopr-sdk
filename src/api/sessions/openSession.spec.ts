@@ -26,7 +26,7 @@ const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> = {
   target: {
     Plain: 'example.com:8080'
   },
-  responseBuffer: '2 MB'
+  responseBuffer: '2 MB',
 };
 
 describe('openSession function', () => {
@@ -34,7 +34,7 @@ describe('openSession function', () => {
     nock.cleanAll();
   });
   test('open using hops - should return 200 if successful', async function () {
-    const resp = {
+    const resp : OpenSessionResponseType = {
       ip: '127.0.0.1',
       forwardPath: {
         Hops: 1
@@ -47,7 +47,8 @@ describe('openSession function', () => {
       surbLen: 398,
       protocol: 'tcp',
       target: 'example.com:8080',
-      destination: BUDDY_NODE_ADDRESS
+      destination: BUDDY_NODE_ADDRESS,
+      activeClients: []
     };
     nock(API_ENDPOINT)
       .post(`/api/v4/session/${PROTOCOL}`, body)
@@ -62,7 +63,7 @@ describe('openSession function', () => {
     expect(result).toEqual(resp);
   });
   test('open using IntermediatePath - should return 200 if successful', async function () {
-    const resp = {
+    const resp : OpenSessionResponseType = {
       ip: '127.0.0.1',
       forwardPath: {
         IntermediatePath: ['peer1', 'peer2', 'peer3']
@@ -75,7 +76,8 @@ describe('openSession function', () => {
       surbLen: 398,
       protocol: 'tcp',
       target: 'example.com:8080',
-      destination: BUDDY_NODE_ADDRESS
+      destination: BUDDY_NODE_ADDRESS,
+      activeClients: []
     };
     nock(API_ENDPOINT)
       .post(`/api/v4/session/${PROTOCOL}`, body)

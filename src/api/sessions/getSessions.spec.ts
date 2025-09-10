@@ -29,6 +29,7 @@ describe('getSessions', () => {
         },
         hoprMtu: 1500,
         surbLen: 398,
+        activeClients: ['0xabc']
       },
       {
         ip: '127.0.0.1',
@@ -44,6 +45,7 @@ describe('getSessions', () => {
         },
         hoprMtu: 1500,
         surbLen: 398,
+        activeClients: []
       }
     ];
 
