@@ -36,8 +36,8 @@
     "pack": "tsup && yarn pack",
     "lint": "tsc",
     "lint:ci": "tsc",
-    "format": "prettier --write src/ e2e/ .github/ *.js *.ts *.json *.md",
-    "format:ci": "prettier --check src/ e2e/ .github/ *.js *.ts *.json *.md",
+    "format": "prettier --write .",
+    "format:ci": "prettier --check .",
     "test": "jest --coverage src/",
     "test:e2e": "bash e2e/start.sh",
     "docs": "typedoc --plugin typedoc-plugin-zod"
