@@ -1,110 +1,53 @@
 import nock from 'nock';
-import { openSession } from './openSession';
+import { updateSessionConfig } from './updateSessionConfig';
 import { sdkApiError } from '../../utils';
 import {
   RemoveBasicAuthenticationPayloadType,
   OpenSessionResponseType,
-  OpenSessionPayloadCallType
+  OpenSessionPayloadCallType,
+  UpdateSessionConfigCallType,
+  GetSessionConfigPayloadResponseType
 } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const API_TOKEN_INVALID = 'my-invalid-api-token';
 const BUDDY_NODE_ADDRESS = '0x3262f13a39efaca789ae58390441c9ed76bc658a';
-const PROTOCOL = 'udp';
+const SESSION_ID = 'abc:123';
 
-const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> = {
-  destination: BUDDY_NODE_ADDRESS,
-  capabilities: ['Retransmission', 'Segmentation'],
-  listenHost: '127.0.0.1:5542',
-  forwardPath: {
-    Hops: 1
-  },
-  returnPath: {
-    Hops: 1
-  },
-  target: {
-    Plain: 'example.com:8080'
-  },
-  responseBuffer: '2 MB'
+const body: GetSessionConfigPayloadResponseType = {
+  maxSurbUpstream: "2 Mbps",
+  responseBuffer: "2 MB"
 };
 
-describe('openSession function', () => {
+describe('updateSessionConfig function', () => {
   afterEach(() => {
     nock.cleanAll();
   });
-  test('open using hops - should return 200 if successful', async function () {
-    const resp: OpenSessionResponseType = {
-      activeClients: [],
-      destination: BUDDY_NODE_ADDRESS,
-      forwardPath: {
-        Hops: 1
-      },
-      hoprMtu: 1500,
-      ip: '127.0.0.1',
-      maxClientSessions: 2,
-      maxSurbUpstream: '2000 kb/s',
-      port: 5542,
-      protocol: 'tcp',
-      returnPath: {
-        Hops: 1
-      },
-      surbLen: 398,
-      target: 'example.com:8080'
-    };
+  test('update session configuration - should return 204 if successful', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v4/session/${PROTOCOL}`, body)
-      .reply(200, resp);
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .reply(204);
 
-    const result = await openSession({
+    const result = await updateSessionConfig({
       apiToken: API_TOKEN,
       apiEndpoint: API_ENDPOINT,
-      protocol: PROTOCOL,
+      sessionId: SESSION_ID,
       ...body
     });
-    expect(result).toEqual(resp);
-  });
-  test('open using IntermediatePath - should return 200 if successful', async function () {
-    const resp: OpenSessionResponseType = {
-      activeClients: [],
-      destination: BUDDY_NODE_ADDRESS,
-      forwardPath: {
-        IntermediatePath: ['peer1', 'peer2', 'peer3']
-      },
-      hoprMtu: 1500,
-      ip: '127.0.0.1',
-      maxClientSessions: 1,
-      port: 5542,
-      protocol: 'tcp',
-      returnPath: {
-        IntermediatePath: ['peer1', 'peer2', 'peer3']
-      },
-      surbLen: 398,
-      target: 'example.com:8080'
-    };
-    nock(API_ENDPOINT)
-      .post(`/api/v4/session/${PROTOCOL}`, body)
-      .reply(200, resp);
-
-    const result = await openSession({
-      apiToken: API_TOKEN,
-      apiEndpoint: API_ENDPOINT,
-      protocol: PROTOCOL,
-      ...body
-    });
-    expect(result).toEqual(resp);
+    expect(result).toEqual(true);
   });
 
   test('should return 400 if invalid node address was provided', async function () {
     nock(API_ENDPOINT)
-      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
       .reply(400, { status: 'INVALID_ERROR' });
 
     await expect(
-      openSession({
+      updateSessionConfig({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        protocol: PROTOCOL,
+        sessionId: SESSION_ID,
         ...body
       })
     ).rejects.toThrow(sdkApiError);
@@ -116,14 +59,14 @@ describe('openSession function', () => {
       error: 'authentication failed'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
       .reply(401, expectedResponse);
 
     await expect(
-      openSession({
+      updateSessionConfig({
         apiToken: API_TOKEN_INVALID,
         apiEndpoint: API_ENDPOINT,
-        protocol: PROTOCOL,
+        sessionId: SESSION_ID,
         ...body
       })
     ).rejects.toThrow(sdkApiError);
@@ -135,14 +78,14 @@ describe('openSession function', () => {
       error: 'You are not authorized to perform this action'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
       .reply(403, expectedResponse);
 
     await expect(
-      openSession({
+      updateSessionConfig({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        protocol: PROTOCOL,
+        sessionId: SESSION_ID,
         ...body
       })
     ).rejects.toThrow(sdkApiError);
@@ -154,14 +97,14 @@ describe('openSession function', () => {
       error: 'Listening address and port already in use.'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
       .reply(409, expectedResponse);
 
     await expect(
-      openSession({
+      updateSessionConfig({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        protocol: PROTOCOL,
+        sessionId: SESSION_ID,
         ...body
       })
     ).rejects.toThrow(sdkApiError);
@@ -173,14 +116,14 @@ describe('openSession function', () => {
       error: 'Full error message.'
     };
     nock(API_ENDPOINT)
-      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
       .reply(422, expectedResponse);
 
     await expect(
-      openSession({
+      updateSessionConfig({
         apiToken: API_TOKEN,
         apiEndpoint: API_ENDPOINT,
-        protocol: PROTOCOL,
+        sessionId: SESSION_ID,
         ...body
       })
     ).rejects.toThrow(sdkApiError);

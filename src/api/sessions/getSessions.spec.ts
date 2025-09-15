@@ -15,37 +15,40 @@ describe('getSessions', () => {
   it('should return a list of sessions with their corresponding data if 200', async function () {
     const expectedResponse: GetSessionsResponseType = [
       {
-        ip: '127.0.0.1',
-        port: 5542,
-        protocol: PROTOCOL,
-        target: 'example.com:80',
+        activeClients: ['0xabc'],
         destination: '0x123',
-
         forwardPath: {
           Hops: 1
         },
+        hoprMtu: 1500,
+        ip: '127.0.0.1',
+        maxClientSessions: 2,
+        maxSurbUpstream: '2000 kb/s',
+        port: 5542,
+        protocol: PROTOCOL,
         returnPath: {
           Hops: 1
         },
-        hoprMtu: 1500,
+        sessionPool: 5,
         surbLen: 398,
-        activeClients: ['0xabc']
+        target: 'example.com:80'
       },
       {
-        ip: '127.0.0.1',
-        port: 5543,
-        protocol: PROTOCOL,
-        target: 'example.com:80',
+        activeClients: [],
         destination: '0x1234',
         forwardPath: {
           Hops: 1
         },
+        hoprMtu: 1500,
+        ip: '127.0.0.1',
+        maxClientSessions: 5,
+        port: 5543,
+        protocol: PROTOCOL,
         returnPath: {
           Hops: 1
         },
-        hoprMtu: 1500,
         surbLen: 398,
-        activeClients: []
+        target: 'example.com:80'
       }
     ];
 

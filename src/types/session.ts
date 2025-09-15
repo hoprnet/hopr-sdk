@@ -15,22 +15,26 @@ const SessionCapabilities = z.enum([
 ]);
 
 export const SessionPayload = z.object({
-  ip: z.string(),
-  port: z.number(),
-  protocol: SessionProtocols,
-  target: z.string(),
-  destination: z.string(),
-  hoprMtu: z.number(),
-  surbLen: z.number(),
   activeClients: z.array(z.string()),
+  destination: z.string(),
   forwardPath: z.object({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
   }),
+  hoprMtu: z.number(),
+  ip: z.string(),
+  maxClientSessions: z.number(),
+  maxSurbUpstream: z.string().optional(),
+  port: z.number(),
+  protocol: SessionProtocols,
+  responseBuffer: z.string().optional(),
   returnPath: z.object({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
-  })
+  }),
+  sessionPool: z.number().nullable().optional(),
+  surbLen: z.number(),
+  target: z.string(),
 });
 
 export type SessionPayloadType = z.infer<typeof SessionPayload>;
@@ -87,7 +91,7 @@ export type OpenSessionResponseType = SessionPayloadType;
  * Session config
  */
 
-export const GetSessionConfigPayloadCall = BasePayload.extend({
+export const GetSessionConfigCallPayload = BasePayload.extend({
   sessionId: z.string()
 });
 
@@ -96,25 +100,25 @@ const SessionConfig = z.object({
   responseBuffer: z.string()
 });
 
-export const GetSessionConfigPayload = SessionConfig;
+export const GetSessionConfigResponse = SessionConfig;
 
-export type GetSessionConfigPayloadCallType = z.infer<
-  typeof GetSessionConfigPayloadCall
+export type GetSessionConfigCallPayloadType = z.infer<
+  typeof GetSessionConfigCallPayload
 >;
-export type GetSessionConfigPayloadType = z.infer<
-  typeof GetSessionConfigPayload
+export type GetSessionConfigPayloadResponseType = z.infer<
+  typeof GetSessionConfigResponse
 >;
 
-export const UpdateSessionConfigPayloadCall =
-  GetSessionConfigPayloadCall.extend(SessionConfig.shape);
+export const UpdateSessionConfigCall =
+  GetSessionConfigCallPayload.extend(SessionConfig.shape);
 
-export const UpdateSessionConfigPayload = SessionConfig;
+export const UpdateSessionConfig = SessionConfig;
 
-export type UpdateSessionConfigPayloadCallType = z.infer<
-  typeof UpdateSessionConfigPayloadCall
+export type UpdateSessionConfigCallType = z.infer<
+  typeof UpdateSessionConfigCall
 >;
-export type UpdateSessionConfigPayloadType = z.infer<
-  typeof UpdateSessionConfigPayload
+export type UpdateSessionConfigType = z.infer<
+  typeof UpdateSessionConfig
 >;
 
 /**
