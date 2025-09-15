@@ -14,8 +14,8 @@ describe('getSessionConfig', () => {
 
   it('should return a sessions corresponding config if 200', async function () {
     const expectedResponse: GetSessionConfigPayloadResponseType = {
-      "maxSurbUpstream": "2 Mbps",
-      "responseBuffer": "2 MB"
+      maxSurbUpstream: '2 Mbps',
+      responseBuffer: '2 MB'
     };
 
     nock(API_ENDPOINT)

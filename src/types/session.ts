@@ -34,7 +34,7 @@ export const SessionPayload = z.object({
   }),
   sessionPool: z.number().nullable().optional(),
   surbLen: z.number(),
-  target: z.string(),
+  target: z.string()
 });
 
 export type SessionPayloadType = z.infer<typeof SessionPayload>;
@@ -109,17 +109,16 @@ export type GetSessionConfigPayloadResponseType = z.infer<
   typeof GetSessionConfigResponse
 >;
 
-export const UpdateSessionConfigCall =
-  GetSessionConfigCallPayload.extend(SessionConfig.shape);
+export const UpdateSessionConfigCall = GetSessionConfigCallPayload.extend(
+  SessionConfig.shape
+);
 
 export const UpdateSessionConfig = SessionConfig;
 
 export type UpdateSessionConfigCallType = z.infer<
   typeof UpdateSessionConfigCall
 >;
-export type UpdateSessionConfigType = z.infer<
-  typeof UpdateSessionConfig
->;
+export type UpdateSessionConfigType = z.infer<typeof UpdateSessionConfig>;
 
 /**
  * closeSession

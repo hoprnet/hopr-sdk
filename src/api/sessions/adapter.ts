@@ -16,7 +16,6 @@ import { getSessionConfig } from './getSessionConfig';
 import { openSession } from './openSession';
 import { updateSessionConfig } from './updateSessionConfig';
 
-
 const log = createLogger('session');
 
 /**

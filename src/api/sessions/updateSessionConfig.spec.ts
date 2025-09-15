@@ -16,8 +16,8 @@ const BUDDY_NODE_ADDRESS = '0x3262f13a39efaca789ae58390441c9ed76bc658a';
 const SESSION_ID = 'abc:123';
 
 const body: GetSessionConfigPayloadResponseType = {
-  maxSurbUpstream: "2 Mbps",
-  responseBuffer: "2 MB"
+  maxSurbUpstream: '2 Mbps',
+  responseBuffer: '2 MB'
 };
 
 describe('updateSessionConfig function', () => {

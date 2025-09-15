@@ -19,12 +19,12 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const updateSessionConfig = async (
   payload: UpdateSessionConfigCallType
 ): Promise<boolean> => {
-  const { sessionId, maxSurbUpstream, responseBuffer, apiToken, apiEndpoint } = payload;
-  const body: UpdateSessionConfigType =
-    {
-      maxSurbUpstream,
-      responseBuffer
-    };
+  const { sessionId, maxSurbUpstream, responseBuffer, apiToken, apiEndpoint } =
+    payload;
+  const body: UpdateSessionConfigType = {
+    maxSurbUpstream,
+    responseBuffer
+  };
 
   const url = new URL(`api/v4/session/config/${sessionId}`, apiEndpoint);
   const rawResponse = await fetchWithTimeout(
