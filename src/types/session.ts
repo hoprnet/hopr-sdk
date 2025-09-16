@@ -24,10 +24,10 @@ export const SessionPayload = z.object({
   hoprMtu: z.number(),
   ip: z.string(),
   maxClientSessions: z.number(),
-  maxSurbUpstream: z.string().optional(),
+  maxSurbUpstream: z.string().nullable().optional(),
   port: z.number(),
   protocol: SessionProtocols,
-  responseBuffer: z.string().optional(),
+  responseBuffer: z.string().nullable().optional(),
   returnPath: z.object({
     Hops: z.number().optional(),
     IntermediatePath: z.array(z.string()).optional()
