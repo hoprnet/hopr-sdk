@@ -66,25 +66,23 @@ describe('openSession function', () => {
   });
   test('open using IntermediatePath - should return 200 if successful', async function () {
     const resp: OpenSessionResponseType = {
-      target: "127.0.0.1:8081",
-      destination: "0xbdb61dd58780f9118661dda6568a8bc57128bd10",
+      target: '127.0.0.1:8081',
+      destination: '0xbdb61dd58780f9118661dda6568a8bc57128bd10',
       forwardPath: {
-          IntermediatePath: [
-              "0xe56b036600d23af206f9ba358432f01780934039"
-          ]
+        IntermediatePath: ['0xe56b036600d23af206f9ba358432f01780934039']
       },
       returnPath: {
-          Hops: 0
+        Hops: 0
       },
-      protocol: "tcp",
-      ip: "127.0.0.1",
+      protocol: 'tcp',
+      ip: '127.0.0.1',
       port: 10001,
       hoprMtu: 1002,
       surbLen: 395,
       activeClients: [],
       maxClientSessions: 5,
       maxSurbUpstream: null,
-      responseBuffer: "2.0 MiB",
+      responseBuffer: '2.0 MiB',
       sessionPool: null
     };
     nock(API_ENDPOINT)
