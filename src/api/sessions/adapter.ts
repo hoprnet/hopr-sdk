@@ -4,12 +4,17 @@ import {
   OpenSessionResponseType,
   OpenSessionPayloadType,
   GetSessionsResponseType,
+  GetSessionConfigCallPayloadType,
+  GetSessionConfigPayloadResponseType,
+  UpdateSessionConfigCallType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
-import { getSessions } from './getSessions';
-import { openSession } from './openSession';
 import { closeSession } from './closeSession';
+import { getSessions } from './getSessions';
+import { getSessionConfig } from './getSessionConfig';
+import { openSession } from './openSession';
+import { updateSessionConfig } from './updateSessionConfig';
 
 const log = createLogger('session');
 
@@ -81,6 +86,23 @@ export class SessionsAdapter {
   }
 
   /**
+   * Get information about active session configs.
+   *
+   * @param payload - An object containing the protocol filter for sessions.
+   * @returns A promise that resolves to the active sessions information.
+   */
+  public async getSessionsConfig(
+    payload: RemoveBasicAuthenticationPayloadType<GetSessionConfigCallPayloadType>
+  ): Promise<GetSessionConfigPayloadResponseType> {
+    return getSessionConfig({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      sessionId: payload.sessionId
+    });
+  }
+
+  /**
    * Unassign an alias from a PeerId.
    *
    * @param payload - The payload containing the details of the alias to remove.
@@ -96,6 +118,25 @@ export class SessionsAdapter {
       protocol: payload.protocol,
       listeningIp: payload.listeningIp,
       port: payload.port
+    });
+  }
+
+  /**
+   * Update configuration of an active session.
+   *
+   * @param payload - An object containing the protocol filter for sessions.
+   * @returns A promise that resolves to the active sessions information.
+   */
+  public async updateSessionConfig(
+    payload: RemoveBasicAuthenticationPayloadType<UpdateSessionConfigCallType>
+  ): Promise<boolean> {
+    return updateSessionConfig({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload.timeout ?? this.timeout,
+      sessionId: payload.sessionId,
+      maxSurbUpstream: payload.maxSurbUpstream,
+      responseBuffer: payload.responseBuffer
     });
   }
 }

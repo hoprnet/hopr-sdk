@@ -136,7 +136,9 @@ export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
 
 /** Get channels corrupted */
 
-export const GetChannelsCorruptedResponse = z.array(z.string());
+export const GetChannelsCorruptedResponse = z.object({
+  channelIds: z.array(z.string())
+});
 
 export type GetChannelsCorruptedResponseType = z.infer<
   typeof GetChannelsCorruptedResponse

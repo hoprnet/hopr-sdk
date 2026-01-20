@@ -34,19 +34,23 @@ describe('openSession function', () => {
     nock.cleanAll();
   });
   test('open using hops - should return 200 if successful', async function () {
-    const resp = {
-      ip: '127.0.0.1',
+    const resp: OpenSessionResponseType = {
+      activeClients: [],
+      destination: BUDDY_NODE_ADDRESS,
       forwardPath: {
         Hops: 1
       },
+      hoprMtu: 1500,
+      ip: '127.0.0.1',
+      maxClientSessions: 2,
+      maxSurbUpstream: '2000 kb/s',
+      port: 5542,
+      protocol: 'tcp',
       returnPath: {
         Hops: 1
       },
-      port: 5542,
-      mtu: 1500,
-      protocol: 'tcp',
-      target: 'example.com:8080',
-      destination: BUDDY_NODE_ADDRESS
+      surbLen: 398,
+      target: 'example.com:8080'
     };
     nock(API_ENDPOINT)
       .post(`/api/v4/session/${PROTOCOL}`, body)
@@ -61,19 +65,25 @@ describe('openSession function', () => {
     expect(result).toEqual(resp);
   });
   test('open using IntermediatePath - should return 200 if successful', async function () {
-    const resp = {
-      ip: '127.0.0.1',
+    const resp: OpenSessionResponseType = {
+      target: '127.0.0.1:8081',
+      destination: '0xbdb61dd58780f9118661dda6568a8bc57128bd10',
       forwardPath: {
-        IntermediatePath: ['peer1', 'peer2', 'peer3']
+        IntermediatePath: ['0xe56b036600d23af206f9ba358432f01780934039']
       },
       returnPath: {
-        IntermediatePath: ['peer1', 'peer2', 'peer3']
+        Hops: 0
       },
-      port: 5542,
-      mtu: 1500,
       protocol: 'tcp',
-      target: 'example.com:8080',
-      destination: BUDDY_NODE_ADDRESS
+      ip: '127.0.0.1',
+      port: 10001,
+      hoprMtu: 1002,
+      surbLen: 395,
+      activeClients: [],
+      maxClientSessions: 5,
+      maxSurbUpstream: null,
+      responseBuffer: '2.0 MiB',
+      sessionPool: null
     };
     nock(API_ENDPOINT)
       .post(`/api/v4/session/${PROTOCOL}`, body)
