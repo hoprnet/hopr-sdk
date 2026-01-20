@@ -17,21 +17,16 @@ describe('test getPeers', function () {
           address: '0x0987654321098765432109876543210987654321',
           multiaddr:
             '/p2p/16Uiu2HAmVLfzSLQoLtCGSfQv5ac2GTQmMuxXFkZZgrmuirfT8gaJ',
-          heartbeats: {
-            sent: 10,
-            success: 8
-          },
-          lastSeen: 1646410980793,
-          lastSeenLatency: 17,
-          quality: 0.8,
-          backoff: 0,
-          isNew: true
+          averageLatency: 100,
+          lastUpdate: 1646410980793,
+          probeRate: 0.476,
+          score: 0.7
         }
       ],
       announced: [
         {
           address: '0x0987654321098765432109876543210987654321',
-          multiaddr: '1.1.1.1'
+          multiaddrs: ['/ip4/1.1.1.1/tcp/9091']
         }
       ]
     };

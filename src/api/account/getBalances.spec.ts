@@ -2,6 +2,7 @@ import nock from 'nock';
 import { getBalances } from './getBalances';
 import { sdkApiError } from '../../utils';
 import { GetBalancesResponseType } from '../../types';
+import { ZodError } from 'zod';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
@@ -74,4 +75,5 @@ describe('getBalances', () => {
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(sdkApiError);
   });
+
 });

@@ -90,4 +90,21 @@ describe('getAddresses', () => {
       })
     ).rejects.toThrow(ZodError);
   });
+
+  test('should throw APIError on internal server error', async function () {
+    const expectedResponse = {
+      native: null
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v4/account/addresses')
+      .reply(500, expectedResponse);
+
+    await expect(
+      getAddresses({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN
+      })
+    ).rejects.toThrow(Error);
+  });
 });
