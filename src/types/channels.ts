@@ -36,18 +36,6 @@ export type RedeemChannelTicketsPayloadType = z.infer<
 >;
 
 /**
- * Aggregate channel tickets
- */
-
-export const AggregateChannelTicketsPayload = BasePayload.extend({
-  channelId: z.string()
-});
-
-export type AggregateChannelTicketsPayloadType = z.infer<
-  typeof RedeemChannelTicketsPayload
->;
-
-/**
  * Fund channel
  */
 
@@ -109,7 +97,6 @@ export const Ticket = z.object({
   channelId: z.string(),
   amount: z.string(),
   index: z.number(),
-  indexOffset: z.number(),
   channelEpoch: z.number(),
   winProb: z.string(),
   signature: z.string()
@@ -131,7 +118,6 @@ export type CloseChannelPayloadType = z.infer<typeof CloseChannelPayload>;
 
 export const CloseChannelResponse = z.object({
   receipt: z.string(),
-  channelStatus: ChannelStatus
 });
 
 export type CloseChannelResponseType = z.infer<typeof CloseChannelResponse>;

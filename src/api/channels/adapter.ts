@@ -1,5 +1,4 @@
 import {
-  AggregateChannelTicketsPayloadType,
   CloseChannelPayloadType,
   FundChannelsPayloadType,
   GetChannelPayloadType,
@@ -11,12 +10,10 @@ import {
   BasePayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
-import { aggregateChannelTickets } from './aggregateChannelTickets';
 import { closeChannel } from './closeChannel';
 import { fundChannel } from './fundChannel';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
-import { getChannelsCorrupted } from './getChannelsCorrupted';
 import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
 import { redeemChannelTickets } from './redeemChannelTickets';
@@ -140,24 +137,4 @@ export class ChannelsAdapter {
     });
   }
 
-  public async aggregateChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<AggregateChannelTicketsPayloadType>
-  ) {
-    return aggregateChannelTickets({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
-    });
-  }
-
-  public async getChannelsCorrupted(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getChannelsCorrupted({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout
-    });
-  }
 }
