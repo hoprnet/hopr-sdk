@@ -91,7 +91,7 @@ describe('getAddresses', () => {
     ).rejects.toThrow(ZodError);
   });
 
-  test('should throw APIError on internal server error', async function () {
+  test('should throw Error on internal server error', async function () {
     const expectedResponse = {
       native: null
     };

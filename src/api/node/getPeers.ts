@@ -11,7 +11,7 @@ export const getPeers = async (
   payload: GetPeersPayloadType
 ): Promise<GetPeersResponseType> => {
   const url = new URL(`api/v4/node/peers`, payload.apiEndpoint);
-  if (payload?.score) {
+  if (payload?.score || payload?.score === 0) {
     url.searchParams.set('score', payload.score.toString());
   }
   const rawResponse = await fetchWithTimeout(
