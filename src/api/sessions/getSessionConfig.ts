@@ -45,7 +45,7 @@ export const getSessionConfig = async (
     if (parsedRes.success) {
       return parsedRes.data;
     }
-    throw new ZodError(parsedRes.error.issues);
+    throw parsedRes.error;
   }
 
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);

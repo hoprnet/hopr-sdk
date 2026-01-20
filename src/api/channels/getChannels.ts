@@ -65,5 +65,5 @@ export const getChannels = async (
   }
 
   // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw parsedRes.error;
 };
