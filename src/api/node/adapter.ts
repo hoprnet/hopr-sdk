@@ -64,7 +64,7 @@ export class NodeAdapter {
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout,
-      quality: payload?.quality
+      score: payload?.score
     });
   }
 

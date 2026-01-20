@@ -56,7 +56,7 @@ const nodeSchema = z.object({
   isEligible: z.boolean()
 });
 
-export const GetEntryNodesResponse = z.record(nodeSchema);
+export const GetEntryNodesResponse = z.record(z.string(), nodeSchema);
 
 export type GetEntryNodesResponseType = z.infer<typeof GetEntryNodesResponse>;
 
