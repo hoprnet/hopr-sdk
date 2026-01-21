@@ -117,7 +117,7 @@ export const CloseChannelPayload = BasePayload.extend({
 export type CloseChannelPayloadType = z.infer<typeof CloseChannelPayload>;
 
 export const CloseChannelResponse = z.object({
-  receipt: z.string(),
+  receipt: z.string()
 });
 
 export type CloseChannelResponseType = z.infer<typeof CloseChannelResponse>;

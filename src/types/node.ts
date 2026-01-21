@@ -17,7 +17,7 @@ export const PeerConnected = z.object({
   averageLatency: z.number(),
   lastUpdate: z.number(),
   probeRate: z.number(),
-  score: z.number(),
+  score: z.number()
 });
 
 export const PeerAnnounced = z.object({

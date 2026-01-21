@@ -75,5 +75,4 @@ describe('getBalances', () => {
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(sdkApiError);
   });
-
 });

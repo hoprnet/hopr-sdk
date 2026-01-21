@@ -136,5 +136,4 @@ export class ChannelsAdapter {
       channelId: payload.channelId
     });
   }
-
 }

@@ -39,9 +39,11 @@ export const getBalances = async (
   const jsonResponse = await rawResponse.json();
 
   const currencies = Object.keys(jsonResponse);
-  jsonResponse.token = jsonResponse?.safeHoprAllowance && jsonResponse.safeHoprAllowance.includes(' ')
-    ? jsonResponse.safeHoprAllowance.split(' ')[1]
-    : null;
+  jsonResponse.token =
+    jsonResponse?.safeHoprAllowance &&
+    jsonResponse.safeHoprAllowance.includes(' ')
+      ? jsonResponse.safeHoprAllowance.split(' ')[1]
+      : null;
 
   for (let i = 0; i < currencies.length; i++) {
     const token = currencies[i] as string;

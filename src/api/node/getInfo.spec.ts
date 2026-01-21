@@ -14,12 +14,8 @@ describe('test getInfo', function () {
     nock(API_ENDPOINT)
       .get(`/api/v4/node/info`)
       .reply(200, {
-        announcedAddress: [
-          "/ip4/10.0.2.100/tcp/19092"
-        ],
-        listeningAddress: [
-           "/ip4/10.0.2.100/tcp/19092"
-        ],
+        announcedAddress: ['/ip4/10.0.2.100/tcp/19092'],
+        listeningAddress: ['/ip4/10.0.2.100/tcp/19092'],
         providerUrl: 'https://staging.blokli.hoprnet.link',
         hoprNodeSafe: '0x0361a040acb376dd7e5a4643e5a4c7ae9d20c834',
         connectivityStatus: 'Orange',
