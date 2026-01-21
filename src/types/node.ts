@@ -20,6 +20,8 @@ export const PeerConnected = z.object({
   score: z.number()
 });
 
+export type PeerConnectedType = z.infer<typeof PeerConnected>;
+
 export const PeerAnnounced = z.object({
   address: z.string(),
   multiaddrs: z.array(z.string().nullable())
