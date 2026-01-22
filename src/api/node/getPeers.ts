@@ -11,8 +11,8 @@ export const getPeers = async (
   payload: GetPeersPayloadType
 ): Promise<GetPeersResponseType> => {
   const url = new URL(`api/v4/node/peers`, payload.apiEndpoint);
-  if (payload?.quality) {
-    url.searchParams.set('quality', payload.quality.toString());
+  if (payload?.score || payload?.score === 0) {
+    url.searchParams.set('score', payload.score.toString());
   }
   const rawResponse = await fetchWithTimeout(
     url,
@@ -48,5 +48,5 @@ export const getPeers = async (
   }
 
   // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw parsedRes.error;
 };

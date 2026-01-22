@@ -52,7 +52,7 @@ export const openSession = async (
     if (parsedRes.success) {
       return parsedRes.data;
     }
-    throw new ZodError(parsedRes.error.issues);
+    throw parsedRes.error;
   }
 
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
@@ -65,5 +65,5 @@ export const openSession = async (
   }
 
   // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw isApiErrorResponse.error;
 };

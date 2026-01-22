@@ -47,5 +47,5 @@ export const redeemAllTickets = async (
   }
 
   // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw isApiErrorResponse.error;
 };

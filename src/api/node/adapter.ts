@@ -1,12 +1,10 @@
 import {
   BasePayloadType,
-  GetGraphPayloadType,
   GetPeersPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { getEntryNodes } from './getEntryNodes';
-import { getGraph } from './getGraph';
 import { getInfo } from './getInfo';
 import { getPeers } from './getPeers';
 import { getVersion } from './getVersion';
@@ -49,19 +47,6 @@ export class NodeAdapter {
     });
   }
 
-  public async getGraph(
-    payload?: RemoveBasicAuthenticationPayloadType<GetGraphPayloadType>
-  ) {
-    return getGraph({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout,
-      ignoreDisconnectedComponents: payload?.ignoreDisconnectedComponents,
-      ignoreNonOpenedChannels: payload?.ignoreNonOpenedChannels,
-      rawGraph: payload?.rawGraph
-    });
-  }
-
   public async getInfo(
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
@@ -79,7 +64,7 @@ export class NodeAdapter {
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout,
-      quality: payload?.quality
+      score: payload?.score
     });
   }
 

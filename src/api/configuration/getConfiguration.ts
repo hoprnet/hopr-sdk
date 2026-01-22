@@ -46,51 +46,5 @@ export const getConfiguration = async (
     });
   }
 
-  let parsedStrategies: {
-    [key: string]: {
-      [key: string]: string | number | boolean;
-    };
-  } = {};
-
-  /*
-    Exapmple of jsonResponse.hoprd.strategies:
-    "strategies":[
-        {
-          "Aggregating":{
-              "aggregation_threshold":3,
-              "unrealized_balance_ratio":0.95,
-              "aggregate_on_channel_close":true
-          },
-        },
-        {
-          "AutoRedeeming":{
-              "redeem_only_aggregated":true,
-              "on_close_redeem_single_tickets_value_min":"2000000000000000000 HOPR"
-          }
-        },
-        {
-          "ClosureFinalizer":{
-              "max_closure_overdue":3600
-          }
-        }
-    ]
-  */
-
-  jsonResponse.hopr.strategy.strategies.forEach(
-    (strategyObj: {
-      [key: string]: { [key: string]: string | number | boolean };
-    }) => {
-      try {
-        const strategyName = Object.keys(strategyObj)[0];
-        if (typeof strategyName !== 'string') return;
-        let tmp = strategyObj[strategyName];
-        if (!tmp) return;
-        parsedStrategies[strategyName] = tmp;
-      } catch (e) {}
-    }
-  );
-
-  jsonResponse.hopr.strategy.parsedStrategies = parsedStrategies;
-
   return jsonResponse;
 };

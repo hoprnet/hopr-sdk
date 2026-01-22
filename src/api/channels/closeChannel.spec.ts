@@ -17,8 +17,7 @@ describe('test closeChannel', function () {
       .delete(`/api/v4/channels/${BUDDY_CHANNEL_ID}`)
       .reply(200, {
         receipt:
-          '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e',
-        channelStatus: 'Closed'
+          '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
       } as CloseChannelResponseType);
 
     const response = await closeChannel({
@@ -30,7 +29,6 @@ describe('test closeChannel', function () {
     expect(response.receipt).toEqual(
       '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
     );
-    expect(response.channelStatus).toEqual('Closed');
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT)

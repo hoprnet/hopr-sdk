@@ -35,6 +35,7 @@ export const getAddresses = async (
 
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAddressesResponse.safeParse(jsonResponse);
+  console.log('parsedRes', parsedRes);
 
   // received expected response
   if (parsedRes.success) {
@@ -53,5 +54,5 @@ export const getAddresses = async (
   }
 
   // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw parsedRes.error;
 };

@@ -39,9 +39,12 @@ export const getBalances = async (
   const jsonResponse = await rawResponse.json();
 
   const currencies = Object.keys(jsonResponse);
-  jsonResponse.token = jsonResponse.safeHoprAllowance.includes(' ')
-    ? jsonResponse.safeHoprAllowance.split(' ')[1]
-    : null;
+  jsonResponse.token =
+    jsonResponse?.safeHoprAllowance &&
+    jsonResponse.safeHoprAllowance.includes(' ')
+      ? jsonResponse.safeHoprAllowance.split(' ')[1]
+      : null;
+
   for (let i = 0; i < currencies.length; i++) {
     const token = currencies[i] as string;
     jsonResponse[token] = jsonResponse[`${currencies[i]}`].includes(' ')
@@ -68,5 +71,5 @@ export const getBalances = async (
   }
 
   // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw parsedRes.error;
 };
