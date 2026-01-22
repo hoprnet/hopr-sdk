@@ -51,7 +51,7 @@ describe('getConfiguration', () => {
                 max_closure_overdue: 3600
               }
             }
-          ],
+          ]
         },
         heartbeat: {
           variance: 2,
@@ -303,7 +303,7 @@ describe('getConfiguration', () => {
                 redeem_only_aggregated: true
               }
             }
-          ],
+          ]
         },
         heartbeat: {
           variance: 2,
