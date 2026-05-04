@@ -9,7 +9,7 @@ on:
         default: '22.x'
 
 concurrency:
-  group: build
+  group: build-${{ inputs.node_version }}
   cancel-in-progress: false
 
 jobs:
