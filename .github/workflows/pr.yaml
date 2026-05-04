@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  pull_request:
+    types: [synchronize, opened, reopened]
+
+concurrency:
+  group: pr
+  cancel-in-progress: true
+
+jobs:
+
+  build:
+    name: Build
+    strategy:
+      matrix:
+        node_version: 
+          - 22.x
+          - 24.x
+    uses: ./.github/workflows/build.yaml
+    with:
+      node_version: ${{ matrix.node_version }}
+
+  publish:
+    name: Publish
+    needs: build
+    uses: ./.github/workflows/publish.yaml
+    with:
+      version_type: 'commit'
+    secrets:
+      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      gcp_service_account: ${{ secrets.GCP_SA_GITHUB_RUNNER }}
