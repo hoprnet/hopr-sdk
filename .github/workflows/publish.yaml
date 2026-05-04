@@ -22,7 +22,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-
   publish:
     name: Publish
     runs-on: depot-ubuntu-24.04-4
@@ -99,5 +98,3 @@ jobs:
           cat .npmrc
           yarn publish --non-interactive --registry=https://registry.npmjs.org/ --access public --no-git-tag-version --tag release-candidate
           git checkout .npmrc .yarnrc
-
-

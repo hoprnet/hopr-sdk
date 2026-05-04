@@ -9,12 +9,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   build:
     name: Build
     strategy:
       matrix:
-        node_version: 
+        node_version:
           - 22.x
           - 24.x
     uses: ./.github/workflows/build.yaml

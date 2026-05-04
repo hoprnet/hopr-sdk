@@ -13,7 +13,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-
   checks:
     name: Build
     runs-on: depot-ubuntu-24.04
