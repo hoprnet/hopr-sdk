@@ -84,6 +84,18 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Building
         run: yarn build
+      - name: Debug GitHub OIDC claims
+        run: |
+          token_json=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org")
+          id_token=$(echo "$token_json" | jq -r '.value')
+          echo "$id_token" | awk -F. '{print $2}' | base64 -d 2>/dev/null | jq '{aud, sub, workflow, workflow_ref, job_workflow_ref, repository, repository_owner, repository_visibility, runner_environment, event_name, ref}'
+      - name: Check npm OIDC exchange
+        run: |
+          token_json=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org")
+          id_token=$(echo "$token_json" | jq -r '.value')
+          status=$(curl -sS -o /tmp/npm-oidc-response.json -w "%{http_code}" -X POST -H "Authorization: Bearer $id_token" https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/@hoprnet%2fhopr-sdk)
+          echo "npm OIDC exchange status: $status"
+          cat /tmp/npm-oidc-response.json | jq .
       - name: Publish release candidate to npm
         run: npm publish --provenance --access public --tag release-candidate --verbose
       - name: Print npm debug log
