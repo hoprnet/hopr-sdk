@@ -1,64 +1,35 @@
 name: Build
 
 on:
-  pull_request:
-    types: [synchronize, opened, reopened]
+  workflow_call:
+    inputs:
+      node_version:
+        required: false
+        type: string
+        default: '22.x'
 
 concurrency:
-  group: build
-  cancel-in-progress: true
+  group: build-${{ inputs.node_version }}
+  cancel-in-progress: false
 
 jobs:
-  build:
+  checks:
     name: Build
-    runs-on: self-hosted-hoprnet-bigger # The testing task requires more memory
-    strategy:
-      matrix:
-        node-version: [22, 24]
+    runs-on: depot-ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
-      - name: Building
-        run: nix develop .#node${{ matrix.node-version }} --command bash -c "yarn install --frozen-lockfile && yarn build"
-
-      - name: Linting
-        run: nix develop .#node${{ matrix.node-version }} --command yarn lint:ci
-
-      - name: Formatting
-        run: nix develop .#node${{ matrix.node-version }} --command yarn format:ci
-
-      - name: Testing
-        run: nix develop .#node${{ matrix.node-version }} --command yarn test
-
-  publish:
-    name: Publish
-    runs-on: self-hosted-hoprnet-big
-    needs: build
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Setup Node.js
-        uses: hoprnet/hopr-workflows/actions/setup-node-js@master
+        uses: hoprnet/hopr-workflows/actions/setup-node-js@setup-node-js-v1
         with:
-          node-version: 22.x
-
-      - name: Setup GCP
-        id: gcp
-        uses: hoprnet/hopr-workflows/actions/setup-gcp@master
-        with:
-          google-credentials: ${{ secrets.GOOGLE_HOPRASSOCIATION_CREDENTIALS_REGISTRY }}
-          login-artifact-registry: 'true'
-
-      - name: Publish next version
-        run: |
-          BUILD_DATE=$(date +%Y%m%d%H%M%S)
-          PR_VERSION=$(jq -r '.version' package.json)-pr.${{ github.event.pull_request.number }}
-          jq --arg version "${PR_VERSION}-${BUILD_DATE}" '.version = $version' package.json > temp.json
-          mv temp.json package.json
-          yarn build
-          npm run login
-          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
+          node_version: ${{ inputs.node_version }}
+      - name: Installing dependencies
+        run: yarn install --frozen-lockfile
+      - name: Building
+        run: yarn build
+      - name: Linting
+        run: yarn lint:ci
+      - name: Formatting
+        run: yarn format:ci
+      - name: Testing
+        run: yarn test

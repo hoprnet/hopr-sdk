@@ -1,0 +1,100 @@
+name: Publish
+
+on:
+  workflow_call:
+    inputs:
+      version_type:
+        required: true
+        type: string
+      node_version:
+        required: false
+        type: string
+        default: '22.x'
+    secrets:
+      cachix_auth_token:
+        required: true
+      gcp_service_account:
+        required: true
+      npm_token:
+        required: false
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: depot-ubuntu-24.04-4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup Nix
+        uses: hoprnet/hopr-workflows/actions/setup-nix@setup-nix-v1
+        with:
+          cachix_cache_name: hopr-sdk
+          cachix_auth_token: ${{ secrets.cachix_auth_token }}
+      - name: Setup Node.js
+        uses: hoprnet/hopr-workflows/actions/setup-node-js@setup-node-js-v1
+        with:
+          node_version: ${{ inputs.node_version }}
+      - name: Setup GCP
+        id: gcp
+        uses: hoprnet/hopr-workflows/actions/setup-gcp@setup-gcp-v3
+        with:
+          google_credentials: ${{ secrets.gcp_service_account }}
+          login_artifact_registry: 'true'
+      - name: Updates build version
+        id: version
+        uses: hoprnet/hopr-workflows/actions/set-build-version@set-build-version-v2
+        with:
+          file: package.json
+          version_type: ${{ inputs.version_type }}
+      - name: Building
+        run: |
+          yarn build
+      - name: Publish next version
+        if: inputs.version_type == 'commit'
+        run: |
+          npm run login
+          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
+      - name: Publish alpha version
+        if: inputs.version_type == 'pr'
+        run: |
+          npm run login
+          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag alpha
+        env:
+          NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
+      - name: Publish release candidate version to Google Artifact Registry
+        if: inputs.version_type == 'release'
+        run: |
+          already_released=$(gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="hopr-sdk" --format=json 2>/dev/null | jq -r ' .[] | select(.name | contains("${{ steps.version.outputs.build_version }}")).name' | grep '${{ steps.version.outputs.build_version }}$' | wc -l)
+          if [ "$already_released" -eq 0 ]; then
+            npm run login
+            yarn publish --non-interactive --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --tag release-candidate
+          else
+            echo "Release already released in Artifact registry"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
+      - name: Setup Node.js for npm publish
+        if: inputs.version_type == 'release'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node_version }}
+          cache: 'yarn'
+          cache-dependency-path: ./yarn.lock
+          registry-url: https://registry.npmjs.org
+      - name: Publish release candidate to npm
+        if: inputs.version_type == 'release'
+        run: |
+          rm .yarnrc
+          cat > .npmrc <<EOF
+          registry=https://registry.npmjs.org/
+          //registry.npmjs.org/:_authToken=${{ secrets.npm_token }}
+          //registry.npmjs.org/:always-auth=true
+          EOF
+          cat .npmrc
+          yarn publish --non-interactive --registry=https://registry.npmjs.org/ --access public --no-git-tag-version --tag release-candidate
+          git checkout .npmrc .yarnrc
