@@ -96,9 +96,10 @@ jobs:
           node-version: ${{ inputs.node_version }}
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false  # never use caching in release builds
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
       - name: Building
-        run: |
-          yarn build
+        run: yarn build
       - name: Publish release candidate to npm
         run: |
           npm config set --location project @hoprnet:registry https://registry.npmjs.org/
