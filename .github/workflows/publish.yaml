@@ -83,7 +83,7 @@ jobs:
     name: NPM
     needs: publish-google
     if: inputs.version_type == 'release'
-    runs-on: depot-ubuntu-24.04-4
+    runs-on: ubuntu-latest # Required by NPM OIDC login
     permissions:
       id-token: write
       contents: read
