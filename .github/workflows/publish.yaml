@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   publish-google:
-    name: Google Artifact Registry
+    name: Google
     runs-on: depot-ubuntu-24.04-4
     permissions:
       id-token: write
@@ -70,7 +70,7 @@ jobs:
       - name: Publish release candidate
         if: inputs.version_type == 'release'
         run: |
-          already_released=$(gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="hopr-sdk" --format=json 2>/dev/null | jq -r ' .[] | select(.name | contains("${{ steps.version.outputs.build_version }}")).name' | grep '${{ steps.version.outputs.build_version }}$' | wc -l)
+          already_released=$(gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="@hoprnet/hopr-sdk" --format=json 2>/dev/null | jq -r ' .[] | select(.name | contains("${{ steps.version.outputs.build_version }}")).name' | grep '${{ steps.version.outputs.build_version }}$' | wc -l)
           if [ "$already_released" -eq 0 ]; then
             npm run login
             yarn publish --non-interactive --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --tag release-candidate
