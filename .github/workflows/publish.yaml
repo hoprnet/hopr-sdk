@@ -103,9 +103,7 @@ jobs:
       - name: Building
         run: yarn build
       - name: Publish release candidate to npm
-        run: |
-          npm config set --location project @hoprnet:registry https://registry.npmjs.org/
-          npm publish --provenance --access public --tag release-candidate --verbose
+        run: npm publish --provenance --access public --tag release-candidate --verbose
       - name: Print npm debug log
         if: failure()
         run: cat /home/runner/.npm/_logs/*.log
