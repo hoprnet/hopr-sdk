@@ -15,16 +15,17 @@ on:
         required: true
       gcp_service_account:
         required: true
-      npm_token:
-        required: false
 concurrency:
   group: publish
   cancel-in-progress: false
 
 jobs:
   publish:
-    name: Publish
+    name: Publish Package
     runs-on: depot-ubuntu-24.04-4
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -80,21 +81,14 @@ jobs:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
       - name: Setup Node.js for npm publish
         if: inputs.version_type == 'release'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e #v6.4.0
         with:
           node-version: ${{ inputs.node_version }}
-          cache: 'yarn'
-          cache-dependency-path: ./yarn.lock
           registry-url: https://registry.npmjs.org
+          package-manager-cache: false
       - name: Publish release candidate to npm
         if: inputs.version_type == 'release'
         run: |
-          rm .yarnrc
-          cat > .npmrc <<EOF
-          registry=https://registry.npmjs.org/
-          //registry.npmjs.org/:_authToken=${{ secrets.npm_token }}
-          //registry.npmjs.org/:always-auth=true
-          EOF
-          cat .npmrc
-          yarn publish --non-interactive --registry=https://registry.npmjs.org/ --access public --no-git-tag-version --tag release-candidate
-          git checkout .npmrc .yarnrc
+          npm config set --location project @hoprnet:registry https://registry.npmjs.org/
+          npm publish --provenance --access public --tag release-candidate
+          git checkout .npmrc
