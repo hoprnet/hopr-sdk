@@ -90,5 +90,6 @@ jobs:
         if: inputs.version_type == 'release'
         run: |
           npm config set --location project @hoprnet:registry https://registry.npmjs.org/
+          npm config delete --location project //registry.npmjs.org/:_authToken
           npm publish --provenance --access public --tag release-candidate
           git checkout .npmrc
