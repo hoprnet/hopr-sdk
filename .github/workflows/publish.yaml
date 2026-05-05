@@ -20,8 +20,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
-    name: Publish Package
+  publish-google:
+    name: Publish Google Artifact Registry
     runs-on: depot-ubuntu-24.04-4
     permissions:
       id-token: write
@@ -67,7 +67,7 @@ jobs:
           yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag alpha
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
-      - name: Publish release candidate version to Google Artifact Registry
+      - name: Publish release candidate
         if: inputs.version_type == 'release'
         run: |
           already_released=$(gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="hopr-sdk" --format=json 2>/dev/null | jq -r ' .[] | select(.name | contains("${{ steps.version.outputs.build_version }}")).name' | grep '${{ steps.version.outputs.build_version }}$' | wc -l)
@@ -79,9 +79,27 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
+  publish-npm:
+    name: Publish NPM
+    needs: publish-google
+    if: inputs.version_type == 'release'
+    runs-on: depot-ubuntu-24.04-4
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e #v6.4.0
+        with:
+          node-version: ${{ inputs.node_version }}
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false  # never use caching in release builds
+      - name: Building
+        run: |
+          yarn build
       - name: Publish release candidate to npm
-        if: inputs.version_type == 'release'
         run: |
           npm config set --location project @hoprnet:registry https://registry.npmjs.org/
           npm publish --provenance --access public --tag release-candidate
-          git checkout .npmrc
