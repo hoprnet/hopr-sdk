@@ -14,7 +14,6 @@ jobs:
     strategy:
       matrix:
         node_version:
-          - 22.x
           - 24.x
     uses: ./.github/workflows/build.yaml
     with:

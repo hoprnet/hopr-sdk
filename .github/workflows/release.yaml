@@ -22,7 +22,7 @@ jobs:
   #   name: Build
   #   uses: ./.github/workflows/build.yaml
   #   with:
-  #     node_version: '22'
+  #     node_version: '24'
   # release:
   #   name: Close release
   #   needs:

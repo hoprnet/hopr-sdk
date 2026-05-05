@@ -34,7 +34,7 @@ jobs:
       - name: Setup Node.js
         uses: hoprnet/hopr-workflows/actions/setup-node-js@setup-node-js-v1
         with:
-          node_version: 22.x
+          node_version: 24.x
       - name: Create docs
         run: |
           rm -rf docs/*
