@@ -53,6 +53,9 @@ jobs:
     # needs:
     #   - build
     #   - release
+    permissions:
+      id-token: write
+      contents: read
     uses: ./.github/workflows/publish.yaml
     with:
       version_type: release
