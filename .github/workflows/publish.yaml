@@ -73,7 +73,7 @@ jobs:
           already_released=$(gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="@hoprnet/hopr-sdk" --format=json 2>/dev/null | jq -r ' .[] | select(.name | contains("${{ steps.version.outputs.build_version }}")).name' | grep '${{ steps.version.outputs.build_version }}$' | wc -l)
           if [ "$already_released" -eq 0 ]; then
             npm run login
-            yarn publish --non-interactive --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --tag release-candidate
+            yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag release-candidate
           else
             echo "Release already released in Artifact registry"
           fi

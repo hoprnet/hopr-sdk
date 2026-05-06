@@ -23,10 +23,24 @@ jobs:
     uses: ./.github/workflows/build.yaml
     with:
       node_version: '24'
+  publish:
+    name: Publish
+    needs:
+      - build
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/publish.yaml
+    with:
+      version_type: release
+    secrets:
+      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      gcp_service_account: ${{ secrets.GCP_SA_GITHUB_RUNNER }}
   release:
     name: Close release
     needs:
       - build
+      - publish
     runs-on: depot-ubuntu-24.04
     permissions:
       contents: write
@@ -48,17 +62,3 @@ jobs:
           zulip_topic: Releases
           gcp_service_account: ${{ secrets.GCP_SA_GITHUB_RUNNER }}
           github_token: ${{ secrets.GH_RUNNER_TOKEN }}
-  publish:
-    name: Publish
-    needs:
-      - build
-      - release
-    permissions:
-      id-token: write
-      contents: read
-    uses: ./.github/workflows/publish.yaml
-    with:
-      version_type: release
-    secrets:
-      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      gcp_service_account: ${{ secrets.GCP_SA_GITHUB_RUNNER }}
