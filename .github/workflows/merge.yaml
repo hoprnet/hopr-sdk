@@ -12,46 +12,37 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  merge:
-    name: Merge PR
-    runs-on: self-hosted-hoprnet-big
-    if: github.event.pull_request.merged == true
-
+  build:
+    name: Build
+    uses: ./.github/workflows/build.yaml
+  publish:
+    name: Publish
+    needs: build
+    uses: ./.github/workflows/publish.yaml
+    with:
+      version_type: pr
+    secrets:
+      cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      gcp_service_account: ${{ secrets.GCP_SA_GITHUB_RUNNER }}
+  docs:
+    name: Docs
+    needs: build
+    runs-on: depot-ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Setup Node.js
-        uses: hoprnet/hopr-workflows/actions/setup-node-js@master
+        uses: hoprnet/hopr-workflows/actions/setup-node-js@setup-node-js-v1
         with:
-          node-version: 22.x
-
-      - name: Setup GCP
-        id: gcp
-        uses: hoprnet/hopr-workflows/actions/setup-gcp@master
+          node_version: 24.x
+      - name: Create docs
+        run: |
+          rm -rf docs/*
+          yarn docs
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
         with:
-          google-credentials: ${{ secrets.GOOGLE_HOPRASSOCIATION_CREDENTIALS_REGISTRY }}
-          login-artifact-registry: 'true'
-
-      - name: Unpublish PR commit versions
-        run: |
-          gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="${{ vars.NPM_PACKAGE_NAME }}" --format=json 2> /dev/null | jq -r ' .[] | select(.name | contains("-pr.${{ github.event.pull_request.number }}-")).name'  | sed 's/.*versions\///g' > pr_commit_versions.txt
-          while read -r version; do
-            echo "Unpublishing commit version: $version"
-            gcloud artifacts versions delete --delete-tags --quiet --repository=npm --location=europe-west3 --project=hoprassociation --package "${{ vars.NPM_PACKAGE_NAME }}" $version
-          done < pr_commit_versions.txt
-
-      - name: Publish alpha version
-        run: |
-          BUILD_DATE=$(date +%Y%m%d%H%M%S)
-          PR_VERSION=$(jq -r '.version' package.json)-pr.${{ github.event.pull_request.number }}
-          jq --arg version "${PR_VERSION}-${BUILD_DATE}" '.version = $version' package.json > temp.json
-          mv temp.json package.json
-          yarn build
-          npm run login
-          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag next
-          jq --arg version "${PR_VERSION}" '.version = $version' package.json > temp.json
-          mv temp.json package.json
-          yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag alpha
-        env:
-          NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: docs
+          force_orphan: true
