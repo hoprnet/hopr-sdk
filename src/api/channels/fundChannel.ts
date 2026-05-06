@@ -1,9 +1,7 @@
-import { ZodError } from 'zod';
 import {
   FundChannelsResponse,
   type FundChannelsPayloadType,
   type FundChannelsResponseType,
-  type RemoveBasicAuthenticationPayloadType,
   ApiErrorResponse
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
@@ -19,7 +17,7 @@ export const fundChannel = async (
   };
 
   const url = new URL(
-    `api/v4/channels/${payload.channelId}/fund`,
+    `api/v4/channels/${payload.address}/fund`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(
@@ -32,11 +30,6 @@ export const fundChannel = async (
     payload.timeout
   );
 
-  // received expected response
-  if (rawResponse.status === 200) {
-    return await rawResponse.text();
-  }
-
   let jsonResponse: any;
 
   try {
@@ -48,6 +41,7 @@ export const fundChannel = async (
       description: 'Failed parsing response'
     });
   }
+
   const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
 
   // received expected response

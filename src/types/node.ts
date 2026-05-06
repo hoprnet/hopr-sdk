@@ -42,8 +42,10 @@ export const GetInfoResponse = z.object({
   announcedAddress: z.string().array(),
   listeningAddress: z.string().array(),
   providerUrl: z.string(),
+  hoprNetworkName: z.string(),
   hoprNodeSafe: z.string(),
-  connectivityStatus: z.enum(['Unknown', 'Red', 'Orange', 'Yellow', 'Green']),
+  connectivityStatus: z.string(),
+  chainStatus: z.string(),
   channelClosurePeriod: z.number()
 });
 

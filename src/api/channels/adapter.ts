@@ -6,8 +6,7 @@ import {
   GetChannelTicketsPayloadType,
   OpenChannelPayloadType,
   RedeemChannelTicketsPayloadType,
-  RemoveBasicAuthenticationPayloadType,
-  BasePayloadType
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
 import { closeChannel } from './closeChannel';
@@ -56,7 +55,8 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
+      address: payload.address,
+      direction: payload.direction
     });
   }
 
@@ -79,7 +79,8 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
+      address: payload.address,
+      direction: payload.direction
     });
   }
 
@@ -133,7 +134,7 @@ export class ChannelsAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       amount: payload.amount,
-      channelId: payload.channelId
+      address: payload.address
     });
   }
 }

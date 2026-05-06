@@ -11,9 +11,32 @@ export const GetPeerPayload = BasePayload.extend({
 
 export type GetPeerPayloadType = z.infer<typeof GetPeerPayload>;
 
+const AnnouncementOrigin = z.enum(['chain', 'dht']);
+
+const MultiaddressSource = z.object({
+  multiaddress: z.string(),
+  origin: AnnouncementOrigin
+});
+
+const PeerChannelInfo = z.object({
+  id: z.string(),
+  status: z.string(),
+  balance: z.string()
+});
+
+const PeerQosInfo = z.object({
+  probeRate: z.number(),
+  lastUpdate: z.number(),
+  score: z.number(),
+  averageLatency: z.number().nullable().optional()
+});
+
 export const GetPeerResponse = z.object({
-  announced: z.string().array(),
-  observed: z.string().array()
+  announcedSources: z.array(MultiaddressSource),
+  observed: z.string().array(),
+  incomingChannel: PeerChannelInfo.nullable().optional(),
+  outgoingChannel: PeerChannelInfo.nullable().optional(),
+  qos: PeerQosInfo.nullable().optional()
 });
 
 export type GetPeerResponseType = z.infer<typeof GetPeerResponse>;

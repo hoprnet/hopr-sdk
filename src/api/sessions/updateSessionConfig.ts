@@ -1,7 +1,6 @@
 import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
-  OpenSessionResponse,
   UpdateSessionConfigCallType,
   UpdateSessionConfigType
 } from '../../types';

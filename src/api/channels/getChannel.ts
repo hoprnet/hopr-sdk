@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   GetChannelPayloadType,
@@ -11,9 +10,12 @@ export const getChannel = async (
   payload: GetChannelPayloadType
 ): Promise<GetChannelResponseType> => {
   const url = new URL(
-    `api/v4/channels/${payload.channelId}`,
+    `api/v4/channels/${payload.address}`,
     payload.apiEndpoint
   );
+  if (payload.direction) {
+    url.searchParams.set('direction', payload.direction);
+  }
   const rawResponse = await fetchWithTimeout(
     url,
     {

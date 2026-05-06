@@ -5,7 +5,6 @@ import {
   ApiErrorResponse
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
-import { ZodError } from 'zod';
 
 /**
  * Closes a HOPR channel given a payload that specifies the API endpoint of the HOPR node, and the  channel id.
@@ -19,9 +18,12 @@ export const closeChannel = async (
   payload: CloseChannelPayloadType
 ): Promise<CloseChannelResponseType> => {
   const url = new URL(
-    `api/v4/channels/${payload.channelId}`,
+    `api/v4/channels/${payload.address}`,
     payload.apiEndpoint
   );
+  if (payload.direction) {
+    url.searchParams.set('direction', payload.direction);
+  }
   const rawResponse = await fetchWithTimeout(
     url,
     {

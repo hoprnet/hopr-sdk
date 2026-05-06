@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import { ApiErrorResponse, type BasePayloadType } from '../../types';
 import {
   GetTicketStatisticsResponse,
@@ -29,19 +28,15 @@ export const getTicketStatistics = async (
 
   // received expected response
   if (parsedRes.success) {
+    const strip = (v: string) =>
+      v.includes(' ') ? (v.split(' ')[0] as string) : v;
     return {
-      neglectedValue: parsedRes.data.neglectedValue.includes(' ')
-        ? (parsedRes.data.neglectedValue.split(' ')[0] as string)
-        : parsedRes.data.neglectedValue,
-      redeemedValue: parsedRes.data.redeemedValue.includes(' ')
-        ? (parsedRes.data.redeemedValue.split(' ')[0] as string)
-        : parsedRes.data.redeemedValue,
-      rejectedValue: parsedRes.data.rejectedValue.includes(' ')
-        ? (parsedRes.data.rejectedValue.split(' ')[0] as string)
-        : parsedRes.data.rejectedValue,
-      unredeemedValue: parsedRes.data.unredeemedValue.includes(' ')
-        ? (parsedRes.data.unredeemedValue.split(' ')[0] as string)
-        : parsedRes.data.unredeemedValue,
+      neglectedValue: strip(parsedRes.data.neglectedValue),
+      redeemedValue: parsedRes.data.redeemedValue
+        ? strip(parsedRes.data.redeemedValue)
+        : undefined,
+      rejectedValue: strip(parsedRes.data.rejectedValue),
+      unredeemedValue: strip(parsedRes.data.unredeemedValue),
       winningCount: parsedRes.data.winningCount
     };
   }

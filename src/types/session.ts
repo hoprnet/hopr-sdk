@@ -14,13 +14,20 @@ const SessionCapabilities = z.enum([
   'NoRateControl'
 ]);
 
+const RoutingOptions = z.object({
+  Hops: z.number().optional()
+});
+
+const SessionTargetSpec = z.union([
+  z.object({ Plain: z.string() }),
+  z.object({ Sealed: z.array(z.number()) }),
+  z.object({ Service: z.number() })
+]);
+
 export const SessionPayload = z.object({
   activeClients: z.array(z.string()),
   destination: z.string(),
-  forwardPath: z.object({
-    Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional()
-  }),
+  forwardPath: RoutingOptions,
   hoprMtu: z.number(),
   ip: z.string(),
   maxClientSessions: z.number(),
@@ -28,10 +35,7 @@ export const SessionPayload = z.object({
   port: z.number(),
   protocol: SessionProtocols,
   responseBuffer: z.string().nullable().optional(),
-  returnPath: z.object({
-    Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional()
-  }),
+  returnPath: RoutingOptions,
   sessionPool: z.number().nullable().optional(),
   surbLen: z.number(),
   target: z.string()
@@ -58,24 +62,16 @@ export type GetSessionsResponseType = z.infer<typeof GetSessionsResponse>;
  */
 
 export const OpenSessionPayloadCall = BasePayload.extend({
-  capabilities: SessionCapabilities.array(),
+  capabilities: SessionCapabilities.array().nullable().optional(),
   destination: z.string(),
-  listenHost: z.string(),
-  forwardPath: z.object({
-    Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional()
-  }),
-  returnPath: z.object({
-    Hops: z.number().optional(),
-    IntermediatePath: z.array(z.string()).optional()
-  }),
+  listenHost: z.string().nullable().optional(),
+  forwardPath: RoutingOptions,
+  returnPath: RoutingOptions,
   maxClientSessions: z.number().nullable().optional(),
-  maxSurbUpstream: z.string().optional(),
-  responseBuffer: z.string().optional(),
+  maxSurbUpstream: z.string().nullable().optional(),
+  responseBuffer: z.string().nullable().optional(),
   sessionPool: z.number().max(5).min(0).nullable().optional(),
-  target: z.object({
-    Plain: z.string()
-  })
+  target: SessionTargetSpec
 });
 
 export const OpenSessionPayload = OpenSessionPayloadCall.extend({
@@ -96,8 +92,8 @@ export const GetSessionConfigCallPayload = BasePayload.extend({
 });
 
 const SessionConfig = z.object({
-  maxSurbUpstream: z.string(),
-  responseBuffer: z.string()
+  maxSurbUpstream: z.string().optional(),
+  responseBuffer: z.string().optional()
 });
 
 export const GetSessionConfigResponse = SessionConfig;
@@ -137,7 +133,3 @@ export type CloseSessionPayloadCallType = z.infer<
   typeof CloseSessionPayloadCall
 >;
 export type CloseSessionPayloadType = z.infer<typeof CloseSessionPayload>;
-
-// export const CloseSessionResponse = z.object({ listeningIp: z.string(), port: z.number() });
-
-// export type CloseSessionResponseType = z.infer<typeof CloseSessionResponse>;

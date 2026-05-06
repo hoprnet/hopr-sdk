@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   GetAddressesResponse,
   GetAddressesResponseType,
@@ -35,7 +34,6 @@ export const getAddresses = async (
 
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAddressesResponse.safeParse(jsonResponse);
-  console.log('parsedRes', parsedRes);
 
   // received expected response
   if (parsedRes.success) {
