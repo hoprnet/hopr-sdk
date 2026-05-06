@@ -65,6 +65,29 @@ export const GetEntryNodesResponse = z.record(z.string(), nodeSchema);
 export type GetEntryNodesResponseType = z.infer<typeof GetEntryNodesResponse>;
 
 /**
+ * Get node status
+ */
+
+const ComponentStatusInfo = z.object({
+  status: z.string(),
+  detail: z.string().nullable().optional()
+});
+
+const ComponentStatusesResponse = z.object({
+  chain: ComponentStatusInfo,
+  network: ComponentStatusInfo,
+  transport: ComponentStatusInfo
+});
+
+export const GetNodeStatusResponse = z.object({
+  overall: z.string(),
+  nodeState: z.string(),
+  components: ComponentStatusesResponse
+});
+
+export type GetNodeStatusResponseType = z.infer<typeof GetNodeStatusResponse>;
+
+/**
  * Get version
  */
 

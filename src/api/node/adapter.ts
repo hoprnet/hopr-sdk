@@ -7,6 +7,7 @@ import { createLogger } from '../../utils';
 import { getEntryNodes } from './getEntryNodes';
 import { getInfo } from './getInfo';
 import { getPeers } from './getPeers';
+import { getStatus } from './getStatus';
 import { getVersion } from './getVersion';
 import { getVersions } from './getVersions';
 
@@ -72,6 +73,16 @@ export class NodeAdapter {
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
     return getVersion({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload?.timeout ?? this.timeout
+    });
+  }
+
+  public async getStatus(
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getStatus({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout
