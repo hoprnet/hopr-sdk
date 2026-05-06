@@ -9,7 +9,7 @@ on:
       node_version:
         required: false
         type: string
-        default: '24.x'
+        default: '24.x' # Requires 24.x for publishing to npm with OIDC authentication
     secrets:
       cachix_auth_token:
         required: true

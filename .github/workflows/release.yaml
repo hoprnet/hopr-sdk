@@ -21,8 +21,6 @@ jobs:
   build:
     name: Build
     uses: ./.github/workflows/build.yaml
-    with:
-      node_version: '24'
   publish:
     name: Publish
     needs:
