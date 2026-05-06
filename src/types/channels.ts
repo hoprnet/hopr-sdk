@@ -26,18 +26,6 @@ export const Channel = z.object({
 });
 
 /**
- * Redeem channel tickets
- */
-
-export const RedeemChannelTicketsPayload = BasePayload.extend({
-  channelId: z.string()
-});
-
-export type RedeemChannelTicketsPayloadType = z.infer<
-  typeof RedeemChannelTicketsPayload
->;
-
-/**
  * Fund channel
  */
 
@@ -87,31 +75,6 @@ export const GetChannelsResponse = z.object({
 
 export type GetChannelsResponseType = z.infer<typeof GetChannelsResponse>;
 
-/** Get channel tickets */
-
-export const GetChannelTicketsPayload = BasePayload.extend({
-  channelId: z.string()
-});
-
-export type GetChannelTicketsPayloadType = z.infer<
-  typeof GetChannelTicketsPayload
->;
-
-export const Ticket = z.object({
-  channelId: z.string(),
-  amount: z.string(),
-  index: z.number(),
-  channelEpoch: z.number(),
-  winProb: z.string(),
-  signature: z.string()
-});
-
-export const GetChannelTicketsResponse = z.array(Ticket);
-
-export type GetChannelTicketsResponseType = z.infer<
-  typeof GetChannelTicketsResponse
->;
-
 /** Close channel */
 
 export const CloseChannelPayload = BasePayload.extend({
@@ -140,12 +103,3 @@ export const GetChannelResponse = TopologyChannel;
 
 export type GetChannelResponseType = z.infer<typeof GetChannelResponse>;
 
-/** Get channels corrupted */
-
-export const GetChannelsCorruptedResponse = z.object({
-  channelIds: z.array(z.string())
-});
-
-export type GetChannelsCorruptedResponseType = z.infer<
-  typeof GetChannelsCorruptedResponse
->;

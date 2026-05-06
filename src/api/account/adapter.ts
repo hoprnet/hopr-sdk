@@ -6,9 +6,6 @@ import {
 import { createLogger } from '../../utils';
 import { getAddresses } from './getAddresses';
 import { getBalances } from './getBalances';
-import { getHoprBalance } from './getHoprBalance';
-import { getNativeAddress } from './getNativeAddress';
-import { getNativeBalance } from './getNativeBalance';
 import { withdraw } from './withdraw';
 
 const log = createLogger('account');
@@ -68,47 +65,6 @@ export class AccountAdapter {
     });
   }
 
-  /**
-   * Gets the HOPR balance associated to the node.
-   * @returns — A Promise that resolves to a string representing the HOPR balance.
-   */
-  public async getHoprBalance(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getHoprBalance({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
-    });
-  }
-
-  /**
-   * Gets the native blockchain address associated to the node.
-   * @returns — A Promise that resolves to the native address.
-   */
-  public async getNativeAddress(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getNativeAddress({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
-    });
-  }
-
-  /**
-   * Gets the native blockchain balance associated to the node.
-   * @returns — A Promise that resolves with a string representing the native balance.
-   */
-  public async getNativeBalance(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getNativeBalance({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
-    });
-  }
   /**
    * Withdraw the given currency amount to the specified recipient address.
    * This operation may take more than 5 minutes to complete as it involves on-chain operations.

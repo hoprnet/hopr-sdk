@@ -6,7 +6,8 @@
       "PowerShell(Get-ChildItem -Path \"c:\\\\dev\\\\hoprnet\\\\hopr-sdk\" -Force | Select-Object Name, @{Name=\"IsDir\"; Expression={$_.PSIsContainer}})",
       "PowerShell(ls -Path \"c:\\\\dev\\\\hoprnet\\\\hopr-sdk\" | Format-Table -Property Name, @{Name=\"Type\"; Expression={if\\($_.PSIsContainer\\){\"Dir\"}else{\"File\"}}})",
       "PowerShell(tree -L 3 \"c:\\\\dev\\\\hoprnet\\\\hopr-sdk\\\\src\" -DirOnly 2>$null)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "PowerShell(cd c:\\\\dev\\\\hoprnet\\\\hopr-sdk; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"\\\\.spec\\\\.ts\" } | Select-Object -First 60)"
     ]
   }
 }

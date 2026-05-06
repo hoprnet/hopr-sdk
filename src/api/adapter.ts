@@ -5,8 +5,6 @@ import { ConfigurationAdapter } from './configuration/adapter';
 import { NetworkAdapter } from './network/adapter';
 import { NodeAdapter } from './node/adapter';
 import { TicketsAdapter } from './tickets/adapter';
-import { TokensAdapter } from './tokens/adapter';
-import { MessagesAdapter } from './messages/adapter';
 import { PeersAdapter } from './peers/adapter';
 import { SessionsAdapter } from './sessions/adapter';
 
@@ -18,8 +16,6 @@ export class ApiAdapter {
   public network: NetworkAdapter;
   public node: NodeAdapter;
   public tickets: TicketsAdapter;
-  public tokens: TokensAdapter;
-  public messages: MessagesAdapter;
   public peers: PeersAdapter;
   public sessions: SessionsAdapter;
 
@@ -43,8 +39,6 @@ export class ApiAdapter {
     this.network = new NetworkAdapter({ apiEndpoint, apiToken, timeout });
     this.node = new NodeAdapter({ apiEndpoint, apiToken, timeout });
     this.tickets = new TicketsAdapter({ apiEndpoint, apiToken, timeout });
-    this.tokens = new TokensAdapter({ apiEndpoint, apiToken, timeout });
-    this.messages = new MessagesAdapter({ apiEndpoint, apiToken, timeout });
     this.peers = new PeersAdapter({ apiEndpoint, apiToken, timeout });
     this.sessions = new SessionsAdapter({ apiEndpoint, apiToken, timeout });
   }

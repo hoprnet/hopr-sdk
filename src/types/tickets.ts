@@ -1,4 +1,4 @@
-import { boolean, z } from 'zod';
+import { z } from 'zod';
 import { BasePayload } from './general';
 
 /**
@@ -29,12 +29,3 @@ export type GetTicketStatisticsResponseType = z.infer<
   typeof GetTicketStatisticsResponse
 >;
 
-/**
- * Reset statistics
- */
-
-export const ResetTicketStatisticsResponse = z.boolean();
-
-export type ResetTicketStatisticsResponseType = z.infer<
-  typeof ResetTicketStatisticsResponse
->;

@@ -3,9 +3,7 @@ import {
   FundChannelsPayloadType,
   GetChannelPayloadType,
   GetChannelsPayloadType,
-  GetChannelTicketsPayloadType,
   OpenChannelPayloadType,
-  RedeemChannelTicketsPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
@@ -13,9 +11,7 @@ import { closeChannel } from './closeChannel';
 import { fundChannel } from './fundChannel';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
-import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
-import { redeemChannelTickets } from './redeemChannelTickets';
 
 const log = createLogger('channels');
 
@@ -97,32 +93,6 @@ export class ChannelsAdapter {
       timeout: payload.timeout ?? this.timeout,
       amount: payload.amount,
       destination: payload.destination
-    });
-  }
-
-  public async getChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<GetChannelTicketsPayloadType>
-  ) {
-    return getChannelTickets({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
-    });
-  }
-
-  /**
-   * Redeems all the unredeemed HOPR tickets in a channel.
-   * This operation may take more than 5 minutes to complete as it involves on-chain operations.
-   */
-  public async redeemChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<RedeemChannelTicketsPayloadType>
-  ) {
-    return redeemChannelTickets({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
     });
   }
 
