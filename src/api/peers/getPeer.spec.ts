@@ -14,8 +14,9 @@ const startHangingServer = async () => {
   await new Promise<void>((resolve) =>
     server.listen(0, '127.0.0.1', () => resolve())
   );
-  const port = (server.address() as any).port;
+  const port = (server.address() as import('net').AddressInfo).port;
   const stop = async () => {
+    server.closeAllConnections();
     await new Promise<void>((resolve) => server.close(() => resolve()));
     nock.disableNetConnect();
   };

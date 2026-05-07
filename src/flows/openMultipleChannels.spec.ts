@@ -98,9 +98,9 @@ describe('openMultipleChannels', function () {
       .reply(200, expectedResponse);
 
     (channels.openChannel as jest.Mock).mockImplementation(
-      ({ destination }: { destination: string }) => {
+      async ({ destination }: { destination: string }) => {
         if (destination === 'idFails') {
-          throw new Error('rpc failed');
+          return Promise.reject(new Error('rpc failed'));
         }
         return {
           channelId: '0xchanGood',
