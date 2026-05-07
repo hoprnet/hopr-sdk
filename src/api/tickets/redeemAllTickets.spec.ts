@@ -158,7 +158,7 @@ describe('test redeemAllTickets', function () {
         capturedBody = body;
         return true;
       })
-      .reply(204);
+      .reply(202);
 
     const ADDRESS = '0x1234567890abcdef1234567890abcdef12345678';
     const result = await redeemAllTickets({

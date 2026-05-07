@@ -45,7 +45,7 @@ export const updateSessionConfig = async (
   }
 
   // received expected response (204 No Content)
-  if (rawResponse.status === 204 || rawResponse.status === 200) {
+  if (rawResponse.status === 204) {
     return true;
   }
 

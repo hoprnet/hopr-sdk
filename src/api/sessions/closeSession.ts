@@ -42,14 +42,8 @@ export const closeSession = async (
     return true;
   }
 
-  const jsonResponse = await rawResponse.json();
-
-  // any 2xx body we treat as success boolean true
-  if (rawResponse.ok) {
-    return true;
-  }
-
   // check if response has the structure of an expected api error
+  const jsonResponse = await rawResponse.json();
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {

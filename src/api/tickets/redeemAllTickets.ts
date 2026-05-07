@@ -39,8 +39,8 @@ export const redeemAllTickets = async (
     });
   }
 
-  // received expected response (202 Accepted or 204 No Content)
-  if (rawResponse.status === 202 || rawResponse.status === 204) {
+  // received expected response (202 Accepted)
+  if (rawResponse.status === 202) {
     return true;
   }
 
