@@ -37,6 +37,19 @@ export const getBalances = async (
 
   const jsonResponse = await rawResponse.json();
 
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
   // strip currency unit suffixes from balance fields when present
   const currencies = Object.keys(jsonResponse);
   jsonResponse.token =
@@ -53,23 +66,8 @@ export const getBalances = async (
   }
 
   const parsedRes = GetBalancesResponse.safeParse(jsonResponse);
-
-  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
   }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
-  }
-
-  // we could not parse the response and it is unexpected
   throw parsedRes.error;
 };

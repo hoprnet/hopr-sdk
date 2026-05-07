@@ -27,9 +27,21 @@ export const getTicketStatistics = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetTicketStatisticsResponse.safeParse(jsonResponse);
 
-  // received expected response
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = GetTicketStatisticsResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     const strip = (v: string) =>
       v.includes(' ') ? (v.split(' ')[0] as string) : v;
@@ -43,18 +55,5 @@ export const getTicketStatistics = async (
       winningCount: parsedRes.data.winningCount
     };
   }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
-  }
-
-  // we could not parse the response and it is unexpected
   throw parsedRes.error;
 };

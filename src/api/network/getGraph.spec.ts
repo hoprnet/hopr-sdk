@@ -1,5 +1,6 @@
 import nock from 'nock';
 import http from 'http';
+import { ZodError } from 'zod';
 import { sdkApiError } from '../../utils';
 import { getGraph } from './getGraph';
 
@@ -93,13 +94,13 @@ describe('test getGraph', function () {
       getGraph({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(sdkApiError);
   });
-  it('throws sdkApiError when error-path body matches neither response schema nor ApiErrorResponse', async function () {
+  it('throws ZodError when error-path body matches neither response schema nor ApiErrorResponse', async function () {
     nock(API_ENDPOINT)
       .get(`/api/v4/network/graph`)
       .reply(400, { unexpected: 'shape' });
 
     await expect(
       getGraph({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
-    ).rejects.toThrow(sdkApiError);
+    ).rejects.toThrow(ZodError);
   });
 });

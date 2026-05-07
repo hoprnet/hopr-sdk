@@ -30,24 +30,23 @@ export const getPeer = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetPeerResponse.safeParse(jsonResponse);
 
-  // received expected response
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = GetPeerResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
-  }
-
-  // we could not parse the response and it is unexpected
   throw parsedRes.error;
 };

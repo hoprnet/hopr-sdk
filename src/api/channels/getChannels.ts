@@ -30,9 +30,21 @@ export const getChannels = async (
   }
 
   const jsonResponse = await rawResponse.json();
-  const parsedRes = GetChannelsResponse.safeParse(jsonResponse);
 
-  // received expected response
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = GetChannelsResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     parsedRes.data.all.forEach((channel) => {
       channel.balance = channel.balance.includes(' ')
@@ -54,18 +66,5 @@ export const getChannels = async (
 
     return parsedRes.data;
   }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
-  }
-
-  // we could not parse the response and it is unexpected
   throw parsedRes.error;
 };

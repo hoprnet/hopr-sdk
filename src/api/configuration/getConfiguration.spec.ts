@@ -530,7 +530,7 @@ describe('getConfiguration', () => {
     expect(result).toEqual(expectedResponse);
   });
 
-  it('returns the parsed body when the api responds with a 401 (schema is z.any())', async function () {
+  it('throws sdkApiError when the api responds with a 401', async function () {
     const errorBody = {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
@@ -539,13 +539,12 @@ describe('getConfiguration', () => {
       .get('/api/v4/node/configuration')
       .reply(401, errorBody);
 
-    // GetConfigurationResponse is z.any(), so the canonical safeParse-first
-    // pattern returns whatever JSON was received, even on a 4xx response.
-    const result = await getConfiguration({
-      apiEndpoint: API_ENDPOINT,
-      apiToken: API_TOKEN
-    });
-    expect(result).toEqual(errorBody);
+    // Under the canonical pattern, any non-2xx response is the error path,
+    // so the ApiErrorResponse parse runs first and throws sdkApiError even
+    // though GetConfigurationResponse is z.any().
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(sdkApiError);
   });
   it('rejects with TIMEOUT when the request exceeds the timeout', async function () {
     const { url, stop } = await startHangingServer();
@@ -589,12 +588,7 @@ describe('getConfiguration', () => {
     ).rejects.toThrow(sdkApiError);
   });
   // Note: GetConfigurationResponse is `z.any()` (see src/types/configuration.ts).
-  // This means the inner `ApiErrorResponse` fallback (lines 48-56) and the
-  // final `parsedRes.error` throw (line 59) of getConfiguration.ts are
-  // unreachable for any successfully-parsed JSON body — `z.any()` always
-  // succeeds, so execution never falls past `parsedRes.success`. The 401 test
-  // above ("returns the parsed body when the api responds with a 401")
-  // documents this canonical behavior. The only branch we can additionally
-  // cover from the spec is the >= 500 server-error path, which is asserted
-  // by the test directly above.
+  // Under the canonical error-handling pattern, the !rawResponse.ok branch
+  // runs before the success-schema parse, so non-2xx responses still surface
+  // as sdkApiError (or ZodError when the body fails ApiErrorResponse).
 });

@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import { BasePayloadType, ApiErrorResponse } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
@@ -25,7 +24,7 @@ export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   }
 
   // received expected response (text/plain)
-  if (rawResponse.status === 200) {
+  if (rawResponse.ok) {
     return rawResponse.text();
   }
 
@@ -42,5 +41,5 @@ export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   }
 
   // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw isApiErrorResponse.error;
 };

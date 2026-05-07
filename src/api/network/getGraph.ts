@@ -46,8 +46,5 @@ export const getGraph = async (
   }
 
   // we could not parse the error and it is not unexpected
-  throw new sdkApiError({
-    status: rawResponse.status,
-    statusText: rawResponse.statusText
-  });
+  throw isApiErrorResponse.error;
 };
