@@ -124,9 +124,7 @@ describe('getBalances', () => {
   });
 
   it('rejects when response body is malformed JSON', async () => {
-    nock(API_ENDPOINT)
-      .get('/api/v4/account/balances')
-      .reply(200, 'not-json');
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(200, 'not-json');
 
     await expect(
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })

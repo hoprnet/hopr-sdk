@@ -1,7 +1,4 @@
-import {
-  ApiErrorResponse,
-  GetNetworkGraphPayloadType
-} from '../../types';
+import { ApiErrorResponse, GetNetworkGraphPayloadType } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getGraph = async (

@@ -1,7 +1,4 @@
-import {
-  ApiErrorResponse,
-  CloseSessionPayloadType
-} from '../../types';
+import { ApiErrorResponse, CloseSessionPayloadType } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**

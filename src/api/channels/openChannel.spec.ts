@@ -192,9 +192,7 @@ describe('test openChannel', function () {
     }
   });
   it('rejects when the connection errors', async function () {
-    nock(API_ENDPOINT)
-      .post('/api/v4/channels')
-      .replyWithError('ECONNREFUSED');
+    nock(API_ENDPOINT).post('/api/v4/channels').replyWithError('ECONNREFUSED');
 
     await expect(
       openChannel({
@@ -206,9 +204,7 @@ describe('test openChannel', function () {
     ).rejects.toThrow();
   });
   it('rejects when response body is malformed JSON', async function () {
-    nock(API_ENDPOINT)
-      .post('/api/v4/channels')
-      .reply(200, 'not-json');
+    nock(API_ENDPOINT).post('/api/v4/channels').reply(200, 'not-json');
 
     await expect(
       openChannel({

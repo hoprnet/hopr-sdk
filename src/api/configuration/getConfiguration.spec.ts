@@ -535,9 +535,7 @@ describe('getConfiguration', () => {
       status: 'UNAUTHORIZED',
       error: 'authentication failed'
     };
-    nock(API_ENDPOINT)
-      .get('/api/v4/node/configuration')
-      .reply(401, errorBody);
+    nock(API_ENDPOINT).get('/api/v4/node/configuration').reply(401, errorBody);
 
     // Under the canonical pattern, any non-2xx response is the error path,
     // so the ApiErrorResponse parse runs first and throws sdkApiError even
@@ -570,9 +568,7 @@ describe('getConfiguration', () => {
     ).rejects.toThrow();
   });
   it('rejects when 200 body is malformed JSON', async function () {
-    nock(API_ENDPOINT)
-      .get('/api/v4/node/configuration')
-      .reply(200, 'not-json');
+    nock(API_ENDPOINT).get('/api/v4/node/configuration').reply(200, 'not-json');
 
     await expect(
       getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })

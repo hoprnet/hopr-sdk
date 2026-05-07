@@ -45,9 +45,7 @@ export const GetNetworkGraphPayload = BasePayload.extend({
   reachableOnly: z.boolean().optional()
 });
 
-export type GetNetworkGraphPayloadType = z.infer<
-  typeof GetNetworkGraphPayload
->;
+export type GetNetworkGraphPayloadType = z.infer<typeof GetNetworkGraphPayload>;
 
 /**
  * Get network price

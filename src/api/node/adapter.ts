@@ -63,6 +63,4 @@ export class NodeAdapter {
       timeout: payload?.timeout ?? this.timeout
     });
   }
-
 }
-

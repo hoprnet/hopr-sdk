@@ -85,9 +85,7 @@ describe('test getMetrics', function () {
     }
   });
   it('rejects when the connection errors', async function () {
-    nock(API_ENDPOINT)
-      .get(`/metrics`)
-      .replyWithError('ECONNREFUSED');
+    nock(API_ENDPOINT).get(`/metrics`).replyWithError('ECONNREFUSED');
 
     await expect(
       getMetrics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

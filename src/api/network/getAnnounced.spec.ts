@@ -105,9 +105,7 @@ describe('test getAnnounced', function () {
     ).rejects.toThrow();
   });
   it('rejects when response body is malformed JSON', async function () {
-    nock(API_ENDPOINT)
-      .get(`/api/v4/network/announced`)
-      .reply(200, 'not-json');
+    nock(API_ENDPOINT).get(`/api/v4/network/announced`).reply(200, 'not-json');
 
     await expect(
       getAnnounced({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

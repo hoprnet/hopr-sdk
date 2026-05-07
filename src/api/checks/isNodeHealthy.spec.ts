@@ -47,9 +47,7 @@ describe('test pingPeer', function () {
     expect(response).toEqual(false);
   });
   it('throws ZodError when error-path body matches neither response schema nor ApiErrorResponse', async function () {
-    nock(API_ENDPOINT)
-      .get(`/healthyz`)
-      .reply(400, { unexpected: 'shape' });
+    nock(API_ENDPOINT).get(`/healthyz`).reply(400, { unexpected: 'shape' });
 
     let caught: any;
     try {
@@ -75,9 +73,7 @@ describe('test pingPeer', function () {
     }
   });
   it('rejects when the connection errors', async function () {
-    nock(API_ENDPOINT)
-      .get(`/healthyz`)
-      .replyWithError('ECONNREFUSED');
+    nock(API_ENDPOINT).get(`/healthyz`).replyWithError('ECONNREFUSED');
 
     await expect(
       isNodeHealthy({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

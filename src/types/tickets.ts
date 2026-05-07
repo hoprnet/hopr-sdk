@@ -28,4 +28,3 @@ export type RedeemAllTicketsPayloadType = z.infer<
 export type GetTicketStatisticsResponseType = z.infer<
   typeof GetTicketStatisticsResponse
 >;
-

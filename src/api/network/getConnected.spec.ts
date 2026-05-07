@@ -107,9 +107,7 @@ describe('test getConnected', function () {
     ).rejects.toThrow();
   });
   it('rejects when response body is malformed JSON', async function () {
-    nock(API_ENDPOINT)
-      .get(`/api/v4/network/connected`)
-      .reply(200, 'not-json');
+    nock(API_ENDPOINT).get(`/api/v4/network/connected`).reply(200, 'not-json');
 
     await expect(
       getConnected({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

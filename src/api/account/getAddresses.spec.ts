@@ -162,9 +162,7 @@ describe('getAddresses', () => {
   });
 
   test('should reject when the response body is malformed JSON', async function () {
-    nock(API_ENDPOINT)
-      .get('/api/v4/account/addresses')
-      .reply(200, 'not-json');
+    nock(API_ENDPOINT).get('/api/v4/account/addresses').reply(200, 'not-json');
 
     await expect(
       getAddresses({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })

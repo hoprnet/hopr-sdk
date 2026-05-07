@@ -118,9 +118,7 @@ describe('test getInfo', function () {
     }
   });
   it('rejects when the connection errors', async function () {
-    nock(API_ENDPOINT)
-      .get(`/api/v4/node/info`)
-      .replyWithError('ECONNREFUSED');
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).replyWithError('ECONNREFUSED');
 
     await expect(
       getInfo({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

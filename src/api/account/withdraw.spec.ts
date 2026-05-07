@@ -184,9 +184,7 @@ describe('withdraw function', () => {
   });
 
   test('should reject when response body is malformed JSON', async function () {
-    nock(API_ENDPOINT)
-      .post('/api/v4/account/withdraw')
-      .reply(200, 'not-json');
+    nock(API_ENDPOINT).post('/api/v4/account/withdraw').reply(200, 'not-json');
 
     await expect(
       withdraw({

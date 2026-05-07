@@ -57,9 +57,7 @@ describe('test isNodeEligible', function () {
     ).rejects.toThrow(Error);
   });
   it('throws ZodError when error-path body matches neither response schema nor ApiErrorResponse', async function () {
-    nock(API_ENDPOINT)
-      .get(`/eligiblez`)
-      .reply(400, { unexpected: 'shape' });
+    nock(API_ENDPOINT).get(`/eligiblez`).reply(400, { unexpected: 'shape' });
 
     let caught: any;
     try {
@@ -85,9 +83,7 @@ describe('test isNodeEligible', function () {
     }
   });
   it('rejects when the connection errors', async function () {
-    nock(API_ENDPOINT)
-      .get(`/eligiblez`)
-      .replyWithError('ECONNREFUSED');
+    nock(API_ENDPOINT).get(`/eligiblez`).replyWithError('ECONNREFUSED');
 
     await expect(
       isNodeEligible({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

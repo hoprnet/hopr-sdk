@@ -13,39 +13,39 @@ Branch: hoprd-v4
 
 ## File-by-file matrix
 
-| file | docs status codes | tested status codes | gap | branch coverage | notes |
-|---|---|---|---|---|---|
-| account/getAddresses.ts | 200,401,422 | 200,403,422,500 | docs-only: 401; spec-only: 403,500 | 100% | spec uses 403 instead of 401 |
-| account/getBalances.ts | 200,401,422 | 200,401,403,422 | spec-only: 403 | 84.61% | minor extra negative case |
-| account/withdraw.ts | 200,401,412,422 | 200,400,401,403,412,422 | spec-only: 400,403 | 66.66% | OK |
-| channels/closeChannel.ts | 200,400,401,404,412,422 | 200,400,401,404,412,422 | none | 100% | exact parity |
-| channels/fundChannel.ts | 200,400,401,403,404,412,422 | 200,400,401,403,404,412,422 | none | 100% | exact parity |
-| channels/getChannel.ts | 200,400,401,404,422 | 200,400,401,404,422 | none | 75% | exact parity |
-| channels/getChannels.ts | 200,401,422 | 200,400,401,403,422 | spec-only: 400,403 | 55.55% | low branch cov |
-| channels/openChannel.ts | 201,400,401,403,409,412,422 | 200,201,400,401,403,409,412,422 | spec-only: 200 | 100% | extra positive case |
-| checks/getMetrics.ts | 200,401,422 | 200,400,401,403,422 | spec-only: 400,403 | 66.66% | OK |
-| checks/isNodeEligible.ts | 200,412,500 | 200,400,412,500 | spec-only: 400 | 80% | OK |
-| checks/isNodeHealthy.ts | 200,412 | 200,400,412,500 | spec-only: 400,500 | 80% | OK |
-| checks/isNodeReady.ts | 200,412 | 200,400,412,500 | spec-only: 400,500 | 80% | OK |
-| checks/isNodeStarted.ts | 200,412 | 200,400,412,500 | spec-only: 400,500 | 80% | OK |
-| configuration/getConfiguration.ts | 200,401 | 200,401 | none | 100% | exact parity |
-| network/getAnnounced.ts | 200,401,422 | 200,401,422 | none | 66.66% | exact parity |
-| network/getConnected.ts | 200,401,422 | 200,401,422 | none | 66.66% | exact parity |
-| network/getGraph.ts | 200,401 | 200,401 | none | 50% | low branch cov |
-| network/getMinimumTicketProbability.ts | 200,401,422 | 200,401,422 | none | 66.66% | exact parity |
-| network/getTicketPrice.ts | 200,401,422 | 200,401,422 | none | 60% | exact parity |
-| node/getInfo.ts | 200,422 | 200,400,401,403,422 | spec-only: 400,401,403 | 66.66% | extra negatives |
-| node/getStatus.ts | 200,401 | 200,401 | none | 66.66% | exact parity |
-| node/getVersion.ts | 200,401 | 200,400,401 | spec-only: 400 | 66.66% | minor extra |
-| peers/getPeer.ts | 200,400,401,422 | 200,400,401,403,422 | spec-only: 403 | 66.66% | OK |
-| peers/pingPeer.ts | 200,400,401,404,408,412,422 | 200,400,401,403,404,408,412,422 | spec-only: 403 | 66.66% | OK |
-| sessions/closeSession.ts | 204,400,401,404,422 | 204,400,401,403,404,422 | spec-only: 403 | 66.66% | OK |
-| sessions/getSessionConfig.ts | 200,400,401,404,422 | 200,400,401,404,422,500 | spec-only: 500 | 100% | OK |
-| sessions/getSessions.ts | 200,400,401,422 | 200,400,401,422,500 | spec-only: 500 | 100% | OK |
-| sessions/openSession.ts | 200,400,401,409,422 | 200,400,401,403,409,422 | spec-only: 403 | 75% | OK |
-| sessions/updateSessionConfig.ts | 204,400,401,404,406,422 | 204,400,401,403,404,406,409,422 | spec-only: 403,409 | 80% | OK |
-| tickets/getTicketStatistics.ts | 200,401,422 | 200,400,401,403,422 | spec-only: 400,403 | 57.14% | low branch cov |
-| tickets/redeemAllTickets.ts | 202,400,401,404,422 | 202,400,401,403,404,412,422 | spec-only: 403,412 | 66.66% | OK |
+| file                                   | docs status codes           | tested status codes             | gap                                | branch coverage | notes                        |
+| -------------------------------------- | --------------------------- | ------------------------------- | ---------------------------------- | --------------- | ---------------------------- |
+| account/getAddresses.ts                | 200,401,422                 | 200,403,422,500                 | docs-only: 401; spec-only: 403,500 | 100%            | spec uses 403 instead of 401 |
+| account/getBalances.ts                 | 200,401,422                 | 200,401,403,422                 | spec-only: 403                     | 84.61%          | minor extra negative case    |
+| account/withdraw.ts                    | 200,401,412,422             | 200,400,401,403,412,422         | spec-only: 400,403                 | 66.66%          | OK                           |
+| channels/closeChannel.ts               | 200,400,401,404,412,422     | 200,400,401,404,412,422         | none                               | 100%            | exact parity                 |
+| channels/fundChannel.ts                | 200,400,401,403,404,412,422 | 200,400,401,403,404,412,422     | none                               | 100%            | exact parity                 |
+| channels/getChannel.ts                 | 200,400,401,404,422         | 200,400,401,404,422             | none                               | 75%             | exact parity                 |
+| channels/getChannels.ts                | 200,401,422                 | 200,400,401,403,422             | spec-only: 400,403                 | 55.55%          | low branch cov               |
+| channels/openChannel.ts                | 201,400,401,403,409,412,422 | 200,201,400,401,403,409,412,422 | spec-only: 200                     | 100%            | extra positive case          |
+| checks/getMetrics.ts                   | 200,401,422                 | 200,400,401,403,422             | spec-only: 400,403                 | 66.66%          | OK                           |
+| checks/isNodeEligible.ts               | 200,412,500                 | 200,400,412,500                 | spec-only: 400                     | 80%             | OK                           |
+| checks/isNodeHealthy.ts                | 200,412                     | 200,400,412,500                 | spec-only: 400,500                 | 80%             | OK                           |
+| checks/isNodeReady.ts                  | 200,412                     | 200,400,412,500                 | spec-only: 400,500                 | 80%             | OK                           |
+| checks/isNodeStarted.ts                | 200,412                     | 200,400,412,500                 | spec-only: 400,500                 | 80%             | OK                           |
+| configuration/getConfiguration.ts      | 200,401                     | 200,401                         | none                               | 100%            | exact parity                 |
+| network/getAnnounced.ts                | 200,401,422                 | 200,401,422                     | none                               | 66.66%          | exact parity                 |
+| network/getConnected.ts                | 200,401,422                 | 200,401,422                     | none                               | 66.66%          | exact parity                 |
+| network/getGraph.ts                    | 200,401                     | 200,401                         | none                               | 50%             | low branch cov               |
+| network/getMinimumTicketProbability.ts | 200,401,422                 | 200,401,422                     | none                               | 66.66%          | exact parity                 |
+| network/getTicketPrice.ts              | 200,401,422                 | 200,401,422                     | none                               | 60%             | exact parity                 |
+| node/getInfo.ts                        | 200,422                     | 200,400,401,403,422             | spec-only: 400,401,403             | 66.66%          | extra negatives              |
+| node/getStatus.ts                      | 200,401                     | 200,401                         | none                               | 66.66%          | exact parity                 |
+| node/getVersion.ts                     | 200,401                     | 200,400,401                     | spec-only: 400                     | 66.66%          | minor extra                  |
+| peers/getPeer.ts                       | 200,400,401,422             | 200,400,401,403,422             | spec-only: 403                     | 66.66%          | OK                           |
+| peers/pingPeer.ts                      | 200,400,401,404,408,412,422 | 200,400,401,403,404,408,412,422 | spec-only: 403                     | 66.66%          | OK                           |
+| sessions/closeSession.ts               | 204,400,401,404,422         | 204,400,401,403,404,422         | spec-only: 403                     | 66.66%          | OK                           |
+| sessions/getSessionConfig.ts           | 200,400,401,404,422         | 200,400,401,404,422,500         | spec-only: 500                     | 100%            | OK                           |
+| sessions/getSessions.ts                | 200,400,401,422             | 200,400,401,422,500             | spec-only: 500                     | 100%            | OK                           |
+| sessions/openSession.ts                | 200,400,401,409,422         | 200,400,401,403,409,422         | spec-only: 403                     | 75%             | OK                           |
+| sessions/updateSessionConfig.ts        | 204,400,401,404,406,422     | 204,400,401,403,404,406,409,422 | spec-only: 403,409                 | 80%             | OK                           |
+| tickets/getTicketStatistics.ts         | 200,401,422                 | 200,400,401,403,422             | spec-only: 400,403                 | 57.14%          | low branch cov               |
+| tickets/redeemAllTickets.ts            | 202,400,401,404,422         | 202,400,401,403,404,412,422     | spec-only: 403,412                 | 66.66%          | OK                           |
 
 ## Adapter coverage
 
@@ -58,25 +58,25 @@ These are public-API naming bugs in the adapter, not test gaps. They are **flagg
 
 ## Branch coverage flags (<80%)
 
-| file | branch % |
-|---|---|
-| account/withdraw.ts | 66.66% |
-| channels/getChannel.ts | 75% |
-| channels/getChannels.ts | 55.55% |
-| checks/getMetrics.ts | 66.66% |
-| network/getAnnounced.ts | 66.66% |
-| network/getConnected.ts | 66.66% |
-| network/getGraph.ts | 50% |
-| network/getMinimumTicketProbability.ts | 66.66% |
-| network/getTicketPrice.ts | 60% |
-| node/getInfo.ts | 66.66% |
-| node/getStatus.ts | 66.66% |
-| node/getVersion.ts | 66.66% |
-| peers/getPeer.ts | 66.66% |
-| peers/pingPeer.ts | 66.66% |
-| sessions/closeSession.ts | 66.66% |
-| tickets/getTicketStatistics.ts | 57.14% |
-| tickets/redeemAllTickets.ts | 66.66% |
+| file                                   | branch % |
+| -------------------------------------- | -------- |
+| account/withdraw.ts                    | 66.66%   |
+| channels/getChannel.ts                 | 75%      |
+| channels/getChannels.ts                | 55.55%   |
+| checks/getMetrics.ts                   | 66.66%   |
+| network/getAnnounced.ts                | 66.66%   |
+| network/getConnected.ts                | 66.66%   |
+| network/getGraph.ts                    | 50%      |
+| network/getMinimumTicketProbability.ts | 66.66%   |
+| network/getTicketPrice.ts              | 60%      |
+| node/getInfo.ts                        | 66.66%   |
+| node/getStatus.ts                      | 66.66%   |
+| node/getVersion.ts                     | 66.66%   |
+| peers/getPeer.ts                       | 66.66%   |
+| peers/pingPeer.ts                      | 66.66%   |
+| sessions/closeSession.ts               | 66.66%   |
+| tickets/getTicketStatistics.ts         | 57.14%   |
+| tickets/redeemAllTickets.ts            | 66.66%   |
 
 The recurring uncovered branches (lines like 23/25/27/42/45) typically correspond to a `payload.timeout ?? this.timeout` style fallback or an `if (!response.ok)` early-exit that the specs do not deliberately exercise.
 
