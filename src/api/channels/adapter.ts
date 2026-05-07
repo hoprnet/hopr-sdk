@@ -1,25 +1,17 @@
 import {
-  AggregateChannelTicketsPayloadType,
   CloseChannelPayloadType,
   FundChannelsPayloadType,
   GetChannelPayloadType,
   GetChannelsPayloadType,
-  GetChannelTicketsPayloadType,
   OpenChannelPayloadType,
-  RedeemChannelTicketsPayloadType,
-  RemoveBasicAuthenticationPayloadType,
-  BasePayloadType
+  RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
-import { aggregateChannelTickets } from './aggregateChannelTickets';
 import { closeChannel } from './closeChannel';
 import { fundChannel } from './fundChannel';
 import { getChannel } from './getChannel';
 import { getChannels } from './getChannels';
-import { getChannelsCorrupted } from './getChannelsCorrupted';
-import { getChannelTickets } from './getChannelTickets';
 import { openChannel } from './openChannel';
-import { redeemChannelTickets } from './redeemChannelTickets';
 
 const log = createLogger('channels');
 
@@ -59,7 +51,8 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
+      address: payload.address,
+      direction: payload.direction
     });
   }
 
@@ -82,7 +75,8 @@ export class ChannelsAdapter {
       apiToken: this.apiToken,
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
+      address: payload.address,
+      direction: payload.direction
     });
   }
 
@@ -102,32 +96,6 @@ export class ChannelsAdapter {
     });
   }
 
-  public async getChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<GetChannelTicketsPayloadType>
-  ) {
-    return getChannelTickets({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
-    });
-  }
-
-  /**
-   * Redeems all the unredeemed HOPR tickets in a channel.
-   * This operation may take more than 5 minutes to complete as it involves on-chain operations.
-   */
-  public async redeemChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<RedeemChannelTicketsPayloadType>
-  ) {
-    return redeemChannelTickets({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
-    });
-  }
-
   public async fundChannel(
     payload: RemoveBasicAuthenticationPayloadType<FundChannelsPayloadType>
   ) {
@@ -136,28 +104,7 @@ export class ChannelsAdapter {
       apiEndpoint: this.apiEndpoint,
       timeout: payload.timeout ?? this.timeout,
       amount: payload.amount,
-      channelId: payload.channelId
-    });
-  }
-
-  public async aggregateChannelTickets(
-    payload: RemoveBasicAuthenticationPayloadType<AggregateChannelTicketsPayloadType>
-  ) {
-    return aggregateChannelTickets({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout,
-      channelId: payload.channelId
-    });
-  }
-
-  public async getChannelsCorrupted(
-    payload: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getChannelsCorrupted({
-      apiToken: this.apiToken,
-      apiEndpoint: this.apiEndpoint,
-      timeout: payload.timeout ?? this.timeout
+      address: payload.address
     });
   }
 }

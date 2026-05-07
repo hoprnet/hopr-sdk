@@ -1,4 +1,5 @@
-import { boolean, z } from 'zod';
+import { z } from 'zod';
+import { BasePayload } from './general';
 
 /**
  * Get statistics
@@ -6,22 +7,24 @@ import { boolean, z } from 'zod';
 
 export const GetTicketStatisticsResponse = z.object({
   neglectedValue: z.string(),
-  redeemedValue: z.string(),
+  redeemedValue: z.string().optional(),
   rejectedValue: z.string(),
   unredeemedValue: z.string(),
   winningCount: z.number()
 });
 
-export type GetTicketStatisticsResponseType = z.infer<
-  typeof GetTicketStatisticsResponse
->;
-
 /**
- * Reset statistics
+ * Redeem all tickets
  */
 
-export const ResetTicketStatisticsResponse = z.boolean();
+export const RedeemAllTicketsPayload = BasePayload.extend({
+  address: z.string().nullable().optional()
+});
 
-export type ResetTicketStatisticsResponseType = z.infer<
-  typeof ResetTicketStatisticsResponse
+export type RedeemAllTicketsPayloadType = z.infer<
+  typeof RedeemAllTicketsPayload
+>;
+
+export type GetTicketStatisticsResponseType = z.infer<
+  typeof GetTicketStatisticsResponse
 >;

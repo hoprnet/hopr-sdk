@@ -1,23 +1,21 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   IsNodeHealthyPayloadType,
-  IsNodeHealthyResponse,
   IsNodeHealthyResponseType
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
- * Check whether the node is healthy.
- * @returns A Promise that resolves to a boolean stating that the node is healthy or not.
+ * Check whether the node is started.
+ * @returns A Promise that resolves to a boolean stating that the node is started or not.
  * @throws An error that occurred while processing the request.
  */
 export const isNodeStarted = async (
   payload: IsNodeHealthyPayloadType
 ): Promise<IsNodeHealthyResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL('startedz', payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}startedz`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -27,7 +25,10 @@ export const isNodeStarted = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   // received expected response
@@ -50,5 +51,5 @@ export const isNodeStarted = async (
   }
 
   // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw isApiErrorResponse.error;
 };

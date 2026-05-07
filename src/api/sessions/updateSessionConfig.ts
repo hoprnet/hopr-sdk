@@ -1,7 +1,5 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
-  OpenSessionResponse,
   UpdateSessionConfigCallType,
   UpdateSessionConfigType
 } from '../../types';
@@ -39,11 +37,14 @@ export const updateSessionConfig = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
-  // received expected response
-  if (rawResponse.status === 204 || rawResponse.status === 200) {
+  // received expected response (204 No Content)
+  if (rawResponse.status === 204) {
     return true;
   }
 
@@ -60,5 +61,5 @@ export const updateSessionConfig = async (
   }
 
   // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw isApiErrorResponse.error;
 };

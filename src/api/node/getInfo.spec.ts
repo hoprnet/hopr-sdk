@@ -1,10 +1,27 @@
 import nock from 'nock';
+import http from 'http';
+import { ZodError } from 'zod';
 import { sdkApiError } from '../../utils';
 import { getInfo } from './getInfo';
 import { GetInfoResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as import('net').AddressInfo).port;
+  const stop = async () => {
+    server.closeAllConnections();
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
+};
 
 describe('test getInfo', function () {
   beforeEach(function () {
@@ -14,23 +31,13 @@ describe('test getInfo', function () {
     nock(API_ENDPOINT)
       .get(`/api/v4/node/info`)
       .reply(200, {
-        network: 'rotsee',
-        announcedAddress: [],
-        listeningAddress: [],
-        chain: '',
-        hoprToken: '0xD4fdec44DB9D44B8f2b6d529620f9C0C7066A2c1',
-        hoprChannels: '0x4c3bb6470b72A749Db1bB394c024A92AB60a793e',
-        hoprNetworkRegistry: '0x2f3243adC9805F6dd3E01C9E9ED31675A5B16902',
-        hoprNodeSafeRegistry: '0x3E7c4720934ff6A9FE122Cb761f36a11E9b848D9',
-        hoprManagementModule: '0x39b0445b32f5a544eb7917912f5f837bd061be4c',
+        announcedAddress: ['/ip4/10.0.2.100/tcp/19092'],
+        listeningAddress: ['/ip4/10.0.2.100/tcp/19092'],
+        providerUrl: 'https://staging.blokli.hoprnet.link',
+        hoprNetworkName: 'dufour',
         hoprNodeSafe: '0x0361a040acb376dd7e5a4643e5a4c7ae9d20c834',
-        indexerBlock: 35346732,
-        indexerLastLogBlock: 35611556,
-        indexerLastLogChecksum:
-          '0xe780bd95f350e96fe30e98d17560ade3c892f0d3bd75d681f99b0d3c1690517d',
-        provider: 'http://localhost:8545/',
-        isEligible: false,
         connectivityStatus: 'Orange',
+        chainStatus: 'Connected',
         channelClosurePeriod: 5
       } as GetInfoResponseType);
 
@@ -39,8 +46,8 @@ describe('test getInfo', function () {
       apiEndpoint: API_ENDPOINT
     });
 
-    expect(response.hoprToken).toEqual(
-      '0xD4fdec44DB9D44B8f2b6d529620f9C0C7066A2c1'
+    expect(response.hoprNodeSafe).toEqual(
+      '0x0361a040acb376dd7e5a4643e5a4c7ae9d20c834'
     );
   });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
@@ -77,6 +84,57 @@ describe('test getInfo', function () {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
+
+    await expect(
+      getInfo({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('throws ZodError when 200 body fails the response schema', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/node/info`)
+      .reply(200, { hoprNodeSafe: 12345 });
+
+    await expect(
+      getInfo({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(ZodError);
+  });
+  it('throws ZodError when 200 body matches neither response schema nor ApiErrorResponse', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/node/info`)
+      .reply(200, { unexpected: 'shape' });
+
+    await expect(
+      getInfo({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(ZodError);
+  });
+  it('rejects with TIMEOUT when the request exceeds the timeout', async function () {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        getInfo({ apiToken: API_TOKEN, apiEndpoint: url, timeout: 100 })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+  it('rejects when the connection errors', async function () {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).replyWithError('ECONNREFUSED');
+
+    await expect(
+      getInfo({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow();
+  });
+  it('rejects when response body is malformed JSON', async function () {
+    nock(API_ENDPOINT).get(`/api/v4/node/info`).reply(200, 'not-json');
+
+    await expect(
+      getInfo({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow();
+  });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/node/info`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
 
     await expect(
       getInfo({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })

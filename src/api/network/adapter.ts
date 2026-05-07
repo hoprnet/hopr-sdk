@@ -1,8 +1,13 @@
 import {
+  BasePayloadType,
   GetMinimumNetworkProbabilityPayloadType,
+  GetNetworkGraphPayloadType,
   GetTicketPricePayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
+import { getAnnounced } from './getAnnounced';
+import { getConnected } from './getConnected';
+import { getGraph } from './getGraph';
 import { getTicketPrice } from './getTicketPrice';
 import { getMinimumTicketProbability } from './getMinimumTicketProbability';
 
@@ -29,6 +34,37 @@ export class NetworkAdapter {
     this.apiEndpoint = apiEndpoint;
     this.apiToken = apiToken;
     this.timeout = timeout;
+  }
+
+  public async getAnnounced(
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getAnnounced({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload?.timeout ?? this.timeout
+    });
+  }
+
+  public async getConnected(
+    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+  ) {
+    return getConnected({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload?.timeout ?? this.timeout
+    });
+  }
+
+  public async getGraph(
+    payload?: RemoveBasicAuthenticationPayloadType<GetNetworkGraphPayloadType>
+  ) {
+    return getGraph({
+      apiEndpoint: this.apiEndpoint,
+      apiToken: this.apiToken,
+      timeout: payload?.timeout ?? this.timeout,
+      reachableOnly: payload?.reachableOnly
+    });
   }
 
   public async getTicketPrice(

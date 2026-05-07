@@ -1,5 +1,8 @@
-import { ZodError } from 'zod';
-import { ApiErrorResponse, type BasePayloadType } from '../../types';
+import {
+  ApiErrorResponse,
+  type BasePayloadType,
+  GetVersionResponse
+} from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getVersion = async (payload: BasePayloadType): Promise<string> => {
@@ -13,29 +16,32 @@ export const getVersion = async (payload: BasePayloadType): Promise<string> => {
     payload.timeout
   );
 
-  // received expected response
-  if (rawResponse.status === 200) {
-    const jsonResponse = await rawResponse.json();
-    return jsonResponse.version as string;
-  }
-
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
-  }
-
-  // check if response has the structure of an expected api error
-  const jsonResponse = await rawResponse.json();
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
+      statusText: rawResponse.statusText
     });
   }
 
-  // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  const jsonResponse = await rawResponse.json();
+
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = GetVersionResponse.safeParse(jsonResponse);
+  if (parsedRes.success) {
+    return parsedRes.data.version;
+  }
+  throw parsedRes.error;
 };

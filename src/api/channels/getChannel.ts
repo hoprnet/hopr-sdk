@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   GetChannelPayloadType,
@@ -11,9 +10,12 @@ export const getChannel = async (
   payload: GetChannelPayloadType
 ): Promise<GetChannelResponseType> => {
   const url = new URL(
-    `api/v4/channels/${payload.channelId}`,
+    `api/v4/channels/${payload.address}`,
     payload.apiEndpoint
   );
+  if (payload.direction) {
+    url.searchParams.set('direction', payload.direction);
+  }
   const rawResponse = await fetchWithTimeout(
     url,
     {
@@ -24,29 +26,31 @@ export const getChannel = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status >= 499) {
-    throw new Error(rawResponse.statusText);
-  }
-
-  const jsonResponse = await rawResponse.json();
-  const parsedRes = GetChannelResponse.safeParse(jsonResponse);
-
-  // received expected response
-  if (parsedRes.success) {
-    return parsedRes.data;
-  }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
+      statusText: rawResponse.statusText
     });
   }
 
-  // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  const jsonResponse = await rawResponse.json();
+
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = GetChannelResponse.safeParse(jsonResponse);
+  if (parsedRes.success) {
+    return parsedRes.data;
+  }
+  throw parsedRes.error;
 };

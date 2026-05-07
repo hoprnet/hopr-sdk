@@ -5,7 +5,6 @@ import {
   WithdrawResponse
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
-import { ZodError } from 'zod';
 
 /**
  * Withdraw the given currency amount to the specified recipient address.
@@ -16,7 +15,6 @@ import { ZodError } from 'zod';
 export const withdraw = async (
   payload: WithdrawPayloadType
 ): Promise<string> => {
-  // Fetch and check error responses
   const body: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType> = {
     amount: payload.amount,
     address: payload.address
@@ -34,28 +32,30 @@ export const withdraw = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
-  }
-
-  const jsonResponse = await rawResponse.json();
-  const parsedRes = WithdrawResponse.safeParse(jsonResponse);
-
-  // received expected response
-  if (parsedRes.success) {
-    return parsedRes.data.receipt;
-  }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
+      statusText: rawResponse.statusText
     });
   }
 
-  // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  const jsonResponse = await rawResponse.json();
+
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = WithdrawResponse.safeParse(jsonResponse);
+  if (parsedRes.success) {
+    return parsedRes.data.receipt;
+  }
+  throw parsedRes.error;
 };

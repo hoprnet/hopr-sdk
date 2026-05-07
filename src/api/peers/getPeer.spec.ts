@@ -1,10 +1,27 @@
 import nock from 'nock';
+import http from 'http';
+import { ZodError } from 'zod';
 import { sdkApiError } from '../../utils';
 import { getPeer } from './getPeer';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
 const BUDDY_NODE_ADDRESS = '0x3262f13a39efaca789ae58390441c9ed76bc658a';
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as import('net').AddressInfo).port;
+  const stop = async () => {
+    server.closeAllConnections();
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
+};
 
 describe('test getPeer', function () {
   beforeEach(function () {
@@ -14,16 +31,7 @@ describe('test getPeer', function () {
     nock(API_ENDPOINT)
       .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
       .reply(200, {
-        announced: [
-          '/ip4/',
-          '/p2p/',
-          '/p2p/',
-          '/p2p/',
-          '/p2p/',
-          '/p2p/',
-          '/ip4/',
-          '/ip4/'
-        ],
+        announcedSources: [],
         observed: ['/ip4/', '/ip4/', '/ip4/', '/p2p/']
       });
 
@@ -81,6 +89,86 @@ describe('test getPeer', function () {
       status: 'UNKNOWN_FAILURE',
       error: 'Full error message.'
     });
+
+    await expect(
+      getPeer({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: BUDDY_NODE_ADDRESS
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('throws ZodError when 200 body fails the response schema', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
+      .reply(200, { observed: 'not-an-array' });
+
+    await expect(
+      getPeer({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: BUDDY_NODE_ADDRESS
+      })
+    ).rejects.toThrow(ZodError);
+  });
+  it('throws ZodError when 200 body matches neither response schema nor ApiErrorResponse', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
+      .reply(200, { unexpected: 'shape' });
+
+    await expect(
+      getPeer({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: BUDDY_NODE_ADDRESS
+      })
+    ).rejects.toThrow(ZodError);
+  });
+  it('rejects with TIMEOUT when the request exceeds the timeout', async function () {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        getPeer({
+          apiToken: API_TOKEN,
+          apiEndpoint: url,
+          address: BUDDY_NODE_ADDRESS,
+          timeout: 100
+        })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+  it('rejects when the connection errors', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
+      .replyWithError('ECONNREFUSED');
+
+    await expect(
+      getPeer({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: BUDDY_NODE_ADDRESS
+      })
+    ).rejects.toThrow();
+  });
+  it('rejects when response body is malformed JSON', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
+      .reply(200, 'not-json');
+
+    await expect(
+      getPeer({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: BUDDY_NODE_ADDRESS
+      })
+    ).rejects.toThrow();
+  });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
 
     await expect(
       getPeer({

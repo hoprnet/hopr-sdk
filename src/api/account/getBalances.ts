@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   GetBalancesResponseType,
   GetBalancesResponse,
@@ -29,7 +28,7 @@ export const getBalances = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status !== 200) {
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText
@@ -38,10 +37,27 @@ export const getBalances = async (
 
   const jsonResponse = await rawResponse.json();
 
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  // strip currency unit suffixes from balance fields when present
   const currencies = Object.keys(jsonResponse);
-  jsonResponse.token = jsonResponse.safeHoprAllowance.includes(' ')
-    ? jsonResponse.safeHoprAllowance.split(' ')[1]
-    : null;
+  jsonResponse.token =
+    jsonResponse?.safeHoprAllowance &&
+    jsonResponse.safeHoprAllowance.includes(' ')
+      ? jsonResponse.safeHoprAllowance.split(' ')[1]
+      : null;
+
   for (let i = 0; i < currencies.length; i++) {
     const token = currencies[i] as string;
     jsonResponse[token] = jsonResponse[`${currencies[i]}`].includes(' ')
@@ -50,23 +66,8 @@ export const getBalances = async (
   }
 
   const parsedRes = GetBalancesResponse.safeParse(jsonResponse);
-
-  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
   }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
-  }
-
-  // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw parsedRes.error;
 };

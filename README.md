@@ -190,7 +190,7 @@ async function getResource(payload: ResourcePayloadType) {
     // if we get to this point then we could not parse the response
     // and it is not unexpected error
     // we probably need to update the zod type
-    throw new ZodError(parsedRes.error.issues);
+    throw parsedRes.error;
 }
 ```
 

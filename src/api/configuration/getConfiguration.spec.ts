@@ -1,10 +1,26 @@
 import nock from 'nock';
-import { sdkApiError } from '../../utils';
+import http from 'http';
 import { getConfiguration } from './getConfiguration';
+import { sdkApiError } from '../../utils';
 import { GetConfigurationResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as import('net').AddressInfo).port;
+  const stop = async () => {
+    server.closeAllConnections();
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
+};
 
 describe('getConfiguration', () => {
   beforeEach(() => {
@@ -51,22 +67,7 @@ describe('getConfiguration', () => {
                 max_closure_overdue: 3600
               }
             }
-          ],
-          parsedStrategies: {
-            Aggregating: {
-              aggregate_on_channel_close: true,
-              aggregation_threshold: 3,
-              unrealized_balance_ratio: 0.95
-            },
-            AutoRedeeming: {
-              on_close_redeem_single_tickets_value_min:
-                '2000000000000000000 HOPR',
-              redeem_only_aggregated: true
-            },
-            ClosureFinalizer: {
-              max_closure_overdue: 3600
-            }
-          }
+          ]
         },
         heartbeat: {
           variance: 2,
@@ -318,23 +319,7 @@ describe('getConfiguration', () => {
                 redeem_only_aggregated: true
               }
             }
-          ],
-          parsedStrategies: {
-            Aggregating: {
-              aggregate_on_channel_close: true,
-              aggregation_threshold: 100,
-              unrealized_balance_ratio: 0.9
-            },
-            AutoFunding: {
-              funding_amount: '10000000000000000000 HOPR',
-              min_stake_threshold: '1000000000000000000 HOPR'
-            },
-            AutoRedeeming: {
-              on_close_redeem_single_tickets_value_min:
-                '2000000000000000000 HOPR',
-              redeem_only_aggregated: true
-            }
-          }
+          ]
         },
         heartbeat: {
           variance: 2,
@@ -544,4 +529,62 @@ describe('getConfiguration', () => {
 
     expect(result).toEqual(expectedResponse);
   });
+
+  it('throws sdkApiError when the api responds with a 401', async function () {
+    const errorBody = {
+      status: 'UNAUTHORIZED',
+      error: 'authentication failed'
+    };
+    nock(API_ENDPOINT).get('/api/v4/node/configuration').reply(401, errorBody);
+
+    // Under the canonical pattern, any non-2xx response is the error path,
+    // so the ApiErrorResponse parse runs first and throws sdkApiError even
+    // though GetConfigurationResponse is z.any().
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('rejects with TIMEOUT when the request exceeds the timeout', async function () {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        getConfiguration({
+          apiEndpoint: url,
+          apiToken: API_TOKEN,
+          timeout: 100
+        })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+  it('rejects when the connection errors', async function () {
+    nock(API_ENDPOINT)
+      .get('/api/v4/node/configuration')
+      .replyWithError('ECONNREFUSED');
+
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow();
+  });
+  it('rejects when 200 body is malformed JSON', async function () {
+    nock(API_ENDPOINT).get('/api/v4/node/configuration').reply(200, 'not-json');
+
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow();
+  });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get('/api/v4/node/configuration')
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(sdkApiError);
+  });
+  // Note: GetConfigurationResponse is `z.any()` (see src/types/configuration.ts).
+  // Under the canonical error-handling pattern, the !rawResponse.ok branch
+  // runs before the success-schema parse, so non-2xx responses still surface
+  // as sdkApiError (or ZodError when the body fails ApiErrorResponse).
 });

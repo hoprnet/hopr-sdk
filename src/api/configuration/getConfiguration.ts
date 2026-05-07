@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   BasePayloadType,
@@ -30,67 +29,31 @@ export const getConfiguration = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status !== 200) {
-    throw new Error(rawResponse.statusText);
-  }
-
-  let jsonResponse: any;
-
-  try {
-    jsonResponse = await rawResponse.json();
-  } catch (e) {
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: rawResponse.statusText,
-      description: 'Failed parsing response'
+      statusText: rawResponse.statusText
     });
   }
 
-  let parsedStrategies: {
-    [key: string]: {
-      [key: string]: string | number | boolean;
-    };
-  } = {};
+  const jsonResponse = await rawResponse.json();
 
-  /*
-    Exapmple of jsonResponse.hoprd.strategies:
-    "strategies":[
-        {
-          "Aggregating":{
-              "aggregation_threshold":3,
-              "unrealized_balance_ratio":0.95,
-              "aggregate_on_channel_close":true
-          },
-        },
-        {
-          "AutoRedeeming":{
-              "redeem_only_aggregated":true,
-              "on_close_redeem_single_tickets_value_min":"2000000000000000000 HOPR"
-          }
-        },
-        {
-          "ClosureFinalizer":{
-              "max_closure_overdue":3600
-          }
-        }
-    ]
-  */
-
-  jsonResponse.hopr.strategy.strategies.forEach(
-    (strategyObj: {
-      [key: string]: { [key: string]: string | number | boolean };
-    }) => {
-      try {
-        const strategyName = Object.keys(strategyObj)[0];
-        if (typeof strategyName !== 'string') return;
-        let tmp = strategyObj[strategyName];
-        if (!tmp) return;
-        parsedStrategies[strategyName] = tmp;
-      } catch (e) {}
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
     }
-  );
+    throw isApiErrorResponse.error;
+  }
 
-  jsonResponse.hopr.strategy.parsedStrategies = parsedStrategies;
-
-  return jsonResponse;
+  const parsedRes = GetConfigurationResponse.safeParse(jsonResponse);
+  if (parsedRes.success) {
+    return parsedRes.data;
+  }
+  throw parsedRes.error;
 };

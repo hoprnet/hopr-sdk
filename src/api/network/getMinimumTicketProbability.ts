@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   GetMinimumNetworkProbabilityPayloadType,
@@ -10,9 +9,9 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const getMinimumTicketProbability = async (
   payload: GetMinimumNetworkProbabilityPayloadType
 ): Promise<GetMinimumNetworkProbabilityResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL(`api/v4/network/probability`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}api/v4/network/probability`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -22,29 +21,31 @@ export const getMinimumTicketProbability = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
-  }
-
-  const jsonResponse = await rawResponse.json();
-  const parsedRes =
-    GetMinimumNetworkProbabilityResponse.safeParse(jsonResponse);
-
-  // received expected response
-  if (parsedRes.success) {
-    return parsedRes.data;
-  }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
+      statusText: rawResponse.statusText
     });
   }
 
-  // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  const jsonResponse = await rawResponse.json();
+
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes =
+    GetMinimumNetworkProbabilityResponse.safeParse(jsonResponse);
+  if (parsedRes.success) {
+    return parsedRes.data;
+  }
+  throw parsedRes.error;
 };

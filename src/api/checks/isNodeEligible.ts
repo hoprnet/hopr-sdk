@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   IsNodeHealthyPayloadType,
@@ -14,9 +13,9 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 export const isNodeEligible = async (
   payload: IsNodeHealthyPayloadType
 ): Promise<IsNodeHealthyResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL('eligiblez', payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}eligiblez`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -26,7 +25,10 @@ export const isNodeEligible = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   // received expected response
@@ -49,5 +51,5 @@ export const isNodeEligible = async (
   }
 
   // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw isApiErrorResponse.error;
 };

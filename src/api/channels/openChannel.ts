@@ -6,7 +6,6 @@ import {
   ApiErrorResponse
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
-import { ZodError } from 'zod';
 
 /**
  * Opens a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
@@ -35,35 +34,32 @@ export const openChannel = async (
     payload.timeout
   );
 
-  let jsonResponse: any;
-
-  try {
-    jsonResponse = await rawResponse.json();
-  } catch (e) {
+  // received unexpected error from server
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText
     });
   }
 
-  const parsedRes = OpenChannelResponse.safeParse(jsonResponse);
+  const jsonResponse = await rawResponse.json();
 
-  // received expected response
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = OpenChannelResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
-  }
-
-  // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw parsedRes.error;
 };

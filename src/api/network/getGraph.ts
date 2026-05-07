@@ -1,16 +1,13 @@
-import { ZodError } from 'zod';
-import {
-  ApiErrorResponse,
-  type BasePayloadType,
-  GetVersionResponse,
-  GetVersionResponseType
-} from '../../types';
+import { ApiErrorResponse, GetNetworkGraphPayloadType } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getVersions = async (
-  payload: BasePayloadType
-): Promise<GetVersionResponseType> => {
-  const url = new URL(`api/v4/node/version`, payload.apiEndpoint);
+export const getGraph = async (
+  payload: GetNetworkGraphPayloadType
+): Promise<string> => {
+  const url = new URL(`api/v4/network/graph`, payload.apiEndpoint);
+  if (payload.reachableOnly !== undefined) {
+    url.searchParams.set('reachableOnly', String(payload.reachableOnly));
+  }
   const rawResponse = await fetchWithTimeout(
     url,
     {
@@ -20,20 +17,17 @@ export const getVersions = async (
     payload.timeout
   );
 
-  // received expected response
-  if (rawResponse.status === 200) {
-    const jsonResponse = await rawResponse.json();
-    const parsedRes = GetVersionResponse.safeParse(jsonResponse);
-
-    // received expected response
-    if (parsedRes.success) {
-      return parsedRes.data;
-    }
-  }
-
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
+  }
+
+  // received expected response (text/plain body)
+  if (rawResponse.ok) {
+    return rawResponse.text();
   }
 
   // check if response has the structure of an expected api error
@@ -49,5 +43,5 @@ export const getVersions = async (
   }
 
   // we could not parse the error and it is not unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw isApiErrorResponse.error;
 };

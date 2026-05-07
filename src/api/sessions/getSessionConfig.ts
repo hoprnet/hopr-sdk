@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   GetSessionConfigCallPayloadType,
@@ -38,26 +37,25 @@ export const getSessionConfig = async (
 
   const jsonResponse = await rawResponse.json();
 
-  // parsedRes and error {} from HOPRd have the same type,
-  // we can only rely on rawResponse.ok to know if its a success
-  if (rawResponse.ok) {
-    const parsedRes = GetSessionConfigResponse.safeParse(jsonResponse);
-    if (parsedRes.success) {
-      return parsedRes.data;
+  // GetSessionConfigResponse has all-optional fields, so a 4xx error envelope
+  // would silently parse as `{}` if we ran the schema check first. Treat any
+  // non-2xx response as the error path before attempting the success parse.
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
     }
-    throw new ZodError(parsedRes.error.issues);
+    throw isApiErrorResponse.error;
   }
 
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: rawResponse.statusText,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
+  const parsedRes = GetSessionConfigResponse.safeParse(jsonResponse);
+  if (parsedRes.success) {
+    return parsedRes.data;
   }
 
-  // we could not parse the response and it is unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw parsedRes.error;
 };

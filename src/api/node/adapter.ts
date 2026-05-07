@@ -1,16 +1,11 @@
 import {
   BasePayloadType,
-  GetGraphPayloadType,
-  GetPeersPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
 import { createLogger } from '../../utils';
-import { getEntryNodes } from './getEntryNodes';
-import { getGraph } from './getGraph';
 import { getInfo } from './getInfo';
-import { getPeers } from './getPeers';
+import { getStatus } from './getStatus';
 import { getVersion } from './getVersion';
-import { getVersions } from './getVersions';
 
 const log = createLogger('node');
 
@@ -39,29 +34,6 @@ export class NodeAdapter {
     this.timeout = timeout;
   }
 
-  public async getEntryNodes(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
-  ) {
-    return getEntryNodes({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
-    });
-  }
-
-  public async getGraph(
-    payload?: RemoveBasicAuthenticationPayloadType<GetGraphPayloadType>
-  ) {
-    return getGraph({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout,
-      ignoreDisconnectedComponents: payload?.ignoreDisconnectedComponents,
-      ignoreNonOpenedChannels: payload?.ignoreNonOpenedChannels,
-      rawGraph: payload?.rawGraph
-    });
-  }
-
   public async getInfo(
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
@@ -69,17 +41,6 @@ export class NodeAdapter {
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout
-    });
-  }
-
-  public async getPeers(
-    payload?: RemoveBasicAuthenticationPayloadType<GetPeersPayloadType>
-  ) {
-    return getPeers({
-      apiEndpoint: this.apiEndpoint,
-      apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout,
-      quality: payload?.quality
     });
   }
 
@@ -93,10 +54,10 @@ export class NodeAdapter {
     });
   }
 
-  public async getVersions(
+  public async getStatus(
     payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
   ) {
-    return getVersions({
+    return getStatus({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
       timeout: payload?.timeout ?? this.timeout

@@ -1,14 +1,15 @@
-import { ApiErrorResponse, type BasePayloadType } from '../../types';
 import {
-  GetTicketStatisticsResponse,
-  GetTicketStatisticsResponseType
-} from '../../types/tickets';
+  ApiErrorResponse,
+  BasePayloadType,
+  GetNodeStatusResponse,
+  GetNodeStatusResponseType
+} from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
-export const getTicketStatistics = async (
+export const getStatus = async (
   payload: BasePayloadType
-): Promise<GetTicketStatisticsResponseType> => {
-  const url = new URL(`api/v4/tickets/statistics`, payload.apiEndpoint);
+): Promise<GetNodeStatusResponseType> => {
+  const url = new URL(`api/v4/node/status`, payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
     url,
     {
@@ -41,19 +42,9 @@ export const getTicketStatistics = async (
     throw isApiErrorResponse.error;
   }
 
-  const parsedRes = GetTicketStatisticsResponse.safeParse(jsonResponse);
+  const parsedRes = GetNodeStatusResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
-    const strip = (v: string) =>
-      v.includes(' ') ? (v.split(' ')[0] as string) : v;
-    return {
-      neglectedValue: strip(parsedRes.data.neglectedValue),
-      redeemedValue: parsedRes.data.redeemedValue
-        ? strip(parsedRes.data.redeemedValue)
-        : undefined,
-      rejectedValue: strip(parsedRes.data.rejectedValue),
-      unredeemedValue: strip(parsedRes.data.unredeemedValue),
-      winningCount: parsedRes.data.winningCount
-    };
+    return parsedRes.data;
   }
   throw parsedRes.error;
 };

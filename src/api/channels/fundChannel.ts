@@ -1,9 +1,7 @@
-import { ZodError } from 'zod';
 import {
   FundChannelsResponse,
   type FundChannelsPayloadType,
   type FundChannelsResponseType,
-  type RemoveBasicAuthenticationPayloadType,
   ApiErrorResponse
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
@@ -19,7 +17,7 @@ export const fundChannel = async (
   };
 
   const url = new URL(
-    `api/v4/channels/${payload.channelId}/fund`,
+    `api/v4/channels/${payload.address}/fund`,
     payload.apiEndpoint
   );
   const rawResponse = await fetchWithTimeout(
@@ -32,40 +30,32 @@ export const fundChannel = async (
     payload.timeout
   );
 
-  // received expected response
-  if (rawResponse.status === 200) {
-    return await rawResponse.text();
-  }
-
-  let jsonResponse: any;
-
-  try {
-    jsonResponse = await rawResponse.json();
-  } catch (e) {
+  // received unexpected error from server
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: rawResponse.statusText,
-      description: 'Failed parsing response'
+      statusText: rawResponse.statusText
     });
   }
-  const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
 
-  // received expected response
+  const jsonResponse = await rawResponse.json();
+
+  // any non-2xx response is an error path
+  if (!rawResponse.ok) {
+    const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+    if (isApiErrorResponse.success) {
+      throw new sdkApiError({
+        status: rawResponse.status,
+        statusText: isApiErrorResponse.data.status,
+        hoprdErrorPayload: isApiErrorResponse.data
+      });
+    }
+    throw isApiErrorResponse.error;
+  }
+
+  const parsedRes = FundChannelsResponse.safeParse(jsonResponse);
   if (parsedRes.success) {
     return parsedRes.data;
   }
-
-  // check if response has the structure of an expected api error
-  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
-
-  if (isApiErrorResponse.success) {
-    throw new sdkApiError({
-      status: rawResponse.status,
-      statusText: isApiErrorResponse.data.status,
-      hoprdErrorPayload: isApiErrorResponse.data
-    });
-  }
-
-  // we could not parse the response and it is unexpected
-  throw new ZodError(parsedRes.error.issues);
+  throw parsedRes.error;
 };
