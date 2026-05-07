@@ -1,10 +1,25 @@
 import nock from 'nock';
+import http from 'http';
 import { sdkApiError } from '../../utils';
 import { getTicketStatistics } from './getTicketStatistics';
 import { ZodError } from 'zod';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as any).port;
+  const stop = async () => {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
+};
 
 describe('test getTicketStatistics', function () {
   beforeEach(function () {
@@ -73,5 +88,53 @@ describe('test getTicketStatistics', function () {
     await expect(
       getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(ZodError);
+  });
+  it('throws ZodError when 200 body fails the response schema', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/tickets/statistics`)
+      .reply(200, { winningCount: 'not-a-number' });
+
+    await expect(
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(ZodError);
+  });
+  it('throws ZodError when 200 body matches neither response schema nor ApiErrorResponse', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/tickets/statistics`)
+      .reply(200, { unexpected: 'shape' });
+
+    await expect(
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(ZodError);
+  });
+  it('rejects with TIMEOUT when the request exceeds the timeout', async function () {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        getTicketStatistics({
+          apiToken: API_TOKEN,
+          apiEndpoint: url,
+          timeout: 100
+        })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+  it('rejects when the connection errors', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/tickets/statistics`)
+      .replyWithError('ECONNREFUSED');
+
+    await expect(
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow();
+  });
+  it('rejects when response body is malformed JSON', async function () {
+    nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(200, 'not-json');
+
+    await expect(
+      getTicketStatistics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow();
   });
 });

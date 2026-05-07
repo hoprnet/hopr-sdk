@@ -1,4 +1,6 @@
 import nock from 'nock';
+import http from 'http';
+import { ZodError } from 'zod';
 import { openSession } from './openSession';
 import { sdkApiError } from '../../utils';
 import {
@@ -12,6 +14,20 @@ const API_TOKEN = 'S3CR3T-T0K3N';
 const API_TOKEN_INVALID = 'my-invalid-api-token';
 const BUDDY_NODE_ADDRESS = '0x3262f13a39efaca789ae58390441c9ed76bc658a';
 const PROTOCOL = 'udp';
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as any).port;
+  const stop = async () => {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
+};
 
 const body: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> = {
   destination: BUDDY_NODE_ADDRESS,
@@ -64,12 +80,12 @@ describe('openSession function', () => {
     });
     expect(result).toEqual(resp);
   });
-  test('open using IntermediatePath - should return 200 if successful', async function () {
+  test('open using single hop - should return 200 if successful', async function () {
     const resp: OpenSessionResponseType = {
       target: '127.0.0.1:8081',
       destination: '0xbdb61dd58780f9118661dda6568a8bc57128bd10',
       forwardPath: {
-        IntermediatePath: ['0xe56b036600d23af206f9ba358432f01780934039']
+        Hops: 1
       },
       returnPath: {
         Hops: 0
@@ -187,5 +203,77 @@ describe('openSession function', () => {
         ...body
       })
     ).rejects.toThrow(sdkApiError);
+  });
+  test('throws ZodError when 200 body fails the response schema', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .reply(200, { activeClients: 'not-an-array' });
+
+    await expect(
+      openSession({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        protocol: PROTOCOL,
+        ...body
+      })
+    ).rejects.toThrow(ZodError);
+  });
+  test('throws ZodError when 200 body matches neither response schema nor ApiErrorResponse', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .reply(200, { unexpected: 'shape' });
+
+    await expect(
+      openSession({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        protocol: PROTOCOL,
+        ...body
+      })
+    ).rejects.toThrow(ZodError);
+  });
+  test('rejects with TIMEOUT when the request exceeds the timeout', async function () {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        openSession({
+          apiToken: API_TOKEN,
+          apiEndpoint: url,
+          protocol: PROTOCOL,
+          ...body,
+          timeout: 100
+        })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+  test('rejects when the connection errors', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .replyWithError('ECONNREFUSED');
+
+    await expect(
+      openSession({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        protocol: PROTOCOL,
+        ...body
+      })
+    ).rejects.toThrow();
+  });
+  test('rejects when response body is malformed JSON', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .reply(200, 'not-json');
+
+    await expect(
+      openSession({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        protocol: PROTOCOL,
+        ...body
+      })
+    ).rejects.toThrow();
   });
 });

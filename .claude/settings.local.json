@@ -7,7 +7,24 @@
       "PowerShell(ls -Path \"c:\\\\dev\\\\hoprnet\\\\hopr-sdk\" | Format-Table -Property Name, @{Name=\"Type\"; Expression={if\\($_.PSIsContainer\\){\"Dir\"}else{\"File\"}}})",
       "PowerShell(tree -L 3 \"c:\\\\dev\\\\hoprnet\\\\hopr-sdk\\\\src\" -DirOnly 2>$null)",
       "Bash(npx tsc *)",
-      "PowerShell(cd c:\\\\dev\\\\hoprnet\\\\hopr-sdk; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"\\\\.spec\\\\.ts\" } | Select-Object -First 60)"
+      "PowerShell(cd c:\\\\dev\\\\hoprnet\\\\hopr-sdk; npx tsc --noEmit 2>&1 | Where-Object { $_ -notmatch \"\\\\.spec\\\\.ts\" } | Select-Object -First 60)",
+      "Bash(Get-Content openapi-4.0.2-rc.1+pr.8091.json)",
+      "Bash(Select-String '\"/\\(.*?\\)\"' -AllMatches)",
+      "Bash(Select-Object -ExpandProperty Matches)",
+      "Bash(Select-Object -ExpandProperty Value)",
+      "Bash(Sort-Object -Unique)",
+      "PowerShell($json = Get-Content 'c:\\\\dev\\\\hoprnet\\\\hopr-sdk\\\\openapi-4.0.2-rc.1+pr.8091.json' -Raw | ConvertFrom-Json; $json.paths | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Sort-Object)",
+      "Bash(xargs -I {} sh -c 'echo \"=== {} ===\" && head -30 {}')",
+      "Bash(node -e ' *)",
+      "Bash(rm -f c:/dev/hoprnet/hopr-sdk/src/api/account/getHoprBalance.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/account/getNativeAddress.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/account/getNativeBalance.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/tickets/resetTicketStatistics.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/node/getPeers.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/node/getEntryNodes.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/node/getVersions.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/channels/redeemChannelTickets.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/channels/getChannelTickets.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/tokens/createToken.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/tokens/deleteToken.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/tokens/getToken.spec.ts c:/dev/hoprnet/hopr-sdk/src/api/messages/websocket.spec.ts)",
+      "Bash(npx jest *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(node -e \"const {z} = require\\('zod'\\); const s = z.object\\({status: z.string\\(\\), error: z.string\\(\\).optional\\(\\)}\\); console.log\\(JSON.stringify\\(s.safeParse\\({unexpected:'shape'}\\), null, 2\\)\\);\")",
+      "Bash(node -e \"const {ZodError, z} = require\\('zod'\\); const s = z.object\\({status: z.string\\(\\)}\\); const r = s.safeParse\\({unexpected:'shape'}\\); try { throw new ZodError\\(r.error.issues\\); } catch \\(e\\) { console.log\\('caught', e.constructor.name, e instanceof ZodError\\); }\")",
+      "Bash(echo \"EXIT=$?\")"
+    ],
+    "additionalDirectories": [
+      "c:\\dev\\hoprnet\\hopr-sdk\\src\\api\\account"
     ]
   }
 }

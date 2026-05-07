@@ -6,9 +6,9 @@ export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
   const headersForMetrics = getHeaders(payload.apiToken);
   headersForMetrics.set('accept', 'text/plain');
 
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL('metrics', payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}metrics`,
+    url,
     {
       method: 'GET',
       headers: headersForMetrics
@@ -16,14 +16,17 @@ export const getMetrics = async (payload: BasePayloadType): Promise<string> => {
     payload.timeout
   );
 
-  // received expected response
-  if (rawResponse.status === 200) {
-    return rawResponse.text();
-  }
-
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
+  }
+
+  // received expected response (text/plain)
+  if (rawResponse.status === 200) {
+    return rawResponse.text();
   }
 
   // check if response has the structure of an expected api error

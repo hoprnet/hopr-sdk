@@ -1,4 +1,6 @@
 import nock from 'nock';
+import http from 'http';
+import { ZodError } from 'zod';
 import { updateSessionConfig } from './updateSessionConfig';
 import { sdkApiError } from '../../utils';
 import {
@@ -18,6 +20,20 @@ const SESSION_ID = 'abc:123';
 const body: GetSessionConfigPayloadResponseType = {
   maxSurbUpstream: '2 Mbps',
   responseBuffer: '2 MB'
+};
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as any).port;
+  const stop = async () => {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
 };
 
 describe('updateSessionConfig function', () => {
@@ -110,6 +126,44 @@ describe('updateSessionConfig function', () => {
     ).rejects.toThrow(sdkApiError);
   });
 
+  test('should return 404 if session is not found', async function () {
+    const expectedResponse = {
+      status: 'SESSION_NOT_FOUND',
+      error: 'Session not found.'
+    };
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .reply(404, expectedResponse);
+
+    await expect(
+      updateSessionConfig({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        sessionId: SESSION_ID,
+        ...body
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+
+  test('should return 406 if the configuration is not acceptable', async function () {
+    const expectedResponse = {
+      status: 'NOT_ACCEPTABLE',
+      error: 'Configuration not acceptable.'
+    };
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .reply(406, expectedResponse);
+
+    await expect(
+      updateSessionConfig({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        sessionId: SESSION_ID,
+        ...body
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+
   test('should return 422 if unknown failure', async function () {
     const expectedResponse = {
       status: 'UNKNOWN_FAILURE',
@@ -127,5 +181,81 @@ describe('updateSessionConfig function', () => {
         ...body
       })
     ).rejects.toThrow(sdkApiError);
+  });
+  test('throws ZodError when error-path body matches neither response schema nor ApiErrorResponse', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .reply(400, { unexpected: 'shape' });
+
+    let caught: any;
+    try {
+      await updateSessionConfig({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        sessionId: SESSION_ID,
+        ...body
+      });
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeDefined();
+    expect(caught?.name).toBe('ZodError');
+  });
+  test('rejects with TIMEOUT when the request exceeds the timeout', async function () {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        updateSessionConfig({
+          apiToken: API_TOKEN,
+          apiEndpoint: url,
+          sessionId: SESSION_ID,
+          ...body,
+          timeout: 100
+        })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+  test('rejects when the connection errors', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .replyWithError('ECONNREFUSED');
+
+    await expect(
+      updateSessionConfig({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        sessionId: SESSION_ID,
+        ...body
+      })
+    ).rejects.toThrow();
+  });
+  test('rejects when error-path body is malformed JSON', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .reply(400, 'not-json');
+
+    await expect(
+      updateSessionConfig({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        sessionId: SESSION_ID,
+        ...body
+      })
+    ).rejects.toThrow();
+  });
+  test('does not parse a body on 204 success', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .reply(204);
+
+    const result = await updateSessionConfig({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      sessionId: SESSION_ID,
+      ...body
+    });
+    expect(result).toBe(true);
   });
 });

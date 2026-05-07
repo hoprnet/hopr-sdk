@@ -1,10 +1,24 @@
 import nock from 'nock';
-import { sdkApiError } from '../../utils';
+import http from 'http';
 import { getConfiguration } from './getConfiguration';
 import { GetConfigurationResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as any).port;
+  const stop = async () => {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
+};
 
 describe('getConfiguration', () => {
   beforeEach(() => {
@@ -512,5 +526,55 @@ describe('getConfiguration', () => {
     });
 
     expect(result).toEqual(expectedResponse);
+  });
+
+  it('returns the parsed body when the api responds with a 401 (schema is z.any())', async function () {
+    const errorBody = {
+      status: 'UNAUTHORIZED',
+      error: 'authentication failed'
+    };
+    nock(API_ENDPOINT)
+      .get('/api/v4/node/configuration')
+      .reply(401, errorBody);
+
+    // GetConfigurationResponse is z.any(), so the canonical safeParse-first
+    // pattern returns whatever JSON was received, even on a 4xx response.
+    const result = await getConfiguration({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN
+    });
+    expect(result).toEqual(errorBody);
+  });
+  it('rejects with TIMEOUT when the request exceeds the timeout', async function () {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        getConfiguration({
+          apiEndpoint: url,
+          apiToken: API_TOKEN,
+          timeout: 100
+        })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+  it('rejects when the connection errors', async function () {
+    nock(API_ENDPOINT)
+      .get('/api/v4/node/configuration')
+      .replyWithError('ECONNREFUSED');
+
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow();
+  });
+  it('rejects when 200 body is malformed JSON', async function () {
+    nock(API_ENDPOINT)
+      .get('/api/v4/node/configuration')
+      .reply(200, 'not-json');
+
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow();
   });
 });

@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   GetBalancesResponseType,
   GetBalancesResponse,
@@ -29,7 +28,7 @@ export const getBalances = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status !== 200) {
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText
@@ -38,6 +37,7 @@ export const getBalances = async (
 
   const jsonResponse = await rawResponse.json();
 
+  // strip currency unit suffixes from balance fields when present
   const currencies = Object.keys(jsonResponse);
   jsonResponse.token =
     jsonResponse?.safeHoprAllowance &&

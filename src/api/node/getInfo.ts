@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   BasePayloadType,
@@ -22,7 +21,10 @@ export const getInfo = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   const jsonResponse = await rawResponse.json();

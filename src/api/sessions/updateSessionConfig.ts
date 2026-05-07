@@ -38,10 +38,13 @@ export const updateSessionConfig = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
-  // received expected response
+  // received expected response (204 No Content)
   if (rawResponse.status === 204 || rawResponse.status === 200) {
     return true;
   }

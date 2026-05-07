@@ -33,16 +33,15 @@ export const closeChannel = async (
     payload.timeout
   );
 
-  let jsonResponse: any;
-
-  try {
-    jsonResponse = await rawResponse.json();
-  } catch (e) {
+  // received unexpected error from server
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText
     });
   }
+
+  const jsonResponse = await rawResponse.json();
   const parsedRes = CloseChannelResponse.safeParse(jsonResponse);
 
   // received expected response

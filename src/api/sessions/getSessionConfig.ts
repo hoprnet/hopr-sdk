@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   GetSessionConfigCallPayloadType,
@@ -37,27 +36,24 @@ export const getSessionConfig = async (
   }
 
   const jsonResponse = await rawResponse.json();
+  const parsedRes = GetSessionConfigResponse.safeParse(jsonResponse);
 
-  // parsedRes and error {} from HOPRd have the same type,
-  // we can only rely on rawResponse.ok to know if its a success
-  if (rawResponse.ok) {
-    const parsedRes = GetSessionConfigResponse.safeParse(jsonResponse);
-    if (parsedRes.success) {
-      return parsedRes.data;
-    }
-    throw parsedRes.error;
+  // received expected response
+  if (parsedRes.success) {
+    return parsedRes.data;
   }
 
+  // check if response has the structure of an expected api error
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: rawResponse.statusText,
+      statusText: isApiErrorResponse.data.status,
       hoprdErrorPayload: isApiErrorResponse.data
     });
   }
 
   // we could not parse the response and it is unexpected
-  throw new ZodError(isApiErrorResponse.error.issues);
+  throw parsedRes.error;
 };

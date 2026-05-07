@@ -26,8 +26,11 @@ export const getChannel = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status >= 499) {
-    throw new Error(rawResponse.statusText);
+  if (rawResponse.status >= 500) {
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   const jsonResponse = await rawResponse.json();

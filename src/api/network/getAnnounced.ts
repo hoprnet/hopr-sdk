@@ -19,17 +19,23 @@ export const getAnnounced = async (
     payload.timeout
   );
 
+  // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   const jsonResponse = await rawResponse.json();
   const parsedRes = GetAnnouncedResponse.safeParse(jsonResponse);
 
+  // received expected response
   if (parsedRes.success) {
     return parsedRes.data;
   }
 
+  // check if response has the structure of an expected api error
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
   if (isApiErrorResponse.success) {
@@ -40,5 +46,6 @@ export const getAnnounced = async (
     });
   }
 
+  // we could not parse the response and it is unexpected
   throw parsedRes.error;
 };

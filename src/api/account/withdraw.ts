@@ -5,7 +5,6 @@ import {
   WithdrawResponse
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
-import { ZodError } from 'zod';
 
 /**
  * Withdraw the given currency amount to the specified recipient address.
@@ -16,7 +15,6 @@ import { ZodError } from 'zod';
 export const withdraw = async (
   payload: WithdrawPayloadType
 ): Promise<string> => {
-  // Fetch and check error responses
   const body: RemoveBasicAuthenticationPayloadType<WithdrawPayloadType> = {
     amount: payload.amount,
     address: payload.address
@@ -34,7 +32,10 @@ export const withdraw = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   const jsonResponse = await rawResponse.json();

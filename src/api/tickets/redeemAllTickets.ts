@@ -10,7 +10,6 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
  *
  * This operation may take more than 5 minutes to complete as it involves on-chain operations.
  * @returns A Promise that resolves to a boolean indicating the success of the operation.
- * True if the operation is successful, false otherwise.
  *
  * @throws APIError - If the operation fails. The error object contains the status code and the error message.
  */
@@ -32,14 +31,17 @@ export const redeemAllTickets = async (
     payload.timeout
   );
 
-  // received expected response
-  if (rawResponse.status === 202 || rawResponse.status === 204) {
-    return true;
-  }
-
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
+  }
+
+  // received expected response (202 Accepted or 204 No Content)
+  if (rawResponse.status === 202 || rawResponse.status === 204) {
+    return true;
   }
 
   // check if response has the structure of an expected api error

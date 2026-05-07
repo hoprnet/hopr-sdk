@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   BasePayloadType,
@@ -30,21 +29,32 @@ export const getConfiguration = async (
   );
 
   // received unexpected error from server
-  if (rawResponse.status !== 200) {
-    throw new Error(rawResponse.statusText);
-  }
-
-  let jsonResponse: any;
-
-  try {
-    jsonResponse = await rawResponse.json();
-  } catch (e) {
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
-      statusText: rawResponse.statusText,
-      description: 'Failed parsing response'
+      statusText: rawResponse.statusText
     });
   }
 
-  return jsonResponse;
+  const jsonResponse = await rawResponse.json();
+  const parsedRes = GetConfigurationResponse.safeParse(jsonResponse);
+
+  // received expected response
+  if (parsedRes.success) {
+    return parsedRes.data;
+  }
+
+  // check if response has the structure of an expected api error
+  const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+
+  if (isApiErrorResponse.success) {
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: isApiErrorResponse.data.status,
+      hoprdErrorPayload: isApiErrorResponse.data
+    });
+  }
+
+  // we could not parse the response and it is unexpected
+  throw parsedRes.error;
 };

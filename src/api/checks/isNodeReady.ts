@@ -2,22 +2,21 @@ import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   IsNodeHealthyPayloadType,
-  IsNodeHealthyResponse,
   IsNodeHealthyResponseType
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 /**
- * Check whether the node is healthy.
- * @returns A Promise that resolves to a boolean stating that the node is healthy or not.
+ * Check whether the node is ready.
+ * @returns A Promise that resolves to a boolean stating that the node is ready or not.
  * @throws An error that occurred while processing the request.
  */
 export const isNodeReady = async (
   payload: IsNodeHealthyPayloadType
 ): Promise<IsNodeHealthyResponseType> => {
-  const apiEndpointParsed = new URL(payload.apiEndpoint).href;
+  const url = new URL('readyz', payload.apiEndpoint);
   const rawResponse = await fetchWithTimeout(
-    `${apiEndpointParsed}readyz`,
+    url,
     {
       method: 'GET',
       headers: getHeaders(payload.apiToken)
@@ -27,7 +26,10 @@ export const isNodeReady = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   // received expected response

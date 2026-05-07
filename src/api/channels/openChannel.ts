@@ -6,7 +6,6 @@ import {
   ApiErrorResponse
 } from '../../types';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
-import { ZodError } from 'zod';
 
 /**
  * Opens a HOPR channel given a payload that specifies the API endpoint of the HOPR node, the peerId, and the amount of HOPR tokens to be staked in the channel.
@@ -35,17 +34,15 @@ export const openChannel = async (
     payload.timeout
   );
 
-  let jsonResponse: any;
-
-  try {
-    jsonResponse = await rawResponse.json();
-  } catch (e) {
+  // received unexpected error from server
+  if (rawResponse.status >= 500) {
     throw new sdkApiError({
       status: rawResponse.status,
       statusText: rawResponse.statusText
     });
   }
 
+  const jsonResponse = await rawResponse.json();
   const parsedRes = OpenChannelResponse.safeParse(jsonResponse);
 
   // received expected response

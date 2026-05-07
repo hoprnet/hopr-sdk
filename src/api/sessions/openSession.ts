@@ -1,4 +1,3 @@
-import { ZodError } from 'zod';
 import {
   ApiErrorResponse,
   RemoveBasicAuthenticationPayloadType,
@@ -14,8 +13,7 @@ import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
  *
  * @param apiEndpoint - The API endpoint
  * @param apiToken - The API token to be used for authentication.
- * @param body - A object containing the peer ID and alias to link.
- * @returns A Promise that resolves to true if alias successfully linked to peerId.
+ * @returns A Promise that resolves to the opened session payload.
  * @throws An error that occurred while processing the request.
  */
 export const openSession = async (
@@ -40,22 +38,23 @@ export const openSession = async (
 
   // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
   const jsonResponse = await rawResponse.json();
+  const parsedRes = OpenSessionResponse.safeParse(jsonResponse);
 
-  // parsedRes and error {} from HOPRd have the same type,
-  // we can only rely on rawResponse.ok to know if its a success
-  if (rawResponse.ok) {
-    const parsedRes = OpenSessionResponse.safeParse(jsonResponse);
-    if (parsedRes.success) {
-      return parsedRes.data;
-    }
-    throw parsedRes.error;
+  // received expected response
+  if (parsedRes.success) {
+    return parsedRes.data;
   }
 
+  // check if response has the structure of an expected api error
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
+
   if (isApiErrorResponse.success) {
     throw new sdkApiError({
       status: rawResponse.status,
@@ -64,6 +63,6 @@ export const openSession = async (
     });
   }
 
-  // we could not parse the error and it is not unexpected
-  throw isApiErrorResponse.error;
+  // we could not parse the response and it is unexpected
+  throw parsedRes.error;
 };

@@ -20,14 +20,20 @@ export const getGraph = async (
     payload.timeout
   );
 
+  // received unexpected error from server
   if (rawResponse.status >= 500) {
-    throw new Error(rawResponse.statusText);
+    throw new sdkApiError({
+      status: rawResponse.status,
+      statusText: rawResponse.statusText
+    });
   }
 
+  // received expected response (text/plain body)
   if (rawResponse.ok) {
     return rawResponse.text();
   }
 
+  // check if response has the structure of an expected api error
   const jsonResponse = await rawResponse.json();
   const isApiErrorResponse = ApiErrorResponse.safeParse(jsonResponse);
 
@@ -39,5 +45,9 @@ export const getGraph = async (
     });
   }
 
-  throw new Error(rawResponse.statusText);
+  // we could not parse the error and it is not unexpected
+  throw new sdkApiError({
+    status: rawResponse.status,
+    statusText: rawResponse.statusText
+  });
 };

@@ -1,4 +1,5 @@
 import nock from 'nock';
+import http from 'http';
 import { getBalances } from './getBalances';
 import { sdkApiError } from '../../utils';
 import { GetBalancesResponseType } from '../../types';
@@ -6,6 +7,20 @@ import { ZodError } from 'zod';
 
 const API_ENDPOINT = 'http://localhost:3001';
 const API_TOKEN = 'S3CR3T-T0K3N';
+
+const startHangingServer = async () => {
+  nock.enableNetConnect('127.0.0.1');
+  const server = http.createServer(() => {});
+  await new Promise<void>((resolve) =>
+    server.listen(0, '127.0.0.1', () => resolve())
+  );
+  const port = (server.address() as any).port;
+  const stop = async () => {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+    nock.disableNetConnect();
+  };
+  return { url: `http://127.0.0.1:${port}`, stop };
+};
 
 describe('getBalances', () => {
   afterEach(() => {
@@ -74,5 +89,46 @@ describe('getBalances', () => {
     await expect(
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow(sdkApiError);
+  });
+
+  it('throws ZodError when 200 body fails the response schema (also fails ApiErrorResponse)', async () => {
+    nock(API_ENDPOINT)
+      .get('/api/v4/account/balances')
+      .reply(200, { unexpected: 'data' });
+
+    await expect(
+      getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(ZodError);
+  });
+
+  it('rejects with TIMEOUT when the request exceeds the timeout', async () => {
+    const { url, stop } = await startHangingServer();
+    try {
+      await expect(
+        getBalances({ apiEndpoint: url, apiToken: API_TOKEN, timeout: 100 })
+      ).rejects.toThrow('TIMEOUT');
+    } finally {
+      await stop();
+    }
+  });
+
+  it('rejects when the connection errors', async () => {
+    nock(API_ENDPOINT)
+      .get('/api/v4/account/balances')
+      .replyWithError('ECONNREFUSED');
+
+    await expect(
+      getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow();
+  });
+
+  it('rejects when response body is malformed JSON', async () => {
+    nock(API_ENDPOINT)
+      .get('/api/v4/account/balances')
+      .reply(200, 'not-json');
+
+    await expect(
+      getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow();
   });
 });
