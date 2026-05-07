@@ -131,4 +131,14 @@ describe('getBalances', () => {
       getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow();
   });
+
+  it('throws sdkApiError when the api responds with a 500', async () => {
+    nock(API_ENDPOINT)
+      .get('/api/v4/account/balances')
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      getBalances({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

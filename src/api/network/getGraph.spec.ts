@@ -67,4 +67,38 @@ describe('test getGraph', function () {
       getGraph({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow();
   });
+  it('forwards reachableOnly into the query string when set', async function () {
+    const expectedResponse = 'digraph G {}';
+
+    nock(API_ENDPOINT)
+      .get(`/api/v4/network/graph`)
+      .query({ reachableOnly: 'true' })
+      .reply(200, expectedResponse);
+
+    const response = await getGraph({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      reachableOnly: true
+    });
+
+    expect(response).toEqual(expectedResponse);
+  });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/network/graph`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      getGraph({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('throws sdkApiError when error-path body matches neither response schema nor ApiErrorResponse', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/network/graph`)
+      .reply(400, { unexpected: 'shape' });
+
+    await expect(
+      getGraph({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

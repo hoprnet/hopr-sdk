@@ -1,6 +1,7 @@
 import nock from 'nock';
 import http from 'http';
 import { ZodError } from 'zod';
+import { sdkApiError } from '../../utils';
 import { isNodeEligible } from './isNodeEligible';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -97,5 +98,15 @@ describe('test isNodeEligible', function () {
     await expect(
       isNodeEligible({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow();
+  });
+  it('throws sdkApiError when error-path body matches ApiErrorResponse', async function () {
+    nock(API_ENDPOINT).get(`/eligiblez`).reply(401, {
+      status: 'UNAUTHORIZED',
+      error: 'authentication failed'
+    });
+
+    await expect(
+      isNodeEligible({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
   });
 });

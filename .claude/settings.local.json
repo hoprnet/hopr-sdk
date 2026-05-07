@@ -21,7 +21,10 @@
       "Bash(echo \"exit=$?\")",
       "Bash(node -e \"const {z} = require\\('zod'\\); const s = z.object\\({status: z.string\\(\\), error: z.string\\(\\).optional\\(\\)}\\); console.log\\(JSON.stringify\\(s.safeParse\\({unexpected:'shape'}\\), null, 2\\)\\);\")",
       "Bash(node -e \"const {ZodError, z} = require\\('zod'\\); const s = z.object\\({status: z.string\\(\\)}\\); const r = s.safeParse\\({unexpected:'shape'}\\); try { throw new ZodError\\(r.error.issues\\); } catch \\(e\\) { console.log\\('caught', e.constructor.name, e instanceof ZodError\\); }\")",
-      "Bash(echo \"EXIT=$?\")"
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(yarn test *)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(echo \"Exit: $?\")"
     ],
     "additionalDirectories": [
       "c:\\dev\\hoprnet\\hopr-sdk\\src\\api\\account"

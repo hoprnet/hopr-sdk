@@ -85,4 +85,52 @@ describe('cashOut', function () {
     ).toEqual('vitalik.eth');
     expect((account.withdraw as jest.Mock).mock.calls.length).toEqual(2);
   });
+  it('only withdraws native funds when only native balance is non-zero', async function () {
+    const apiResponse: GetBalancesResponseType = {
+      native: '10 xDAI',
+      hopr: '0 wxHOPR',
+      safeHopr: '0 wxHOPR',
+      safeNative: '0 xDAI',
+      safeHoprAllowance: '0 wxHOPR'
+    };
+
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(200, apiResponse);
+
+    const expectedReceipt = '0xnativeonly';
+    (account.withdraw as jest.Mock).mockImplementation(() => expectedReceipt);
+
+    const res = await cashOut({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN,
+      address: 'vitalik.eth'
+    });
+
+    expect(res.native).toEqual(expectedReceipt);
+    expect(res.hopr).toEqual(undefined);
+    expect((account.withdraw as jest.Mock).mock.calls.length).toEqual(1);
+  });
+  it('only withdraws hopr funds when only hopr balance is non-zero', async function () {
+    const apiResponse: GetBalancesResponseType = {
+      native: '0 xDAI',
+      hopr: '10 wxHOPR',
+      safeHopr: '0 wxHOPR',
+      safeNative: '0 xDAI',
+      safeHoprAllowance: '0 wxHOPR'
+    };
+
+    nock(API_ENDPOINT).get('/api/v4/account/balances').reply(200, apiResponse);
+
+    const expectedReceipt = '0xhopronly';
+    (account.withdraw as jest.Mock).mockImplementation(() => expectedReceipt);
+
+    const res = await cashOut({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN,
+      address: 'vitalik.eth'
+    });
+
+    expect(res.hopr).toEqual(expectedReceipt);
+    expect(res.native).toEqual(undefined);
+    expect((account.withdraw as jest.Mock).mock.calls.length).toEqual(1);
+  });
 });

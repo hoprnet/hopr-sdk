@@ -187,4 +187,18 @@ describe('test fundChannel', function () {
       })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/channels/${ADDRESS}/fund`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      fundChannel({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: ADDRESS,
+        amount: '1000000'
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

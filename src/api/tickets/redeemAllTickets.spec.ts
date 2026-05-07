@@ -142,4 +142,31 @@ describe('test redeemAllTickets', function () {
       redeemAllTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/tickets/redeem`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      redeemAllTickets({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('forwards the address from the payload into the request body', async function () {
+    let capturedBody: any = null;
+    nock(API_ENDPOINT)
+      .post(`/api/v4/tickets/redeem`, (body) => {
+        capturedBody = body;
+        return true;
+      })
+      .reply(204);
+
+    const ADDRESS = '0x1234567890abcdef1234567890abcdef12345678';
+    const result = await redeemAllTickets({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      address: ADDRESS
+    });
+    expect(result).toBe(true);
+    expect(capturedBody).toEqual({ address: ADDRESS });
+  });
 });

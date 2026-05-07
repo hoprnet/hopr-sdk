@@ -186,4 +186,17 @@ describe('test closeChannel', function () {
       })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .delete(`/api/v4/channels/${ADDRESS}`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      closeChannel({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: ADDRESS
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

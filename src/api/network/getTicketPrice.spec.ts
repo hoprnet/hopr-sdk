@@ -114,4 +114,13 @@ describe('test getTicketPrice', function () {
       getTicketPrice({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/network/price`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      getTicketPrice({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

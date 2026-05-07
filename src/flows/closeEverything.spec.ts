@@ -192,4 +192,36 @@ describe('closeEverything', function () {
       1
     );
   });
+  it('skips the redeem step entirely when unredeemedValue is falsy (empty string)', async function () {
+    // mock hoprd node get channels (none open)
+    nock(API_ENDPOINT)
+      .get('/api/v4/channels?includingClosed=false&fullTopology=false')
+      .reply(200, {
+        incoming: [],
+        outgoing: [],
+        all: []
+      } as GetChannelsResponseType);
+
+    // empty-string unredeemedValue is falsy in JS — the `if` at line 41 is false
+    nock(API_ENDPOINT)
+      .get(`/api/v4/tickets/statistics`)
+      .reply(200, {
+        neglectedValue: '0',
+        redeemedValue: '0',
+        rejectedValue: '0',
+        unredeemedValue: '',
+        winningCount: 0
+      } as GetTicketStatisticsResponseType);
+
+    const res = await closeEverything({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN
+    });
+    expect(res.closedChannels.length).toEqual(0);
+    expect(res.redeemedTickets).toEqual(false);
+    // because the if-block is skipped entirely, redeemAllTickets is never called
+    expect((tickets.redeemAllTickets as jest.Mock).mock.calls.length).toEqual(
+      0
+    );
+  });
 });

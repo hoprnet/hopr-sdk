@@ -164,4 +164,17 @@ describe('test getPeer', function () {
       })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      getPeer({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: BUDDY_NODE_ADDRESS
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

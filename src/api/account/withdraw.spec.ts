@@ -196,4 +196,19 @@ describe('withdraw function', () => {
       })
     ).rejects.toThrow();
   });
+
+  test('should throw sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .post('/api/v4/account/withdraw')
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      withdraw({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        amount: AMOUNT,
+        address: ETHEREUM_ADDRESS
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

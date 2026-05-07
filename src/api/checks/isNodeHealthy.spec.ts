@@ -96,4 +96,14 @@ describe('test pingPeer', function () {
       isNodeHealthy({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow(Error);
   });
+  it('throws sdkApiError when error-path body matches ApiErrorResponse', async function () {
+    nock(API_ENDPOINT).get(`/healthyz`).reply(401, {
+      status: 'UNAUTHORIZED',
+      error: 'authentication failed'
+    });
+
+    await expect(
+      isNodeHealthy({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

@@ -83,4 +83,49 @@ describe('openMultipleChannels', function () {
         '0x37954ca4a630aa28f045df2e8e604cae22071046042e557355acf00f4ef20d2e'
     } as OpenChannelResponseType);
   });
+  it('handles openChannel rejections without surfacing them in the result', async function () {
+    const destinations = ['idGood', 'idFails'];
+    const expectedResponse: GetBalancesResponseType = {
+      native: BigInt(0.03 * 10e18).toString() + ' xDai',
+      hopr: '0 wxHOPR',
+      safeHopr: '100 wxHOPR',
+      safeNative: '0 xDai',
+      safeHoprAllowance: '100 wxHOPR'
+    };
+
+    nock(API_ENDPOINT)
+      .get('/api/v4/account/balances')
+      .reply(200, expectedResponse);
+
+    (channels.openChannel as jest.Mock).mockImplementation(
+      ({ destination }: { destination: string }) => {
+        if (destination === 'idFails') {
+          throw new Error('rpc failed');
+        }
+        return {
+          channelId: '0xchanGood',
+          transactionReceipt: '0xreceiptGood'
+        } as OpenChannelResponseType;
+      }
+    );
+
+    const res = await openMultipleChannels({
+      apiEndpoint: API_ENDPOINT,
+      apiToken: API_TOKEN,
+      destinations,
+      amount: '3'
+    });
+
+    // The good destination is in the result with both fields populated.
+    expect(res?.['idGood']).toEqual({
+      channelId: '0xchanGood',
+      transactionReceipt: '0xreceiptGood'
+    });
+    // The failing destination is filtered out entirely (transactionReceipt is null
+    // in the catch-block result, and the final filter at line 88 drops null values).
+    expect(res?.['idFails']).toBeUndefined();
+    expect((channels.openChannel as jest.Mock).mock.calls.length).toEqual(
+      destinations.length
+    );
+  });
 });

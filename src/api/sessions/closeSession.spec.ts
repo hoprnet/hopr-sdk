@@ -161,4 +161,19 @@ describe('closeSession', () => {
     const result = await closeSession(payload);
     expect(result).toBe(true);
   });
+  test('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .delete(`/api/v4/session/${protocol}/${listeningIp}/${port}`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(closeSession(payload)).rejects.toThrow(sdkApiError);
+  });
+  test('returns true when the api responds with a 2xx and a JSON body', async function () {
+    nock(API_ENDPOINT)
+      .delete(`/api/v4/session/${protocol}/${listeningIp}/${port}`)
+      .reply(200, '{"some":"body"}');
+
+    const result = await closeSession(payload);
+    expect(result).toBe(true);
+  });
 });

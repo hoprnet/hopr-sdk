@@ -1,6 +1,7 @@
 import nock from 'nock';
 import http from 'http';
 import { getConfiguration } from './getConfiguration';
+import { sdkApiError } from '../../utils';
 import { GetConfigurationResponseType } from '../../types';
 
 const API_ENDPOINT = 'http://localhost:3001';
@@ -577,4 +578,22 @@ describe('getConfiguration', () => {
       getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get('/api/v4/node/configuration')
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      getConfiguration({ apiEndpoint: API_ENDPOINT, apiToken: API_TOKEN })
+    ).rejects.toThrow(sdkApiError);
+  });
+  // Note: GetConfigurationResponse is `z.any()` (see src/types/configuration.ts).
+  // This means the inner `ApiErrorResponse` fallback (lines 48-56) and the
+  // final `parsedRes.error` throw (line 59) of getConfiguration.ts are
+  // unreachable for any successfully-parsed JSON body — `z.any()` always
+  // succeeds, so execution never falls past `parsedRes.success`. The 401 test
+  // above ("returns the parsed body when the api responds with a 401")
+  // documents this canonical behavior. The only branch we can additionally
+  // cover from the spec is the >= 500 server-error path, which is asserted
+  // by the test directly above.
 });

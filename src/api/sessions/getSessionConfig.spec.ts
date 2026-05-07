@@ -170,4 +170,19 @@ describe('getSessionConfig', () => {
       })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when body fails the response schema but matches ApiErrorResponse', async function () {
+    // Force the GetSessionConfigResponse parse to fail (maxSurbUpstream is not a string)
+    // while the ApiErrorResponse parse succeeds (status is a string).
+    nock(API_ENDPOINT)
+      .get(`/api/v4/session/config/${SESSION_ID}`)
+      .reply(400, { status: 'INVALID_INPUT', maxSurbUpstream: 12345 });
+
+    await expect(
+      getSessionConfig({
+        apiEndpoint: API_ENDPOINT,
+        apiToken: API_TOKEN,
+        sessionId: SESSION_ID
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

@@ -258,4 +258,18 @@ describe('updateSessionConfig function', () => {
     });
     expect(result).toBe(true);
   });
+  test('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/config/${SESSION_ID}`, body)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      updateSessionConfig({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        sessionId: SESSION_ID,
+        ...body
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

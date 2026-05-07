@@ -218,4 +218,18 @@ describe('test openChannel', function () {
       })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .post('/api/v4/channels')
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      openChannel({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        destination: BUDDY_NODE_ADDRESS,
+        amount: '1000000'
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });

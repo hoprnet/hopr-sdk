@@ -99,4 +99,25 @@ describe('test getMetrics', function () {
       getMetrics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
     ).rejects.toThrow();
   });
+  it('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .get(`/metrics`)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      getMetrics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('throws ZodError when the error-path body matches neither the response schema nor ApiErrorResponse', async function () {
+    nock(API_ENDPOINT).get(`/metrics`).reply(400, { unrelated: 'shape' });
+
+    let caught: any;
+    try {
+      await getMetrics({ apiToken: API_TOKEN, apiEndpoint: API_ENDPOINT });
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeDefined();
+    expect(caught?.name).toBe('ZodError');
+  });
 });

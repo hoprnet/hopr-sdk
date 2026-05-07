@@ -276,4 +276,18 @@ describe('openSession function', () => {
       })
     ).rejects.toThrow();
   });
+  test('throws sdkApiError when the api responds with a 500', async function () {
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/${PROTOCOL}`, body)
+      .reply(500, { status: 'INTERNAL_SERVER_ERROR' });
+
+    await expect(
+      openSession({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        protocol: PROTOCOL,
+        ...body
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
 });
