@@ -49,6 +49,9 @@ dist
 # vscode files
 .vscode
 
+# Claude Code local files
+.claude/
+
 # e2e env file
 !/e2e/.env
 
