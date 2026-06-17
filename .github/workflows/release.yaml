@@ -47,7 +47,7 @@ jobs:
     steps:
       - name: Release version
         id: release
-        uses: hoprnet/hopr-workflows/actions/release-version@fa71078959cf9f892185e8df16551720693a2cd1
+        uses: hoprnet/hopr-workflows/actions/release-version@fa71078959cf9f892185e8df16551720693a2cd1 # 0.9.3
         with:
           source_branch: ${{ github.ref_name }}
           file: package.json
