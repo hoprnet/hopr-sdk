@@ -13,8 +13,6 @@ on:
     secrets:
       cachix_auth_token:
         required: true
-      gcp_service_account:
-        required: true
 concurrency:
   group: publish
   cancel-in-progress: false
@@ -40,9 +38,8 @@ jobs:
           node_version: ${{ inputs.node_version }}
       - name: Setup GCP
         id: gcp
-        uses: hoprnet/hopr-workflows/actions/setup-gcp@setup-gcp-v3
+        uses: hoprnet/hopr-workflows/actions/setup-gcp@ac3e0b6137b0ba470a30c373aab2ceba9e0879e4 # setup-gcp-v4
         with:
-          google_credentials: ${{ secrets.gcp_service_account }}
           login_artifact_registry: 'true'
       - name: Updates build version
         id: version
