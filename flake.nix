@@ -31,13 +31,14 @@
 
         mkDevShell = nodejs: pkgs.mkShell {
           nativeBuildInputs = [
+            pkgs.gh
             nodejs
             (pkgs.yarn.override { inherit nodejs; })
           ]
           ++ pkgs.lib.optional pkgs.stdenv.isLinux pkgs.inotify-tools;
           shellHook = ''
-            ${pre-commit-check.shellHook}
             export GITHUB_TOKEN="''${GITHUB_TOKEN:-$(gh auth token 2>/dev/null || true)}"
+            ${pre-commit-check.shellHook}
           '';
         };
       in
