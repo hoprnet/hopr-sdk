@@ -115,6 +115,41 @@ describe('openSession function', () => {
     expect(result).toEqual(resp);
   });
 
+  test('open using intermediate path, flow control and PIX - should return 200 if successful', async function () {
+    const pathBody: RemoveBasicAuthenticationPayloadType<OpenSessionPayloadCallType> =
+      {
+        ...body,
+        capabilities: ['Segmentation', 'UsePIX'],
+        flowControl: 'robust',
+        forwardPath: { IntermediatePath: [BUDDY_NODE_ADDRESS] },
+        returnPath: { IntermediatePath: [] }
+      };
+    const resp: OpenSessionResponseType = {
+      activeClients: [],
+      destination: BUDDY_NODE_ADDRESS,
+      forwardPath: { IntermediatePath: [BUDDY_NODE_ADDRESS] },
+      hoprMtu: 1500,
+      ip: '127.0.0.1',
+      maxClientSessions: 2,
+      port: 5542,
+      protocol: 'tcp',
+      returnPath: { IntermediatePath: [] },
+      surbLen: 398,
+      target: 'example.com:8080'
+    };
+    nock(API_ENDPOINT)
+      .post(`/api/v4/session/${PROTOCOL}`, pathBody)
+      .reply(200, resp);
+
+    const result = await openSession({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      protocol: PROTOCOL,
+      ...pathBody
+    });
+    expect(result).toEqual(resp);
+  });
+
   test('should return 400 if invalid node address was provided', async function () {
     nock(API_ENDPOINT)
       .post(`/api/v4/session/${PROTOCOL}`, body)

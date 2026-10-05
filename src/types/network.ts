@@ -22,9 +22,9 @@ export type GetAnnouncedResponseType = z.infer<typeof GetAnnouncedResponse>;
 export const GetConnectedResponse = z.array(
   z.object({
     address: z.string(),
-    probeRate: z.number(),
+    probeRate: z.number().nullable().optional(),
     lastUpdate: z.number(),
-    score: z.number(),
+    score: z.number().nullable().optional(),
     averageLatency: z.number().nullable().optional()
   })
 );

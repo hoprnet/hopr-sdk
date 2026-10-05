@@ -1,5 +1,5 @@
 import {
-  BasePayloadType,
+  GetTicketStatisticsPayloadType,
   RedeemAllTicketsPayloadType,
   RemoveBasicAuthenticationPayloadType
 } from '../../types';
@@ -34,13 +34,17 @@ export class TicketsAdapter {
     this.timeout = timeout;
   }
 
+  /**
+   * Gets ticket statistics, optionally scoped to the incoming channel from a counterparty address.
+   */
   public async getTicketStatistics(
-    payload?: RemoveBasicAuthenticationPayloadType<BasePayloadType>
+    payload?: RemoveBasicAuthenticationPayloadType<GetTicketStatisticsPayloadType>
   ) {
     return getTicketStatistics({
       apiEndpoint: this.apiEndpoint,
       apiToken: this.apiToken,
-      timeout: payload?.timeout ?? this.timeout
+      timeout: payload?.timeout ?? this.timeout,
+      address: payload?.address
     });
   }
 

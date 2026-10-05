@@ -5,6 +5,14 @@ import { BasePayload } from './general';
  * Get statistics
  */
 
+export const GetTicketStatisticsPayload = BasePayload.extend({
+  address: z.string().optional()
+});
+
+export type GetTicketStatisticsPayloadType = z.infer<
+  typeof GetTicketStatisticsPayload
+>;
+
 export const GetTicketStatisticsResponse = z.object({
   neglectedValue: z.string(),
   redeemedValue: z.string().optional(),

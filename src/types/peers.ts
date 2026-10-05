@@ -25,9 +25,9 @@ const PeerChannelInfo = z.object({
 });
 
 const PeerQosInfo = z.object({
-  probeRate: z.number(),
+  probeRate: z.number().nullable().optional(),
   lastUpdate: z.number(),
-  score: z.number(),
+  score: z.number().nullable().optional(),
   averageLatency: z.number().nullable().optional()
 });
 

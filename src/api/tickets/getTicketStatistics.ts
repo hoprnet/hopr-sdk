@@ -1,14 +1,18 @@
-import { ApiErrorResponse, type BasePayloadType } from '../../types';
+import { ApiErrorResponse } from '../../types';
 import {
+  GetTicketStatisticsPayloadType,
   GetTicketStatisticsResponse,
   GetTicketStatisticsResponseType
 } from '../../types/tickets';
 import { sdkApiError, fetchWithTimeout, getHeaders } from '../../utils';
 
 export const getTicketStatistics = async (
-  payload: BasePayloadType
+  payload: GetTicketStatisticsPayloadType
 ): Promise<GetTicketStatisticsResponseType> => {
   const url = new URL(`api/v4/tickets/statistics`, payload.apiEndpoint);
+  if (payload.address !== undefined) {
+    url.searchParams.set('address', payload.address);
+  }
   const rawResponse = await fetchWithTimeout(
     url,
     {
