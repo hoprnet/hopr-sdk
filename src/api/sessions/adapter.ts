@@ -60,9 +60,13 @@ export class SessionsAdapter {
       destination: payload.destination,
       capabilities: payload.capabilities,
       listenHost: payload.listenHost,
+      flowControl: payload.flowControl,
       forwardPath: payload.forwardPath,
       returnPath: payload.returnPath,
+      maxClientSessions: payload.maxClientSessions,
+      maxSurbUpstream: payload.maxSurbUpstream,
       responseBuffer: payload.responseBuffer,
+      sessionPool: payload.sessionPool,
       target: payload.target,
       protocol: payload.protocol
     });

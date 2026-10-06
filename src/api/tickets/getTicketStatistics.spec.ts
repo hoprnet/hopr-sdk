@@ -42,6 +42,39 @@ describe('test getTicketStatistics', function () {
 
     expect(response.winningCount).toEqual(0);
   });
+  it('sends the counterparty address as a query param', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/tickets/statistics`)
+      .query({ address: '0x3262f13a39efaca789ae58390441c9ed76bc658a' })
+      .reply(200, {
+        neglectedValue: '0 wxHOPR',
+        rejectedValue: '0 wxHOPR',
+        unredeemedValue: '1 wxHOPR',
+        winningCount: 1
+      });
+
+    const response = await getTicketStatistics({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      address: '0x3262f13a39efaca789ae58390441c9ed76bc658a'
+    });
+
+    expect(response.unredeemedValue).toEqual('1');
+  });
+  it('throws a custom error when the counterparty channel is not found', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/tickets/statistics`)
+      .query({ address: '0x3262f13a39efaca789ae58390441c9ed76bc658a' })
+      .reply(404, { status: 'CHANNEL_NOT_FOUND' });
+
+    await expect(
+      getTicketStatistics({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: '0x3262f13a39efaca789ae58390441c9ed76bc658a'
+      })
+    ).rejects.toMatchObject({ status: 404 });
+  });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v4/tickets/statistics`).reply(400, {
       status: 'INVALID_ERROR'

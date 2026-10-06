@@ -11,12 +11,18 @@ const SessionCapabilities = z.enum([
   'Segmentation',
   'RetransmissionAckOnly',
   'NoDelay',
-  'NoRateControl'
+  'NoRateControl',
+  'UsePIX'
 ]);
 
-const RoutingOptions = z.object({
-  Hops: z.number().optional()
-});
+const SessionFlowControl = z.enum(['off', 'clean', 'robust']);
+
+export type SessionFlowControlType = z.infer<typeof SessionFlowControl>;
+
+const RoutingOptions = z.union([
+  z.object({ Hops: z.number().int().min(0) }),
+  z.object({ IntermediatePath: z.array(z.string()) })
+]);
 
 const SessionTargetSpec = z.union([
   z.object({ Plain: z.string() }),
@@ -64,6 +70,7 @@ export type GetSessionsResponseType = z.infer<typeof GetSessionsResponse>;
 export const OpenSessionPayloadCall = BasePayload.extend({
   capabilities: SessionCapabilities.array().nullable().optional(),
   destination: z.string(),
+  flowControl: SessionFlowControl.nullable().optional(),
   listenHost: z.string().nullable().optional(),
   forwardPath: RoutingOptions,
   returnPath: RoutingOptions,

@@ -49,6 +49,32 @@ describe('test getConnected', function () {
 
     expect(response).toEqual(expectedResponse);
   });
+  it('handles peers without measured probe rate or score', async function () {
+    const expectedResponse: GetConnectedResponseType = [
+      {
+        address: '0x3262f13a39efaca789ae58390441c9ed76bc658a',
+        probeRate: null,
+        lastUpdate: 1700000000,
+        score: null,
+        averageLatency: null
+      },
+      {
+        address: '0xbdb61dd58780f9118661dda6568a8bc57128bd10',
+        lastUpdate: 1700000000
+      }
+    ];
+
+    nock(API_ENDPOINT)
+      .get(`/api/v4/network/connected`)
+      .reply(200, expectedResponse);
+
+    const response = await getConnected({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT
+    });
+
+    expect(response).toEqual(expectedResponse);
+  });
   it('throws a custom error when hoprd api response is an 401 error', async function () {
     nock(API_ENDPOINT).get(`/api/v4/network/connected`).reply(401, {
       status: 'UNAUTHORIZED',

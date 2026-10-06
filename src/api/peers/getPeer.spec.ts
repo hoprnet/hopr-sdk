@@ -43,6 +43,24 @@ describe('test getPeer', function () {
 
     expect(response.observed.at(0)).toEqual('/ip4/');
   });
+  it('handles qos without measured probe rate or score', async function () {
+    nock(API_ENDPOINT)
+      .get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`)
+      .reply(200, {
+        announcedSources: [],
+        observed: [],
+        qos: { probeRate: null, lastUpdate: 1700000000, score: null }
+      });
+
+    const response = await getPeer({
+      apiToken: API_TOKEN,
+      apiEndpoint: API_ENDPOINT,
+      address: BUDDY_NODE_ADDRESS
+    });
+
+    expect(response.qos?.probeRate).toBeNull();
+    expect(response.qos?.score).toBeNull();
+  });
   it('throws a custom error when hoprd api response is an 400 error', async function () {
     nock(API_ENDPOINT).get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`).reply(400, {
       status: 'INVALID_PEERID'
@@ -74,6 +92,19 @@ describe('test getPeer', function () {
     nock(API_ENDPOINT).get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`).reply(403, {
       status: 'string',
       error: 'string'
+    });
+
+    await expect(
+      getPeer({
+        apiToken: API_TOKEN,
+        apiEndpoint: API_ENDPOINT,
+        address: BUDDY_NODE_ADDRESS
+      })
+    ).rejects.toThrow(sdkApiError);
+  });
+  it('throws a custom error when hoprd api response is an 404 error', async function () {
+    nock(API_ENDPOINT).get(`/api/v4/peers/${BUDDY_NODE_ADDRESS}`).reply(404, {
+      status: 'PEER_NOT_FOUND'
     });
 
     await expect(
