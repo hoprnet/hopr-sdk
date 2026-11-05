@@ -13,6 +13,8 @@ on:
           - patch
         default: 'patch'
 
+permissions: {}
+
 concurrency:
   group: release
   cancel-in-progress: false
@@ -20,6 +22,8 @@ concurrency:
 jobs:
   build:
     name: Build
+    permissions:
+      contents: read
     uses: ./.github/workflows/build.yaml
   publish:
     name: Publish

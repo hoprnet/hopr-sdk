@@ -4,8 +4,10 @@ on:
   pull_request:
     types: [synchronize, opened, reopened]
 
+permissions: {}
+
 concurrency:
-  group: pr
+  group: ${{ github.event.pull_request.number || github.ref }}-pr
   cancel-in-progress: true
 
 jobs:
@@ -16,6 +18,8 @@ jobs:
         node_version:
           - 22.x
           - 24.x
+    permissions:
+      contents: read
     uses: ./.github/workflows/build.yaml
     with:
       node_version: ${{ matrix.node_version }}
@@ -31,3 +35,19 @@ jobs:
       version_type: commit
     secrets:
       cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+  # Single aggregate merge gate: green only if every other job in this run
+  # succeeded. Mark THIS one as the required check in the branch ruleset.
+  merge-gate:
+    name: Merge gate
+    if: always()
+    needs:
+      - build
+      - publish
+    runs-on: depot-ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Require all jobs to pass
+        uses: re-actors/alls-green@b5b5b37504aa4183270bd3d855c52a67f212be35 # v1.3.0
+        with:
+          jobs: ${{ toJSON(needs) }}
