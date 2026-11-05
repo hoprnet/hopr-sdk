@@ -9,7 +9,7 @@ on:
         default: '22.x'
 
 concurrency:
-  group: build-${{ inputs.node_version }}
+  group: build-${{ inputs.node_version }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
