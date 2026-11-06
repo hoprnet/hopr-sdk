@@ -40,7 +40,7 @@ jobs:
           node_version: ${{ inputs.node_version }}
       - name: Setup GCP
         id: gcp
-        uses: hoprnet/hopr-workflows/actions/setup-gcp@ac3e0b6137b0ba470a30c373aab2ceba9e0879e4 # 0.9.4
+        uses: hoprnet/hopr-workflows/actions/setup-gcp@5be6fbca6ea8b13afa4d111724ff83c78456d13e # 0.9.4
         with:
           login_artifact_registry: 'true'
       - name: Updates build version
