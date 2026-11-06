@@ -16,7 +16,7 @@ on:
 permissions: {}
 
 concurrency:
-  group: publish
+  group: ${{ inputs.version_type == 'commit' && format('publish-pr-{0}', github.event.pull_request.number || github.ref) || 'publish' }}
   cancel-in-progress: false
 
 jobs:
