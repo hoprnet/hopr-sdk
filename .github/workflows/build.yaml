@@ -8,14 +8,18 @@ on:
         type: string
         default: '22.x'
 
+permissions: {}
+
 concurrency:
-  group: build-${{ inputs.node_version }}
+  group: build-${{ inputs.node_version }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
   checks:
     name: Build
     runs-on: depot-ubuntu-24.04
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

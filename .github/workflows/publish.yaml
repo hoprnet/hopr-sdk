@@ -13,6 +13,8 @@ on:
     secrets:
       cachix_auth_token:
         required: true
+permissions: {}
+
 concurrency:
   group: publish
   cancel-in-progress: false
@@ -67,7 +69,11 @@ jobs:
       - name: Publish release candidate to google
         if: inputs.version_type == 'release'
         run: |
-          already_released=$(gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="@hoprnet/hopr-sdk" --format=json 2>/dev/null | jq -r ' .[] | select(.name | contains("${{ steps.version.outputs.build_version }}")).name' | grep -c '${{ steps.version.outputs.build_version }}$')
+          if [[ ! "$BUILD_VERSION" =~ ^v?[0-9A-Za-z._-]+$ ]]; then
+            echo "Invalid build version: $BUILD_VERSION" >&2
+            exit 1
+          fi
+          already_released=$(gcloud artifacts versions list --repository=npm --location=europe-west3 --project=hoprassociation --package="@hoprnet/hopr-sdk" --format=json 2>/dev/null | jq -r --arg v "$BUILD_VERSION" '.[] | select(.name | contains($v)).name' | grep -c -- "${BUILD_VERSION}\$")
           if [ "$already_released" -eq 0 ]; then
             npm run login
             yarn publish --registry=https://europe-west3-npm.pkg.dev/hoprassociation/npm/ --no-git-tag-version --tag release-candidate
@@ -76,6 +82,7 @@ jobs:
           fi
         env:
           NODE_AUTH_TOKEN: ${{ steps.gcp.outputs.access_token }}
+          BUILD_VERSION: ${{ steps.version.outputs.build_version }}
 
   publish-npm:
     name: NPM
