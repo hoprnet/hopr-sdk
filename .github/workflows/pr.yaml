@@ -33,6 +33,8 @@ jobs:
     uses: ./.github/workflows/publish.yaml
     with:
       version_type: commit
+      # Fork PRs get no secrets or OIDC token, so nothing is published for them.
+      enabled: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     secrets:
       cachix_auth_token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
@@ -51,3 +53,5 @@ jobs:
         uses: re-actors/alls-green@b5b5b37504aa4183270bd3d855c52a67f212be35 # v1.3.0
         with:
           jobs: ${{ toJSON(needs) }}
+          # Publishing is input-skipped for fork PRs.
+          allowed-skips: ${{ github.event.pull_request.head.repo.full_name != github.repository && 'publish' || '' }}
